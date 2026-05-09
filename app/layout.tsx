@@ -39,13 +39,22 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
   ),
-  // サイト全体のOG設定（各ページで上書き可）
   openGraph: {
     type: "website",
     locale: "ja_JP",
     siteName: "ToolBox",
+    images: [
+      {
+        url: `/api/og?${new URLSearchParams({ title: "ToolBox | 無料Webツール集", icon: "🧰", desc: "FIRE・NISA・画像変換・動画圧縮など、検索で見つかる無料ツール集。登録不要・スマホ対応。" }).toString()}`,
+        width: 1200,
+        height: 630,
+        alt: "ToolBox",
+      },
+    ],
   },
-  // robots設定
+  twitter: {
+    card: "summary_large_image",
+  },
   verification: {
     google: "QYjtugi8BFF5kEzdJoVN74hleLT6GGpBFq0kT7g4jOw",
   },

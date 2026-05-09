@@ -4,6 +4,7 @@
 // ========================================
 import type { Metadata } from "next";
 import { getSiteUrl } from "./utils";
+import { getToolById } from "./tools-data";
 
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME ?? "ToolBox";
 const siteUrl = getSiteUrl();
@@ -72,10 +73,15 @@ export function generateToolMeta(
   slug: string,
   keywords: string[] = []
 ): Metadata {
+  const tool = getToolById(slug);
+  const icon = tool?.icon ?? "🧰";
+  const ogImage = `/api/og?${new URLSearchParams({ title: toolName, icon, desc: description }).toString()}`;
+
   return generateMeta({
     title: `${toolName}【無料・登録不要】`,
     description: `${description} 無料・登録不要・スマホ対応。`,
     path: `/${slug}`,
     keywords: [toolName, "無料ツール", "オンライン", ...keywords],
+    ogImage,
   });
 }
