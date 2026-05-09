@@ -71,12 +71,9 @@ export default function HomePage() {
             </div>
 
             {/* 統計バッジ */}
-            <div className="mt-10 flex flex-wrap justify-center gap-4 text-sm text-slate-500 dark:text-slate-500">
-              <span>✅ {tools.length}つのツール</span>
-              <span>✅ 完全無料</span>
-              <span>✅ 登録不要</span>
-              <span>✅ スマホ対応</span>
-            </div>
+            <p className="mt-8 text-sm text-slate-400 dark:text-slate-500">
+              全{tools.length}ツール　·　無料　·　登録不要　·　スマホ対応
+            </p>
           </div>
         </div>
       </section>
