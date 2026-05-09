@@ -73,8 +73,11 @@ export default function RootLayout({
       className={`${inter.variable} ${notoSansJP.variable}`}
     >
       <head>
-        {/* Google AdSense（取得後にコメント解除） */}
-        {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossOrigin="anonymous" /> */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8801800417491644"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="font-sans bg-white dark:bg-zinc-950 text-slate-900 dark:text-slate-100 antialiased">
         <ThemeProvider>
