@@ -71,6 +71,16 @@ export const tools: Tool[] = [
     category: "image",
     keywords: ["画像圧縮", "ファイルサイズ削減", "WebP変換", "無料"],
   },
+  {
+    id: "image-resize",
+    title: "画像リサイズ・アスペクト比変換",
+    description: "画像のサイズ変更・比率変換をブラウザで完結。16:9・1:1など主要比率とSNSサイズプリセット対応。",
+    href: "/image-resize",
+    icon: "✂️",
+    category: "image",
+    isNew: true,
+    keywords: ["画像リサイズ", "アスペクト比変換", "画像サイズ変更", "16:9", "正方形", "無料"],
+  },
   // ── 追加10ツール ─────────────────────────────
   {
     id: "mortgage-calculator",

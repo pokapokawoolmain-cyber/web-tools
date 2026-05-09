@@ -1,22 +1,21 @@
 "use client";
 import { useState, useMemo } from "react";
-import { NumberInput } from "@/components/ui/NumberInput";
+import { SliderInput } from "@/components/ui/SliderInput";
 import { ResultCard } from "@/components/ui/ResultCard";
 
-const MERCARI_FEE_RATE = 0.1; // 10%
+const MERCARI_FEE_RATE = 0.1;
 
 export function MercariCalculator() {
-  const [sellPrice, setSellPrice] = useState(3000);    // 販売価格
-  const [buyPrice, setBuyPrice] = useState(1000);      // 仕入れ価格
-  const [shippingFee, setShippingFee] = useState(200); // 送料
-  const [packagingFee, setPackagingFee] = useState(50); // 梱包費
+  const [sellPrice, setSellPrice]     = useState(3000);
+  const [buyPrice, setBuyPrice]       = useState(1000);
+  const [shippingFee, setShippingFee] = useState(200);
+  const [packagingFee, setPackagingFee] = useState(50);
 
   const result = useMemo(() => {
-    const fee = Math.floor(sellPrice * MERCARI_FEE_RATE); // メルカリ手数料
+    const fee = Math.floor(sellPrice * MERCARI_FEE_RATE);
     const totalCost = buyPrice + shippingFee + packagingFee + fee;
     const profit = sellPrice - totalCost;
     const profitRate = sellPrice > 0 ? (profit / sellPrice) * 100 : 0;
-
     return { fee, totalCost, profit, profitRate };
   }, [sellPrice, buyPrice, shippingFee, packagingFee]);
 
@@ -27,50 +26,58 @@ export function MercariCalculator() {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-6 space-y-5">
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-6 space-y-6">
         <h2 className="font-bold text-slate-900 dark:text-white">金額を入力</h2>
 
-        <NumberInput
+        <SliderInput
           id="sell-price"
           label="販売価格"
           value={sellPrice}
           onChange={setSellPrice}
           min={0}
+          max={100000}
+          step={100}
           unit="円"
+          formatValue={(v) => `${v.toLocaleString()}円`}
         />
-        <NumberInput
+        <SliderInput
           id="buy-price"
           label="仕入れ価格（0でもOK）"
           value={buyPrice}
           onChange={setBuyPrice}
           min={0}
+          max={80000}
+          step={100}
           unit="円"
-          helpText="元々手元にあるものを売る場合は0円"
+          formatValue={(v) => `${v.toLocaleString()}円`}
         />
-        <NumberInput
+        <SliderInput
           id="shipping"
           label="送料（出品者負担の場合）"
           value={shippingFee}
           onChange={setShippingFee}
           min={0}
+          max={5000}
+          step={10}
           unit="円"
-          helpText="着払いや購入者負担の場合は0円"
+          formatValue={(v) => `${v.toLocaleString()}円`}
         />
-        <NumberInput
+        <SliderInput
           id="packaging"
           label="梱包費"
           value={packagingFee}
           onChange={setPackagingFee}
           min={0}
+          max={1000}
+          step={10}
           unit="円"
+          formatValue={(v) => `${v.toLocaleString()}円`}
         />
       </div>
 
-      {/* 結果 */}
       <div className="space-y-4">
         <h2 className="font-bold text-slate-900 dark:text-white">計算結果</h2>
 
-        {/* メルカリ手数料の内訳 */}
         <div className="bg-slate-50 dark:bg-zinc-800/50 rounded-xl p-4 text-sm space-y-2 border border-slate-200 dark:border-zinc-700">
           <div className="flex justify-between">
             <span className="text-slate-500 dark:text-slate-400">販売価格</span>
