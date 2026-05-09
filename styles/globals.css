@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/* ========================================
+   カスタムCSS変数
+   ダークモード対応のカラーシステム
+   ======================================== */
+:root {
+  /* ライトモード */
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+  --muted: 248 250 252;
+  --muted-foreground: 100 116 139;
+  --border: 226 232 240;
+  --card: 255 255 255;
+  --card-foreground: 15 23 42;
+
+  /* ガラスモーフィズム */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+.dark {
+  /* ダークモード */
+  --background: 10 10 10;
+  --foreground: 248 250 252;
+  --muted: 23 23 23;
+  --muted-foreground: 148 163 184;
+  --border: 39 39 42;
+  --card: 18 18 18;
+  --card-foreground: 248 250 252;
+
+  /* ダークモード ガラスモーフィズム */
+  --glass-bg: rgba(18, 18, 18, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ========================================
+   ベーススタイル
+   ======================================== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* スムーズスクロール */
+  scroll-behavior: smooth;
+  /* フォントレンダリング最適化 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  line-height: 1.7;
+}
+
+/* ========================================
+   ユーティリティクラス
+   ======================================== */
+
+/* ガラスカード（ガラスモーフィズム） */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* コンテナ幅 */
+.container-base {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-base {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* ツールカード */
+.tool-card {
+  background: rgb(var(--card));
+  border: 1px solid rgb(var(--border));
+  border-radius: 1rem;
+  transition: all 0.2s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.dark .tool-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 入力フィールド */
+.input-base {
+  width: 100%;
+  background: rgb(var(--muted));
+  border: 1px solid rgb(var(--border));
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: rgb(var(--foreground));
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.input-base:focus {
+  border-color: rgb(59 130 246);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ボタン */
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* 結果表示ブロック */
+.result-block {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.dark .result-block {
+  background: linear-gradient(135deg, #1e3a5f, #1e3a8a20);
+  border-color: #1d4ed820;
+}
+
+/* スクロールバーカスタマイズ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border-radius: 3px;
+}
