@@ -45,6 +45,9 @@ export const metadata: Metadata = {
     siteName: "ToolBox",
   },
   // robots設定
+  verification: {
+    google: "QYjtugi8BFF5kEzdJoVN74hleLT6GGpBFq0kT7g4jOw",
+  },
   robots: {
     index: true,
     follow: true,
