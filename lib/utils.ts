@@ -52,7 +52,9 @@ export function calcFutureValueMonthly(
 
 // サイトURLを取得（SSR/CSR両対応）
 export function getSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
 }
 
 // デバウンス（入力値の変化を遅延処理）

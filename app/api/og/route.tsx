@@ -3,19 +3,24 @@ import { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
-async function loadFont(): Promise<ArrayBuffer> {
-  // Safari UA → Google Fonts returns woff (Satori compatible)
-  const css = await fetch(
-    "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700",
-    {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
-      },
-    }
-  ).then((r) => r.text());
-  const url = css.match(/src: url\((.+?)\)/)?.[1] ?? "";
-  return fetch(url).then((r) => r.arrayBuffer());
+async function loadFont(): Promise<ArrayBuffer | null> {
+  try {
+    // Safari UA → Google Fonts returns woff (Satori compatible)
+    const css = await fetch(
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700",
+      {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
+        },
+      }
+    ).then((r) => r.text());
+    const url = css.match(/src: url\((.+?)\)/)?.[1] ?? "";
+    if (!url) return null;
+    return fetch(url).then((r) => r.arrayBuffer());
+  } catch {
+    return null;
+  }
 }
 
 export async function GET(req: NextRequest) {
@@ -25,6 +30,10 @@ export async function GET(req: NextRequest) {
   const desc  = searchParams.get("desc")  ?? "無料Webツール集";
 
   const font = await loadFont();
+
+  const fontConfig = font
+    ? [{ name: "Noto Sans JP", data: font, weight: 700 as const }]
+    : [];
 
   return new ImageResponse(
     (
@@ -185,7 +194,7 @@ export async function GET(req: NextRequest) {
     {
       width: 1200,
       height: 630,
-      fonts: [{ name: "Noto Sans JP", data: font, weight: 700 }],
+      fonts: fontConfig,
       headers: {
         "cache-control": "public, immutable, no-transform, max-age=31536000",
       },
