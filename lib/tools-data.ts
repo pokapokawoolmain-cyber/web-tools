@@ -72,6 +72,16 @@ export const tools: Tool[] = [
     keywords: ["画像圧縮", "ファイルサイズ削減", "WebP変換", "無料"],
   },
   {
+    id: "video-compress",
+    title: "動画圧縮ツール",
+    description: "MP4・MOV・AVI・MKVなどの動画をブラウザで圧縮。品質・解像度を自由に設定。ファイルはサーバーに送信されません。",
+    href: "/video-compress",
+    icon: "🎬",
+    category: "image",
+    isNew: true,
+    keywords: ["動画圧縮", "MP4圧縮", "動画ファイルサイズ削減", "動画変換", "無料"],
+  },
+  {
     id: "image-resize",
     title: "画像リサイズ・アスペクト比変換",
     description: "画像のサイズ変更・比率変換をブラウザで完結。16:9・1:1など主要比率とSNSサイズプリセット対応。",

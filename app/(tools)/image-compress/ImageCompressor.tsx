@@ -1,10 +1,7 @@
 "use client";
-// ========================================
-// 画像圧縮ツール
-// Canvas APIを使ったブラウザ完結の画像圧縮
-// ========================================
 import { useState, useRef, useCallback } from "react";
-import { Upload, Download, X } from "lucide-react";
+import { Upload, Download, X, AlertCircle } from "lucide-react";
+import { SliderInput } from "@/components/ui/SliderInput";
 
 type CompressedImage = {
   originalFile: File;
@@ -109,30 +106,21 @@ export function ImageCompressor() {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* 圧縮品質設定 */}
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-6">
-        <div className="flex justify-between items-center mb-3">
-          <label className="font-medium text-slate-700 dark:text-slate-300 text-sm">
-            圧縮品質
-          </label>
-          <span className="text-blue-600 dark:text-blue-400 font-bold text-sm">
-            {quality}%
-          </span>
-        </div>
-        <input
-          type="range"
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-6 space-y-3">
+        <SliderInput
+          id="quality"
+          label="圧縮品質"
           value={quality}
-          min={10}
+          onChange={setQuality}
+          min={1}
           max={100}
-          step={5}
-          onChange={(e) => setQuality(Number(e.target.value))}
-          className="w-full h-2 rounded-full appearance-none cursor-pointer"
-          style={{
-            background: `linear-gradient(to right, #3b82f6 ${quality}%, #e2e8f0 ${quality}%)`,
-          }}
+          step={1}
+          unit="%"
+          formatValue={(v) => `${v}%`}
         />
-        <div className="flex justify-between text-xs text-slate-400 mt-1">
-          <span>高圧縮（ファイル小）</span>
-          <span>高品質（ファイル大）</span>
+        <div className="flex justify-between text-xs text-slate-400">
+          <span>← 高圧縮（ファイル小）</span>
+          <span>高品質（ファイル大）→</span>
         </div>
       </div>
 
@@ -193,16 +181,28 @@ export function ImageCompressor() {
                 <p className="font-medium text-sm text-slate-900 dark:text-white truncate">
                   {result.originalFile.name}
                 </p>
-                <div className="flex items-center gap-2 mt-1 text-xs text-slate-500">
+                <div className="flex items-center gap-2 mt-1 text-xs text-slate-500 flex-wrap">
                   <span>{formatSize(result.originalSize)}</span>
                   <span>→</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                  <span className={`font-medium ${result.compressionRate > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400"}`}>
                     {formatSize(result.compressedSize)}
                   </span>
-                  <span className="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded-full">
-                    −{result.compressionRate.toFixed(0)}%
-                  </span>
+                  {result.compressionRate > 0 ? (
+                    <span className="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded-full">
+                      −{result.compressionRate.toFixed(0)}%
+                    </span>
+                  ) : (
+                    <span className="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-1.5 py-0.5 rounded-full flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      これ以上小さくなりません
+                    </span>
+                  )}
                 </div>
+                {result.compressionRate <= 0 && (
+                  <p className="text-xs text-amber-600 dark:text-amber-500 mt-1">
+                    この画像はすでに最適化済みです。品質を下げるか、WebP形式への変換をお試しください。
+                  </p>
+                )}
               </div>
 
               {/* アクション */}
