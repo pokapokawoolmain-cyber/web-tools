@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Upload, Download, Printer, RotateCcw } from "lucide-react";
+import { Upload, Download, Printer, RotateCcw, Wand2, Check, Loader2 } from "lucide-react";
 import { RelatedTools } from "@/components/tools/RelatedTools";
 
 // Photo size presets (mm) — will render at 300dpi on canvas
@@ -36,6 +36,13 @@ export function IdPhoto() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [printUrl, setPrintUrl] = useState<string | null>(null);
 
+  const [processedSrc, setProcessedSrc] = useState<string | null>(null);
+  const [isRemovingBg, setIsRemovingBg] = useState(false);
+  const [bgRemoved, setBgRemoved] = useState(false);
+
+  // Use processed (transparent) image if available
+  const activeSrc = processedSrc ?? imgSrc;
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
 
@@ -46,6 +53,8 @@ export function IdPhoto() {
     if (!file.type.startsWith("image/")) return;
     const url = URL.createObjectURL(file);
     setImgSrc(url);
+    setProcessedSrc(null);
+    setBgRemoved(false);
     setScale(1);
     setOffsetX(0);
     setOffsetY(0);
@@ -87,10 +96,97 @@ export function IdPhoto() {
     setOffsetY(t.clientY - dragStart.y);
   };
 
+  // BFS flood-fill background removal from image edges
+  const handleRemoveBg = useCallback(async () => {
+    if (!imgSrc) return;
+    setIsRemovingBg(true);
+    try {
+      await new Promise<void>((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          const MAX = 1500;
+          const ratio = Math.min(MAX / img.width, MAX / img.height, 1);
+          const w = Math.round(img.width * ratio);
+          const h = Math.round(img.height * ratio);
+
+          const canvas = document.createElement("canvas");
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d")!;
+          ctx.drawImage(img, 0, 0, w, h);
+
+          const imageData = ctx.getImageData(0, 0, w, h);
+          const d = imageData.data;
+
+          // Sample background color from 8 edge points
+          const samples: [number, number][] = [
+            [0, 0], [w - 1, 0], [0, h - 1], [w - 1, h - 1],
+            [w >> 1, 0], [0, h >> 1], [w - 1, h >> 1], [w >> 1, h - 1],
+          ];
+          let sr = 0, sg = 0, sb = 0;
+          for (const [x, y] of samples) {
+            const i = (y * w + x) * 4;
+            sr += d[i]; sg += d[i + 1]; sb += d[i + 2];
+          }
+          sr = Math.round(sr / samples.length);
+          sg = Math.round(sg / samples.length);
+          sb = Math.round(sb / samples.length);
+
+          const TOLERANCE = 40;
+          const dist = (i: number) => {
+            const dr = d[i] - sr, dg = d[i + 1] - sg, db = d[i + 2] - sb;
+            return Math.sqrt(dr * dr + dg * dg + db * db);
+          };
+
+          // BFS from all border pixels
+          const visited = new Uint8Array(w * h);
+          const queue: number[] = [];
+          const seed = (x: number, y: number) => {
+            const idx = y * w + x;
+            if (!visited[idx]) { visited[idx] = 1; queue.push(idx); }
+          };
+          for (let x = 0; x < w; x++) { seed(x, 0); seed(x, h - 1); }
+          for (let y = 0; y < h; y++) { seed(0, y); seed(w - 1, y); }
+
+          let qi = 0;
+          while (qi < queue.length) {
+            const idx = queue[qi++];
+            const pi = idx * 4;
+            if (dist(pi) > TOLERANCE) continue;
+            // Smooth edge: partial alpha based on distance
+            const fade = Math.min(dist(pi) / TOLERANCE, 1);
+            d[pi + 3] = Math.round(fade * fade * 255);
+
+            const x = idx % w, y = (idx / w) | 0;
+            const dirs: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+            for (const [dx, dy] of dirs) {
+              const nx = x + dx, ny = y + dy;
+              if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+              const ni = ny * w + nx;
+              if (!visited[ni]) { visited[ni] = 1; queue.push(ni); }
+            }
+          }
+
+          ctx.putImageData(imageData, 0, 0);
+          const url = canvas.toDataURL("image/png");
+          setProcessedSrc(url);
+          setBgRemoved(true);
+          resolve();
+        };
+        img.onerror = () => reject(new Error("load error"));
+        img.src = imgSrc;
+      });
+    } catch (e) {
+      console.error("BG removal failed:", e);
+    } finally {
+      setIsRemovingBg(false);
+    }
+  }, [imgSrc]);
+
   // Render single photo to canvas
   const renderPhoto = useCallback((): Promise<string> => {
     return new Promise((resolve, reject) => {
-      if (!imgSrc) { reject("no image"); return; }
+      if (!activeSrc) { reject("no image"); return; }
       const pw = mmToPx(selectedSize.w);
       const ph = mmToPx(selectedSize.h);
       const canvas = document.createElement("canvas");
@@ -104,23 +200,18 @@ export function IdPhoto() {
 
       const img = new Image();
       img.onload = () => {
-        // Scale: ratio of canvas to editor, times user scale
         const scaleRatio = pw / EDITOR_W;
-        const imgDisplayW = img.width * scale;
-        const imgDisplayH = img.height * scale;
-        const canvasOffsetX = offsetX * scaleRatio;
-        const canvasOffsetY = offsetY * scaleRatio;
-        const drawW = imgDisplayW * scaleRatio;
-        const drawH = imgDisplayH * scaleRatio;
-        const startX = (pw - drawW) / 2 + canvasOffsetX;
-        const startY = (ph - drawH) / 2 + canvasOffsetY;
+        const drawW = img.width * scale * scaleRatio;
+        const drawH = img.height * scale * scaleRatio;
+        const startX = (pw - drawW) / 2 + offsetX * scaleRatio;
+        const startY = (ph - drawH) / 2 + offsetY * scaleRatio;
         ctx.drawImage(img, startX, startY, drawW, drawH);
         resolve(canvas.toDataURL("image/jpeg", 0.95));
       };
       img.onerror = () => reject("load error");
-      img.src = imgSrc;
+      img.src = activeSrc;
     });
-  }, [imgSrc, selectedSize, bgColor, scale, offsetX, offsetY, EDITOR_W]);
+  }, [activeSrc, selectedSize, bgColor, scale, offsetX, offsetY, EDITOR_W]);
 
   const handleGenerate = async () => {
     try {
@@ -220,15 +311,47 @@ export function IdPhoto() {
             {/* Step 3: Background color */}
             <section>
               <p className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">背景色</p>
-              <div className="bg-white dark:bg-zinc-900 rounded-2xl px-5 py-4 flex gap-4">
-                {BG_COLORS.map(c => (
-                  <button key={c.value} onClick={() => setBgColor(c.value)}
-                    className="flex flex-col items-center gap-2">
-                    <span className={`w-10 h-10 rounded-full border-2 transition-all ${bgColor === c.value ? "border-blue-500 scale-110" : "border-slate-200 dark:border-zinc-700"}`}
-                      style={{ backgroundColor: c.value }} />
-                    <span className="text-[11px] text-slate-500 dark:text-zinc-400">{c.label}</span>
-                  </button>
-                ))}
+              <div className="bg-white dark:bg-zinc-900 rounded-2xl px-5 py-4 space-y-4">
+                <div className="flex gap-4">
+                  {BG_COLORS.map(c => (
+                    <button key={c.value} onClick={() => setBgColor(c.value)}
+                      className="flex flex-col items-center gap-2">
+                      <span className={`w-10 h-10 rounded-full border-2 transition-all ${bgColor === c.value ? "border-blue-500 scale-110" : "border-slate-200 dark:border-zinc-700"}`}
+                        style={{ backgroundColor: c.value }} />
+                      <span className="text-[11px] text-slate-500 dark:text-zinc-400">{c.label}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="border-t border-slate-100 dark:border-zinc-800 pt-3">
+                  {bgRemoved ? (
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-1.5 text-[13px] text-green-600 dark:text-green-400 font-medium">
+                        <Check className="w-4 h-4" />背景除去済み
+                      </span>
+                      <button
+                        onClick={() => { setProcessedSrc(null); setBgRemoved(false); }}
+                        className="text-[12px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                      >
+                        元の写真に戻す
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleRemoveBg}
+                      disabled={isRemovingBg}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-[14px] font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors disabled:opacity-50"
+                    >
+                      {isRemovingBg ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" />背景を解析中…</>
+                      ) : (
+                        <><Wand2 className="w-4 h-4" />背景を自動除去して色を変更</>
+                      )}
+                    </button>
+                  )}
+                  <p className="text-[11px] text-slate-400 dark:text-zinc-600 mt-1.5">
+                    {bgRemoved ? "上の色を選んで背景色を変更できます" : "背景除去後、上の色が反映されます"}
+                  </p>
+                </div>
               </div>
             </section>
 
@@ -249,7 +372,7 @@ export function IdPhoto() {
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={imgSrc}
+                      src={activeSrc!}
                       alt="編集中の写真"
                       draggable={false}
                       className="absolute pointer-events-none"
