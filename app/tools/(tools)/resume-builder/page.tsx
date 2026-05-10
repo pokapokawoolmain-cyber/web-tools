@@ -16,6 +16,7 @@ export default function ResumeBuilderPage() {
       title="職務経歴書作成ツール"
       description="フォームを埋めるだけで職務経歴書の文章が完成。コピーしてそのまま使えます。"
       icon="📄"
+      slug="resume-builder"
     >
       <ResumeBuilder />
     </ToolLayout>

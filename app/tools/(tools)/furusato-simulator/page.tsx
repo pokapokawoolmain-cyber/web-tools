@@ -27,6 +27,7 @@ export default function FurusatoSimulatorPage() {
       title="ふるさと納税シミュレーター"
       description="年収と家族構成を選ぶだけで控除上限額を即計算。自己負担2,000円でお得に活用できます。"
       icon="🎁"
+      slug="furusato-simulator"
       seoContent={seoContent}
     >
       <FurusatoSimulator />

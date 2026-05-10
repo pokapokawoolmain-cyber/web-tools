@@ -30,6 +30,7 @@ export default function ImageResizePage() {
       title="画像リサイズ・アスペクト比変換"
       description="画像のサイズ変更・アスペクト比変換をブラウザで完結。ファイルはサーバーに送信されません。"
       icon="✂️"
+      slug="image-resize"
       seoContent={seoContent}
     >
       <ImageResize />

@@ -27,6 +27,7 @@ export default function MortgageCalculatorPage() {
       title="住宅ローンシミュレーター"
       description="借入金額・金利・年数を入力するだけ。毎月返済額・総返済額・利息合計を即計算します。"
       icon="🏠"
+      slug="mortgage-calculator"
       seoContent={seoContent}
     >
       <MortgageCalculator />

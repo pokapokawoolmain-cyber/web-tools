@@ -16,6 +16,7 @@ export default function PasswordGeneratorPage() {
       title="パスワード生成"
       description="長さ・記号・数字を自由に設定。強度メーター付きのランダムパスワードをブラウザ内で安全に生成。"
       icon="🔐"
+      slug="password-generator"
     >
       <PasswordGenerator />
     </ToolLayout>

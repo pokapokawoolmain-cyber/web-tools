@@ -33,6 +33,7 @@ export default function SideJobProfitPage() {
       title="副業利益・税金計算"
       description="副業収入から経費・税金を差し引いた実質手取りを計算。確定申告の目安も確認できます。"
       icon="💼"
+      slug="side-job-profit"
       seoContent={seoContent}
     >
       <SideJobCalculator />

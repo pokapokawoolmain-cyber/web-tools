@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { generateToolMeta } from "@/lib/seo";
 import { Gpa } from "./Gpa";
 
@@ -10,5 +11,10 @@ export const metadata: Metadata = generateToolMeta(
 );
 
 export default function Page() {
-  return <Gpa />;
+  return (
+    <>
+      <ToolJsonLd slug="gpa" title="GPA計算" description="科目・単位数・成績を入力してGPAを即計算。大学の累積GPAをリアルタイムで確認。" />
+      <Gpa />
+    </>
+  );
 }

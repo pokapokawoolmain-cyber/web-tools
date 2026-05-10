@@ -16,6 +16,7 @@ export default function ImageCompressPage() {
       title="画像圧縮ツール"
       description="JPG・PNG・WebP画像をブラウザ上で圧縮。サーバーに送信しないのでプライバシー安全。"
       icon="🗜️"
+      slug="image-compress"
     >
       <ImageCompressor />
     </ToolLayout>

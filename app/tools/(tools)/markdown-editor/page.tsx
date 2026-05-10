@@ -16,6 +16,7 @@ export default function MarkdownEditorPage() {
       title="Markdownエディタ"
       description="左に書いて右でプレビュー。GitHub対応MDをリアルタイム確認・コピー・ダウンロード。"
       icon="📝"
+      slug="markdown-editor"
     >
       <MarkdownEditor />
     </ToolLayout>

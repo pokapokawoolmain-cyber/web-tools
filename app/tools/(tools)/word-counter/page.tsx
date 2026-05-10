@@ -16,6 +16,7 @@ export default function WordCounterPage() {
       title="文字数カウント"
       description="入力した瞬間にリアルタイムで文字数・行数・単語数を計測。スペース有無の切り替えも可能。"
       icon="✍️"
+      slug="word-counter"
     >
       <WordCounter />
     </ToolLayout>

@@ -16,6 +16,7 @@ export default function GasCalculatorPage() {
       title="ガソリン代計算"
       description="走行距離・燃費・ガソリン単価を入力。片道・往復・月間のガソリン代を即計算します。"
       icon="⛽"
+      slug="gas-calculator"
     >
       <GasCalculator />
     </ToolLayout>

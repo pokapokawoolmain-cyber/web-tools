@@ -16,6 +16,7 @@ export default function QrGeneratorPage() {
       title="QRコード生成"
       description="URL・テキスト・WiFi情報をQRコードに変換。色変更・PNG/SVGダウンロード対応。"
       icon="📱"
+      slug="qr-generator"
     >
       <QrGenerator />
     </ToolLayout>

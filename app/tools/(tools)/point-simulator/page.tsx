@@ -16,6 +16,7 @@ export default function PointSimulatorPage() {
       title="ポイント還元シミュレーター"
       description="月の利用金額を入力するだけ。PayPay・楽天・クレカなど主要サービスの年間獲得ポイントを一括比較。"
       icon="💳"
+      slug="point-simulator"
     >
       <PointSimulator />
     </ToolLayout>

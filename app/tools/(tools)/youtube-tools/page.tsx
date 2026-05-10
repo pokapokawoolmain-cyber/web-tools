@@ -16,6 +16,7 @@ export default function YoutubeToolsPage() {
       title="YouTube SEOツール"
       description="タイトル文字数・ハッシュタグ最適化・サムネイル比率確認をまとめてチェック。"
       icon="🎥"
+      slug="youtube-tools"
     >
       <YoutubeTools />
     </ToolLayout>

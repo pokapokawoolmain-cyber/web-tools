@@ -33,6 +33,7 @@ export default function MercariProfitPage() {
       title="メルカリ利益計算"
       description="販売価格・仕入れ価格・送料を入力するだけ。手数料10%を引いた実質手取りを計算します。"
       icon="🛍️"
+      slug="mercari-profit"
       seoContent={seoContent}
     >
       <MercariCalculator />

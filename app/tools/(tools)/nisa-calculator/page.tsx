@@ -33,6 +33,7 @@ export default function NisaCalculatorPage() {
       title="新NISA積立計算"
       description="毎月の積立額と運用期間を入力するだけ。複利効果で将来いくらになるかを可視化します。"
       icon="📈"
+      slug="nisa-calculator"
       seoContent={seoContent}
     >
       <NisaCalculator />

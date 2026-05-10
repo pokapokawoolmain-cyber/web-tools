@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { generateToolMeta } from "@/lib/seo";
 import { WifiQr } from "./WifiQr";
 
@@ -10,5 +11,10 @@ export const metadata: Metadata = generateToolMeta(
 );
 
 export default function Page() {
-  return <WifiQr />;
+  return (
+    <>
+      <ToolJsonLd slug="wifi-qr" title="Wi-Fi QRコード生成" description="SSIDとパスワードを入力するだけでWi-Fi接続用QRコードを即生成。" />
+      <WifiQr />
+    </>
+  );
 }

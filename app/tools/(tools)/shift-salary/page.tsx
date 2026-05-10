@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { generateToolMeta } from "@/lib/seo";
 import { ShiftSalary } from "./ShiftSalary";
 
@@ -10,5 +11,10 @@ export const metadata: Metadata = generateToolMeta(
 );
 
 export default function Page() {
-  return <ShiftSalary />;
+  return (
+    <>
+      <ToolJsonLd slug="shift-salary" title="シフト給与計算" description="時給・勤務時間・深夜時間を入力して月収を計算。深夜割増・交通費も対応。" />
+      <ShiftSalary />
+    </>
+  );
 }

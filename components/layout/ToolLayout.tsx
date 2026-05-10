@@ -5,13 +5,15 @@
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { AdBanner } from "@/components/ads/AdBanner";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getSiteUrl } from "@/lib/utils";
 
 type ToolLayoutProps = {
   title: string;
   description: string;
   icon: string;
+  slug: string;
   children: React.ReactNode;
-  // SEO補足テキスト（ページ下部に表示）
   seoContent?: React.ReactNode;
 };
 
@@ -19,10 +21,44 @@ export function ToolLayout({
   title,
   description,
   icon,
+  slug,
   children,
   seoContent,
 }: ToolLayoutProps) {
+  const siteUrl = getSiteUrl();
+  const toolUrl = `${siteUrl}/tools/${slug}`;
+
+  const schemas = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": title,
+      "description": description,
+      "url": toolUrl,
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "ja",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ToolBox", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "ツール一覧", "item": `${siteUrl}/tools` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": toolUrl },
+      ],
+    },
+  ];
+
   return (
+    <>
+      <JsonLd data={schemas as Record<string, unknown>[]} />
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* ページヘッダー */}
       <div className="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-zinc-950 dark:to-zinc-900 border-b border-slate-100 dark:border-zinc-800">
@@ -92,5 +128,6 @@ export function ToolLayout({
         )}
       </div>
     </div>
+    </>
   );
 }

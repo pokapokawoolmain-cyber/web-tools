@@ -16,6 +16,7 @@ export default function ShortLinkPage() {
       title="URL短縮 & QR生成"
       description="長いURLをコンパクトに整形。QRコードも同時生成します。"
       icon="🔗"
+      slug="short-link"
     >
       <ShortLink />
     </ToolLayout>

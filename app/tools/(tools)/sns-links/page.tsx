@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { generateToolMeta } from "@/lib/seo";
 import { SnsLinks } from "./SnsLinks";
 
@@ -10,5 +11,10 @@ export const metadata: Metadata = generateToolMeta(
 );
 
 export default function Page() {
-  return <SnsLinks />;
+  return (
+    <>
+      <ToolJsonLd slug="sns-links" title="SNSリンクまとめ" description="複数のSNSリンクをまとめた共有ページを即生成。" />
+      <SnsLinks />
+    </>
+  );
 }

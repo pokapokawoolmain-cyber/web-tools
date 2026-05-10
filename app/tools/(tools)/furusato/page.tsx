@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { generateToolMeta } from "@/lib/seo";
 import { Furusato } from "./Furusato";
 
@@ -10,5 +11,10 @@ export const metadata: Metadata = generateToolMeta(
 );
 
 export default function Page() {
-  return <Furusato />;
+  return (
+    <>
+      <ToolJsonLd slug="furusato" title="ふるさと納税（詳細版）" description="年収・扶養人数・配偶者の有無を入力して控除上限額を精密計算。" />
+      <Furusato />
+    </>
+  );
 }

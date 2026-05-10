@@ -43,6 +43,7 @@ export default function FireSimulatorPage() {
       title="FIREシミュレーター"
       description="現在の資産・積立額・生活費を入力するだけ。FIRE達成年数と必要資産額を即計算します。"
       icon="🔥"
+      slug="fire-simulator"
       seoContent={seoContent}
     >
       <FireSimulator />

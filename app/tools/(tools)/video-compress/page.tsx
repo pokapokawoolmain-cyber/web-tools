@@ -30,6 +30,7 @@ export default function VideoCompressPage() {
       title="動画圧縮ツール"
       description="MP4・MOV・MKVなどの動画をブラウザで完結圧縮。ファイルはサーバーに送信されません。"
       icon="🎬"
+      slug="video-compress"
       seoContent={seoContent}
     >
       <VideoCompressor />

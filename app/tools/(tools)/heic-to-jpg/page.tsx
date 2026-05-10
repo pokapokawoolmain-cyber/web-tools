@@ -16,6 +16,7 @@ export default function HeicToJpgPage() {
       title="HEIC → JPG 変換"
       description="iPhoneの写真（HEIC形式）をJPGに変換。ブラウザ完結・サーバー送信なし・無料。"
       icon="🖼️"
+      slug="heic-to-jpg"
     >
       <HeicConverter />
     </ToolLayout>
