@@ -57,13 +57,13 @@ export default function HomePage() {
             {/* CTA */}
             <div className="flex flex-wrap gap-3 justify-center">
               <Link
-                href="/fire-simulator"
+                href="/tools/fire-simulator"
                 className="btn-primary text-sm sm:text-base"
               >
                 🔥 FIREシミュレーター
               </Link>
               <Link
-                href="/nisa-calculator"
+                href="/tools/nisa-calculator"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-slate-700 dark:text-slate-300 font-medium text-sm sm:text-base hover:bg-slate-50 dark:hover:bg-zinc-800 transition-all"
               >
                 📈 NISA計算
