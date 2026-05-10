@@ -3,10 +3,18 @@
 // ========================================
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { Tool } from "@/types";
-
 type ToolCardProps = {
-  tool: Tool;
+  tool: {
+    id: string;
+    title: string;
+    description: string;
+    href: string;
+    icon: string;
+    category: string;
+    isNew?: boolean;
+    isPopular?: boolean;
+    keywords?: string[];
+  };
 };
 
 export function ToolCard({ tool }: ToolCardProps) {

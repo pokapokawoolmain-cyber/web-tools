@@ -4,7 +4,7 @@
 // ========================================
 import type { Metadata } from "next";
 import { getSiteUrl } from "./utils";
-import { getToolById } from "./tools-data";
+import { getToolById } from "@/data/tools";
 
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME ?? "ToolBox";
 const siteUrl = getSiteUrl();
@@ -74,7 +74,7 @@ export function generateToolMeta(
   keywords: string[] = []
 ): Metadata {
   const tool = getToolById(slug);
-  const icon = tool?.icon ?? "🧰";
+  const icon = tool?.emoji ?? "🧰";
   const ogImage = `/api/og?${new URLSearchParams({ title: toolName, icon, desc: description }).toString()}`;
 
   return generateMeta({

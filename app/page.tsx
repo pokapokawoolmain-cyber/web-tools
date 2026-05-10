@@ -4,7 +4,7 @@
 // ========================================
 import type { Metadata } from "next";
 import Link from "next/link";
-import { tools, categoryLabels, getToolsByCategory } from "@/lib/tools-data";
+import { TOOLS, getToolsByCategory, getPopularTools } from "@/data/tools";
 import { ToolCard } from "@/components/tools/ToolCard";
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const toolsByCategory = getToolsByCategory();
-  const popularTools = tools.filter((t) => t.isPopular);
+  const popularTools = getPopularTools();
 
   return (
     <>
@@ -72,7 +72,7 @@ export default function HomePage() {
 
             {/* 統計バッジ */}
             <p className="mt-8 text-sm text-slate-400 dark:text-slate-500">
-              全{tools.length}ツール　·　無料　·　登録不要　·　スマホ対応
+              全{TOOLS.length}ツール　·　無料　·　登録不要　·　スマホ対応
             </p>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function HomePage() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {popularTools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
+              <ToolCard key={tool.id} tool={{ ...tool, icon: tool.emoji, keywords: [] }} />
             ))}
           </div>
         </div>
@@ -97,17 +97,12 @@ export default function HomePage() {
 
       {/* カテゴリ別ツール一覧 */}
       {Object.entries(toolsByCategory).map(([category, categoryTools]) => (
-        <section
-          key={category}
-          className="py-12 border-t border-slate-100 dark:border-zinc-800"
-        >
+        <section key={category} className="py-12 border-t border-slate-100 dark:border-zinc-800">
           <div className="container-base">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">
-              {categoryLabels[category as keyof typeof categoryLabels] ?? category}
-            </h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">{category}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {categoryTools.map((tool) => (
-                <ToolCard key={tool.id} tool={tool} />
+                <ToolCard key={tool.id} tool={{ ...tool, icon: tool.emoji, keywords: [] }} />
               ))}
             </div>
           </div>
@@ -121,15 +116,10 @@ export default function HomePage() {
             ToolBoxについて
           </h2>
           <div className="prose prose-slate dark:prose-invert text-sm leading-relaxed text-slate-600 dark:text-slate-400 space-y-3">
-            <p>
-              ToolBoxは、日常で「ちょっと計算したい」「ファイルを変換したい」という場面で役立つ、無料のWebツールを集めたサービスです。
-            </p>
-            <p>
-              FIREシミュレーターやNISA積立計算など投資・お金のツール、メルカリの利益計算・副業収入の税金計算など副業サポートツール、HEIC→JPG変換や画像圧縮などファイル変換ツールを提供しています。
-            </p>
-            <p>
-              すべてのツールはブラウザ完結で動作するため、ファイルがサーバーにアップロードされることはなく、プライバシーも安心です。
-            </p>
+            <p>ToolBoxは、「すぐ使える」「シンプルで迷わない」「ブラウザだけで完結する」無料ツールを集めたWebサービスです。</p>
+            <p>投資・お金・画像変換・PDF・SNS・文章作成など、日常や仕事で役立つ便利ツールを、スマホでも快適に使えるよう設計しています。</p>
+            <p>すべてのツールは高速・軽量を重視し、可能な限りブラウザ内で処理されるため、ファイルがサーバーへアップロードされない安全設計です。</p>
+            <p>ToolBoxは今後も、「静かに便利」をコンセプトに、高品質なWebツールを追加していきます。</p>
           </div>
         </div>
       </section>
