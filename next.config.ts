@@ -12,6 +12,24 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  // 旧URLから新URLへの301リダイレクト
+  async redirects() {
+    const toolIds = [
+      "fire-simulator", "nisa-calculator", "mortgage-calculator", "net-income",
+      "furusato-simulator", "furusato", "mercari-profit", "gas-calculator",
+      "shift-salary", "point-simulator", "heic-to-jpg", "image-compress",
+      "video-compress", "image-resize", "id-photo", "side-job-profit",
+      "youtube-tools", "sns-links", "word-counter", "markdown-editor",
+      "password-generator", "qr-generator", "wifi-qr", "gpa",
+      "resume-builder", "short-link",
+    ];
+    return toolIds.map((id) => ({
+      source: `/${id}`,
+      destination: `/tools/${id}`,
+      permanent: true,
+    }));
+  },
+
   // ヘッダー設定（SEO・セキュリティ）
   async headers() {
     return [

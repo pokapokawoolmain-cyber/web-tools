@@ -80,7 +80,7 @@ export function generateToolMeta(
   return generateMeta({
     title: `${toolName}【無料・登録不要】`,
     description: `${description} 無料・登録不要・スマホ対応。`,
-    path: `/${slug}`,
+    path: `/tools/${slug}`,
     keywords: [toolName, "無料ツール", "オンライン", ...keywords],
     ogImage,
   });
