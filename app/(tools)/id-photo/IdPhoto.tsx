@@ -3,66 +3,74 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Upload, Download, Printer, RotateCcw, Wand2, Check, Loader2 } from "lucide-react";
 import { RelatedTools } from "@/components/tools/RelatedTools";
 
-// Photo size presets (mm) — will render at 300dpi on canvas
 type SizePreset = { id: string; label: string; w: number; h: number; desc: string };
 const SIZES: SizePreset[] = [
-  { id: "resume", label: "履歴書", w: 30, h: 40, desc: "30×40mm" },
-  { id: "mynumber", label: "マイナンバー", w: 35, h: 45, desc: "35×45mm" },
-  { id: "passport", label: "パスポート", w: 35, h: 45, desc: "35×45mm" },
-  { id: "license", label: "運転免許", w: 24, h: 30, desc: "24×30mm" },
-  { id: "exam", label: "受験用", w: 30, h: 40, desc: "30×40mm" },
+  { id: "resume",   label: "履歴書",       w: 30, h: 40, desc: "30×40mm" },
+  { id: "mynumber", label: "マイナンバー",  w: 35, h: 45, desc: "35×45mm" },
+  { id: "passport", label: "パスポート",    w: 35, h: 45, desc: "35×45mm" },
+  { id: "license",  label: "運転免許",      w: 24, h: 30, desc: "24×30mm" },
+  { id: "exam",     label: "受験用",        w: 30, h: 40, desc: "30×40mm" },
 ];
 
 const BG_COLORS = [
-  { label: "白", value: "#ffffff" },
+  { label: "白",         value: "#ffffff" },
   { label: "ライトグレー", value: "#e8ecf0" },
-  { label: "ブルー", value: "#a8c4e0" },
+  { label: "ブルー",     value: "#a8c4e0" },
 ];
 
-// mm to px at 300dpi
 const mmToPx = (mm: number) => Math.round((mm / 25.4) * 300);
 
 export function IdPhoto() {
-  const [imgSrc, setImgSrc] = useState<string | null>(null);
-  const [selectedSize, setSelectedSize] = useState<SizePreset>(SIZES[0]);
-  const [bgColor, setBgColor] = useState("#ffffff");
-  const [scale, setScale] = useState(1);
-  const [offsetX, setOffsetX] = useState(0);
-  const [offsetY, setOffsetY] = useState(0);
-  const [isDrag, setIsDrag] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [mode, setMode] = useState<"edit" | "preview" | "print">("edit");
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [printUrl, setPrintUrl] = useState<string | null>(null);
+  const [imgSrc, setImgSrc]               = useState<string | null>(null);
+  const [selectedSize, setSelectedSize]   = useState<SizePreset>(SIZES[0]);
+  const [bgColor, setBgColor]             = useState("#ffffff");
+  const [scale, setScale]                 = useState(1);
+  const [fillScale, setFillScale]         = useState(1);   // scale at which image fills editor
+  const [offsetX, setOffsetX]             = useState(0);
+  const [offsetY, setOffsetY]             = useState(0);
+  const [isDrag, setIsDrag]               = useState(false);
+  const [isDragging, setIsDragging]       = useState(false);
+  const [dragStart, setDragStart]         = useState({ x: 0, y: 0 });
+  const [mode, setMode]                   = useState<"edit" | "preview" | "print">("edit");
+  const [previewUrl, setPreviewUrl]       = useState<string | null>(null);
+  const [printUrl, setPrintUrl]           = useState<string | null>(null);
+  const [processedSrc, setProcessedSrc]   = useState<string | null>(null);
+  const [isRemovingBg, setIsRemovingBg]   = useState(false);
+  const [bgRemoved, setBgRemoved]         = useState(false);
 
-  const [processedSrc, setProcessedSrc] = useState<string | null>(null);
-  const [isRemovingBg, setIsRemovingBg] = useState(false);
-  const [bgRemoved, setBgRemoved] = useState(false);
-
-  // Use processed (transparent) image if available
   const activeSrc = processedSrc ?? imgSrc;
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const editorRef = useRef<HTMLDivElement>(null);
+  const fileInputRef  = useRef<HTMLInputElement>(null);
+  const editorRef     = useRef<HTMLDivElement>(null);
+  const fillScaleRef  = useRef(fillScale);
+  const scaleRef      = useRef(scale);
+  useEffect(() => { fillScaleRef.current = fillScale; }, [fillScale]);
+  useEffect(() => { scaleRef.current = scale; }, [scale]);
 
-  const EDITOR_W = 240; // px, display size of editor
+  const EDITOR_W = 240;
   const EDITOR_H = Math.round(EDITOR_W * (selectedSize.h / selectedSize.w));
 
+  // ── image load ────────────────────────────────────────────────────────────
   const loadImage = useCallback((file: File) => {
     if (!file.type.startsWith("image/")) return;
     const url = URL.createObjectURL(file);
-    setImgSrc(url);
-    setProcessedSrc(null);
-    setBgRemoved(false);
-    setScale(1);
-    setOffsetX(0);
-    setOffsetY(0);
-    setMode("edit");
-    setPreviewUrl(null);
-  }, []);
+    const tmp = new Image();
+    tmp.onload = () => {
+      const fs = Math.max(EDITOR_W / tmp.naturalWidth, EDITOR_H / tmp.naturalHeight);
+      setFillScale(fs);
+      setScale(fs);
+      setImgSrc(url);
+      setProcessedSrc(null);
+      setBgRemoved(false);
+      setOffsetX(0);
+      setOffsetY(0);
+      setMode("edit");
+      setPreviewUrl(null);
+    };
+    tmp.src = url;
+  }, [EDITOR_W, EDITOR_H]);
 
-  // Drag events for repositioning
+  // ── mouse drag ────────────────────────────────────────────────────────────
   const onMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setDragStart({ x: e.clientX - offsetX, y: e.clientY - offsetY });
@@ -83,20 +91,36 @@ export function IdPhoto() {
     };
   }, [onMouseMove, onMouseUp]);
 
-  // Touch events
-  const onTouchStart = (e: React.TouchEvent) => {
+  // ── touch drag (touchAction:none on editor prevents page scroll) ──────────
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
     const t = e.touches[0];
     setIsDragging(true);
     setDragStart({ x: t.clientX - offsetX, y: t.clientY - offsetY });
-  };
-  const onTouchMove = (e: React.TouchEvent) => {
+  }, [offsetX, offsetY]);
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
     if (!isDragging) return;
     const t = e.touches[0];
     setOffsetX(t.clientX - dragStart.x);
     setOffsetY(t.clientY - dragStart.y);
-  };
+  }, [isDragging, dragStart]);
 
-  // BFS flood-fill background removal from image edges
+  // ── wheel zoom (non-passive to prevent page scroll) ───────────────────────
+  useEffect(() => {
+    const el = editorRef.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      const dir = e.deltaY > 0 ? -1 : 1;
+      setScale(s => {
+        const fs = fillScaleRef.current;
+        return Math.min(fs * 3, Math.max(fs * 0.5, s + dir * fs * 0.06));
+      });
+    };
+    el.addEventListener("wheel", handler, { passive: false });
+    return () => el.removeEventListener("wheel", handler);
+  }, []);
+
+  // ── background removal (BFS flood-fill) ───────────────────────────────────
   const handleRemoveBg = useCallback(async () => {
     if (!imgSrc) return;
     setIsRemovingBg(true);
@@ -110,31 +134,37 @@ export function IdPhoto() {
           const h = Math.round(img.height * ratio);
 
           const canvas = document.createElement("canvas");
-          canvas.width = w;
-          canvas.height = h;
+          canvas.width = w; canvas.height = h;
           const ctx = canvas.getContext("2d")!;
           ctx.drawImage(img, 0, 0, w, h);
 
           const imageData = ctx.getImageData(0, 0, w, h);
           const d = imageData.data;
 
-          // Sample background color from 8 edge points
-          const samples: [number, number][] = [
-            [0, 0], [w - 1, 0], [0, h - 1], [w - 1, h - 1],
-            [w >> 1, 0], [0, h >> 1], [w - 1, h >> 1], [w >> 1, h - 1],
-          ];
-          let sr = 0, sg = 0, sb = 0;
-          for (const [x, y] of samples) {
-            const i = (y * w + x) * 4;
-            sr += d[i]; sg += d[i + 1]; sb += d[i + 2];
+          // Collect all border pixels for robust BG color detection
+          const border: [number, number, number][] = [];
+          for (let x = 0; x < w; x++) {
+            const ti = x * 4, bi = ((h - 1) * w + x) * 4;
+            border.push([d[ti], d[ti + 1], d[ti + 2]]);
+            border.push([d[bi], d[bi + 1], d[bi + 2]]);
           }
-          sr = Math.round(sr / samples.length);
-          sg = Math.round(sg / samples.length);
-          sb = Math.round(sb / samples.length);
+          for (let y = 1; y < h - 1; y++) {
+            const li = y * w * 4, ri = (y * w + w - 1) * 4;
+            border.push([d[li], d[li + 1], d[li + 2]]);
+            border.push([d[ri], d[ri + 1], d[ri + 2]]);
+          }
+          // Sort by luminance, use trimmed mean (middle 60%) to exclude hair/clothing
+          border.sort((a, b) => (a[0] + a[1] + a[2]) - (b[0] + b[1] + b[2]));
+          const s0 = Math.floor(border.length * 0.2);
+          const s1 = Math.floor(border.length * 0.8);
+          let sr = 0, sg = 0, sb = 0;
+          for (let i = s0; i < s1; i++) { sr += border[i][0]; sg += border[i][1]; sb += border[i][2]; }
+          const cnt = s1 - s0;
+          sr = Math.round(sr / cnt); sg = Math.round(sg / cnt); sb = Math.round(sb / cnt);
 
-          const TOLERANCE = 40;
-          const dist = (i: number) => {
-            const dr = d[i] - sr, dg = d[i + 1] - sg, db = d[i + 2] - sb;
+          const TOLERANCE = 50;
+          const dist = (pi: number) => {
+            const dr = d[pi] - sr, dg = d[pi + 1] - sg, db = d[pi + 2] - sb;
             return Math.sqrt(dr * dr + dg * dg + db * db);
           };
 
@@ -146,20 +176,19 @@ export function IdPhoto() {
             if (!visited[idx]) { visited[idx] = 1; queue.push(idx); }
           };
           for (let x = 0; x < w; x++) { seed(x, 0); seed(x, h - 1); }
-          for (let y = 0; y < h; y++) { seed(0, y); seed(w - 1, y); }
+          for (let y = 1; y < h - 1; y++) { seed(0, y); seed(w - 1, y); }
 
           let qi = 0;
           while (qi < queue.length) {
             const idx = queue[qi++];
             const pi = idx * 4;
-            if (dist(pi) > TOLERANCE) continue;
-            // Smooth edge: partial alpha based on distance
-            const fade = Math.min(dist(pi) / TOLERANCE, 1);
-            d[pi + 3] = Math.round(fade * fade * 255);
+            const dv = dist(pi);
+            if (dv > TOLERANCE) continue;
+            // Smooth edge: transparent at 0 dist, increasingly opaque toward tolerance
+            d[pi + 3] = Math.round((dv / TOLERANCE) ** 1.5 * 255);
 
             const x = idx % w, y = (idx / w) | 0;
-            const dirs: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
-            for (const [dx, dy] of dirs) {
+            for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]] as [number, number][]) {
               const nx = x + dx, ny = y + dy;
               if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
               const ni = ny * w + nx;
@@ -169,6 +198,12 @@ export function IdPhoto() {
 
           ctx.putImageData(imageData, 0, 0);
           const url = canvas.toDataURL("image/png");
+
+          // Recalculate fill scale for processed image dimensions, preserving zoom ratio
+          const newFill = Math.max(EDITOR_W / w, EDITOR_H / h);
+          const zoomRatio = scaleRef.current / fillScaleRef.current;
+          setFillScale(newFill);
+          setScale(newFill * zoomRatio);
           setProcessedSrc(url);
           setBgRemoved(true);
           resolve();
@@ -181,25 +216,24 @@ export function IdPhoto() {
     } finally {
       setIsRemovingBg(false);
     }
-  }, [imgSrc]);
+  }, [imgSrc, EDITOR_W, EDITOR_H]);
 
-  // Render single photo to canvas
+  // ── canvas render ─────────────────────────────────────────────────────────
   const renderPhoto = useCallback((): Promise<string> => {
     return new Promise((resolve, reject) => {
       if (!activeSrc) { reject("no image"); return; }
       const pw = mmToPx(selectedSize.w);
       const ph = mmToPx(selectedSize.h);
       const canvas = document.createElement("canvas");
-      canvas.width = pw;
-      canvas.height = ph;
+      canvas.width = pw; canvas.height = ph;
       const ctx = canvas.getContext("2d")!;
-
-      // Background
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, pw, ph);
 
       const img = new Image();
       img.onload = () => {
+        // fillScale maps img.width → EDITOR_W, so img.width*fillScale = EDITOR_W
+        // scale is relative to fillScale (1x fill = fillScale)
         const scaleRatio = pw / EDITOR_W;
         const drawW = img.width * scale * scaleRatio;
         const drawH = img.height * scale * scaleRatio;
@@ -214,40 +248,26 @@ export function IdPhoto() {
   }, [activeSrc, selectedSize, bgColor, scale, offsetX, offsetY, EDITOR_W]);
 
   const handleGenerate = async () => {
-    try {
-      const url = await renderPhoto();
-      setPreviewUrl(url);
-      setMode("preview");
-    } catch (e) { console.error(e); }
+    try { setPreviewUrl(await renderPhoto()); setMode("preview"); }
+    catch (e) { console.error(e); }
   };
 
-  // Conveni print: L-size (89x127mm at 300dpi) with 4 photos
   const handlePrint = async () => {
     try {
       const photoUrl = await renderPhoto();
-      const LW = mmToPx(89);
-      const LH = mmToPx(127);
+      const LW = mmToPx(89), LH = mmToPx(127);
       const canvas = document.createElement("canvas");
-      canvas.width = LW;
-      canvas.height = LH;
+      canvas.width = LW; canvas.height = LH;
       const ctx = canvas.getContext("2d")!;
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, LW, LH);
-
       const img = new Image();
       img.onload = () => {
-        const pw = mmToPx(selectedSize.w);
-        const ph = mmToPx(selectedSize.h);
-        const margin = mmToPx(3);
-        const positions = [
-          { x: margin, y: margin },
-          { x: margin + pw + margin, y: margin },
-          { x: margin, y: margin + ph + margin },
-          { x: margin + pw + margin, y: margin + ph + margin },
-        ];
-        for (const pos of positions) {
-          ctx.drawImage(img, pos.x, pos.y, pw, ph);
-        }
+        const pw = mmToPx(selectedSize.w), ph = mmToPx(selectedSize.h), m = mmToPx(3);
+        for (const { x, y } of [
+          { x: m, y: m }, { x: m + pw + m, y: m },
+          { x: m, y: m + ph + m }, { x: m + pw + m, y: m + ph + m },
+        ]) ctx.drawImage(img, x, y, pw, ph);
         setPrintUrl(canvas.toDataURL("image/jpeg", 0.95));
         setMode("print");
       };
@@ -257,21 +277,25 @@ export function IdPhoto() {
 
   const download = (url: string, filename: string) => {
     const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.click();
+    a.href = url; a.download = filename; a.click();
   };
+
+  // Slider range relative to fill scale
+  const minScale  = fillScale * 0.5;
+  const maxScale  = fillScale * 3;
+  const sliderPct = Math.max(0, Math.min(100, ((scale - minScale) / (maxScale - minScale)) * 100));
+  const zoomPct   = Math.round((scale / fillScale) * 100);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-zinc-950">
       <div className="max-w-lg mx-auto px-4 pt-8 pb-24 space-y-6">
-        {/* Title */}
+
         <div className="px-1">
           <h1 className="text-[28px] font-bold text-slate-900 dark:text-white tracking-tight">証明写真作成</h1>
           <p className="text-[15px] text-slate-500 dark:text-zinc-400 mt-1">履歴書・マイナンバー・パスポート対応。ブラウザで完結。</p>
         </div>
 
-        {/* Step 1: Upload */}
+        {/* ── Step 1: Upload ────────────────────────────────────────────── */}
         {!imgSrc ? (
           <section>
             <p className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">写真をアップロード</p>
@@ -289,9 +313,10 @@ export function IdPhoto() {
                 onChange={e => e.target.files?.[0] && loadImage(e.target.files[0])} />
             </div>
           </section>
+
         ) : mode === "edit" ? (
           <>
-            {/* Step 2: Size selection */}
+            {/* ── Step 2: Size ─────────────────────────────────────────── */}
             <section>
               <p className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">サイズを選択</p>
               <div className="bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden divide-y divide-slate-100 dark:divide-zinc-800">
@@ -308,7 +333,7 @@ export function IdPhoto() {
               </div>
             </section>
 
-            {/* Step 3: Background color */}
+            {/* ── Step 3: Background ───────────────────────────────────── */}
             <section>
               <p className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">背景色</p>
               <div className="bg-white dark:bg-zinc-900 rounded-2xl px-5 py-4 space-y-4">
@@ -329,23 +354,31 @@ export function IdPhoto() {
                         <Check className="w-4 h-4" />背景除去済み
                       </span>
                       <button
-                        onClick={() => { setProcessedSrc(null); setBgRemoved(false); }}
+                        onClick={() => {
+                          // Restore original fill scale
+                          if (imgSrc) {
+                            const tmp = new Image();
+                            tmp.onload = () => {
+                              const fs = Math.max(EDITOR_W / tmp.naturalWidth, EDITOR_H / tmp.naturalHeight);
+                              const zr = scaleRef.current / fillScaleRef.current;
+                              setFillScale(fs);
+                              setScale(fs * zr);
+                            };
+                            tmp.src = imgSrc;
+                          }
+                          setProcessedSrc(null); setBgRemoved(false);
+                        }}
                         className="text-[12px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
                       >
                         元の写真に戻す
                       </button>
                     </div>
                   ) : (
-                    <button
-                      onClick={handleRemoveBg}
-                      disabled={isRemovingBg}
-                      className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-[14px] font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors disabled:opacity-50"
-                    >
-                      {isRemovingBg ? (
-                        <><Loader2 className="w-4 h-4 animate-spin" />背景を解析中…</>
-                      ) : (
-                        <><Wand2 className="w-4 h-4" />背景を自動除去して色を変更</>
-                      )}
+                    <button onClick={handleRemoveBg} disabled={isRemovingBg}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-[14px] font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors disabled:opacity-50">
+                      {isRemovingBg
+                        ? <><Loader2 className="w-4 h-4 animate-spin" />背景を解析中…</>
+                        : <><Wand2 className="w-4 h-4" />背景を自動除去して色を変更</>}
                     </button>
                   )}
                   <p className="text-[11px] text-slate-400 dark:text-zinc-600 mt-1.5">
@@ -355,16 +388,15 @@ export function IdPhoto() {
               </div>
             </section>
 
-            {/* Step 4: Editor */}
+            {/* ── Step 4: Editor ───────────────────────────────────────── */}
             <section>
               <p className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">顔の位置を調整</p>
               <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 space-y-4">
-                {/* Crop viewport */}
                 <div className="flex justify-center">
                   <div
                     ref={editorRef}
                     className="relative overflow-hidden rounded-xl border-2 border-blue-400 cursor-grab active:cursor-grabbing select-none"
-                    style={{ width: EDITOR_W, height: EDITOR_H, backgroundColor: bgColor }}
+                    style={{ width: EDITOR_W, height: EDITOR_H, backgroundColor: bgColor, touchAction: "none" }}
                     onMouseDown={onMouseDown}
                     onTouchStart={onTouchStart}
                     onTouchMove={onTouchMove}
@@ -378,14 +410,10 @@ export function IdPhoto() {
                       className="absolute pointer-events-none"
                       style={{
                         transform: `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${scale})`,
-                        top: "50%",
-                        left: "50%",
-                        maxWidth: "none",
-                        width: "auto",
-                        height: "auto",
+                        top: "50%", left: "50%",
+                        maxWidth: "none", width: "auto", height: "auto",
                       }}
                     />
-                    {/* Guide lines */}
                     <div className="absolute inset-0 pointer-events-none">
                       <div className="absolute top-1/3 left-0 right-0 border-t border-white/30" />
                       <div className="absolute top-2/3 left-0 right-0 border-t border-white/30" />
@@ -394,47 +422,49 @@ export function IdPhoto() {
                     </div>
                   </div>
                 </div>
-                <p className="text-[12px] text-slate-400 text-center">ドラッグして顔の位置を調整</p>
+                <p className="text-[12px] text-slate-400 text-center">ドラッグ・スクロールで位置とズームを調整</p>
 
-                {/* Zoom slider */}
+                {/* Zoom slider — range relative to fill scale */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[13px] text-slate-500 dark:text-zinc-400">ズーム</span>
-                    <span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">{Math.round(scale * 100)}%</span>
+                    <span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">{zoomPct}%</span>
                   </div>
-                  <input type="range" min={0.5} max={3} step={0.05} value={scale}
+                  <input type="range"
+                    min={minScale} max={maxScale} step={fillScale * 0.02}
+                    value={scale}
                     onChange={e => setScale(Number(e.target.value))}
-                    className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-slate-200 dark:bg-zinc-700"
-                    style={{ background: `linear-gradient(to right, #3b82f6 ${((scale - 0.5) / 2.5) * 100}%, #e2e8f0 ${((scale - 0.5) / 2.5) * 100}%)` }}
+                    className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
+                    style={{ background: `linear-gradient(to right, #3b82f6 ${sliderPct}%, #e2e8f0 ${sliderPct}%)` }}
                   />
+                  <div className="flex justify-between text-[10px] text-slate-300 dark:text-zinc-600">
+                    <span>縮小</span><span>等倍</span><span>拡大</span>
+                  </div>
                 </div>
               </div>
             </section>
 
-            {/* Reset + Generate buttons */}
             <div className="space-y-3">
               <button onClick={handleGenerate}
                 className="w-full py-[16px] text-[17px] font-semibold text-white bg-blue-500 rounded-2xl active:opacity-80 transition-opacity">
                 証明写真を生成
               </button>
-              <button onClick={() => { setImgSrc(null); setMode("edit"); }}
+              <button onClick={() => { setImgSrc(null); setProcessedSrc(null); setBgRemoved(false); setMode("edit"); }}
                 className="w-full py-[14px] text-[15px] font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 active:opacity-80 transition-opacity flex items-center justify-center gap-2">
                 <RotateCcw className="w-4 h-4" />別の写真を選ぶ
               </button>
             </div>
           </>
+
         ) : mode === "preview" && previewUrl ? (
           <>
             <section>
               <p className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">プレビュー</p>
               <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 flex justify-center" style={{ backgroundColor: "#f0f0f0" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={previewUrl} alt="証明写真プレビュー"
-                  className="rounded shadow-md"
-                  style={{ height: 180 }} />
+                <img src={previewUrl} alt="証明写真プレビュー" className="rounded shadow-md" style={{ height: 180 }} />
               </div>
             </section>
-
             <div className="space-y-3">
               <button onClick={() => download(previewUrl, `id-photo-${selectedSize.id}.jpg`)}
                 className="w-full py-[16px] text-[17px] font-semibold text-white bg-blue-500 rounded-2xl active:opacity-80 transition-opacity flex items-center justify-center gap-2">
@@ -450,21 +480,19 @@ export function IdPhoto() {
               </button>
             </div>
           </>
+
         ) : mode === "print" && printUrl ? (
           <>
             <section>
               <p className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">コンビニ印刷用（L判）</p>
               <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 flex justify-center" style={{ backgroundColor: "#f0f0f0" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={printUrl} alt="L判4枚配置プレビュー"
-                  className="rounded shadow-md"
-                  style={{ maxWidth: "100%", maxHeight: 280 }} />
+                <img src={printUrl} alt="L判4枚配置プレビュー" className="rounded shadow-md" style={{ maxWidth: "100%", maxHeight: 280 }} />
               </div>
               <p className="text-[12px] text-slate-400 text-center mt-2">L判（89×127mm）に4枚配置済み</p>
             </section>
-
             <div className="space-y-3">
-              <button onClick={() => download(printUrl, `id-photo-L-print.jpg`)}
+              <button onClick={() => download(printUrl, "id-photo-L-print.jpg")}
                 className="w-full py-[16px] text-[17px] font-semibold text-white bg-blue-500 rounded-2xl active:opacity-80 transition-opacity flex items-center justify-center gap-2">
                 <Download className="w-5 h-5" />L判データをダウンロード
               </button>
@@ -473,7 +501,6 @@ export function IdPhoto() {
                 戻る
               </button>
             </div>
-
             <div className="bg-amber-50 dark:bg-amber-950/30 rounded-2xl p-4 text-[13px] text-amber-700 dark:text-amber-400">
               <p className="font-medium mb-1">コンビニ印刷の手順</p>
               <ol className="space-y-1 list-decimal list-inside opacity-90">
