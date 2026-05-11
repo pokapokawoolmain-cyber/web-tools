@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
       "youtube-tools", "sns-links", "word-counter", "markdown-editor",
       "password-generator", "qr-generator", "wifi-qr", "gpa",
       "resume-builder", "short-link",
+      "pdf-merge", "pdf-split", "pdf-compress", "jpg-to-pdf", "pdf-to-jpg",
     ];
     return toolIds.map((id) => ({
       source: `/${id}`,

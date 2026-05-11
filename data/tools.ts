@@ -38,6 +38,11 @@ export const TOOLS: ToolItem[] = [
   { id: "video-compress", title: "動画圧縮ツール", description: "MP4・MOV・AVI・MKVなどの動画をブラウザで圧縮。品質・解像度を自由に設定。", href: "/tools/video-compress", emoji: "🎬", category: "画像・PDF", isNew: true },
   { id: "image-resize", title: "画像リサイズ・アスペクト比変換", description: "画像のサイズ変更・比率変換をブラウザで完結。16:9・1:1など主要比率とSNSサイズプリセット対応。", href: "/tools/image-resize", emoji: "✂️", category: "画像・PDF", isNew: true },
   { id: "id-photo", title: "証明写真作成", seoTitle: "証明写真作成ツール｜履歴書・コンビニ印刷対応", description: "履歴書・マイナンバー・パスポート対応。写真をアップロードするだけで証明写真を自動作成。L判4枚配置のコンビニ印刷モード搭載。", href: "/tools/id-photo", emoji: "📸", category: "画像・PDF", isNew: true },
+  { id: "pdf-merge", title: "PDF結合", seoTitle: "PDF結合ツール｜複数PDFを無料でまとめる【登録不要】", description: "複数のPDFファイルをブラウザ上で簡単に結合。ドラッグで順番変更・登録不要・スマホ対応。", href: "/tools/pdf-merge", emoji: "📎", category: "画像・PDF", isNew: true },
+  { id: "pdf-split", title: "PDF分割", seoTitle: "PDF分割ツール｜ページ抽出・分割を無料で実行", description: "PDFをページごとに分割。必要なページだけ抽出して保存できます。登録不要・ブラウザ完結。", href: "/tools/pdf-split", emoji: "✂️", category: "画像・PDF", isNew: true },
+  { id: "pdf-compress", title: "PDF圧縮", seoTitle: "PDF圧縮ツール｜ファイルサイズを無料で軽量化", description: "PDFファイルをブラウザ上で圧縮。メール添付やアップロード向けに軽量化できます。", href: "/tools/pdf-compress", emoji: "🗜️", category: "画像・PDF", isNew: true },
+  { id: "jpg-to-pdf", title: "JPG→PDF変換", seoTitle: "JPGをPDFに変換｜画像をまとめてPDF化【無料】", description: "JPGやPNG画像をまとめてPDFへ変換。ドラッグで順番変更・スマホ・PC両対応。", href: "/tools/jpg-to-pdf", emoji: "🖼️", category: "画像・PDF", isNew: true },
+  { id: "pdf-to-jpg", title: "PDF→JPG変換", seoTitle: "PDFをJPGに変換｜PDFページを画像保存【無料】", description: "PDFページを高画質JPGへ変換。ブラウザ完結・登録不要・ZIPまとめダウンロード対応。", href: "/tools/pdf-to-jpg", emoji: "📄", category: "画像・PDF", isNew: true },
   // 生活・副業
   { id: "side-job-profit", title: "副業利益・税金計算", description: "副業収入から経費・税金を差し引いた実質手取りを計算。確定申告の目安も確認。", href: "/tools/side-job-profit", emoji: "💼", category: "生活・副業" },
   { id: "youtube-tools", title: "YouTube SEOツール", description: "タイトル文字数・ハッシュタグ最適化・サムネ比率確認をまとめてチェック。", href: "/tools/youtube-tools", emoji: "🎥", category: "生活・副業" },

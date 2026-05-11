@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, FileText, BookOpen } from "lucide-react";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 
 export function Header() {
@@ -80,6 +80,18 @@ export function Header() {
                     className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
                     <span className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center text-white text-sm"><Home className="w-4 h-4" /></span>
                     <span className="text-[15px] font-medium text-slate-900 dark:text-white flex-1">ホーム</span>
+                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
+                  </Link>
+                  <Link href="/pdf-tools" onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
+                    <span className="w-8 h-8 rounded-lg bg-rose-500 flex items-center justify-center text-white text-sm"><FileText className="w-4 h-4" /></span>
+                    <span className="text-[15px] font-medium text-slate-900 dark:text-white flex-1">PDFツール</span>
+                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
+                  </Link>
+                  <Link href="/blog" onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
+                    <span className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-white text-sm"><BookOpen className="w-4 h-4" /></span>
+                    <span className="text-[15px] font-medium text-slate-900 dark:text-white flex-1">ブログ</span>
                     <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
                   </Link>
                   <div className="px-4 py-[13px]">
