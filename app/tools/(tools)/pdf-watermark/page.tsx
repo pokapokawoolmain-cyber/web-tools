@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "PDFに文字の透かし（ウォーターマーク）を追加できます。「社外秘」「CONFIDENTIAL」「DRAFT」など全ページ一括対応。登録不要・無料・ブラウザ完結。",
   path: "/tools/pdf-watermark",
   keywords: ["PDF 透かし", "PDF ウォーターマーク", "PDF 文字 入れる", "PDF 透かし 追加", "PDF watermark 無料"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "PDF透かし追加", icon: "🔏", desc: "社外秘・CONFIDENTIAL・DRAFTをPDFに追加。" }).toString()}`,
 });
 
 const faqSchema = {

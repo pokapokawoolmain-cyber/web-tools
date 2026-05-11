@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "複数のPDFファイルをブラウザ上で簡単に結合。ドラッグで順番変更・登録不要・無料・スマホ対応。ファイルはサーバーに送信されません。",
   path: "/tools/pdf-merge",
   keywords: ["PDF結合", "PDF まとめる", "PDF 複数 合体", "PDF結合 無料", "PDF merger"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "PDF結合ツール", icon: "📎", desc: "複数PDFを1つにまとめる。登録不要・無料・スマホ対応。" }).toString()}`,
 });
 
 const faqSchema = {
@@ -19,6 +20,8 @@ const faqSchema = {
     { "@type": "Question", name: "PDF結合は無料ですか？", acceptedAnswer: { "@type": "Answer", text: "完全無料です。登録・インストール不要でブラウザから即利用できます。" } },
     { "@type": "Question", name: "ファイルはサーバーに送信されますか？", acceptedAnswer: { "@type": "Answer", text: "いいえ。処理はすべてブラウザ内で完結します。ファイルが外部サーバーに送信されることは一切ありません。" } },
     { "@type": "Question", name: "スマホでも使えますか？", acceptedAnswer: { "@type": "Answer", text: "はい。iPhone・Androidともに対応しています。" } },
+    { "@type": "Question", name: "PDFの結合順番は変えられますか？", acceptedAnswer: { "@type": "Answer", text: "はい。アップロード後にドラッグ＆ドロップでファイルの順番を自由に並び替えられます。スマホでは上下ボタンで順番を変更できます。" } },
+    { "@type": "Question", name: "何ファイルまで結合できますか？", acceptedAnswer: { "@type": "Answer", text: "ファイル数に上限はありませんが、大きなPDFを多数結合するとブラウザのメモリ上限に達する場合があります。合計ファイルサイズが数百MB以内を目安にご利用ください。" } },
   ],
 };
 

@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "PDFから不要なページを選んで削除できます。複数ページ一括削除・反転選択に対応。登録不要・無料・ブラウザ完結で安全にPDFを編集できます。",
   path: "/tools/pdf-delete-pages",
   keywords: ["PDF ページ 削除", "PDF いらないページ 消す", "PDF 不要ページ 削除", "PDF 編集 ページ削除", "PDF ページ 消去 無料"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "PDFページ削除", icon: "🗑️", desc: "不要なページを選択して削除。登録不要・無料。" }).toString()}`,
 });
 
 const faqSchema = {

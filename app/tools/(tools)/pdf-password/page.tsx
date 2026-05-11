@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "PDFにパスワードを設定して保護できます。AES-256暗号化でブラウザ完結。登録不要・無料・サーバー保存なし。設定したパスワードで解除も可能。",
   path: "/tools/pdf-password",
   keywords: ["PDF パスワード", "PDF 暗号化", "PDF ロック", "PDF 保護", "PDF password 無料"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "PDFパスワード設定", icon: "🔐", desc: "AES-256暗号化でPDFを保護。ブラウザ完結。" }).toString()}`,
 });
 
 const faqSchema = {

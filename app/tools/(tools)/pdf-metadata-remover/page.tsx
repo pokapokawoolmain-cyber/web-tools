@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "PDFに埋め込まれた作成者・作成日・使用ソフト名などのメタデータを削除。共有前のプライバシー保護に。ブラウザ完結・登録不要・無料。",
   path: "/tools/pdf-metadata-remover",
   keywords: ["PDF メタデータ 削除", "PDF 作成者 削除", "PDF 個人情報 削除", "PDF プロパティ 削除", "PDF metadata remover"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "PDFメタデータ削除", icon: "🧹", desc: "作成者・日付・ソフト名を削除。プライバシー保護。" }).toString()}`,
 });
 
 const faqSchema = {

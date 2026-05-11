@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "PDFのページ順をドラッグ操作で並び替えできます。スマホは上下ボタンにも対応。サムネイルで確認しながら並び替え。登録不要・無料・ブラウザ完結。",
   path: "/tools/pdf-reorder",
   keywords: ["PDF 並び替え", "PDF ページ 順番 変更", "PDF 順番 入れ替え", "PDF ページ 入れ替え 無料", "PDF reorder"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "PDF並び替え", icon: "↕️", desc: "ドラッグでページ順を自由に変更。スマホも対応。" }).toString()}`,
 });
 
 const faqSchema = {

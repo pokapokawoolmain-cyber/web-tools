@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "PDFのページを90度・180度・270度に回転できます。全ページ一括・指定ページ個別対応。登録不要・無料・ブラウザ完結でスマホにも対応。",
   path: "/tools/pdf-rotate",
   keywords: ["PDF 回転", "PDF 向き 変更", "PDF 横向き 縦向き", "PDFページ 回転 無料", "PDF rotate 無料"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "PDF回転ツール", icon: "🔄", desc: "ページの向きを90°・180°・270°に変更。" }).toString()}`,
 });
 
 const faqSchema = {
