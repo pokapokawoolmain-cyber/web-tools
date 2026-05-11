@@ -56,6 +56,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  manifest: "/manifest.json",
   verification: {
     google: "QYjtugi8BFF5kEzdJoVN74hleLT6GGpBFq0kT7g4jOw",
   },
