@@ -41,15 +41,15 @@ export function PdfSplit() {
     if (!f.name.toLowerCase().endsWith(".pdf") && f.type !== "application/pdf") {
       setError("PDFファイルを選択してください"); return;
     }
-    setError(null); setDone(false); setPageInput("");
-    setFile(f);
+    setError(null); setDone(false); setPageInput(""); setFile(null); setPageCount(0);
     try {
       const { PDFDocument } = await import("pdf-lib");
       const bytes = await f.arrayBuffer();
       const doc = await PDFDocument.load(bytes);
+      setFile(f);
       setPageCount(doc.getPageCount());
     } catch {
-      setError("PDFの読み込みに失敗しました");
+      setError("PDFの読み込みに失敗しました。ファイルが破損していないか確認してください。");
     }
   }, []);
 
@@ -60,7 +60,7 @@ export function PdfSplit() {
   }, [loadFile]);
 
   const split = async () => {
-    if (!file) return;
+    if (!file || pageCount === 0) return;
     setSplitting(true); setError(null);
     try {
       const { PDFDocument } = await import("pdf-lib");

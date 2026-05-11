@@ -129,7 +129,7 @@ export function JpgToPdf() {
           className={`relative rounded-3xl border-2 border-dashed transition-all cursor-pointer p-10 text-center mb-6
             ${dragOver ? "border-green-400 bg-green-50 dark:bg-green-950/20" : "border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-900 hover:border-green-300 hover:bg-green-50/50 dark:hover:bg-green-950/10"}`}
         >
-          <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => e.target.files && addFiles(e.target.files)} />
+          <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => { if (e.target.files) { addFiles(e.target.files); e.target.value = ""; } }} />
           <Upload className="w-8 h-8 text-slate-300 dark:text-zinc-600 mx-auto mb-3" />
           <p className="text-[15px] font-medium text-slate-600 dark:text-slate-300">画像をドロップ、またはタップして選択</p>
           <p className="text-[13px] text-slate-400 dark:text-zinc-500 mt-1">JPG・PNG・HEIC対応 · 複数選択可</p>
