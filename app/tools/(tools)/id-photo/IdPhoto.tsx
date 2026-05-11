@@ -252,22 +252,92 @@ export function IdPhoto() {
     catch (e) { console.error(e); }
   };
 
+  // Compute optimal grid layout (derived from selectedSize — no extra state needed)
+  const PRINT_GAP_MM = 2;
+  const lPrintCols = Math.max(1, Math.floor((89 + PRINT_GAP_MM) / (selectedSize.w + PRINT_GAP_MM)));
+  const lPrintRows = Math.max(1, Math.floor((127 + PRINT_GAP_MM) / (selectedSize.h + PRINT_GAP_MM)));
+  const lPrintCount = lPrintCols * lPrintRows;
+
   const handlePrint = async () => {
     try {
       const photoUrl = await renderPhoto();
       const LW = mmToPx(89), LH = mmToPx(127);
+      const GAP = mmToPx(PRINT_GAP_MM);
+
+      const pw = mmToPx(selectedSize.w), ph = mmToPx(selectedSize.h);
+      const cols = lPrintCols, rows = lPrintRows;
+      const gridW = cols * pw + (cols - 1) * GAP;
+      const gridH = rows * ph + (rows - 1) * GAP;
+
+      // Center the grid on the L-size paper
+      const ox = Math.round((LW - gridW) / 2);
+      const oy = Math.round((LH - gridH) / 2);
+
       const canvas = document.createElement("canvas");
       canvas.width = LW; canvas.height = LH;
       const ctx = canvas.getContext("2d")!;
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, LW, LH);
+
       const img = new Image();
       img.onload = () => {
-        const pw = mmToPx(selectedSize.w), ph = mmToPx(selectedSize.h), m = mmToPx(3);
-        for (const { x, y } of [
-          { x: m, y: m }, { x: m + pw + m, y: m },
-          { x: m, y: m + ph + m }, { x: m + pw + m, y: m + ph + m },
-        ]) ctx.drawImage(img, x, y, pw, ph);
+        // Draw photos in grid
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            ctx.drawImage(img,
+              ox + c * (pw + GAP),
+              oy + r * (ph + GAP),
+              pw, ph
+            );
+          }
+        }
+
+        // Draw cut guide lines — only in margin/gap areas, never over photos
+        ctx.strokeStyle = "#c0c0c0";
+        ctx.lineWidth = 2;
+
+        // Horizontal guide line at given y: draws in outer margins + column gaps
+        const drawHLine = (y: number) => {
+          ctx.beginPath();
+          if (ox > 0) { ctx.moveTo(0, y); ctx.lineTo(ox, y); }
+          for (let c = 1; c < cols; c++) {
+            const x1 = ox + (c - 1) * (pw + GAP) + pw;
+            const x2 = ox + c * (pw + GAP);
+            ctx.moveTo(x1, y); ctx.lineTo(x2, y);
+          }
+          if (ox + gridW < LW) { ctx.moveTo(ox + gridW, y); ctx.lineTo(LW, y); }
+          ctx.stroke();
+        };
+
+        // Vertical guide line at given x: draws in outer margins + row gaps
+        const drawVLine = (x: number) => {
+          ctx.beginPath();
+          if (oy > 0) { ctx.moveTo(x, 0); ctx.lineTo(x, oy); }
+          for (let r = 1; r < rows; r++) {
+            const y1 = oy + (r - 1) * (ph + GAP) + ph;
+            const y2 = oy + r * (ph + GAP);
+            ctx.moveTo(x, y1); ctx.lineTo(x, y2);
+          }
+          if (oy + gridH < LH) { ctx.moveTo(x, oy + gridH); ctx.lineTo(x, LH); }
+          ctx.stroke();
+        };
+
+        // Top and bottom horizontal cut lines
+        drawHLine(oy);
+        drawHLine(oy + gridH);
+        // Between-row cut lines (center of each row gap)
+        for (let r = 1; r < rows; r++) {
+          drawHLine(oy + r * (ph + GAP) - Math.round(GAP / 2));
+        }
+
+        // Left and right vertical cut lines
+        drawVLine(ox);
+        drawVLine(ox + gridW);
+        // Between-column cut lines (center of each column gap)
+        for (let c = 1; c < cols; c++) {
+          drawVLine(ox + c * (pw + GAP) - Math.round(GAP / 2));
+        }
+
         setPrintUrl(canvas.toDataURL("image/jpeg", 0.95));
         setMode("print");
       };
@@ -472,7 +542,7 @@ export function IdPhoto() {
               </button>
               <button onClick={handlePrint}
                 className="w-full py-[14px] text-[15px] font-semibold text-blue-500 bg-blue-50 dark:bg-blue-950/30 rounded-2xl active:opacity-80 transition-opacity flex items-center justify-center gap-2">
-                <Printer className="w-4 h-4" />コンビニ印刷用（L判4枚）を生成
+                <Printer className="w-4 h-4" />コンビニ印刷用（L判{lPrintCount}枚）を生成
               </button>
               <button onClick={() => setMode("edit")}
                 className="w-full py-[14px] text-[15px] font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 active:opacity-80 transition-opacity">
@@ -489,7 +559,7 @@ export function IdPhoto() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={printUrl} alt="L判4枚配置プレビュー" className="rounded shadow-md" style={{ maxWidth: "100%", maxHeight: 280 }} />
               </div>
-              <p className="text-[12px] text-slate-400 text-center mt-2">L判（89×127mm）に4枚配置済み</p>
+              <p className="text-[12px] text-slate-400 text-center mt-2">L判（89×127mm）に{lPrintCount}枚配置済み・カットガイド線入り</p>
             </section>
             <div className="space-y-3">
               <button onClick={() => download(printUrl, "id-photo-L-print.jpg")}
