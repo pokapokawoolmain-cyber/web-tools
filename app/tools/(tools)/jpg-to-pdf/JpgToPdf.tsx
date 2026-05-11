@@ -158,6 +158,7 @@ export function JpgToPdf() {
                 className="flex items-center gap-3 bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 rounded-2xl px-4 py-3 cursor-grab"
               >
                 <GripVertical className="w-4 h-4 text-slate-300 dark:text-zinc-600 shrink-0" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={f.preview} alt={f.name} className="w-10 h-10 object-cover rounded-lg shrink-0" />
                 <span className="flex-1 text-[14px] text-slate-700 dark:text-slate-300 truncate">{f.name}</span>
                 <button onClick={(e) => { e.stopPropagation(); removeFile(f.id); }} className="p-1 rounded-lg text-slate-300 hover:text-red-400 transition-colors"><Trash2 className="w-4 h-4" /></button>

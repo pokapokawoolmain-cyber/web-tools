@@ -43,6 +43,12 @@ export const TOOLS: ToolItem[] = [
   { id: "pdf-compress", title: "PDF圧縮", seoTitle: "PDF圧縮ツール｜ファイルサイズを無料で軽量化", description: "PDFファイルをブラウザ上で圧縮。メール添付やアップロード向けに軽量化できます。", href: "/tools/pdf-compress", emoji: "🗜️", category: "画像・PDF", isNew: true },
   { id: "jpg-to-pdf", title: "JPG→PDF変換", seoTitle: "JPGをPDFに変換｜画像をまとめてPDF化【無料】", description: "JPGやPNG画像をまとめてPDFへ変換。ドラッグで順番変更・スマホ・PC両対応。", href: "/tools/jpg-to-pdf", emoji: "🖼️", category: "画像・PDF", isNew: true },
   { id: "pdf-to-jpg", title: "PDF→JPG変換", seoTitle: "PDFをJPGに変換｜PDFページを画像保存【無料】", description: "PDFページを高画質JPGへ変換。ブラウザ完結・登録不要・ZIPまとめダウンロード対応。", href: "/tools/pdf-to-jpg", emoji: "📄", category: "画像・PDF", isNew: true },
+  { id: "pdf-rotate", title: "PDF回転", seoTitle: "PDFページ回転ツール｜横向きを縦に修正【無料】", description: "PDFのページを90°・180°・270°回転。スキャンで横になったPDFを簡単修正。全ページ・指定ページ対応。", href: "/tools/pdf-rotate", emoji: "🔄", category: "画像・PDF", isNew: true },
+  { id: "pdf-watermark", title: "PDF透かし", seoTitle: "PDF透かし（ウォーターマーク）追加ツール【無料】", description: "PDFに「社外秘」「CONFIDENTIAL」「DRAFT」などのテキスト透かしを追加。色・透明度・サイズを自由設定。", href: "/tools/pdf-watermark", emoji: "🔏", category: "画像・PDF", isNew: true },
+  { id: "pdf-delete-pages", title: "PDFページ削除", seoTitle: "PDFページ削除ツール｜不要なページを無料で削除", description: "PDFから不要なページを選んで削除。複数選択・一括削除・反転選択に対応。登録不要・ブラウザ完結。", href: "/tools/pdf-delete-pages", emoji: "🗑️", category: "画像・PDF", isNew: true },
+  { id: "pdf-reorder", title: "PDF並び替え", seoTitle: "PDF並び替えツール｜ページ順番を無料で変更", description: "PDFのページ順をドラッグ操作で並び替え。スマホは上下ボタンにも対応。サムネイルで確認しながら操作。", href: "/tools/pdf-reorder", emoji: "↕️", category: "画像・PDF", isNew: true },
+  { id: "pdf-password", title: "PDFパスワード設定", seoTitle: "PDFパスワード設定ツール｜PDFに無料でロックを追加", description: "PDFにAES-256暗号化でパスワード保護を追加。ブラウザ完結・登録不要・無料。設定したパスワードで解除も可能。", href: "/tools/pdf-password", emoji: "🔐", category: "画像・PDF", isNew: true },
+  { id: "pdf-metadata-remover", title: "PDFメタデータ削除", seoTitle: "PDFメタデータ削除ツール｜作成者・日付を無料で消去", description: "PDFに埋め込まれた作成者・作成日・使用ソフト名などのメタデータを削除。共有前のプライバシー保護に。", href: "/tools/pdf-metadata-remover", emoji: "🧹", category: "画像・PDF", isNew: true },
   // 生活・副業
   { id: "side-job-profit", title: "副業利益・税金計算", description: "副業収入から経費・税金を差し引いた実質手取りを計算。確定申告の目安も確認。", href: "/tools/side-job-profit", emoji: "💼", category: "生活・副業" },
   { id: "youtube-tools", title: "YouTube SEOツール", description: "タイトル文字数・ハッシュタグ最適化・サムネ比率確認をまとめてチェック。", href: "/tools/youtube-tools", emoji: "🎥", category: "生活・副業" },

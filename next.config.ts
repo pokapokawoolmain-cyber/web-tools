@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
       "password-generator", "qr-generator", "wifi-qr", "gpa",
       "resume-builder", "short-link",
       "pdf-merge", "pdf-split", "pdf-compress", "jpg-to-pdf", "pdf-to-jpg",
+      "pdf-rotate", "pdf-watermark", "pdf-delete-pages", "pdf-reorder",
+      "pdf-password", "pdf-metadata-remover",
     ];
     return toolIds.map((id) => ({
       source: `/${id}`,

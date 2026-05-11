@@ -157,6 +157,7 @@ export function PdfToJpg() {
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {previews.map((src, i) => (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img key={i} src={src} alt={`page ${i + 1}`} className="w-full aspect-[3/4] object-cover rounded-xl border border-slate-100 dark:border-zinc-800" />
                   ))}
                   {pageCount > 4 && <div className="aspect-[3/4] rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 flex items-center justify-center text-[13px] text-slate-400">+{pageCount - 4}ページ</div>}

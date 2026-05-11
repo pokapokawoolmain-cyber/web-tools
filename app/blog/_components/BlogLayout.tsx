@@ -36,13 +36,27 @@ export function BlogLayout({ post, children }: Props) {
     ],
   };
 
+  const faqSchema = post.faqs?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.q,
+          acceptedAnswer: { "@type": "Answer", text: faq.a },
+        })),
+      }
+    : null;
+
+  const schemas = [articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
+
   const dateStr = new Date(post.publishedAt).toLocaleDateString("ja-JP", {
     year: "numeric", month: "long", day: "numeric",
   });
 
   return (
     <>
-      <JsonLd data={[articleSchema, breadcrumbSchema] as Record<string, unknown>[]} />
+      <JsonLd data={schemas as Record<string, unknown>[]} />
       <div className="min-h-screen bg-white dark:bg-zinc-950">
         {/* Breadcrumb */}
         <div className="border-b border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900">
