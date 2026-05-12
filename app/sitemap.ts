@@ -20,6 +20,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/furusato-nozei-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mercari-fees-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mortgage-simulation-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // 手取り年収別 3記事（高ボリュームクエリ）
+    { url: `${siteUrl}/blog/takehome-400`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-500`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-600`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
     // PDF活用 8記事
     { url: `${siteUrl}/blog/pdf-merge-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/pdf-compress-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },

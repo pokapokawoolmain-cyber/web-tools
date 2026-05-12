@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import Link from "next/link";
 
 const post = getBlogPost("salary-takehome-table")!;
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["年収 手取り 早見表", "年収500万 手取り", "年収600万 手取り", "年収1000万 手取り", "手取り計算 2024 会社員"],
+  keywords: ["年収500万 手取り", "年収600万 手取り", "年収400万 手取り", "手取り 早見表 年収別", "年収700万 手取り", "年収1000万 手取り", "手取り計算 会社員"],
   type: "article",
 });
 
@@ -23,7 +24,7 @@ export default function Page() {
         この記事では年収300万円〜1,500万円の手取り早見表をまとめ、何にどれだけ引かれているのかの内訳、年収ごとの実質的な負担率、そして手取りを合法的に増やすための方法まで解説します。
       </p>
 
-      <h2>年収別・手取り早見表（2024年版）</h2>
+      <h2>年収別・手取り早見表（最新版）</h2>
       <p>
         以下は給与所得者（会社員・正社員）、独身、東京都在住を前提にした概算です。扶養家族の人数・居住地・加入している健康保険組合によって数万円単位で変わります。
       </p>
@@ -387,12 +388,27 @@ export default function Page() {
 
       <h2>自分の正確な手取りを計算する</h2>
       <p>
-        ここに載せた数字は概算です。扶養家族の人数・加入している健康保険組合・各種控除の状況によって実際の手取りは数万円単位で変わります。自分の条件を入力してより正確な金額を確認したい場合は、手取り計算ツールをお使いください。
+        ここに載せた数字は概算です。扶養家族の人数・加入している健康保険組合・各種控除の状況によって実際の手取りは数万円単位で変わります。自分の年収・家族構成を入力してより正確な金額を確認できます。
       </p>
+
+      <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
+        <strong className="text-blue-800 dark:text-blue-300 block mb-2">手取りを正確に計算する</strong>
+        <p className="text-[14px] text-blue-700 dark:text-blue-400 mb-3">年収・家族構成・各種控除を入力するだけで、あなたの手取り額を自動計算します。</p>
+        <Link href="/tools/net-income" className="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+          手取り計算ツールを使う（無料）→
+        </Link>
+      </div>
+
+      <h2>年収別の詳細解説記事</h2>
+      <ul>
+        <li><Link href="/blog/takehome-400" className="text-blue-600 dark:text-blue-400 hover:underline">年収400万円の手取りはいくら？</Link> — 月26.5万円の生活費シミュレーション</li>
+        <li><Link href="/blog/takehome-500" className="text-blue-600 dark:text-blue-400 hover:underline">年収500万円の手取りはいくら？</Link> — 月32.8万円、日本の平均年収と比較</li>
+        <li><Link href="/blog/takehome-600" className="text-blue-600 dark:text-blue-400 hover:underline">年収600万円の手取りはいくら？</Link> — 月38.5万円、家族持ちのケース別比較</li>
+      </ul>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
-        本記事の数値は2024年時点の税率・社会保険料率に基づく概算です。個人の状況により実際の手取りは異なります。正確な金額は税理士・社会保険労務士にご相談ください。
+        本記事の数値は現行の税率・社会保険料率に基づく概算です。制度改正・個人の状況により実際の手取りは異なります。正確な金額は税理士・社会保険労務士にご相談ください。
       </div>
     </BlogLayout>
   );
