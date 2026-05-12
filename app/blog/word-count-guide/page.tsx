@@ -90,7 +90,7 @@ export default function Page() {
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">関連ツール</strong>
-        URLを短縮して貼り付けたい場合は<Link href="/tools/url-shortener" className="text-blue-600 dark:text-blue-400 hover:underline">URL短縮ツール</Link>も活用できます。
+        URLを短縮して貼り付けたい場合は<Link href="/tools/short-link" className="text-blue-600 dark:text-blue-400 hover:underline">URL短縮ツール</Link>も活用できます。
       </div>
     </BlogLayout>
   );
