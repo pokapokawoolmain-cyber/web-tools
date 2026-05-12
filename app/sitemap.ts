@@ -20,6 +20,45 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/furusato-nozei-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mercari-fees-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mortgage-simulation-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // PDF活用 8記事
+    { url: `${siteUrl}/blog/pdf-merge-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-compress-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-split-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-to-jpg-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/jpg-to-pdf-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-rotate-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-password-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/iphone-pdf-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // PDF応用 3記事
+    { url: `${siteUrl}/blog/pdf-watermark-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-privacy-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-reorder-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // 画像変換 3記事
+    { url: `${siteUrl}/blog/heic-jpg-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/heic-what-is`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/image-compress-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // QR・テキスト 3記事
+    { url: `${siteUrl}/blog/qr-create-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/wifi-qr-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/url-shorten-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // 証明写真 3記事
+    { url: `${siteUrl}/blog/id-photo-convenience`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/id-photo-size-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/id-photo-smartphone`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // 投資・お金 3記事
+    { url: `${siteUrl}/blog/nisa-ideco-compare`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/investment-beginner-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/side-job-tax-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // 生活・計算 3記事
+    { url: `${siteUrl}/blog/shift-salary-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/gas-cost-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/point-return-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // 学生・仕事 2記事
+    { url: `${siteUrl}/blog/gpa-calculation-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/resume-writing-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    // 動画・テキスト 2記事
+    { url: `${siteUrl}/blog/video-compress-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/word-count-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/tools/finance`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
     { url: `${siteUrl}/tools/calculator`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
     { url: `${siteUrl}/tools/image`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
