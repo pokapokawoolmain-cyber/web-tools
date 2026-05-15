@@ -16,7 +16,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「FIREするには何億必要ですか？」という質問、本当によく見かけます。SNSでは「3億あればFIREできる」とか「いや5億は必要」とか、数字が独り歩きしていて、読んでいて混乱することも多い。
       </p>
       <p>
@@ -24,7 +24,7 @@ export default function Page() {
       </p>
 
       <h2>4%ルールとは何か、そもそもの話</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         FIREコミュニティでよく使われる「4%ルール」は、1998年にアメリカのトリニティ大学が発表した研究（通称：トリニティスタディ）が元になっています。
       </p>
       <p>
@@ -34,8 +34,9 @@ export default function Page() {
         ただしこれ、アメリカのデータです。S&P500の過去リターンを前提にしています。日本株や円建て資産で同じ前提が使えるかどうかは、正直わかりません。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収・生活費別のFIRE達成シミュレーション</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         実際に数字を見ていきましょう。以下は、現在の資産500万円・毎月の積立額が手取りの20%という前提で、「何年でFIREできるか」を試算したものです。
       </p>
 
@@ -91,8 +92,9 @@ export default function Page() {
         注意してほしいのは、上の表の「年間生活費」が意外と低く設定されているということ。年収400万円の人が生活費300万円というのは、手取りのほぼ全額を使う計算になります。貯蓄率を上げるには生活費を削るしかなく、それがどこまで現実的かは人によります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>生活費を下げることが最大の近道</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         FIREの計算式をよく見ると、収入を増やすより生活費を減らすほうが2倍の効果があることがわかります。
       </p>
       <p>
@@ -102,6 +104,7 @@ export default function Page() {
         逆に言えば、生活費を下げずに収入だけ増やそうとしても、生活水準も一緒に上がってしまう（ライフスタイルインフレ）と、必要資産額も増えてしまいます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>日本でFIREするときに見落としがちな点</h2>
       <h3>社会保険料の問題</h3>
       <p>
@@ -121,8 +124,9 @@ export default function Page() {
         日本はここ数年、物価が上がっています。年2〜3%のインフレが続くと、20年後の生活費は今より4〜8割高くなる可能性があります。4%ルールがカバーできる範囲ですが、このリスクは意識しておく必要があります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>「完全FIRE」にこだわらなくていい</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         最近は「サイドFIRE」「セミFIRE」という言葉も広まっています。週2〜3日だけ仕事して、残りを自由な時間にするスタイルです。
       </p>
       <p>
@@ -132,6 +136,7 @@ export default function Page() {
         FIREは目的ではなく手段です。「お金の心配をしないで生きたい」という本来の目的のために、どのルートが自分に合っているかを考えるほうが建設的だと思います。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>自分のFIREシミュレーションをやってみる</h2>
       <p>
         ここまで読んで、自分の数字を計算してみたくなった人はぜひFIREシミュレーターを使ってみてください。現在の資産・毎月の積立額・年間生活費・運用利回りを入力すると、FIRE達成年数と必要資産額が即計算できます。

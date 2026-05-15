@@ -17,18 +17,19 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         PDFのページ順を間違えて作ってしまった、スキャンした書類のページが入れ替わっている——ページの並び替えはAcrobatなしでブラウザから無料でできます。
       </p>
 
       <h2>PDFのページ順を変えたい場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>複数枚スキャンした書類のページ順が入れ替わっている</li>
         <li>PDF結合後にページの順序が想定と違っていた</li>
         <li>提出書類の章立て・順番を修正したい</li>
         <li>表紙・目次・本文の順番を整えたい</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDFのページを並び替える手順</h2>
 
       <h3>① PDF並び替えツールにアクセスする</h3>
@@ -54,6 +55,7 @@ export default function Page() {
         並び替えが完了したら「保存」ボタンを押すと、並び替え後のPDFをダウンロードできます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDF並び替えと関連ツールの使い分け</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -80,6 +82,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>効率的なPDF編集の順番</h2>
       <p>
         複数の編集が必要な場合は以下の順番で進めると効率的です。

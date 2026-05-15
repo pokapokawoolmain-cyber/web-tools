@@ -17,18 +17,19 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         iPhoneの写真ファイルを見ると「.heic」という拡張子がついています。これは何か、JPGとどう違うのか、なぜWindowsで開けないのかをわかりやすく解説します。
       </p>
 
       <h2>HEICとは何か</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         HEIC（High Efficiency Image Container）は、Apple が iOS 11（2017年）から採用した画像ファイル形式です。HEIF（High Efficiency Image Format）という規格のコンテナフォーマットで、同等の画質を保ちながらJPGの約半分のファイルサイズで保存できます。
       </p>
       <p>
         Appleがこの形式を採用した主な理由はストレージ節約です。スマートフォンの写真解像度が年々上がる中で、ストレージ容量を圧迫しないようにするためです。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>HEICとJPGの違い</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -58,6 +59,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>HEICが開けない原因と対処法</h2>
 
       <h3>Windowsで開けない場合</h3>
@@ -75,6 +77,7 @@ export default function Page() {
         ECサイトや求人サイト、行政の申請サービスなど、古いシステムでは対応フォーマットがJPG/PNGのみのことがあります。この場合もJPGへの変換で解決できます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>HEICをJPGに変換する方法</h2>
       <p>
         最も手軽な方法は<Link href="/tools/heic-to-jpg">HEIC→JPG変換ツール</Link>を使うことです。ブラウザから操作でき、インストール不要・無料で変換できます。
@@ -83,6 +86,7 @@ export default function Page() {
         複数枚のHEICをまとめてJPGに変換することもできます。変換後に複数の画像を1つのPDFにまとめたい場合は<Link href="/tools/jpg-to-pdf">JPG→PDF変換ツール</Link>も合わせて使えます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>iPhoneでJPG形式で撮影する方法</h2>
       <p>
         「設定」→「カメラ」→「フォーマット」→「互換性優先」を選択すると、以降はJPG形式で保存されます。ただしストレージ消費が増えるため、変換の手間を受け入れてHEICのままにしておく方がストレージ効率は良いです。

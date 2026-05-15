@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         シフト制のアルバイト・パートは毎月の出勤日数が変わるため、月収を正確に把握するのが難しいです。深夜割増・交通費・扶養の壁なども含めて計算方法を解説します。
       </p>
 
@@ -29,6 +29,7 @@ export default function Page() {
         月給 ＝ 時給 × 勤務時間数（通常）＋ 時給 × 1.25 × 深夜時間数
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>深夜割増賃金の計算</h2>
       <p>
         22時〜翌5時の労働は、労働基準法により通常の25%増しの賃金が義務づけられています。
@@ -59,11 +60,12 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>扶養の壁となる年収ライン</h2>
       <p>
         扶養家族として給与所得のある人は、以下の年収ラインを超えると扶養から外れたり、税負担が増えたりします。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>103万円の壁</strong>：超えると所得税が発生する（親の扶養控除・配偶者控除にも影響）</li>
         <li><strong>106万円の壁</strong>：週20時間以上・51人以上企業等の条件に当てはまると社会保険加入が必要</li>
         <li><strong>130万円の壁</strong>：ほとんどの場合、被扶養者として親・配偶者の社会保険から外れる</li>
@@ -73,16 +75,18 @@ export default function Page() {
         103万円・130万円ちょうどで抑えたいなら、年間の勤務時間の管理が重要です。<Link href="/tools/shift-salary">シフト給与計算ツール</Link>で月収の見通しを立てながら調整してみてください。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>手取り額の計算</h2>
       <p>
         総支給から天引きされる主なものは以下です。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>所得税</strong>：給与所得控除後の所得に対して課税</li>
         <li><strong>住民税</strong>：前年の所得をもとに翌年6月〜（年収100万円以下は非課税の場合が多い）</li>
         <li><strong>社会保険料</strong>：一定条件を超えると健康保険・厚生年金が天引き</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>交通費の扱い</h2>
       <p>
         交通費は月15万円まで所得税が非課税です。ただし会社が交通費を支給するかどうかは義務ではなく、勤務先の規定次第です。採用時に確認しておきましょう。

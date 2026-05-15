@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         年収400万円の手取りは<strong>約318万円（月26.5万円）</strong>が目安です。日本の給与所得者の中で最も多い年収帯の一つです。実際に引かれる税金・社会保険料の内訳と、一人暮らしや家族持ちの生活実態を解説します。
       </p>
 
@@ -52,6 +52,7 @@ export default function Page() {
         ※独身・会社員・東京都在住・ボーナス2ヶ月分想定の概算値です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>控除の内訳（年収400万円・独身の場合）</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -82,6 +83,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>月手取り26.5万円で生活できる？</h2>
 
       <h3>一人暮らし（地方都市）の場合</h3>
@@ -99,15 +101,17 @@ export default function Page() {
         共働きで2人の手取りが合計50〜60万円以上になれば、東京でも貯蓄・住宅購入の資金作りがしやすくなります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収400万円から手取りを増やす方法</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>ふるさと納税</strong>：年収400万・独身の場合の寄附上限の目安は約4.2万円。<Link href="/tools/furusato-simulator">ふるさと納税シミュレーター</Link>で上限を確認できます。</li>
         <li><strong>iDeCo</strong>：月2.3万円まで掛金が全額所得控除。年収400万円なら年間3〜4万円の節税効果があります。</li>
         <li><strong>新NISA</strong>：投資利益・配当が非課税。月1万円からでもコツコツ積み立てが可能です。<Link href="/tools/nisa-calculator">NISAシミュレーターで試算する</Link></li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>他の年収との手取り比較</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>年収400万円の手取り：<strong>約318万円（月26.5万円）← このページ</strong></li>
         <li><Link href="/blog/takehome-500">年収500万円の手取り</Link>：約393万円（月32.8万円）— 年収400万より75万円多い</li>
         <li><Link href="/blog/takehome-600">年収600万円の手取り</Link>：約462万円（月38.5万円）— 年収400万より144万円多い</li>

@@ -17,21 +17,22 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         iPhoneで撮影した写真をWindowsパソコンやAndroidスマホに送ったら「開けない」「見られない」——これはHEIC形式の互換性問題です。アプリのインストールなしに、ブラウザから無料で変換できる方法を解説します。
       </p>
 
       <h2>HEICファイルが開けない原因</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         iOS 11以降のiPhoneは写真の保存形式にHEIC（High Efficiency Image Coding）を使っています。容量を約半分に抑えながら高画質を保てる優れた形式ですが、Windows・Androidなど他のOS・ソフトウェアでは対応していない場合があります。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li>古いWindowsの「フォト」アプリでは開けない</li>
         <li>WordやExcelにHEIC画像を貼り付けられない</li>
         <li>Androidスマホに送っても表示されない</li>
         <li>Webサービスの画像アップロードでHEICが弾かれる</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>HEICをJPGに変換する手順</h2>
 
       <h3>① HEIC→JPG変換ツールにアクセスする</h3>
@@ -49,6 +50,7 @@ export default function Page() {
         変換ボタンを押すと処理が始まります。変換が完了したらJPGファイルをダウンロードしてください。複数ファイルの場合はZIPでまとめてダウンロードできます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>変換前に知っておきたいこと</h2>
 
       <h3>画質はどうなる？</h3>
@@ -61,8 +63,9 @@ export default function Page() {
         複数のHEICファイルを同時にアップロードして一括変換できます。旅行写真をまとめてWindows用に変換したい場合などに便利です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>変換後の活用方法</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>Windowsで開く</strong>：JPGはどのビューアーでも表示できます</li>
         <li><strong>Wordに貼り付け</strong>：Office製品でそのまま使用可能</li>
         <li><strong>SNSに投稿</strong>：Instagram・X（Twitter）へのアップロードが可能</li>
@@ -70,6 +73,7 @@ export default function Page() {
         <li><strong>ファイルサイズをさらに小さく</strong>：<Link href="/tools/image-compress">画像圧縮ツール</Link>でWebアップロード用に軽量化</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>iPhoneの写真をJPGで撮影する設定</h2>
       <p>
         変換の手間を省きたい場合は、iPhoneのカメラ設定を変更してJPGで撮影することもできます。

@@ -1,9 +1,5 @@
 "use client";
-// ========================================
-// スライダー入力コンポーネント
-// スライダー + 直接入力テキストボックスのコンボ
-// ========================================
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 type SliderInputProps = {
@@ -15,7 +11,6 @@ type SliderInputProps = {
   max: number;
   step?: number;
   unit?: string;
-  // formatValue: スライダー下のmin/max表示用
   formatValue?: (value: number) => string;
   className?: string;
 };
@@ -32,27 +27,35 @@ export function SliderInput({
   formatValue,
   className,
 }: SliderInputProps) {
-  // テキストボックスの表示値（入力中は文字列として保持）
   const [inputText, setInputText] = useState(String(value));
+  const isFocused = useRef(false);
 
-  // 外部からvalueが変わったときにテキストボックスを同期
+  // スライダー操作など外部から value が変わった場合のみ同期
+  // フォーカス中（直接入力中）は上書きしない
   useEffect(() => {
-    setInputText(String(value));
+    if (!isFocused.current) {
+      setInputText(String(value));
+    }
   }, [value]);
 
   const clamp = (v: number) => Math.min(max, Math.max(min, v));
   const percentage = Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputText(e.target.value);
-    const parsed = parseFloat(e.target.value);
+    const raw = e.target.value;
+    setInputText(raw);
+    const parsed = parseFloat(raw);
     if (!isNaN(parsed)) {
       onChange(clamp(parsed));
     }
   };
 
-  // フォーカスを外れたとき範囲内に丸める
+  const handleFocus = () => {
+    isFocused.current = true;
+  };
+
   const handleBlur = () => {
+    isFocused.current = false;
     const parsed = parseFloat(inputText);
     const clamped = isNaN(parsed) ? value : clamp(parsed);
     onChange(clamped);
@@ -71,22 +74,17 @@ export function SliderInput({
         </label>
         <div className="flex items-center gap-1.5 flex-shrink-0">
           <input
-            type="number"
-            value={inputText}
-            min={min}
-            max={max}
-            step={step}
-            onChange={handleTextChange}
-            onBlur={handleBlur}
+            type="text"
             inputMode="decimal"
+            value={inputText}
+            onChange={handleTextChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             className="w-24 text-right text-sm font-bold text-blue-600 dark:text-blue-400
               bg-blue-50 dark:bg-blue-950/30
               border border-blue-200 dark:border-blue-800
               rounded-lg px-2 py-1 tabular-nums
-              focus:outline-none focus:ring-2 focus:ring-blue-400
-              [appearance:textfield]
-              [&::-webkit-outer-spin-button]:appearance-none
-              [&::-webkit-inner-spin-button]:appearance-none"
+              focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           {unit && (
             <span className="text-sm text-slate-500 dark:text-slate-400 w-fit">
@@ -104,7 +102,10 @@ export function SliderInput({
         min={min}
         max={max}
         step={step}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={(e) => {
+          isFocused.current = false; // スライダー操作時はテキスト同期を許可
+          onChange(Number(e.target.value));
+        }}
         style={{
           background: `linear-gradient(to right, #3b82f6 ${percentage}%, #e2e8f0 ${percentage}%)`,
         }}

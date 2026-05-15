@@ -17,12 +17,12 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「Twitterに投稿しようとしたら文字数オーバーだった」「レポートの字数制限を確認したい」——文字数を素早く数えたいときに役立つツールと活用方法を紹介します。
       </p>
 
       <h2>文字数カウントが役立つ場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>Twitter・X</strong>：140文字制限の確認（URLは23文字換算）</li>
         <li><strong>Instagram</strong>：キャプションの2,200文字制限の確認</li>
         <li><strong>大学レポート・論文</strong>：指定字数（2,000字以上3,000字以内など）の確認</li>
@@ -30,13 +30,14 @@ export default function Page() {
         <li><strong>メルマガ・LPコピー</strong>：段落ごとの文字数バランス確認</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>文字数を数える方法</h2>
 
       <h3>ブラウザのツールを使う</h3>
       <p>
         <Link href="/tools/word-counter">文字数カウントツール</Link>にテキストを貼り付けると即座に文字数・行数・単語数が表示されます。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li>スペース・改行を含む文字数</li>
         <li>スペース・改行を除く文字数</li>
         <li>全角・半角の内訳</li>
@@ -47,6 +48,7 @@ export default function Page() {
         Microsoft Wordでは「校閲」→「文字カウント」で確認できます。ただしWord独自のカウント方式（スペースや記号の扱い）と、SNSや審査システムのカウント方式が異なる場合があります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>SNS別の文字数制限一覧</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -75,11 +77,13 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>Twitterの文字数カウントの仕組み</h2>
       <p>
         X（旧Twitter）の文字数は日本語・英語ともに1文字としてカウントされます。ただしURLは実際の文字数に関わらず、短縮処理されて23文字としてカウントされます。また絵文字は1〜2文字としてカウントされるものがあります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>全角・半角の違いとカウント</h2>
       <p>
         ほとんどのサービス・ツールでは全角文字（日本語・漢字等）も半角文字（英数字）も1文字としてカウントします。ただし一部の古いシステムでは全角を2文字、半角を1文字とするバイト数換算を使っている場合があります。

@@ -17,15 +17,15 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「PDFを送ろうとしたらファイルサイズが大きすぎてメール添付できない」「会社のシステムでアップロード制限に引っかかった」——こういった状況は、スキャンや画像を多く含む資料でよく起きます。PDFを無料で圧縮する方法を解説します。
       </p>
 
       <h2>PDFが大きくなる主な原因</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         PDFのファイルサイズが大きくなる原因はほぼ決まっています。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>画像が多い</strong>：スキャンデータ・写真を貼り込んだ資料は一番サイズが膨らみます</li>
         <li><strong>スキャン解像度が高すぎる</strong>：600dpiでスキャンしたPDFは300dpiの4倍になります</li>
         <li><strong>埋め込みフォント</strong>：特殊なフォントがPDF内に埋め込まれているとサイズが増えます</li>
@@ -35,6 +35,7 @@ export default function Page() {
         テキストだけのPDFは元々サイズが小さいため、圧縮の効果は限定的です。画像を含む資料ほど圧縮効果が大きくなります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDFを無料で圧縮する手順</h2>
 
       <h3>① PDF圧縮ツールを開く</h3>
@@ -52,6 +53,7 @@ export default function Page() {
         処理が完了したら元のサイズと圧縮後のサイズが表示されます。問題なければダウンロードボタンを押して保存します。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>圧縮率の目安</h2>
 
       <div className="overflow-x-auto my-6">
@@ -80,16 +82,18 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>圧縮でも解決しない場合</h2>
       <p>
         圧縮後もサイズが大きい場合は、以下を試してみてください。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>不要なページを削除する</strong>：<Link href="/tools/pdf-delete-pages">PDFページ削除ツール</Link>で不要ページを取り除くと大幅に軽量化できます</li>
         <li><strong>PDFを分割して送る</strong>：<Link href="/tools/pdf-split">PDF分割ツール</Link>で章ごとに分けて送る方法もあります</li>
         <li><strong>別の送信方法を使う</strong>：GoogleドライブやDropboxにアップロードしてリンク共有する方法が容量制限を回避できます</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>メールのPDF添付容量制限まとめ</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">

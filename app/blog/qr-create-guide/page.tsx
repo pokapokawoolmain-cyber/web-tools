@@ -17,12 +17,12 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         URLをQRコードに変換して名刺に印刷したい、お店のInstagramアカウントをQRコードで共有したい——ブラウザから30秒で作成・ダウンロードできます。登録不要・無料です。
       </p>
 
       <h2>QRコードを作りたい場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>名刺にWebサイトやSNSのQRコードを入れたい</li>
         <li>チラシや店舗POPに予約ページやメニューのQRを掲載したい</li>
         <li>SNSのプロフィールURLをQRコードでシェアしたい</li>
@@ -30,6 +30,7 @@ export default function Page() {
         <li>テキスト・電話番号・メールアドレスをQRコード化したい</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>QRコードの作り方</h2>
 
       <h3>① QRコード生成ツールにアクセスする</h3>
@@ -52,6 +53,7 @@ export default function Page() {
         「PNGダウンロード」または「SVGダウンロード」ボタンで保存します。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PNGとSVGどちらを使うべきか</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -80,14 +82,16 @@ export default function Page() {
         印刷物に使う場合はSVGを強くおすすめします。名刺・チラシ・看板など、様々なサイズに拡大しても解像度が落ちません。Web・スライドで使う場合はPNGで十分です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>QRコードが読み取れないときの対処法</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>サイズが小さすぎる</strong>：印刷する場合は最低でも2cm×2cm以上にする</li>
         <li><strong>コントラストが足りない</strong>：明暗の差が小さいカスタムカラーは読み取りにくくなる</li>
         <li><strong>URLが長すぎる</strong>：QRコードのパターンが複雑になるため、短縮URLを使うと読み取りやすくなる</li>
         <li><strong>印刷がかすれている</strong>：プリンターの品質を確認し、コントラストを上げて再印刷する</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>Wi-Fi接続用のQRコードを作りたい場合</h2>
       <p>
         お店やオフィスでゲスト向けのWi-Fi接続QRコードを作りたい場合は、<Link href="/tools/wifi-qr">Wi-Fi QRコード生成ツール</Link>を使うとSSIDとパスワードを入力するだけで専用QRコードを作成できます。

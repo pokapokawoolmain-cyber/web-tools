@@ -17,18 +17,19 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「https://example.com/very/long/path?param=value&...」のような長いURLは、名刺・チラシへの印刷やSNS投稿に使いにくいです。短縮URLとQRコードを同時に作る方法を解説します。
       </p>
 
       <h2>URL短縮が役立つ場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>名刺・フライヤーにURLを印刷する際にコンパクトにしたい</li>
         <li>Twitter（X）の140文字制限を活用するためURLを短くしたい</li>
         <li>メールやLINEで長いURLを短く整形して見やすくしたい</li>
         <li>Google Formsや予約ページの長いURLを共有しやすくしたい</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>URL短縮とQRコードを作る手順</h2>
 
       <h3>① URL短縮ツールにアクセスする</h3>
@@ -46,23 +47,26 @@ export default function Page() {
         生成された短縮URLをコピーしてSNSやメッセージに使えます。QRコードはPNGまたはSVGでダウンロードして印刷物に使えます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>URL短縮とQRコードを同時に使う活用例</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>名刺</strong>：短縮URLをテキストで記載し、QRコードも印刷する——どちらの方法でも飛べる</li>
         <li><strong>チラシ・POP</strong>：QRコードをスキャンするだけでページにアクセスできる</li>
         <li><strong>プレゼンテーション</strong>：スライドにQRコードを入れて、参加者がスマホでアクセスできるようにする</li>
         <li><strong>SNSプロフィール</strong>：URLが長いサービスの場合、短縮URLでプロフィール欄をすっきりさせる</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>印刷物にはQRコード、テキストには短縮URL</h2>
       <p>
         同じリンクをQRコードと短縮URLの両方の形式で持っておくことで使い分けができます。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>QRコード</strong>：スキャンするだけで飛べる——名刺・チラシ・掲示物に最適</li>
         <li><strong>短縮URL</strong>：手入力・コピーが楽——メール本文・SNS投稿・口頭説明に最適</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>QRコードのみ作成したい場合</h2>
       <p>
         URL短縮なしでQRコードだけ作りたい場合は<Link href="/tools/qr-generator">QRコード生成ツール</Link>を使うと、URLやテキストから直接QRコードを生成できます。Wi-FiのQRコードを作りたい場合は<Link href="/tools/wifi-qr">Wi-Fi QRコード生成ツール</Link>が便利です。

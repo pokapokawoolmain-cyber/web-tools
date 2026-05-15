@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「証明写真のサイズが合っていない」として書類を差し戻されるケースは意外と多くあります。用途ごとに定められたサイズをあらかじめ確認してから撮影・作成しましょう。
       </p>
 
@@ -52,6 +52,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>用途別の詳細と注意点</h2>
 
       <h3>履歴書用（40×30mm）</h3>
@@ -80,6 +81,7 @@ export default function Page() {
         運転免許証更新用写真は縦30mm×横24mmです。ただし各都道府県の警察署・免許センターで規格が若干異なる場合があります。持参する写真は事前に要確認です。なお、更新時は窓口での撮影が基本で、持参写真を使えない場合もあります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>証明写真を正しいサイズで作成するには</h2>
       <p>
         <Link href="/tools/id-photo">証明写真作成ツール</Link>では、上記の各サイズに対応したプリセットが用意されています。写真をアップロードして用途に合ったサイズを選ぶだけで、適切なサイズの証明写真を作成できます。

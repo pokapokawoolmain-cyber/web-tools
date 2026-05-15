@@ -1,20 +1,17 @@
 "use client";
-// ========================================
-// 数値入力コンポーネント（ツール共通）
-// ラベル・単位・ヘルプテキストをセット
-// ========================================
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 type NumberInputProps = {
   id: string;
   label: string;
-  value: number | string;
+  value: number;
   onChange: (value: number) => void;
   min?: number;
   max?: number;
   step?: number;
-  unit?: string;        // 入力欄の右側に表示（例: "万円", "%"）
-  helpText?: string;    // ラベル下の補足テキスト
+  unit?: string;
+  helpText?: string;
   className?: string;
 };
 
@@ -25,11 +22,44 @@ export function NumberInput({
   onChange,
   min,
   max,
-  step = 1,
   unit,
   helpText,
   className,
 }: NumberInputProps) {
+  const [text, setText] = useState(String(value));
+  const isFocused = useRef(false);
+
+  // 外部から value が変わった場合（親リセット等）はフォーカス外でのみ同期
+  useEffect(() => {
+    if (!isFocused.current) {
+      setText(String(value));
+    }
+  }, [value]);
+
+  const clamp = (n: number) => {
+    let v = n;
+    if (min !== undefined) v = Math.max(min, v);
+    if (max !== undefined) v = Math.min(max, v);
+    return v;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 数字のみ許可（整数）
+    const raw = e.target.value.replace(/[^\d]/g, "");
+    setText(raw);
+    if (raw !== "") {
+      onChange(clamp(Number(raw)));
+    }
+  };
+
+  const handleBlur = () => {
+    isFocused.current = false;
+    const n = text === "" ? (min ?? 0) : Number(text);
+    const final = clamp(isNaN(n) ? (min ?? 0) : n);
+    onChange(final);
+    setText(String(final));
+  };
+
   return (
     <div className={cn("space-y-1.5", className)}>
       <label
@@ -44,14 +74,13 @@ export function NumberInput({
       <div className="flex items-center gap-2">
         <input
           id={id}
-          type="number"
-          value={value}
-          min={min}
-          max={max}
-          step={step}
-          onChange={(e) => onChange(Number(e.target.value))}
+          type="text"
+          inputMode="numeric"
+          value={text}
+          onChange={handleChange}
+          onFocus={() => { isFocused.current = true; }}
+          onBlur={handleBlur}
           className="input-base flex-1"
-          inputMode="numeric"    // スマホで数字キーボードを表示
         />
         {unit && (
           <span className="text-sm text-slate-500 dark:text-slate-400 whitespace-nowrap font-medium">

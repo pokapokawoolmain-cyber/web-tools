@@ -17,17 +17,18 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         個人情報を含むPDFをメールで送る前に、パスワードをかけて保護したいというニーズは多くあります。Adobe Acrobatがなくても、ブラウザから無料でPDFを暗号化・パスワード保護する方法を解説します。
       </p>
 
       <h2>PDFにパスワードをかけたい場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>個人情報・住所・銀行口座が含まれる書類を送る前に保護したい</li>
         <li>社外秘の資料を共有する際に閲覧制限をかけたい</li>
         <li>クラウドに保存する重要文書を暗号化しておきたい</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDFにパスワードをかける手順</h2>
 
       <h3>① PDFパスワード設定ツールにアクセスする</h3>
@@ -50,6 +51,7 @@ export default function Page() {
         「パスワードで保護する」ボタンを押すとAES-256暗号化で保護されたPDFをダウンロードできます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>重要な注意点</h2>
       <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-4 border border-amber-200 dark:border-amber-800">
         <p className="font-semibold text-amber-800 dark:text-amber-300 mb-2">このツールはAdobeの標準PDF暗号化とは異なります</p>
@@ -63,11 +65,13 @@ export default function Page() {
         パスワードを忘れた場合、ファイルを復元する手段はありません。AES-256暗号化は現在の技術では総当たり攻撃で解読できないレベルの強度があります。パスワードマネージャーへの保存をお勧めします。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>パスワードを解除する方法</h2>
       <p>
         ToolBoxで保護したPDFを解除するには、同じツールの「解除する」タブを使います。保護したファイル（.pdfまたは.encrypted）をアップロードし、設定時のパスワードを入力すれば元のPDFを取り出せます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>メタデータも削除したい場合</h2>
       <p>
         PDFには作成者名・日付・使用ソフト名などの情報が埋め込まれています。共有前にこの情報も削除したい場合は、<Link href="/tools/pdf-metadata-remover">PDFメタデータ削除ツール</Link>と組み合わせてご利用ください。

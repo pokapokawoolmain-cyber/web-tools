@@ -17,18 +17,19 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「100ページある報告書から3ページだけ取り出したい」「契約書の1〜5ページ目だけ相手に送りたい」——こういった場面でPDFの分割・ページ抽出が必要になります。専用ソフト不要でブラウザから無料でできる方法を解説します。
       </p>
 
       <h2>PDFを分割したくなる場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>100ページのPDFのうち特定の章だけを相手に送りたい</li>
         <li>スキャンしたPDFから必要なページだけ取り出して保存したい</li>
         <li>大きなPDFを章ごとに分けて管理したい</li>
         <li>複数人で分担して作業するためにページ範囲で分割したい</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDFの特定ページを抽出する手順</h2>
 
       <h3>① PDF分割ツールにアクセスする</h3>
@@ -45,7 +46,7 @@ export default function Page() {
       <p>
         ページ番号を入力します。入力形式は柔軟です。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>「3」</strong>：3ページ目のみ</li>
         <li><strong>「1,3,5」</strong>：1・3・5ページ目</li>
         <li><strong>「5-8」</strong>：5ページ目から8ページ目</li>
@@ -57,6 +58,7 @@ export default function Page() {
         「分割する」ボタンを押すと、指定したページだけを含む新しいPDFが生成されます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDF分割とPDFページ削除の違い</h2>
       <p>
         似た機能ですが、目的が逆です。
@@ -88,13 +90,15 @@ export default function Page() {
         たとえば50ページのPDFから45ページを残したい場合は、<Link href="/tools/pdf-delete-pages">PDFページ削除ツール</Link>で不要な5ページを削除するほうが楽です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>分割後にページを並び替えたい場合</h2>
       <p>
         抽出したPDFをさらにページ順序を変えたい場合は、<Link href="/tools/pdf-reorder">PDF並び替えツール</Link>が使えます。また、複数の分割PDFをまとめる場合は<Link href="/tools/pdf-merge">PDF結合ツール</Link>を使ってください。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>スマホでのPDF分割：注意点</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>iPhoneのファイルアプリまたはiCloudドライブからPDFを選択できます</li>
         <li>処理がすべてブラウザ内で行われるため、通信速度に関わらず安全です</li>
         <li>処理したPDFは「ダウンロード」フォルダまたはファイルアプリに保存されます</li>

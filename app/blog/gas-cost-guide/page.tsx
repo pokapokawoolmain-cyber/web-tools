@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         ガソリン代は日々の生活費の中で見えにくい出費のひとつです。通勤・仕事・ドライブにかかるガソリン代を正確に把握しておくと、節約や経費申請の際に役立ちます。
       </p>
 
@@ -35,6 +35,7 @@ export default function Page() {
         月20日出勤すると月間8,800円になります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>燃費の計算方法</h2>
       <p>
         燃費は給油時に計算できます。
@@ -46,6 +47,7 @@ export default function Page() {
         例：280km走行して18L給油した場合：280 ÷ 18 ≈ 15.6km/L
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>車種別の燃費目安</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -73,11 +75,12 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>通勤のガソリン代を経費申請する方法</h2>
       <p>
         会社にマイカー通勤のガソリン代を申請する場合は、以下の方法が一般的です。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>実費計算</strong>：通勤距離×2（往復）×出勤日数÷燃費×ガソリン単価</li>
         <li><strong>1kmあたり単価</strong>：会社が定めた単価（例：15円/km）×月間走行距離</li>
       </ul>
@@ -85,8 +88,9 @@ export default function Page() {
         <Link href="/tools/gas-calculator">ガソリン代計算ツール</Link>で正確な金額を算出してから経費申請書類を作成すると、スムーズに手続きできます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>ガソリン代を節約するコツ</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>エコ運転</strong>：急加速・急ブレーキを避けることで燃費が10〜20%改善する場合がある</li>
         <li><strong>タイヤ空気圧の管理</strong>：適切な空気圧に保つことで燃費悪化を防ぐ</li>
         <li><strong>アイドリングストップ</strong>：信号待ちや停車中のエンジン停止</li>

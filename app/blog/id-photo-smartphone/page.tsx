@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         証明写真ボックスが近くにない、急いで証明写真が必要——スマホとブラウザがあれば、アプリをインストールせずに無料で証明写真を作成できます。撮影のコツから印刷まで手順をまとめました。
       </p>
 
@@ -30,6 +30,7 @@ export default function Page() {
         <li>コンビニで40円印刷</li>
       </ol>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>撮影のコツ</h2>
 
       <h3>背景は無地の壁がベスト</h3>
@@ -43,13 +44,14 @@ export default function Page() {
       </p>
 
       <h3>カメラの向きと構図</h3>
-      <ul>
+      <ul className="space-y-2">
         <li>スマホを目線の高さに固定する（スタンドまたは三脚が理想）</li>
         <li>顔が画面の中央に来るように構図を決める</li>
         <li>正面を向き、顎を少し引く</li>
         <li>表情は自然な閉口（口を閉じた状態）が基本</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>証明写真ツールでの編集手順</h2>
 
       <h3>① 写真をアップロードして顔をトリミング</h3>
@@ -66,7 +68,7 @@ export default function Page() {
       <p>
         用途に合わせてサイズを選択します。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li>履歴書：40×30mm（一般的な履歴書）</li>
         <li>パスポート・マイナンバー：45×35mm</li>
         <li>運転免許証：30×24mm</li>
@@ -80,13 +82,15 @@ export default function Page() {
         「L判レイアウトで印刷」を選択すると、1枚のL判（89×127mm）用紙に複数枚配置したレイアウト画像が生成されます。履歴書サイズ（30×40mm）なら6枚が配置されます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>印刷して完成</h2>
       <p>
         ダウンロードした画像をコンビニの写真プリントサービスで「L判」指定で印刷します（40円）。カット線に沿ってハサミで切り取れば完成です。コンビニ印刷の詳細は<Link href="/blog/id-photo-convenience">コンビニで証明写真を印刷する方法</Link>を参照してください。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>スマホ撮影のよくある失敗と対策</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>顔が暗い</strong>：窓を正面に向けて撮影する、または照明を増やす</li>
         <li><strong>手ブレ</strong>：スタンドを使う、またはタイマー撮影を活用する</li>
         <li><strong>服が写真映えしない</strong>：シャツ・ジャケットなどフォーマルな服を着用する</li>

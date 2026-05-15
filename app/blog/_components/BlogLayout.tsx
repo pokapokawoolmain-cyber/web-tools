@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, Clock } from "lucide-react";
+import { ChevronRight, Clock, RefreshCw } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
 import type { BlogPost } from "@/data/blog-posts";
@@ -12,6 +12,7 @@ type Props = {
 export function BlogLayout({ post, children }: Props) {
   const siteUrl = getSiteUrl();
   const articleUrl = `${siteUrl}/blog/${post.slug}`;
+  const ogImageUrl = `${siteUrl}/og-default.png`;
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -22,8 +23,14 @@ export function BlogLayout({ post, children }: Props) {
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
     inLanguage: "ja",
+    image: ogImageUrl,
     author: { "@type": "Organization", name: "ToolBox", url: siteUrl },
-    publisher: { "@type": "Organization", name: "ToolBox", url: siteUrl },
+    publisher: {
+      "@type": "Organization",
+      name: "ToolBox",
+      url: siteUrl,
+      logo: { "@type": "ImageObject", url: `${siteUrl}/favicon.ico` },
+    },
   };
 
   const breadcrumbSchema = {
@@ -50,9 +57,14 @@ export function BlogLayout({ post, children }: Props) {
 
   const schemas = [articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
 
-  const dateStr = new Date(post.publishedAt).toLocaleDateString("ja-JP", {
+  const publishedStr = new Date(post.publishedAt).toLocaleDateString("ja-JP", {
     year: "numeric", month: "long", day: "numeric",
   });
+  const updatedStr = post.updatedAt
+    ? new Date(post.updatedAt).toLocaleDateString("ja-JP", {
+        year: "numeric", month: "long", day: "numeric",
+      })
+    : null;
 
   return (
     <>
@@ -87,9 +99,15 @@ export function BlogLayout({ post, children }: Props) {
             <p className="text-[15px] text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
               {post.description}
             </p>
-            <time className="text-[13px] text-slate-400" dateTime={post.publishedAt}>
-              {dateStr}
-            </time>
+            <div className="flex items-center gap-4 text-[13px] text-slate-400">
+              <time dateTime={post.publishedAt}>公開：{publishedStr}</time>
+              {updatedStr && (
+                <span className="flex items-center gap-1">
+                  <RefreshCw className="w-3 h-3" />
+                  <time dateTime={post.updatedAt}>更新：{updatedStr}</time>
+                </span>
+              )}
+            </div>
           </header>
 
           {/* Content */}
@@ -104,9 +122,38 @@ export function BlogLayout({ post, children }: Props) {
             {children}
           </div>
 
+          {/* FAQ section */}
+          {post.faqs && post.faqs.length > 0 && (
+            <section className="mt-14" aria-label="よくある質問">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-5">
+                よくある質問
+              </h2>
+              <div className="space-y-3">
+                {post.faqs.map((faq, i) => (
+                  <details
+                    key={i}
+                    className="group border border-slate-200 dark:border-zinc-700 rounded-xl overflow-hidden"
+                  >
+                    <summary className="flex items-center justify-between gap-3 px-5 py-4 cursor-pointer select-none list-none bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors">
+                      <span className="text-[15px] font-medium text-slate-800 dark:text-zinc-100">
+                        Q. {faq.q}
+                      </span>
+                      <span className="flex-shrink-0 text-slate-400 group-open:rotate-180 transition-transform duration-200">
+                        ▼
+                      </span>
+                    </summary>
+                    <div className="px-5 py-4 text-[14px] leading-relaxed text-slate-600 dark:text-zinc-400 bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800">
+                      A. {faq.a}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Related tool CTA */}
           {post.relatedToolHref && (
-            <div className="mt-14 p-6 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50">
+            <div className="mt-10 p-6 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50">
               <p className="text-[13px] font-semibold text-blue-600 dark:text-blue-400 mb-1">この記事で使ったツール</p>
               <Link
                 href={post.relatedToolHref}

@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         年収500万円の手取りは<strong>約393万円（月32.8万円）</strong>が目安です。給与から引かれる社会保険料・所得税・住民税の内訳と、もう少し手取りを増やすための節税方法を解説します。
       </p>
 
@@ -52,6 +52,7 @@ export default function Page() {
         ※独身・会社員・東京都在住・ボーナス2ヶ月分想定の概算値です。加入する健康保険組合・家族構成により異なります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>控除の内訳（年収500万円・独身の場合）</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -82,6 +83,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>月手取り32.8万円の生活費シミュレーション</h2>
 
       <h3>東京で一人暮らしの場合</h3>
@@ -115,13 +117,15 @@ export default function Page() {
         家賃が高い東京でも毎月10〜17万円の余裕を作れる水準です。新NISAの積立（月3〜5万円）と生活費のバランスが十分取れます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収500万円は日本の平均と比べてどのくらい？</h2>
       <p>
         国税庁の民間給与実態統計調査（2022年）によると、日本の給与所得者の平均年収は約458万円です。年収500万円はこの平均を少し上回る水準で、30代正社員の中では標準的なレンジに位置します。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収500万円から手取りを増やす方法</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>
           <strong>iDeCo（個人型確定拠出年金）</strong>：会社員の場合、月2.3万円（年27.6万円）まで掛金が全額所得控除。年収500万円なら年間約5〜6万円の節税効果。
         </li>
@@ -133,8 +137,9 @@ export default function Page() {
         </li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>他の年収との手取り比較</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><Link href="/blog/takehome-400">年収400万円の手取り</Link>：約318万円（月26.5万円）— 年収500万より75万円少ない</li>
         <li>年収500万円の手取り：<strong>約393万円（月32.8万円）← このページ</strong></li>
         <li><Link href="/blog/takehome-600">年収600万円の手取り</Link>：約462万円（月38.5万円）— 年収500万より69万円多い</li>

@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「iPhoneでPDFを編集したいけどAcrobatは高い」「アプリをインストールしたくない」——そんな方のために、iPhoneのSafariブラウザだけで使える無料PDFツールを操作別にまとめました。
       </p>
 
@@ -54,6 +54,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>操作別の使い方</h2>
 
       <h3>① PDFを結合する（複数→1つにまとめる）</h3>
@@ -86,17 +87,19 @@ export default function Page() {
         <Link href="/tools/pdf-to-jpg">PDF→JPG変換ツール</Link>で各ページをJPG画像として保存できます。SNS投稿や画像が必要な場面で便利です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>iPhoneでのPDFファイルの場所</h2>
       <p>
         iPhoneでPDFを選択するときは以下の場所を探してみてください。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>ファイルアプリ</strong>：「ダウンロード」フォルダやiCloudドライブに保存されることが多い</li>
         <li><strong>メールの添付ファイル</strong>：メールを開いてPDFを長押し→「ファイルに保存」でファイルアプリに移動</li>
         <li><strong>LINEの受信ファイル</strong>：「他のアプリで開く」→「ファイルに保存」</li>
         <li><strong>SafariでダウンロードしたPDF</strong>：ダウンロードマネージャーまたはファイルアプリ内</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>アプリを使わない理由</h2>
       <p>
         PDF編集アプリを使う方法もありますが、ツールによっては有料プランが必要だったり、個人情報を含む書類をクラウドにアップロードすることへの懸念があります。ToolBoxのPDFツールはすべてブラウザ内処理で、ファイルがサーバーに送信されることがないため、機密書類でも安心して使えます。

@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         年収600万円の手取りは<strong>約462万円（月38.5万円）</strong>が目安です。「年収600万あるのに生活がそんなに楽じゃない」という声もありますが、その理由は138万円分の税金・社会保険料にあります。内訳と節税方法を解説します。
       </p>
 
@@ -52,6 +52,7 @@ export default function Page() {
         ※独身・会社員・東京都在住・ボーナス2ヶ月分想定の概算値です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>控除の内訳（年収600万円・独身の場合）</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -82,6 +83,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>家族構成による手取りの変化</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -112,8 +114,9 @@ export default function Page() {
         配偶者控除（38万円）が適用されると所得税・住民税が合わせて約14万円減ります。子どもが16歳以上（高校生）になると扶養控除も加算され、さらに手取りが増えます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収600万円から手取りをさらに増やす方法</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>
           <strong>ふるさと納税</strong>：年収600万・独身の場合の寄附上限の目安は約7.7万円。<Link href="/tools/furusato-simulator">ふるさと納税シミュレーター</Link>で正確な上限を確認できます。
         </li>
@@ -128,8 +131,9 @@ export default function Page() {
         具体的にいくら節税できるか試算したい場合は<Link href="/tools/fire-simulator">FIREシミュレーター</Link>で資産形成計画も立てられます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>他の年収との手取り比較</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><Link href="/blog/takehome-400">年収400万円の手取り</Link>：約318万円（月26.5万円）</li>
         <li><Link href="/blog/takehome-500">年収500万円の手取り</Link>：約393万円（月32.8万円）</li>
         <li>年収600万円の手取り：<strong>約462万円（月38.5万円）← このページ</strong></li>

@@ -17,8 +17,8 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
-        証明写真ボックスを使うと700〜900円かかりますが、スマホで撮影→証明写真ツールでL判レイアウト作成→コンビニで40円印刷すれば費用を大幅に節約できます。具体的な手順を解説します。
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
+        証明写真ボックスを使うと700〜900円かかりますが、スマホで撮影→証明写真ツールでL判レイアウト作成→コンビニで<strong>40円</strong>印刷すれば費用を大幅に節約できます。具体的な手順を解説します。
       </p>
 
       <h2>コンビニ印刷との費用比較</h2>
@@ -47,6 +47,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>コンビニ印刷の手順</h2>
 
       <h3>① スマホで写真を撮影する</h3>
@@ -69,7 +70,7 @@ export default function Page() {
       <p>
         作成した画像をスマホのカメラロールまたはファイルに保存し、コンビニへ持参します。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>セブン-イレブン</strong>：マルチコピー機→「プリント」→「写真プリント」→「スマホで撮った写真」</li>
         <li><strong>ファミリーマート・ローソン</strong>：マルチコピー機→「写真サービス」→「写真プリント」</li>
       </ul>
@@ -82,16 +83,18 @@ export default function Page() {
         印刷後は、L判用紙に印刷されたカット線（薄いガイドライン）に沿ってハサミで丁寧に切り取ります。定規を当てながらカッターで切ると直線がきれいに出ます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>コンビニ印刷で注意すること</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>「写真プリント」ではなく「普通紙プリント」を選ぶと品質が落ちるため注意</li>
         <li>L判（89×127mm）を選択すること——2L・A4サイズを選ぶとサイズが違う</li>
         <li>光沢のある写真用紙で印刷することで証明写真ボックスに近い仕上がりになる</li>
         <li>プリント後すぐに折れないよう、クリアファイルに入れて持ち帰る</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>対応コンビニと料金</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>セブン-イレブン</strong>：L判 40円</li>
         <li><strong>ファミリーマート</strong>：L判 40円</li>
         <li><strong>ローソン</strong>：L判 40円</li>

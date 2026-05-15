@@ -17,12 +17,12 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         来客のたびにWi-Fiパスワードを口頭で伝えたり、紙に書いたりするのは手間がかかります。QRコードを1枚作っておけば、スマホをかざすだけで接続が完了します。
       </p>
 
       <h2>Wi-Fi QRコードが便利な場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>カフェ・飲食店</strong>：テーブルに置くだけでゲストが自分で接続できる</li>
         <li><strong>オフィス・会議室</strong>：来客・取引先に素早く接続してもらえる</li>
         <li><strong>ゲストハウス・民泊</strong>：チェックイン時の案内資料に印刷して貼り付け</li>
@@ -30,6 +30,7 @@ export default function Page() {
         <li><strong>イベント・展示会</strong>：参加者がスムーズにネットワークに接続できる</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>Wi-Fi QRコードの作り方</h2>
 
       <h3>① Wi-Fi QRコード生成ツールにアクセスする</h3>
@@ -41,7 +42,7 @@ export default function Page() {
       <p>
         以下の情報を入力します。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>SSID（ネットワーク名）</strong>：ルーターや接続画面に表示されているネットワーク名</li>
         <li><strong>パスワード</strong>：Wi-Fiのパスワード（セキュリティキー）</li>
         <li><strong>セキュリティの種類</strong>：WPA2/WPA3（一般家庭・ビジネスはほぼこれ）またはWEP・なし</li>
@@ -52,6 +53,7 @@ export default function Page() {
         QRコードが生成されたらPNGまたはSVGでダウンロードします。印刷物に使う場合はSVGが劣化しないためおすすめです。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>セキュリティについて</h2>
       <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-4 border border-amber-200 dark:border-amber-800">
         <p className="font-semibold text-amber-800 dark:text-amber-300 mb-2">パスワードの取り扱いに注意</p>
@@ -61,29 +63,31 @@ export default function Page() {
       </div>
 
       <h3>セキュリティ種類の選び方</h3>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>WPA3</strong>：最新のセキュリティ規格。対応ルーターなら最優先で選択</li>
         <li><strong>WPA2</strong>：現在最も普及している規格。ほとんどの機器が対応</li>
         <li><strong>WPA2/WPA3</strong>：どちらかわからない場合はこれを選ぶと互換性が高い</li>
         <li><strong>WEP</strong>：古い規格で脆弱。新規購入のルーターでは使われない</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>QRコードをきれいに印刷するコツ</h2>
       <p>
         読み取りやすいQRコードを印刷するには、以下の点に気をつけましょう。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li>最低3cm×3cm以上のサイズで印刷する</li>
         <li>白地に黒（または高コントラストの組み合わせ）を使う</li>
         <li>SVG形式でダウンロードして拡大印刷しても劣化しないようにする</li>
         <li>ラミネート加工で汚れ・湿気から保護する</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>QRコードが読み取れない場合</h2>
       <p>
         スキャンしてもWi-Fiに接続されない場合は以下を確認してください。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li>入力したSSID・パスワードが正確か（大文字・小文字・記号に注意）</li>
         <li>選択したセキュリティの種類がルーターの設定と一致しているか</li>
         <li>iPhoneはiOS 11以降、AndroidはAndroid 10以降からカメラアプリでのスキャンに対応している</li>

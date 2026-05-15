@@ -17,18 +17,19 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         スマホで撮影した領収書・書類・写真を1つのPDFにまとめたい場面は意外と多いものです。経費申請、確定申告、提出書類の整理——こういった場面でJPGや写真をPDF化する方法をまとめました。
       </p>
 
       <h2>写真をPDFにまとめたい場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>スマホで撮影した複数枚の領収書を1つのPDFにして経費申請したい</li>
         <li>書類・契約書の各ページを撮影して1つのPDFにまとめたい</li>
         <li>旅行写真などをPDFアルバムとして保存・共有したい</li>
         <li>複数の身分証・免許証の画像をPDFにまとめて提出したい</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>JPG・写真をPDFに変換する手順</h2>
 
       <h3>① JPG→PDF変換ツールにアクセスする</h3>
@@ -51,6 +52,7 @@ export default function Page() {
         「PDFを生成」ボタンを押すと、選択した順番で画像が1つのPDFにまとめられます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>iPhoneの写真をPDFにする場合</h2>
       <p>
         iPhoneの写真はHEIC形式で保存されていることが多いですが、このツールはHEIC形式にも直接対応しています。JPGに変換する手間なく、撮影した写真をそのままPDF化できます。
@@ -59,16 +61,18 @@ export default function Page() {
         HEIC形式のまま他の作業に使いたい場合は、先に<Link href="/tools/heic-to-jpg">HEIC→JPG変換ツール</Link>でJPGに変換してから使うことも可能です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>領収書をPDFにまとめる際のコツ</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>撮影時は書類全体が収まるように</strong>：端が切れると読み取りにくくなります</li>
         <li><strong>明るい場所で撮影する</strong>：暗い写真は文字が読みにくくなります</li>
         <li><strong>ファイル名を整理してからアップロード</strong>：順番を間違えないように、ファイル名に日付や連番をつけておくと整理しやすいです</li>
         <li><strong>大きすぎる場合は圧縮</strong>：写真枚数が多いと生成されるPDFが大きくなります。<Link href="/tools/pdf-compress">PDF圧縮ツール</Link>で軽量化できます</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>関連ツール</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><Link href="/tools/pdf-merge">PDF結合</Link>：複数のPDFを1つにまとめる</li>
         <li><Link href="/tools/pdf-compress">PDF圧縮</Link>：PDFのサイズを小さくする</li>
         <li><Link href="/tools/heic-to-jpg">HEIC→JPG変換</Link>：iPhone写真をJPGに変換する</li>

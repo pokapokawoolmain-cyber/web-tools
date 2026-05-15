@@ -17,15 +17,15 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「複数のPDFを1つにまとめたいけど、専用アプリが必要？」と思っていませんか。実はスマホのブラウザだけで、インストールも登録も不要で無料でPDFを結合できます。この記事では、iPhoneやAndroidからでも使えるPDF結合の方法を手順ごとに解説します。
       </p>
 
       <h2>PDFを結合したくなる場面</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         PDF結合が必要になるシーンはよくあります。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li>複数枚スキャンした書類を1つのPDFにまとめて提出したい</li>
         <li>見積書・請求書・契約書を1ファイルにして送りたい</li>
         <li>プレゼンの各章PDFを1本にまとめたい</li>
@@ -35,6 +35,7 @@ export default function Page() {
         こういった場面でAdobe Acrobatや専用アプリが必要だと思われがちですが、ブラウザだけで完結します。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>ブラウザだけでPDFを結合する方法（手順）</h2>
 
       <h3>① PDF結合ツールにアクセスする</h3>
@@ -57,16 +58,18 @@ export default function Page() {
         「PDFを結合する」ボタンを押すと処理が始まり、完成したPDFをダウンロードできます。処理はすべてブラウザ内で行われるため、ファイルがサーバーに送られることはありません。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>スマホ利用時の注意点</h2>
       <p>
         スマホからPDF結合を行う際に気をつけることをまとめます。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>ファイルの場所を事前に確認する</strong>：iPhoneはファイルアプリ、AndroidはGoogleドライブやDownloadsフォルダにPDFがあることが多いです。</li>
         <li><strong>ファイルサイズが大きいと時間がかかる</strong>：スキャン画像が多いPDFは1ファイルで数十MBになることがあります。合計数百MB以内が目安です。</li>
         <li><strong>メモリ不足に注意</strong>：古いスマホでは非常に大きなPDFの処理に失敗することがあります。その場合はPCから試してみてください。</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>ページ数が多いPDFを分けて提出したい場合</h2>
       <p>
         逆に、まとめたPDFを特定ページで分割したい場合は<Link href="/tools/pdf-split">PDF分割ツール</Link>が使えます。結合→分割を組み合わせることで、自由にPDFを編集できます。
@@ -75,6 +78,7 @@ export default function Page() {
         PDFを結合したあとサイズが大きくなってしまった場合は、<Link href="/tools/pdf-compress">PDF圧縮ツール</Link>で軽量化するとメール添付しやすくなります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>iPhoneでPDFをまとめる：よくある質問</h2>
 
       <h3>Q. Safariで使えますか？</h3>

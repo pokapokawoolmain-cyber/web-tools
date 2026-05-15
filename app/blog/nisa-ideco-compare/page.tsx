@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「新NISAとiDeCoはどちらを優先すべきか」は投資を始めた人がよく直面する疑問です。どちらも非課税で運用できる制度ですが、仕組みと使い勝手が大きく異なります。
       </p>
 
@@ -50,16 +50,18 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>新NISAを先に始めるべき理由</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         一般的には新NISAから始めることをおすすめします。理由は「いつでも引き出せる」からです。緊急の出費（医療費・転職期間など）が発生したときでも、NISAの資産は売却して現金化できます。iDeCoは60歳まで一切引き出せないため、生活の変化が大きい20〜30代には制約が重く感じられることがあります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>iDeCoが特に有利なケース</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         iDeCoの最大の強みは「掛金が全額所得控除になる」点です。課税所得が高い人ほど節税効果が大きくなります。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li>年収500万円・月2万円掛金で年間約4〜6万円の節税（所得税率・各控除の状況による）</li>
         <li>30年間積み立てると累積で数十〜100万円超の節税効果も</li>
         <li>退職所得控除・年金控除の優遇により受取時も有利</li>
@@ -68,6 +70,7 @@ export default function Page() {
         特に会社員で節税ニーズが高い人、または60歳まで引き出す必要がない余剰資金がある人はiDeCoも積極的に活用する価値があります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>両方を使うのが理想</h2>
       <p>
         財政的に余裕があれば、新NISA（つみたて投資枠）＋iDeCoを両方使うのが最も効率的です。優先順位は以下を目安にしてください。
@@ -79,6 +82,7 @@ export default function Page() {
         <li>さらに余力があれば新NISAの成長投資枠を活用する</li>
       </ol>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>新NISAのシミュレーション</h2>
       <p>
         月々の積立額と運用利回りから将来の資産額を試算できます。<Link href="/tools/nisa-calculator">NISAシミュレーターツール</Link>で実際に計算してみてください。また、FIRE（早期リタイア）を視野に入れた資産計画には<Link href="/tools/fire-simulator">FIREシミュレーター</Link>も活用できます。

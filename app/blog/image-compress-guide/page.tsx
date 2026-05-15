@@ -17,12 +17,12 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         メールの添付制限に引っかかった、Webフォームで「ファイルサイズが大きすぎます」と弾かれた、SNSへのアップロードが遅い——画像のファイルサイズ問題はよくある悩みです。アプリなしでブラウザから無料で解決できます。
       </p>
 
       <h2>画像を軽くしたい場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>メールの添付上限（一般的に5〜25MB）を超えてしまう</li>
         <li>行政や会社のWebフォームで「2MB以下のJPG」と指定されている</li>
         <li>WordやPowerPointに貼るとファイルが重くなる</li>
@@ -30,6 +30,7 @@ export default function Page() {
         <li>ブログやWebサイトの画像を軽くしてページ速度を改善したい</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>画像を圧縮する手順</h2>
 
       <h3>① 画像圧縮ツールにアクセスする</h3>
@@ -47,6 +48,7 @@ export default function Page() {
         圧縮品質（0〜100%）を選択して「圧縮する」ボタンを押します。元のサイズと圧縮後のサイズ・削減率が表示され、ダウンロードできます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>品質設定の目安</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -74,6 +76,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>JPGとPNGで圧縮の特性が異なる</h2>
       <p>
         JPGは写真の圧縮に適しており、品質を大きく落とさずにファイルサイズを大幅に削減できます。PNGは透明背景があるロゴ・イラスト向きで、ロスレス圧縮のためJPGほど削減率は高くありません。
@@ -82,11 +85,13 @@ export default function Page() {
         写真をWebに使う場合は、PNGよりJPGやWebPの方が軽量になります。ロゴや図解など透過が必要なものはPNGのまま圧縮するのがよいでしょう。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>圧縮だけでなくリサイズも効果的</h2>
       <p>
         スマホで撮影した写真は4000×3000px以上の解像度があることが多く、Web用途ではそこまでの解像度は不要です。画像のサイズを1920×1080px程度にリサイズすると、圧縮と組み合わせてさらに大幅に容量を削減できます。<Link href="/tools/image-resize">画像リサイズツール</Link>も合わせて活用できます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>HEICファイルの場合</h2>
       <p>
         iPhoneで撮影したHEIC形式の画像を圧縮・変換したい場合は、先に<Link href="/tools/heic-to-jpg">HEIC→JPG変換ツール</Link>でJPGに変換してから圧縮すると良いでしょう。

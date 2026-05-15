@@ -17,15 +17,15 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「PDFに名前が入っていた」「どのソフトで作ったか知られたくない」——PDFファイルには見えない部分に個人情報が記録されています。共有・提出前にこの情報を削除する方法を解説します。
       </p>
 
       <h2>PDFのメタデータとは何か</h2>
-      <p>
+      <p className="font-medium text-slate-800 dark:text-zinc-200">
         PDFファイルには文書の内容（テキスト・画像）のほかに、「メタデータ」と呼ばれる付属情報が自動的に記録されます。Windowsでファイルを右クリック→「プロパティ」→「詳細」タブで確認できます。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>作成者名</strong>：WordやAcrobatにログインしているユーザー名</li>
         <li><strong>作成日時・更新日時</strong>：文書を作成・保存した日時</li>
         <li><strong>使用ソフト名</strong>：「Microsoft Word」「Adobe Acrobat」等</li>
@@ -33,8 +33,9 @@ export default function Page() {
         <li><strong>キーワード・コメント</strong>：手動で入力した場合</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>メタデータが問題になる場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>名前を伏せて提出したい書類に本名が入っている</li>
         <li>業者・取引先に会社のWindowsアカウント名が見えてしまう</li>
         <li>個人用PCで作成した文書に私的なユーザー名が記録されている</li>
@@ -42,6 +43,7 @@ export default function Page() {
         <li>文書の作成履歴から意図しない情報が推測される</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDFのメタデータを削除する手順</h2>
 
       <h3>① PDFメタデータ削除ツールにアクセスする</h3>
@@ -59,6 +61,7 @@ export default function Page() {
         「メタデータを削除」ボタンを押すと作成者名・日付・ソフト名などのプロパティ情報が削除されたPDFをダウンロードできます。文書の内容・レイアウト・画像は変更されません。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>削除されるメタデータと残るもの</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -87,11 +90,12 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>セキュリティをさらに強化する方法</h2>
       <p>
         メタデータ削除に加えて、以下のツールを組み合わせることでより安全にPDFを共有できます。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><Link href="/tools/pdf-password">PDFパスワード設定</Link>：AES-256暗号化でファイルを保護</li>
         <li><Link href="/tools/pdf-watermark">PDF透かし追加</Link>：「社外秘」などの透かしで取り扱いを明示</li>
       </ul>

@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         キャッシュレス決済の選択肢が増えた今、どれを使えばポイントが最も貯まるか迷っている人は多いです。日常的な支出でのポイント還元率を比較してみました。
       </p>
 
@@ -50,6 +50,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>月5万円の支出で年間どのくらい差が出るか</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -77,6 +78,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>どのキャッシュレス決済を選ぶべきか</h2>
 
       <h3>楽天経済圏をよく使う人</h3>
@@ -94,6 +96,7 @@ export default function Page() {
         汎用性の高い年会費無料のクレジットカード（還元率1%）が安定しています。Amazon・楽天・公共料金・コンビニどこでも使えて、ポイントの失効リスクも低いです。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>ポイント還元シミュレーション</h2>
       <p>
         実際の年間支出額と還元率を入力して、年間どのくらいポイントが貯まるかシミュレーションできます。<Link href="/tools/point-simulator">ポイント還元シミュレーターツール</Link>を使ってみてください。

@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         転職・就職活動の書類選考を突破するためには、履歴書と職務経歴書の両方をしっかり準備することが必要です。書き方のポイントと、証明写真の準備方法まで解説します。
       </p>
 
@@ -46,6 +46,7 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>志望動機の書き方</h2>
       <p>
         よく言われる「志望動機は3つの要素で書く」という方法が効果的です。
@@ -59,14 +60,16 @@ export default function Page() {
         抽象的な表現（「御社の理念に共感しました」）より、具体的なエピソードや数字を入れることで説得力が増します。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>職歴・職務経歴書のポイント</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>数字で実績を示す</strong>：「売上向上に貢献した」より「前年比120%の売上を達成した」が具体的</li>
         <li><strong>使用ツール・技術を明記する</strong>：ExcelだけでなくVBA、SQL、特定のソフトなど</li>
         <li><strong>担当した案件のスケールを示す</strong>：チーム人数・プロジェクト規模・予算規模</li>
         <li><strong>専門用語は適度に使う</strong>：同業界の担当者が読む場合は専門用語でOK、人事担当者向けには補足を</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>証明写真の準備</h2>
       <p>
         履歴書の証明写真は縦40mm×横30mmが一般的です。スマホで撮影して証明写真ツールで加工・印刷する方法と、証明写真ボックス・写真館で撮影する方法があります。
@@ -78,13 +81,15 @@ export default function Page() {
         証明写真のサイズ一覧は<Link href="/blog/id-photo-size-guide">証明写真サイズ一覧</Link>を参照してください。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>手書きとパソコン、どちらがいいか</h2>
       <p>
         特に指定がなければパソコン作成でも問題ありません。転職市場ではパソコン作成が主流です。ただし一部の企業・職種（公務員など）では手書きを求める場合があります。求人票や担当者に確認しましょう。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>提出前のチェックリスト</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>誤字・脱字がないか（特に会社名・担当者名）</li>
         <li>証明写真が適切なサイズ・向きで貼れているか</li>
         <li>日付が提出日（または採用担当者が読む日）になっているか</li>

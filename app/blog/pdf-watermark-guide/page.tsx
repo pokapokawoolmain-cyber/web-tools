@@ -17,12 +17,12 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         書類を外部に送る前に「社外秘」「DRAFT」「回覧」などの透かしを入れておくことで、情報の取り扱いを明確にできます。Adobe Acrobatなしでブラウザから無料で追加できます。
       </p>
 
       <h2>透かし（ウォーターマーク）を入れたい場面</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>社外に送る書類に「社外秘」「CONFIDENTIAL」を入れたい</li>
         <li>確認中の資料に「DRAFT」「校正中」を入れて差し替えを防ぎたい</li>
         <li>回覧書類に「回覧」「社内限り」を入れたい</li>
@@ -30,6 +30,7 @@ export default function Page() {
         <li>著作権を示すために制作者名・社名を入れたい</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDFに透かしを入れる手順</h2>
 
       <h3>① PDF透かし追加ツールにアクセスする</h3>
@@ -46,7 +47,7 @@ export default function Page() {
       <p>
         プリセット（社外秘・CONFIDENTIAL・DRAFT・SAMPLE・回覧など）から選ぶか、独自のテキストを入力します。以下のオプションでカスタマイズできます。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>テキスト</strong>：任意の文字列を入力可能</li>
         <li><strong>フォントサイズ</strong>：大きさを調整</li>
         <li><strong>色</strong>：赤・グレー・青など</li>
@@ -60,6 +61,7 @@ export default function Page() {
         設定が確定したら「透かしを追加する」ボタンを押すと、全ページに透かしが入ったPDFをダウンロードできます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>透かしの透明度の設定目安</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -86,8 +88,9 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>透かしと合わせて使えるツール</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><Link href="/tools/pdf-password">PDFパスワード設定</Link>：透かし入りPDFにさらにパスワードをかけてセキュリティを強化</li>
         <li><Link href="/tools/pdf-metadata-remover">PDFメタデータ削除</Link>：共有前に作成者名などの個人情報を削除</li>
         <li><Link href="/tools/pdf-compress">PDF圧縮</Link>：透かし追加後にファイルサイズが増えた場合に軽量化</li>

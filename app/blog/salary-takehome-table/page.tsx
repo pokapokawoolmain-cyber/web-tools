@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「年収600万円って手取りいくら？」と聞かれると、意外と即答できる人が少ない。給与明細は毎月見ているはずなのに、年収ベースで自分の手取りを正確に把握している人は多くありません。
       </p>
       <p>
@@ -147,6 +147,7 @@ export default function Page() {
         年収が上がるにつれて手取り率が下がっていくのは、累進課税と社会保険料の仕組みによるものです。年収300万円で約80%手元に残るのに対し、1,500万円では66%まで下がります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>何にどれだけ引かれているのか</h2>
       <p>
         給与から引かれるものは「社会保険料」と「税金」の2種類に大別されます。それぞれがどれくらいの割合を占めているか、年収600万円を例に見てみましょう。
@@ -230,6 +231,7 @@ export default function Page() {
         住民税は「前年の所得」に対してかかります。転職・退職した翌年に、前職の収入に対する住民税が来るため、タイミングによっては手元資金が想定より一時的に減ることがあります。独立やフリーランス転向時に「こんなにかかるとは思わなかった」となりやすい落とし穴です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収ごとの手取り詳細</h2>
 
       <h3>年収500万円の場合</h3>
@@ -259,6 +261,7 @@ export default function Page() {
         所得税の税率が上がることに加え、課税所得の計算時に使える「給与所得控除」が年収850万円超で上限に達することも影響します（最大195万円）。一方、厚生年金は標準報酬月額65万円が上限なので、年収1,000万円と800万円でほぼ同額の保険料です。高収入になるほど「払った保険料に対してもらえる年金の比率」が下がる構造になっています。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>配偶者・扶養家族がいる場合の変化</h2>
       <p>
         ここまでは独身前提でしたが、扶養家族がいると手取りは変わります。
@@ -300,6 +303,7 @@ export default function Page() {
         配偶者控除（38万円）が適用されると所得税・住民税が下がります。子どもが16歳以上になると扶養控除（38万円、高校生相当）が使えるようになります。16歳未満の子どもは扶養控除の対象外ですが、児童手当が受給できる年齢帯です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>配偶者の収入と「壁」の問題</h2>
       <p>
         共働き世帯で配偶者の収入がある場合、いくつかの「壁」を意識する必要があります。パート・アルバイトの収入を調整している方は特に関係します。
@@ -340,6 +344,7 @@ export default function Page() {
         2024年以降、政府は「103万円の壁」を引き上げる議論を進めています。最新の税制動向は適宜確認することをおすすめします。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>ボーナスの手取り</h2>
       <p>
         ボーナスにも社会保険料と税金がかかります。ただし計算方法が月給とは少し異なります。
@@ -351,6 +356,7 @@ export default function Page() {
         おおよその目安として、ボーナスから引かれる税・社会保険料の合計は支給額の約20〜25%程度です。50万円のボーナスなら手取りは約37〜40万円になる計算です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>手取りを合法的に増やす5つの方法</h2>
 
       <h3>① iDeCo（個人型確定拠出年金）</h3>
@@ -378,6 +384,7 @@ export default function Page() {
         生命保険・介護保険・個人年金保険の保険料は、一定額まで所得控除の対象になります。地震保険料も同様です。すでに加入している場合は、年末調整で確実に申請しましょう。うっかり忘れている人が意外と多い控除のひとつです。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>「年収を上げるより節税」は本当か</h2>
       <p>
         「節税より収入アップを目指すべき」という意見と「まず節税から」という意見があります。どちらが正しいかは状況次第ですが、節税の上限は収める税金の額に依存します。税金を払っていなければ節税のしようがありません。
@@ -386,6 +393,7 @@ export default function Page() {
         一方、iDeCoやふるさと納税は「やらないと純粋に損」に近い制度です。特にふるさと納税はすでに払っている住民税・所得税をポイントに変換するようなイメージで、返礼品を受け取れる分だけ実質的に手取りが増えます。収入アップを目指しながら並行して使うのが合理的です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>自分の正確な手取りを計算する</h2>
       <p>
         ここに載せた数字は概算です。扶養家族の人数・加入している健康保険組合・各種控除の状況によって実際の手取りは数万円単位で変わります。自分の年収・家族構成を入力してより正確な金額を確認できます。
@@ -399,8 +407,9 @@ export default function Page() {
         </Link>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収別の詳細解説記事</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><Link href="/blog/takehome-400" className="text-blue-600 dark:text-blue-400 hover:underline">年収400万円の手取りはいくら？</Link> — 月26.5万円の生活費シミュレーション</li>
         <li><Link href="/blog/takehome-500" className="text-blue-600 dark:text-blue-400 hover:underline">年収500万円の手取りはいくら？</Link> — 月32.8万円、日本の平均年収と比較</li>
         <li><Link href="/blog/takehome-600" className="text-blue-600 dark:text-blue-400 hover:underline">年収600万円の手取りはいくら？</Link> — 月38.5万円、家族持ちのケース別比較</li>

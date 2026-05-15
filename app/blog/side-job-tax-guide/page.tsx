@@ -17,7 +17,7 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         副業で稼いだお金にはどのくらい税金がかかるのか、確定申告はいつ必要になるのか——これを理解しておくことで、税務署からの追徴課税や無申告加算税を防げます。
       </p>
 
@@ -32,6 +32,7 @@ export default function Page() {
         </p>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>副業の税率（所得税）</h2>
       <p>
         副業所得は本業の給与所得と合算して課税されます。課税所得の金額に応じて税率が段階的に上がります。
@@ -63,8 +64,9 @@ export default function Page() {
         </table>
       </div>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>副業で経費として認められるもの</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>機材・設備費</strong>：PC、カメラ、マイク等（副業専用または業務比率で按分）</li>
         <li><strong>通信費</strong>：インターネット代（在宅副業の場合、業務比率で按分）</li>
         <li><strong>交通費</strong>：副業先への移動費（実費）</li>
@@ -75,11 +77,13 @@ export default function Page() {
         プライベートと兼用のものは「業務使用割合」に応じた按分が必要です。根拠となる記録（利用ログ・領収書）を保管しておきましょう。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>フリマ・ハンドメイド販売の扱い</h2>
       <p>
         メルカリやヤフオクでの不用品の売却は原則非課税です（生活に必要な物品の売却）。ただし転売目的の仕入れ→販売や、継続的なハンドメイド販売は事業所得・雑所得として課税対象になります。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>副業収入の手取り計算</h2>
       <p>
         副業所得がいくらになるか、経費を差し引いた手取り額を確認したい場合は<Link href="/tools/side-job-profit">副業収入計算ツール</Link>を活用してみてください。

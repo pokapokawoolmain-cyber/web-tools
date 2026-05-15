@@ -17,18 +17,19 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「投資は難しそう」「損するのが怖い」——そう感じている人でも、長期の積立投資はシンプルで始めやすい方法です。20代・30代から始めた場合の具体的な資産の積み上がり方を解説します。
       </p>
 
       <h2>積立投資が初心者に向いている理由</h2>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>毎月決まった額を買い続けるだけ</strong>：タイミングを読む必要がない</li>
         <li><strong>少額から始められる</strong>：月100円〜対応の証券会社もある</li>
         <li><strong>時間が味方になる</strong>：長く続けるほど複利の恩恵が大きくなる</li>
         <li><strong>分散投資でリスクを抑えられる</strong>：1本のファンドで世界中に投資できる</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>早く始めるほど差が大きい理由</h2>
       <p>
         月3万円、年利5%で積み立てた場合の資産額は以下の通りです。
@@ -62,11 +63,12 @@ export default function Page() {
         ※年利5%複利で計算した概算値です。実際の運用成績は変動します。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>最初に買うべき投資信託</h2>
       <p>
         投資初心者が最初に選ぶべきは<strong>全世界株式インデックスファンド</strong>です。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li>1本で米国・欧州・アジア等の世界中の株式に分散投資できる</li>
         <li>信託報酬（コスト）が0.1〜0.2%程度と非常に安い</li>
         <li>長期的に見て市場平均のリターンを得られる</li>
@@ -76,6 +78,7 @@ export default function Page() {
         特定の商品名は時代によって変わるため、「全世界株式」「信託報酬0.2%以下」の条件で各証券会社のNISAラインナップから選ぶのがよいでしょう。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>新NISAを使った始め方</h2>
       <ol>
         <li><strong>証券口座を開設する</strong>：ネット証券（楽天・SBI等）はスマホから開設できる</li>
@@ -84,6 +87,7 @@ export default function Page() {
         <li><strong>あとは放置する</strong>：相場の上下に一喜一憂せず続けることが大切</li>
       </ol>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>積立シミュレーションで確認する</h2>
       <p>
         自分の毎月の積立額・期間・利回りで将来の資産額を計算したい場合は<Link href="/tools/nisa-calculator">NISAシミュレーターツール</Link>で試算できます。早期リタイアを目指す場合の目標資産額の計算は<Link href="/tools/fire-simulator">FIREシミュレーター</Link>も活用してみてください。

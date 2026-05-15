@@ -4,7 +4,17 @@
 // ========================================
 import type { MetadataRoute } from "next";
 import { tools } from "@/lib/tools-data";
+import { BLOG_POSTS } from "@/data/blog-posts";
 import { getSiteUrl } from "@/lib/utils";
+
+function blogDate(slug: string): Date {
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  if (!post) return new Date("2026-05-12");
+  return new Date(post.updatedAt ?? post.publishedAt);
+}
+
+const TOOL_LAUNCH = new Date("2026-05-10");
+const SITE_LAUNCH = new Date("2026-05-10");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
@@ -12,78 +22,94 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: siteUrl, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
     { url: `${siteUrl}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${siteUrl}/pdf-tools`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/pdf-tools`, lastModified: SITE_LAUNCH, changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
-    { url: `${siteUrl}/blog/fire-how-much-needed`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/nisa-monthly-simulation`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/salary-takehome-table`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/furusato-nozei-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/mercari-fees-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/mortgage-simulation-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/fire-how-much-needed`, lastModified: blogDate("fire-how-much-needed"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/nisa-monthly-simulation`, lastModified: blogDate("nisa-monthly-simulation"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/salary-takehome-table`, lastModified: blogDate("salary-takehome-table"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/furusato-nozei-guide`, lastModified: blogDate("furusato-nozei-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/mercari-fees-guide`, lastModified: blogDate("mercari-fees-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/mortgage-simulation-guide`, lastModified: blogDate("mortgage-simulation-guide"), changeFrequency: "monthly", priority: 0.8 },
     // 手取り年収別 3記事（高ボリュームクエリ）
-    { url: `${siteUrl}/blog/takehome-400`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-500`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-600`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-400`, lastModified: blogDate("takehome-400"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-500`, lastModified: blogDate("takehome-500"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-600`, lastModified: blogDate("takehome-600"), changeFrequency: "monthly", priority: 0.85 },
+    // 手取り補完 3記事
+    { url: `${siteUrl}/blog/takehome-2026`, lastModified: blogDate("takehome-2026"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-20s`, lastModified: blogDate("takehome-20s"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/bonus-takehome`, lastModified: blogDate("bonus-takehome"), changeFrequency: "monthly", priority: 0.8 },
+    // FIRE・資産形成 3記事
+    { url: `${siteUrl}/blog/fire-monthly-5man`, lastModified: blogDate("fire-monthly-5man"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/fire-4percent-rule`, lastModified: blogDate("fire-4percent-rule"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/nisa-fire-strategy`, lastModified: blogDate("nisa-fire-strategy"), changeFrequency: "monthly", priority: 0.8 },
+    // PDF補完 3記事
+    { url: `${siteUrl}/blog/iphone-pdf-merge`, lastModified: blogDate("iphone-pdf-merge"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-compress-tips`, lastModified: blogDate("pdf-compress-tips"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-edit-smartphone`, lastModified: blogDate("pdf-edit-smartphone"), changeFrequency: "monthly", priority: 0.8 },
     // PDF活用 8記事
-    { url: `${siteUrl}/blog/pdf-merge-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/pdf-compress-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/pdf-split-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/pdf-to-jpg-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/jpg-to-pdf-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/pdf-rotate-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/pdf-password-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/iphone-pdf-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-merge-guide`, lastModified: blogDate("pdf-merge-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-compress-guide`, lastModified: blogDate("pdf-compress-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-split-guide`, lastModified: blogDate("pdf-split-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-to-jpg-guide`, lastModified: blogDate("pdf-to-jpg-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/jpg-to-pdf-guide`, lastModified: blogDate("jpg-to-pdf-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-rotate-guide`, lastModified: blogDate("pdf-rotate-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-password-guide`, lastModified: blogDate("pdf-password-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/iphone-pdf-guide`, lastModified: blogDate("iphone-pdf-guide"), changeFrequency: "monthly", priority: 0.8 },
     // PDF応用 3記事
-    { url: `${siteUrl}/blog/pdf-watermark-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/pdf-privacy-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/pdf-reorder-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-watermark-guide`, lastModified: blogDate("pdf-watermark-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-privacy-guide`, lastModified: blogDate("pdf-privacy-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/pdf-reorder-guide`, lastModified: blogDate("pdf-reorder-guide"), changeFrequency: "monthly", priority: 0.8 },
     // 画像変換 3記事
-    { url: `${siteUrl}/blog/heic-jpg-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/heic-what-is`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/image-compress-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/heic-jpg-guide`, lastModified: blogDate("heic-jpg-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/heic-what-is`, lastModified: blogDate("heic-what-is"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/image-compress-guide`, lastModified: blogDate("image-compress-guide"), changeFrequency: "monthly", priority: 0.8 },
     // QR・テキスト 3記事
-    { url: `${siteUrl}/blog/qr-create-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/wifi-qr-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/url-shorten-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/qr-create-guide`, lastModified: blogDate("qr-create-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/wifi-qr-guide`, lastModified: blogDate("wifi-qr-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/url-shorten-guide`, lastModified: blogDate("url-shorten-guide"), changeFrequency: "monthly", priority: 0.8 },
     // 証明写真 3記事
-    { url: `${siteUrl}/blog/id-photo-convenience`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/id-photo-size-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/id-photo-smartphone`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/id-photo-convenience`, lastModified: blogDate("id-photo-convenience"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/id-photo-size-guide`, lastModified: blogDate("id-photo-size-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/id-photo-smartphone`, lastModified: blogDate("id-photo-smartphone"), changeFrequency: "monthly", priority: 0.8 },
     // 投資・お金 3記事
-    { url: `${siteUrl}/blog/nisa-ideco-compare`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/investment-beginner-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/side-job-tax-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/nisa-ideco-compare`, lastModified: blogDate("nisa-ideco-compare"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/investment-beginner-guide`, lastModified: blogDate("investment-beginner-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/side-job-tax-guide`, lastModified: blogDate("side-job-tax-guide"), changeFrequency: "monthly", priority: 0.8 },
     // 生活・計算 3記事
-    { url: `${siteUrl}/blog/shift-salary-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/gas-cost-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/point-return-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/shift-salary-guide`, lastModified: blogDate("shift-salary-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/gas-cost-guide`, lastModified: blogDate("gas-cost-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/point-return-guide`, lastModified: blogDate("point-return-guide"), changeFrequency: "monthly", priority: 0.8 },
     // 学生・仕事 2記事
-    { url: `${siteUrl}/blog/gpa-calculation-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/resume-writing-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/gpa-calculation-guide`, lastModified: blogDate("gpa-calculation-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/resume-writing-guide`, lastModified: blogDate("resume-writing-guide"), changeFrequency: "monthly", priority: 0.8 },
     // 動画・テキスト 2記事
-    { url: `${siteUrl}/blog/video-compress-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/word-count-guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/tools/finance`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/calculator`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/image`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/lifestyle`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/text`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/student`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/work`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/pdf-rotate`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/tools/pdf-watermark`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/tools/pdf-delete-pages`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/tools/pdf-reorder`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/tools/pdf-password`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/tools/pdf-metadata-remover`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
-    { url: `${siteUrl}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
+    { url: `${siteUrl}/blog/video-compress-guide`, lastModified: blogDate("video-compress-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/word-count-guide`, lastModified: blogDate("word-count-guide"), changeFrequency: "monthly", priority: 0.8 },
+    // 税金・社会保険 3記事
+    { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/shakai-hoken-guide`, lastModified: blogDate("shakai-hoken-guide"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/furusato-nozei-howto`, lastModified: blogDate("furusato-nozei-howto"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/finance`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${siteUrl}/tools/calculator`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${siteUrl}/tools/image`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${siteUrl}/tools/lifestyle`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${siteUrl}/tools/text`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${siteUrl}/tools/student`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${siteUrl}/tools/work`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    { url: `${siteUrl}/tools/pdf-rotate`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/tools/pdf-watermark`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/tools/pdf-delete-pages`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/tools/pdf-reorder`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/tools/pdf-password`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/tools/pdf-metadata-remover`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/privacy`, lastModified: new Date("2026-05-01"), changeFrequency: "yearly", priority: 0.3 },
+    { url: `${siteUrl}/terms`, lastModified: new Date("2026-05-01"), changeFrequency: "yearly", priority: 0.3 },
   ];
 
   // 各ツールページ
   const toolRoutes: MetadataRoute.Sitemap = tools.map((tool) => ({
     url: `${siteUrl}${tool.href}`,
-    lastModified: new Date(),
+    lastModified: TOOL_LAUNCH,
     changeFrequency: "monthly",
     priority: 0.8,
   }));

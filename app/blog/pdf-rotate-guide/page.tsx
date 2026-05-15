@@ -17,18 +17,19 @@ export const metadata: Metadata = generateMeta({
 export default function Page() {
   return (
     <BlogLayout post={post}>
-      <p>
+      <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         スキャンしたPDFを開いたら横向きになっていた——よくあることです。スキャナーの設定や原稿の向きによって、PDFのページが意図しない向きで保存されることがあります。この問題は専用ソフトなしで無料で修正できます。
       </p>
 
       <h2>PDFが横向きになる主な原因</h2>
-      <ul>
+      <ul className="space-y-2">
         <li>原稿を横向きにセットしてスキャンしてしまった</li>
         <li>スキャナーの自動回転設定がうまく働かなかった</li>
         <li>Wordなど横向き設定のドキュメントをPDF化した</li>
         <li>スマホで撮影した書類をPDF化した際に向きが反映されなかった</li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>PDFの向きを直す手順</h2>
 
       <h3>① PDF回転ツールにアクセスする</h3>
@@ -45,7 +46,7 @@ export default function Page() {
       <p>
         回転角度を選択します。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>90°（右回転）</strong>：左を向いているページを正面に向ける場合</li>
         <li><strong>180°</strong>：逆さまになっているページを直す場合</li>
         <li><strong>270°（左回転）</strong>：右を向いているページを正面に向ける場合</li>
@@ -59,6 +60,7 @@ export default function Page() {
         「回転して保存」ボタンを押すと修正済みPDFをダウンロードできます。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>画質は劣化しますか？</h2>
       <p>
         PDFの回転はページの「表示方向」を変更するメタデータの操作です。テキスト・画像・図形の内容そのものは変更されないため、画質が劣化することはありません。
@@ -67,11 +69,12 @@ export default function Page() {
         これはJPGを回転させるのとは異なります。JPEG画像を回転・保存すると再圧縮で画質が劣化しますが、PDF内のページ回転は内容を書き換えないため安全です。
       </p>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>スキャンしたPDFに多い問題</h2>
       <p>
         スキャンPDFにありがちな問題と、それぞれ対応するツールをまとめます。
       </p>
-      <ul>
+      <ul className="space-y-2">
         <li><strong>向きが横になっている</strong>：<Link href="/tools/pdf-rotate">PDF回転ツール</Link>で修正</li>
         <li><strong>ファイルサイズが大きすぎる</strong>：<Link href="/tools/pdf-compress">PDF圧縮ツール</Link>で軽量化</li>
         <li><strong>不要なページが含まれている</strong>：<Link href="/tools/pdf-delete-pages">PDFページ削除ツール</Link>で除去</li>
