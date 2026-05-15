@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["動画 圧縮 無料", "MP4 ファイルサイズ 小さく", "動画 LINE 送れない 解決", "iPhone 動画 圧縮 スマホ", "動画 圧縮 アプリ 不要"],
+  keywords: ["動画 容量 小さくする", "動画 軽くする 方法", "動画 圧縮 無料", "MP4 ファイルサイズ 目安", "動画 LINE 送れない 解決"],
   type: "article",
 });
 

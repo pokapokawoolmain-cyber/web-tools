@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["GPA 計算方法", "GPA 就活 目安", "大学 GPA 上げ方", "GPA 3.0 レベル", "GPA 4点 5点 換算"],
+  keywords: ["GPA とは", "GPA 平均", "GPA 計算方法", "GPA 就活 目安", "GPA どれくらい"],
   type: "article",
 });
 
@@ -18,7 +18,7 @@ export default function Page() {
   return (
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        就活でよく聞かれるGPA。計算方法・企業が求める水準・効率的な上げ方を解説します。複数科目をまとめて自動計算したい場合は<Link href="/tools/gpa">GPA計算ツール</Link>も活用してください。
+        <strong>GPAとは</strong>大学の成績を数値化した指標（Grade Point Average）で、<strong>4.0満点</strong>が一般的です。日本の大学のGPA平均は<strong>2.5〜3.0前後</strong>。就活で「GPAはどれくらいですか？」と聞かれた時の答え方から計算方法・上げ方まで解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -31,7 +31,42 @@ export default function Page() {
 
       <h2>GPAとは</h2>
       <p className="font-medium text-slate-800 dark:text-zinc-200">
-        GPA（Grade Point Average）は大学の成績を数値化した指標です。各科目の成績を点数化して単位数で加重平均した値で、<strong>4.0満点</strong>が最も一般的です。
+        GPA（Grade Point Average）は各科目の成績を点数化し、単位数で加重平均した値です。<strong>4.0満点</strong>が最も一般的で、S・A・B・C・D（不可）の成績をそれぞれ4・3〜3.5・2〜2.5・1〜1.5・0点に換算して計算します。大学・学部・学年を問わず同じ基準で学力水準を比較できるため、就職活動や大学院進学の際に使われます。
+      </p>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>日本の大学のGPA平均はどれくらい？</h2>
+      <p>
+        大学や学部によって差がありますが、日本の大学生のGPA平均の目安は以下のとおりです。
+      </p>
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">GPAの水準</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">どれくらいの学生か</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">就活・進学での評価</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["3.5〜4.0", "上位5〜10%程度。ほぼ全科目でA以上", "外資・コンサルで強い武器になる"],
+              ["3.0〜3.5", "上位20〜30%程度。A・B中心", "外資・金融の足切り通過ライン目安"],
+              ["2.5〜3.0（平均的）", "中間層。B中心でCも混在", "多くの日系企業では問題なし"],
+              ["2.0〜2.5", "やや低め。B・C混在", "大学院進学に影響が出やすい"],
+              ["2.0未満", "要注意。不可・再履修が多い", "卒業要件の確認が先決"],
+            ].map(([gpa, desc, eval_], i) => (
+              <tr key={i} className={i === 2 ? "bg-blue-50 dark:bg-blue-950/20" : i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-bold text-blue-600 dark:text-blue-400">{gpa}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{desc}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-600 dark:text-zinc-400 text-xs">{eval_}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[13px] text-slate-500 dark:text-zinc-500">
+        ※大学・学部により差があります。理工系は文系より平均が低くなる傾向があります。
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />

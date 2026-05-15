@@ -504,9 +504,10 @@ export const BLOG_POSTS: BlogPost[] = [
   // ── 学生向け・仕事 ──────────────────────────────────────────────────────
   {
     slug: "gpa-calculation-guide",
-    title: "GPA計算方法と就活での目安【3.0・3.5の意味・4点/5点換算・効率的な上げ方】",
-    description: "GPA＝（成績点×単位数）の合計÷総単位数。外資系・金融はGPA3.0〜3.5以上が目安。4.0満点と5.0満点の換算方法、単位数の多い科目を狙う効率的な上げ方も解説。",
+    title: "GPAとは？平均・計算方法・就活での目安【3.0のレベルと効率的な上げ方】",
+    description: "GPAとは成績の加重平均（4.0満点が一般的）。日本の大学のGPA平均は2.5〜3.0前後。外資・金融はGPA3.0以上が目安。計算式・4点/5点換算・単位数の多い科目を狙う上げ方を解説。",
     publishedAt: "2026-05-12",
+    updatedAt: "2026-05-16",
     category: "学生向け",
     relatedToolId: "gpa",
     relatedToolHref: "/tools/gpa",
@@ -537,9 +538,10 @@ export const BLOG_POSTS: BlogPost[] = [
   // ── 動画・テキスト ────────────────────────────────────────────────────────
   {
     slug: "video-compress-guide",
-    title: "動画を圧縮する方法【無料・スマホ対応】LINEで送れないMP4・MOVを軽量化",
-    description: "LINEで「ファイルが大きすぎます」と表示されたら。iPhone・Android・PCどこからでも無料で動画を圧縮できます。MP4・MOV対応、アプリ不要のブラウザ完結。1GBの動画が数十MBになるケースも。",
+    title: "動画の容量を小さくする方法【無料・スマホ対応】MP4・MOVをLINEで送れるサイズに",
+    description: "「動画 容量 小さくする」ならブラウザだけで解決。iPhone・Android・PC対応・アプリ不要・無料。1GBの動画を数十MBに圧縮できます。LINEで送れない・メール添付できない動画もすぐ解決。",
     publishedAt: "2026-05-12",
+    updatedAt: "2026-05-16",
     category: "画像変換",
     relatedToolId: "video-compress",
     relatedToolHref: "/tools/video-compress",
