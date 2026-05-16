@@ -30,10 +30,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/furusato-nozei-guide`, lastModified: blogDate("furusato-nozei-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mercari-fees-guide`, lastModified: blogDate("mercari-fees-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mortgage-simulation-guide`, lastModified: blogDate("mortgage-simulation-guide"), changeFrequency: "monthly", priority: 0.8 },
-    // 手取り年収別 3記事（高ボリュームクエリ）
+    // 手取りカテゴリ TOP
+    { url: `${siteUrl}/salary`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.9 },
+    // 手取り年収別（高ボリュームクエリ）
+    { url: `${siteUrl}/blog/takehome-300`, lastModified: blogDate("takehome-300"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/takehome-400`, lastModified: blogDate("takehome-400"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/takehome-500`, lastModified: blogDate("takehome-500"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/takehome-600`, lastModified: blogDate("takehome-600"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-700`, lastModified: blogDate("takehome-700"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-800`, lastModified: blogDate("takehome-800"), changeFrequency: "monthly", priority: 0.85 },
     // 手取り補完 3記事
     { url: `${siteUrl}/blog/takehome-2026`, lastModified: blogDate("takehome-2026"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/takehome-20s`, lastModified: blogDate("takehome-20s"), changeFrequency: "monthly", priority: 0.8 },

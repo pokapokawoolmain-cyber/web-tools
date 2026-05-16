@@ -138,16 +138,50 @@ export default function Page() {
       </ul>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>年収500万円からのFIRE・資産形成シミュレーション</h2>
+      <p>
+        月手取り32.8万円から生活費を引いた余剰を積み立てると、長期的な資産形成が可能です。
+      </p>
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">月の積立額</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">20年後（年利5%）</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">30年後（年利5%）</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["月3万円", "約1,233万円", "約2,497万円"],
+              ["月5万円", "約2,055万円", "約4,161万円"],
+              ["月10万円", "約4,110万円", "約8,322万円"],
+            ].map(([amount, y20, y30], i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">{amount}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-blue-600 dark:text-blue-400">{y20}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-blue-600 dark:text-blue-400">{y30}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        新NISAのつみたて投資枠（年120万円・月10万円まで非課税）を最大活用すると、運用益にかかる約20%の税金がゼロになります。詳しくは<Link href="/blog/nisa-monthly-simulation">新NISA積立シミュレーション</Link>をご覧ください。また<Link href="/tools/fire-simulator">FIREシミュレーター</Link>で達成年数を試算できます。
+      </p>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>他の年収との手取り比較</h2>
       <ul className="space-y-2">
-        <li><Link href="/blog/takehome-400">年収400万円の手取り</Link>：約318万円（月26.5万円）— 年収500万より75万円少ない</li>
+        <li><Link href="/blog/takehome-300">年収300万円の手取り</Link>：約243万円（月20.3万円）</li>
+        <li><Link href="/blog/takehome-400">年収400万円の手取り</Link>：約318万円（月26.5万円）</li>
         <li>年収500万円の手取り：<strong>約393万円（月32.8万円）← このページ</strong></li>
-        <li><Link href="/blog/takehome-600">年収600万円の手取り</Link>：約462万円（月38.5万円）— 年収500万より69万円多い</li>
+        <li><Link href="/blog/takehome-600">年収600万円の手取り</Link>：約462万円（月38.5万円）</li>
+        <li><Link href="/blog/takehome-700">年収700万円の手取り</Link>：約528万円（月44万円）</li>
       </ul>
       <p>
         年収を100万円上げても手取りは約70〜75万円しか増えません。昇給が「思ったほど生活が変わらない」と感じるのはこの仕組みが原因です。
       </p>
-
       <p>
         年収全体の手取り一覧は<Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link>でまとめて確認できます。
       </p>
