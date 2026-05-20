@@ -12,11 +12,6 @@ type Props = {
 };
 
 export function CategoryToolGrid({ popularTools, allTools, accentColor, categoryName }: Props) {
-  // 全ツール一覧から人気ツールを除外
-  const remainingTools = allTools.filter(
-    (t) => !popularTools.some((p) => p.id === t.id)
-  );
-
   return (
     <div className="space-y-12">
       {/* 人気ツール（フィーチャード） */}
@@ -44,7 +39,7 @@ export function CategoryToolGrid({ popularTools, allTools, accentColor, category
       )}
 
       {/* 全ツール一覧 */}
-      {remainingTools.length > 0 && (
+      {allTools.length > 0 && (
         <section>
           <div className="flex items-center gap-3 mb-5">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -55,7 +50,7 @@ export function CategoryToolGrid({ popularTools, allTools, accentColor, category
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {remainingTools.map((tool) => (
+            {allTools.map((tool) => (
               <CategoryToolCard
                 key={tool.id}
                 tool={tool}
