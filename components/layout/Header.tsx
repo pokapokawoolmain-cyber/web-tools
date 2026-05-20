@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, FileText, BookOpen, LayoutGrid } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, BookOpen, LayoutGrid } from "lucide-react";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 import { ALL_CATEGORIES } from "@/data/categories";
 

@@ -41,7 +41,6 @@ export function BlogCard({
   blog,
   variant = "compact",
   accentColor,
-  showRelatedTool = false,
 }: Props) {
   const color = accentColor ?? CATEGORY_COLORS[blog.category] ?? "text-blue-600 dark:text-blue-400";
   const label = CATEGORY_LABELS[blog.category] ?? "記事";

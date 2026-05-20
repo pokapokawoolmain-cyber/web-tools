@@ -11,7 +11,7 @@ type Props = {
   accentColor: string;
 };
 
-export function CategoryFAQ({ faqs, accentColor }: Props) {
+export function CategoryFAQ({ faqs }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
