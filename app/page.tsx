@@ -6,6 +6,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { TOOLS, getToolsByCategory, getPopularTools } from "@/data/tools";
 import { ToolCard } from "@/components/tools/ToolCard";
+import { ALL_CATEGORIES } from "@/data/categories";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "ToolBox | 無料Webツール集 - FIRE・NISA・画像変換など",
@@ -74,6 +76,51 @@ export default function HomePage() {
             <p className="mt-8 text-sm text-slate-400 dark:text-slate-500">
               全{TOOLS.length}ツール　·　無料　·　登録不要　·　スマホ対応
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* カテゴリから探す */}
+      <section className="py-12 sm:py-16 bg-white dark:bg-zinc-950 border-b border-slate-100 dark:border-zinc-800">
+        <div className="container-base">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">
+            カテゴリから探す
+          </h2>
+          <p className="text-slate-500 dark:text-slate-400 mb-8 text-[15px]">
+            専門ツールをカテゴリ別にまとめました
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {ALL_CATEGORIES.map((cat) => (
+              <Link key={cat.slug} href={`/${cat.slug}`} className="group block">
+                <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${cat.gradientLight} border border-slate-200/60 dark:border-zinc-700/60 p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-200`}>
+                  {/* 背景グロー */}
+                  <div
+                    aria-hidden="true"
+                    className={`absolute -bottom-6 -right-6 w-28 h-28 bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo} opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity`}
+                  />
+                  <div className="relative">
+                    {/* アイコン */}
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo} flex items-center justify-center text-2xl mb-4 shadow-sm group-hover:scale-110 transition-transform`}>
+                      {cat.icon}
+                    </div>
+                    {/* テキスト */}
+                    <h3 className="font-bold text-slate-900 dark:text-white text-[17px] mb-1.5">
+                      {cat.name}
+                    </h3>
+                    <p className="text-[13px] text-slate-500 dark:text-zinc-500 mb-3 line-clamp-2">
+                      {cat.tagline}
+                    </p>
+                    {/* ツール数 + 矢印 */}
+                    <div className="flex items-center justify-between">
+                      <span className={`text-[12px] font-semibold ${cat.accentColor}`}>
+                        {cat.allToolIds.length}種類のツール
+                      </span>
+                      <ArrowRight className={`h-4 w-4 ${cat.accentColor} group-hover:translate-x-1 transition-transform`} />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

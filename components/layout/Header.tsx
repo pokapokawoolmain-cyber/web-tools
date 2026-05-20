@@ -2,8 +2,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, FileText, BookOpen } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, FileText, BookOpen, LayoutGrid } from "lucide-react";
 import { TOOLS, CATEGORIES } from "@/data/tools";
+import { ALL_CATEGORIES } from "@/data/categories";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,18 +83,44 @@ export function Header() {
                     <span className="text-[15px] font-medium text-slate-900 dark:text-white flex-1">ホーム</span>
                     <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
                   </Link>
-                  <Link href="/pdf-tools" onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
-                    <span className="w-8 h-8 rounded-lg bg-rose-500 flex items-center justify-center text-white text-sm"><FileText className="w-4 h-4" /></span>
-                    <span className="text-[15px] font-medium text-slate-900 dark:text-white flex-1">PDFツール</span>
-                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
-                  </Link>
                   <Link href="/blog" onClick={() => setIsOpen(false)}
                     className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
                     <span className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-white text-sm"><BookOpen className="w-4 h-4" /></span>
                     <span className="text-[15px] font-medium text-slate-900 dark:text-white flex-1">ブログ</span>
                     <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
                   </Link>
+                </div>
+              </section>
+
+              {/* カテゴリTOP */}
+              <section>
+                <p className="text-[12px] font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">カテゴリ</p>
+                <div className="bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden divide-y divide-slate-100 dark:divide-zinc-700">
+                  {ALL_CATEGORIES.map((cat) => (
+                    <Link key={cat.slug} href={`/${cat.slug}`} onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
+                      <span className={`w-8 h-8 rounded-lg bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo} flex items-center justify-center text-base`}>
+                        {cat.icon}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-[15px] font-medium text-slate-900 dark:text-white">{cat.name}</span>
+                        <span className="ml-2 text-[11px] text-slate-400 dark:text-zinc-500">{cat.allToolIds.length}ツール</span>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
+                    </Link>
+                  ))}
+                  <Link href="/tools" onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
+                    <span className="w-8 h-8 rounded-lg bg-slate-500 flex items-center justify-center text-white text-sm"><LayoutGrid className="w-4 h-4" /></span>
+                    <span className="text-[15px] font-medium text-slate-900 dark:text-white flex-1">全ツール一覧</span>
+                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
+                  </Link>
+                </div>
+              </section>
+
+              {/* 人気・新着 */}
+              <section>
+                <div className="bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden divide-y divide-slate-100 dark:divide-zinc-700">
                   <div className="px-4 py-[13px]">
                     <div className="flex items-center gap-3 mb-3">
                       <span className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center"><Flame className="w-4 h-4 text-white" /></span>

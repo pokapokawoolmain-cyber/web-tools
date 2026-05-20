@@ -7,6 +7,7 @@ import { ChevronLeft } from "lucide-react";
 import { AdBanner } from "@/components/ads/AdBanner";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
+import { getCategoryForTool } from "@/data/categories";
 
 type ToolLayoutProps = {
   title: string;
@@ -28,6 +29,23 @@ export function ToolLayout({
   const siteUrl = getSiteUrl();
   const toolUrl = `${siteUrl}/tools/${slug}`;
 
+  // カテゴリTOPページへの紐付け
+  const categoryConfig = getCategoryForTool(slug);
+  const categoryHref = categoryConfig ? `/${categoryConfig.slug}` : "/tools";
+  const categoryLabel = categoryConfig ? categoryConfig.name : "ツール一覧";
+
+  const breadcrumbItems = categoryConfig
+    ? [
+        { "@type": "ListItem", "position": 1, "name": "ToolBox", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": categoryConfig.name, "item": `${siteUrl}/${categoryConfig.slug}` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": toolUrl },
+      ]
+    : [
+        { "@type": "ListItem", "position": 1, "name": "ToolBox", "item": siteUrl },
+        { "@type": "ListItem", "position": 2, "name": "ツール一覧", "item": `${siteUrl}/tools` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": toolUrl },
+      ];
+
   const schemas = [
     {
       "@context": "https://schema.org",
@@ -48,11 +66,7 @@ export function ToolLayout({
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ToolBox", "item": siteUrl },
-        { "@type": "ListItem", "position": 2, "name": "ツール一覧", "item": `${siteUrl}/tools` },
-        { "@type": "ListItem", "position": 3, "name": title, "item": toolUrl },
-      ],
+      "itemListElement": breadcrumbItems,
     },
   ];
 
@@ -65,17 +79,20 @@ export function ToolLayout({
         <div className="container-base py-8 sm:py-12">
           {/* パンくずリスト（SEO + ナビゲーション） */}
           <nav aria-label="パンくずリスト" className="mb-4">
-            <ol className="flex items-center gap-1 text-sm text-slate-500 dark:text-slate-500">
+            <ol className="flex items-center flex-wrap gap-1 text-sm text-slate-500 dark:text-slate-500">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
-                >
+                <Link href="/" className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
                   ToolBox
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
-              <li className="text-slate-700 dark:text-slate-300">{title}</li>
+              <li>
+                <Link href={categoryHref} className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
+                  {categoryLabel}
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li className="text-slate-700 dark:text-slate-300 truncate max-w-[200px]">{title}</li>
             </ol>
           </nav>
 
@@ -109,13 +126,13 @@ export function ToolLayout({
             {/* 広告枠（将来的にGoogle AdSenseを配置） */}
             <AdBanner slot="sidebar" />
 
-            {/* 戻るリンク */}
+            {/* カテゴリTOPへの戻りリンク */}
             <Link
-              href="/"
+              href={categoryHref}
               className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               <ChevronLeft className="h-4 w-4" />
-              ツール一覧に戻る
+              {categoryLabel}へ戻る
             </Link>
           </aside>
         </div>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TOOLS, CATEGORIES } from "@/data/tools";
+import { ALL_CATEGORIES } from "@/data/categories";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -42,17 +43,32 @@ export function Footer() {
           ))}
         </div>
 
-        {/* PDF & Blog quick links */}
-        <div className="mb-8 flex flex-wrap gap-3">
-          <Link href="/pdf-tools" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-50 dark:bg-rose-950/30 text-[13px] text-rose-600 dark:text-rose-400 hover:opacity-80 transition-opacity border border-rose-100 dark:border-rose-900/40">
-            📄 PDFツール一覧
-          </Link>
-          <Link href="/blog" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/30 text-[13px] text-emerald-600 dark:text-emerald-400 hover:opacity-80 transition-opacity border border-emerald-100 dark:border-emerald-900/40">
-            📝 ブログ
-          </Link>
-          <Link href="/tools" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/30 text-[13px] text-blue-600 dark:text-blue-400 hover:opacity-80 transition-opacity border border-blue-100 dark:border-blue-900/40">
-            🧰 全ツール一覧
-          </Link>
+        {/* カテゴリTOP + Quick links */}
+        <div className="mb-8">
+          <p className="text-[11px] font-semibold text-slate-400 dark:text-zinc-600 uppercase tracking-wider mb-3">カテゴリ一覧</p>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {ALL_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/${cat.slug}`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-zinc-800 text-[13px] text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors border border-slate-200 dark:border-zinc-700 shadow-sm"
+              >
+                <span>{cat.icon}</span>
+                <span>{cat.name}</span>
+              </Link>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/tools" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/30 text-[13px] text-blue-600 dark:text-blue-400 hover:opacity-80 transition-opacity border border-blue-100 dark:border-blue-900/40">
+              🧰 全ツール一覧
+            </Link>
+            <Link href="/blog" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/30 text-[13px] text-emerald-600 dark:text-emerald-400 hover:opacity-80 transition-opacity border border-emerald-100 dark:border-emerald-900/40">
+              📝 ブログ
+            </Link>
+            <Link href="/salary" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-50 dark:bg-teal-950/30 text-[13px] text-teal-600 dark:text-teal-400 hover:opacity-80 transition-opacity border border-teal-100 dark:border-teal-900/40">
+              💴 手取り早見表
+            </Link>
+          </div>
         </div>
 
         {/* Bottom bar */}

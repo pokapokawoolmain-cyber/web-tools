@@ -186,3 +186,13 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {
   return CATEGORY_CONFIGS[slug];
 }
+
+/** ツールID からそのカテゴリTOP設定を返す。未登録の場合は undefined */
+export function getCategoryForTool(toolId: string): CategoryConfig | undefined {
+  return Object.values(CATEGORY_CONFIGS).find(
+    (c) => c.allToolIds.includes(toolId)
+  );
+}
+
+/** 全カテゴリ設定の配列 */
+export const ALL_CATEGORIES = Object.values(CATEGORY_CONFIGS);
