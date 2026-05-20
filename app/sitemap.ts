@@ -22,6 +22,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: siteUrl, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
     { url: `${siteUrl}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+    // カテゴリTOPページ（SEO強化）
+    { url: `${siteUrl}/pdf`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },
+    { url: `${siteUrl}/image`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },
+    { url: `${siteUrl}/money`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },
     { url: `${siteUrl}/pdf-tools`, lastModified: SITE_LAUNCH, changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
     { url: `${siteUrl}/blog/fire-how-much-needed`, lastModified: blogDate("fire-how-much-needed"), changeFrequency: "monthly", priority: 0.8 },
