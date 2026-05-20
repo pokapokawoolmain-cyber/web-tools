@@ -145,7 +145,7 @@ export function Furusato() {
         </p>
 
         {/* Related Tools */}
-        <RelatedTools currentId="furusato" category="lifestyle" />
+        <RelatedTools toolId="furusato" />
       </div>
     </div>
   );

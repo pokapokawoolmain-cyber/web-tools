@@ -151,7 +151,7 @@ export function WifiQr() {
         </button>
 
         {/* Related Tools */}
-        <RelatedTools currentId="wifi-qr" category="text" />
+        <RelatedTools toolId="wifi-qr" />
       </div>
     </div>
   );

@@ -146,7 +146,7 @@ export function NetIncome() {
         </p>
 
         {/* Related Tools */}
-        <RelatedTools currentId="net-income" category="finance" />
+        <RelatedTools toolId="net-income" />
       </div>
     </div>
   );

@@ -144,7 +144,7 @@ export function ShiftSalary() {
         </p>
 
         {/* Related Tools */}
-        <RelatedTools currentId="shift-salary" category="calc" />
+        <RelatedTools toolId="shift-salary" />
       </div>
     </div>
   );

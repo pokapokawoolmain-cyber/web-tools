@@ -170,10 +170,10 @@ const BUSINESS_CATEGORY: CategoryConfig = {
   accentBg: "bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300",
   title: "無料ビジネス書類ツール集｜契約書・請求書・退職届【登録不要】",
   keywords: ["業務委託契約書 無料", "請求書 作成 無料", "NDA テンプレ 無料", "退職届 テンプレ", "見積書 無料", "内容証明 テンプレ"],
-  popularToolIds: ["invoice-generator", "business-contract-generator", "resignation-letter-generator"],
-  allToolIds: ["business-contract-generator", "nda-generator", "invoice-generator", "estimate-generator", "resignation-letter-generator", "certified-letter-generator"],
+  popularToolIds: ["invoice-generator", "business-contract-generator", "resignation-letter-generator", "hanko-generator", "pdf-signature"],
+  allToolIds: ["business-contract-generator", "nda-generator", "invoice-generator", "estimate-generator", "resignation-letter-generator", "certified-letter-generator", "hanko-generator", "pdf-signature", "receipt-generator"],
   stats: [
-    { label: "ビジネスツール数", value: "6種類" },
+    { label: "ビジネスツール数", value: "9種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・インストール", value: "不要" },
     { label: "PDF保存", value: "対応" },

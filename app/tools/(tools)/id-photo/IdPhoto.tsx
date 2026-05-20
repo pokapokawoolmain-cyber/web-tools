@@ -586,7 +586,7 @@ export function IdPhoto() {
           ✅ 写真はサーバーに送信されません。すべてブラウザ内で処理されます。
         </p>
 
-        <RelatedTools currentId="id-photo" category="画像・PDF" />
+        <RelatedTools toolId="id-photo" />
       </div>
     </div>
   );

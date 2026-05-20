@@ -185,7 +185,7 @@ export function Gpa() {
         </section>
 
         {/* Related Tools */}
-        <RelatedTools currentId="gpa" category="lifestyle" />
+        <RelatedTools toolId="gpa" />
       </div>
     </div>
   );

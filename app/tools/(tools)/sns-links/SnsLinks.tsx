@@ -188,7 +188,7 @@ export function SnsLinks() {
         )}
 
         {/* Related Tools */}
-        <RelatedTools currentId="sns-links" category="text" />
+        <RelatedTools toolId="sns-links" />
       </div>
     </div>
   );

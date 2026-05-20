@@ -72,6 +72,9 @@ export const TOOLS: ToolItem[] = [
   { id: "estimate-generator", title: "見積書作成ツール", seoTitle: "見積書作成ツール｜無料・PDF保存対応【登録不要】", description: "見積書を無料で作成。明細行追加・消費税計算・有効期限・承認欄付き。PDF保存・印刷対応。", href: "/tools/estimate-generator", emoji: "📊", category: "ビジネス・契約書", isNew: true },
   { id: "resignation-letter-generator", title: "退職届作成ツール", seoTitle: "退職届作成ツール｜そのまま提出できるテンプレート", description: "退職届・退職願を無料で作成。一身上の都合など理由別テンプレート対応。A4印刷最適化済み。そのまま提出可能。", href: "/tools/resignation-letter-generator", emoji: "✉️", category: "ビジネス・契約書", isNew: true },
   { id: "certified-letter-generator", title: "内容証明テンプレ作成", seoTitle: "内容証明テンプレート作成ツール｜無料・文字数ガイド付き", description: "内容証明郵便のテンプレートを無料で作成。日本郵便の書式ルール（1行26文字・20行）に対応した文字数ガイド付き。", href: "/tools/certified-letter-generator", emoji: "📮", category: "ビジネス・契約書", isNew: true },
+  { id: "hanko-generator", title: "電子印鑑メーカー", seoTitle: "電子印鑑作成ツール｜PNG・透過対応【無料】", description: "電子印鑑（デジタルはんこ）を無料で作成。円形・角印・縦書き対応。透過PNG・SVG保存でPDFや書類にすぐ使える。", href: "/tools/hanko-generator", emoji: "🔴", category: "ビジネス・契約書", isNew: true, isPopular: true },
+  { id: "pdf-signature", title: "PDF電子署名ツール", seoTitle: "PDF電子署名ツール｜契約書にサイン可能【無料】", description: "PDFに手書き署名・テキスト・印鑑を追加してPDFで保存。契約書・NDA・見積書への署名に。ブラウザ完結・登録不要。", href: "/tools/pdf-signature", emoji: "✍️", category: "ビジネス・契約書", isNew: true, isPopular: true },
+  { id: "receipt-generator", title: "領収書作成ツール", seoTitle: "領収書作成ツール｜PDF保存・印刷対応【登録不要】", description: "領収書を無料で作成。インボイス登録番号・消費税表示・収入印紙目安対応。PDF保存・印刷。ブラウザ完結。", href: "/tools/receipt-generator", emoji: "🧾", category: "ビジネス・契約書", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [

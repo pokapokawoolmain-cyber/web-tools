@@ -8,6 +8,8 @@ import { AdBanner } from "@/components/ads/AdBanner";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
 import { getCategoryForTool } from "@/data/categories";
+import { RelatedTools } from "@/components/tools/RelatedTools";
+import { RecentToolsWrapper } from "@/components/tools/RecentToolsWrapper";
 
 type ToolLayoutProps = {
   title: string;
@@ -123,7 +125,7 @@ export function ToolLayout({
 
           {/* サイドバー（広告・関連ツール） */}
           <aside className="space-y-6">
-            {/* 広告枠（将来的にGoogle AdSenseを配置） */}
+            {/* 広告枠 */}
             <AdBanner slot="sidebar" />
 
             {/* カテゴリTOPへの戻りリンク */}
@@ -134,15 +136,24 @@ export function ToolLayout({
               <ChevronLeft className="h-4 w-4" />
               {categoryLabel}へ戻る
             </Link>
+
+            {/* 最近使ったツール */}
+            <RecentToolsWrapper />
           </aside>
         </div>
 
-        {/* SEO補足テキスト（h2見出し付きの説明文） */}
+        {/* SEO補足テキスト */}
         {seoContent && (
           <div className="mt-12 pt-8 border-t border-slate-100 dark:border-zinc-800 max-w-3xl">
             {seoContent}
           </div>
         )}
+
+        {/* 関連ツール自動回遊 */}
+        <RelatedTools
+          toolId={slug}
+          className="mt-10 pt-8 border-t border-slate-100 dark:border-zinc-800"
+        />
       </div>
     </div>
     </>
