@@ -1,18 +1,22 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { PDFDocument, rgb } from "pdf-lib";
+import { PDFDocument, rgb, degrees } from "pdf-lib";
+import { getSavedSeals } from "@/lib/seal-storage";
+import type { SavedSeal } from "@/lib/seal-storage";
 
-type SignatureMode = "draw" | "text";
+type SignatureMode = "draw" | "text" | "seal";
 
 type SigItem = {
   id: string;
-  type: SignatureMode;
+  type: "draw" | "text" | "seal";
   dataUrl?: string;
   text?: string;
   x: number;
   y: number;
   width: number;
   height: number;
+  rotation: number;
+  opacity: number;
 };
 
 export function PdfSignature() {
@@ -31,10 +35,16 @@ export function PdfSignature() {
   const [toastMsg, setToastMsg] = useState("");
   const [isExporting, setIsExporting] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [savedSeals, setSavedSeals] = useState<SavedSeal[]>([]);
+  const [moveStep, setMoveStep] = useState(5);
 
   const pdfCanvasRef = useRef<HTMLCanvasElement>(null);
   const drawCanvasRef = useRef<HTMLCanvasElement>(null);
   const pathRef = useRef<{ x: number; y: number }[]>([]);
+
+  useEffect(() => {
+    setSavedSeals(getSavedSeals());
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
@@ -129,7 +139,7 @@ export function PdfSignature() {
     tmp.width = w; tmp.height = h;
     tmp.getContext("2d")!.drawImage(dc, -minX, -minY);
     const dataUrl = tmp.toDataURL();
-    const next = [...sigs, { id: `${Date.now()}`, type: "draw" as const, dataUrl, x: minX, y: minY, width: w, height: h }];
+    const next = [...sigs, { id: `${Date.now()}`, type: "draw" as const, dataUrl, x: minX, y: minY, width: w, height: h, rotation: 0, opacity: 1 }];
     setSigs(next);
     pushHistory(next);
     dc.getContext("2d")?.clearRect(0, 0, dc.width, dc.height);
@@ -139,10 +149,33 @@ export function PdfSignature() {
   const addText = () => {
     if (!textInput.trim() || !pdfCanvasRef.current) return;
     const c = pdfCanvasRef.current;
-    const next = [...sigs, { id: `${Date.now()}`, type: "text" as const, text: textInput, x: c.width / 2 - 80, y: c.height / 2 - 16, width: 200, height: 32 }];
+    const next = [...sigs, { id: `${Date.now()}`, type: "text" as const, text: textInput, x: c.width / 2 - 80, y: c.height / 2 - 16, width: 200, height: 32, rotation: 0, opacity: 1 }];
     setSigs(next);
     pushHistory(next);
     setTextInput("");
+    setSelectedId(next[next.length - 1].id);
+  };
+
+  const placeSeal = (seal: SavedSeal) => {
+    if (!pdfCanvasRef.current) return;
+    const c = pdfCanvasRef.current;
+    const size = Math.round(Math.min(c.width, c.height) * 0.14);
+    const item: SigItem = {
+      id: `${Date.now()}`,
+      type: "seal",
+      dataUrl: seal.dataUrl,
+      x: Math.round(c.width / 2 - size / 2),
+      y: Math.round(c.height / 2 - size / 2),
+      width: size,
+      height: size,
+      rotation: 0,
+      opacity: 0.9,
+    };
+    const next = [...sigs, item];
+    setSigs(next);
+    pushHistory(next);
+    setSelectedId(item.id);
+    setMode("text");
   };
 
   const undo = () => {
@@ -160,6 +193,14 @@ export function PdfSignature() {
     setSigs(next); pushHistory(next); setSelectedId(null);
   };
 
+  const updateSigProp = useCallback((id: string, updates: Partial<SigItem>) => {
+    setSigs((ss) => ss.map((s) => s.id === id ? { ...s, ...updates } : s));
+  }, []);
+
+  const moveSig = (id: string, dx: number, dy: number) => {
+    setSigs((ss) => ss.map((s) => s.id === id ? { ...s, x: Math.max(0, Math.round(s.x + dx)), y: Math.max(0, Math.round(s.y + dy)) } : s));
+  };
+
   const getSigPos = (e: React.MouseEvent, sigId: string) => {
     const c = pdfCanvasRef.current!;
     const r = c.getBoundingClientRect();
@@ -175,8 +216,8 @@ export function PdfSignature() {
     const c = pdfCanvasRef.current!;
     const r = c.getBoundingClientRect();
     const scaleX = c.width / r.width, scaleY = c.height / r.height;
-    const x = (e.clientX - r.left) * scaleX - dragOffset.x;
-    const y = (e.clientY - r.top) * scaleY - dragOffset.y;
+    const x = Math.round((e.clientX - r.left) * scaleX - dragOffset.x);
+    const y = Math.round((e.clientY - r.top) * scaleY - dragOffset.y);
     setSigs((ss) => ss.map((s) => s.id === isDragging ? { ...s, x, y } : s));
   };
 
@@ -197,21 +238,30 @@ export function PdfSignature() {
       const cw = pdfCanvasRef.current!.width, ch = pdfCanvasRef.current!.height;
 
       for (const sig of sigs) {
-        if (sig.type === "draw" && sig.dataUrl) {
+        const pdfX = (sig.x / cw) * pw;
+        const pdfY = ph - ((sig.y + sig.height) / ch) * ph;
+        const pdfW = (sig.width / cw) * pw;
+        const pdfH = (sig.height / ch) * ph;
+
+        if ((sig.type === "draw" || sig.type === "seal") && sig.dataUrl) {
           const imgBytes = await fetch(sig.dataUrl).then((r) => r.arrayBuffer());
           const img = await doc.embedPng(imgBytes);
           page.drawImage(img, {
-            x: (sig.x / cw) * pw,
-            y: ph - ((sig.y + sig.height) / ch) * ph,
-            width: (sig.width / cw) * pw,
-            height: (sig.height / ch) * ph,
+            x: pdfX,
+            y: pdfY,
+            width: pdfW,
+            height: pdfH,
+            opacity: sig.opacity,
+            rotate: degrees(-sig.rotation),
           });
         } else if (sig.type === "text" && sig.text) {
           page.drawText(sig.text, {
-            x: (sig.x / cw) * pw,
-            y: ph - ((sig.y + sig.height) / ch) * ph,
+            x: pdfX,
+            y: pdfY,
             size: 12,
             color: rgb(0.1, 0.1, 0.5),
+            opacity: sig.opacity,
+            rotate: degrees(-sig.rotation),
           });
         }
       }
@@ -230,10 +280,12 @@ export function PdfSignature() {
     }
   };
 
+  const selectedSig = selectedId ? sigs.find((s) => s.id === selectedId) ?? null : null;
+
   return (
     <div className="space-y-5">
       {toastMsg && (
-        <div className="fixed top-4 right-4 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-sm shadow-xl animate-in fade-in">
+        <div className="fixed top-4 right-4 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-sm shadow-xl">
           {toastMsg}
         </div>
       )}
@@ -261,24 +313,36 @@ export function PdfSignature() {
         <div className="space-y-4">
           {/* ── ツールバー ── */}
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-4">
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex gap-2">
-                {(["draw", "text"] as SignatureMode[]).map((m) => (
-                  <button key={m} onClick={() => setMode(m)}
-                    className={`px-3 py-2 rounded-lg text-xs font-semibold border transition-all ${
-                      mode === m ? "bg-blue-600 text-white border-blue-600" : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800"
-                    }`}
-                  >
-                    {m === "draw" ? "✍️ 手書きで描く" : "💬 テキストで入力"}
-                  </button>
-                ))}
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {/* モード切替 */}
+              <button onClick={() => setMode("draw")}
+                className={`px-3 py-2 rounded-lg text-xs font-semibold border transition-all ${
+                  mode === "draw" ? "bg-blue-600 text-white border-blue-600" : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800"
+                }`}
+              >
+                ✍️ 手書き
+              </button>
+              <button onClick={() => setMode("text")}
+                className={`px-3 py-2 rounded-lg text-xs font-semibold border transition-all ${
+                  mode === "text" ? "bg-blue-600 text-white border-blue-600" : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800"
+                }`}
+              >
+                💬 テキスト
+              </button>
+              <button
+                onClick={() => { setMode("seal"); setSavedSeals(getSavedSeals()); }}
+                className={`px-3 py-2 rounded-lg text-xs font-semibold border transition-all ${
+                  mode === "seal" ? "bg-red-600 text-white border-red-600" : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800"
+                }`}
+              >
+                🔴 印鑑
+              </button>
 
               {mode === "text" && (
                 <div className="flex gap-2">
                   <input type="text" value={textInput} onChange={(e) => setTextInput(e.target.value)}
                     placeholder="署名・社名など" onKeyDown={(e) => e.key === "Enter" && addText()}
-                    className="px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 w-48"
+                    className="px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 w-44"
                   />
                   <button onClick={addText} className="px-3 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700">追加</button>
                 </div>
@@ -297,9 +361,43 @@ export function PdfSignature() {
                 )}
               </div>
             </div>
+
+            {/* 印鑑ピッカー */}
+            {mode === "seal" && (
+              <div className="mt-3 pt-3 border-t border-slate-100 dark:border-zinc-800">
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mb-2">印鑑を選択してPDF上に配置</p>
+                {savedSeals.length === 0 ? (
+                  <div className="flex items-center gap-2 text-xs text-slate-400">
+                    <span>保存済み印鑑がありません。</span>
+                    <a href="/tools/hanko-generator" className="text-blue-500 hover:underline font-medium">
+                      電子印鑑メーカーで作成 →
+                    </a>
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {savedSeals.map((seal) => (
+                      <button key={seal.id} onClick={() => placeSeal(seal)}
+                        className="p-2 border-2 border-slate-200 dark:border-zinc-700 rounded-xl hover:border-red-400 dark:hover:border-red-500 transition-colors bg-white dark:bg-zinc-800"
+                        title={seal.name || "印鑑"}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={seal.dataUrl} alt={seal.name || "印鑑"} className="w-12 h-12 object-contain" />
+                        {seal.name && <p className="text-xs text-center mt-1 text-slate-500 dark:text-zinc-400">{seal.name}</p>}
+                      </button>
+                    ))}
+                    <a href="/tools/hanko-generator"
+                      className="flex flex-col items-center justify-center p-2 w-[60px] h-[60px] border-2 border-dashed border-slate-300 dark:border-zinc-600 rounded-xl hover:border-red-400 text-slate-400 transition-colors">
+                      <span className="text-xl leading-none">＋</span>
+                      <span className="text-xs mt-1">作成</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            )}
+
             {mode === "draw" && (
               <p className="text-xs text-slate-400 dark:text-zinc-500 mt-2">
-                PDFの上でマウスをドラッグして署名を描いてください。署名後はドラッグで位置を調整できます。
+                PDFの上でマウスをドラッグして署名を描いてください。
               </p>
             )}
           </div>
@@ -315,17 +413,26 @@ export function PdfSignature() {
             >
               <canvas ref={pdfCanvasRef} className="block" />
 
-              {/* 署名オーバーレイ */}
+              {/* 署名・印鑑オーバーレイ */}
               {sigs.map((sig) => (
                 <div key={sig.id}
-                  style={{ position: "absolute", left: sig.x, top: sig.y, width: sig.width, height: sig.height,
-                    cursor: mode === "text" ? "move" : "default",
+                  style={{
+                    position: "absolute",
+                    left: sig.x,
+                    top: sig.y,
+                    width: sig.width,
+                    height: sig.height,
+                    cursor: "move",
                     border: selectedId === sig.id ? "1.5px dashed #3b82f6" : "1px dashed transparent",
-                    boxSizing: "border-box" }}
+                    boxSizing: "border-box",
+                    transform: sig.rotation ? `rotate(${sig.rotation}deg)` : undefined,
+                    transformOrigin: "center center",
+                    opacity: sig.opacity,
+                  }}
                   onMouseDown={(e) => getSigPos(e, sig.id)}
                   onClick={() => setSelectedId(sig.id)}
                 >
-                  {sig.type === "draw" && sig.dataUrl && (
+                  {(sig.type === "draw" || sig.type === "seal") && sig.dataUrl && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={sig.dataUrl} alt="署名" style={{ width: "100%", height: "100%", pointerEvents: "none" }} />
                   )}
@@ -347,6 +454,105 @@ export function PdfSignature() {
               />
             </div>
           </div>
+
+          {/* ── 選択オブジェクト プロパティパネル ── */}
+          {selectedSig && (
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-blue-200 dark:border-blue-800/50 p-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                  {selectedSig.type === "seal" ? "🔴 印鑑の設定" : selectedSig.type === "draw" ? "✍️ 署名の設定" : "💬 テキストの設定"}
+                </h4>
+                <button onClick={() => setSelectedId(null)} className="text-xs text-slate-400 hover:text-slate-600">✕ 閉じる</button>
+              </div>
+
+              {/* X / Y / W / H */}
+              <div className="grid grid-cols-4 gap-2">
+                {(["x", "y", "width", "height"] as const).map((key) => (
+                  <div key={key}>
+                    <label className="block text-xs text-slate-500 dark:text-zinc-400 mb-1 uppercase">{key === "width" ? "W" : key === "height" ? "H" : key.toUpperCase()}</label>
+                    <input
+                      type="number"
+                      value={Math.round(selectedSig[key] as number)}
+                      onChange={(e) => updateSigProp(selectedSig.id, { [key]: Number(e.target.value) })}
+                      className="w-full px-2 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* 矢印ボタン + ステップ */}
+              <div className="flex items-center gap-4">
+                <div className="grid grid-cols-3 gap-1 w-24">
+                  <div />
+                  <button onClick={() => moveSig(selectedSig.id, 0, -moveStep)}
+                    className="p-1.5 rounded border border-slate-200 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-800 text-xs text-center font-bold">↑</button>
+                  <div />
+                  <button onClick={() => moveSig(selectedSig.id, -moveStep, 0)}
+                    className="p-1.5 rounded border border-slate-200 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-800 text-xs text-center font-bold">←</button>
+                  <div className="flex items-center justify-center text-xs text-slate-300 dark:text-zinc-600">✛</div>
+                  <button onClick={() => moveSig(selectedSig.id, moveStep, 0)}
+                    className="p-1.5 rounded border border-slate-200 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-800 text-xs text-center font-bold">→</button>
+                  <div />
+                  <button onClick={() => moveSig(selectedSig.id, 0, moveStep)}
+                    className="p-1.5 rounded border border-slate-200 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-zinc-800 text-xs text-center font-bold">↓</button>
+                  <div />
+                </div>
+                <div>
+                  <p className="text-xs text-slate-400 mb-1.5">移動幅</p>
+                  <div className="flex gap-1">
+                    {[1, 5, 10].map((step) => (
+                      <button key={step} onClick={() => setMoveStep(step)}
+                        className={`px-2 py-1 rounded-lg text-xs border transition-all ${moveStep === step ? "bg-blue-600 text-white border-blue-600" : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800"}`}>
+                        {step}px
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 配置プリセット */}
+                <div className="ml-auto">
+                  <p className="text-xs text-slate-400 mb-1.5">プリセット</p>
+                  <div className="flex gap-1">
+                    {pdfCanvasRef.current && [
+                      { label: "中央", dx: Math.round(pdfCanvasRef.current.width / 2 - selectedSig.width / 2), dy: Math.round(pdfCanvasRef.current.height / 2 - selectedSig.height / 2) },
+                      { label: "右下", dx: Math.round(pdfCanvasRef.current.width - selectedSig.width - 30), dy: Math.round(pdfCanvasRef.current.height - selectedSig.height - 30) },
+                      { label: "右上", dx: Math.round(pdfCanvasRef.current.width - selectedSig.width - 30), dy: 30 },
+                    ].map(({ label, dx, dy }) => (
+                      <button key={label}
+                        onClick={() => updateSigProp(selectedSig.id, { x: dx, y: dy })}
+                        className="px-2 py-1 rounded-lg text-xs border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800">
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* 回転 */}
+              <div>
+                <div className="flex justify-between mb-1">
+                  <label className="text-xs text-slate-500 dark:text-zinc-400">回転</label>
+                  <span className="text-xs text-slate-400 dark:text-zinc-500">{selectedSig.rotation}°</span>
+                </div>
+                <input type="range" min="-180" max="180" value={selectedSig.rotation}
+                  onChange={(e) => updateSigProp(selectedSig.id, { rotation: Number(e.target.value) })}
+                  className="w-full accent-blue-600"
+                />
+              </div>
+
+              {/* 透明度 */}
+              <div>
+                <div className="flex justify-between mb-1">
+                  <label className="text-xs text-slate-500 dark:text-zinc-400">透明度</label>
+                  <span className="text-xs text-slate-400 dark:text-zinc-500">{Math.round(selectedSig.opacity * 100)}%</span>
+                </div>
+                <input type="range" min="10" max="100" value={Math.round(selectedSig.opacity * 100)}
+                  onChange={(e) => updateSigProp(selectedSig.id, { opacity: Number(e.target.value) / 100 })}
+                  className="w-full accent-blue-600"
+                />
+              </div>
+            </div>
+          )}
 
           {/* ── フッター操作 ── */}
           <div className="flex flex-wrap items-center justify-between gap-3">

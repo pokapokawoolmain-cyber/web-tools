@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { saveSeal } from "@/lib/seal-storage";
 
 type HankoConfig = {
   text: string;
@@ -128,6 +129,14 @@ export function HankoGenerator() {
       a.click();
     }
     showToast("ダウンロードしました");
+  };
+
+  const saveToStorage = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dataUrl = canvas.toDataURL("image/png");
+    saveSeal(dataUrl, config.text);
+    showToast("印鑑を保存しました。PDFツールから押印できます ✓");
   };
 
   const downloadSvg = () => {
@@ -283,10 +292,16 @@ export function HankoGenerator() {
 
           <div className="space-y-2">
             <button
+              onClick={saveToStorage}
+              className="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl text-sm transition-colors"
+            >
+              💾 PDFツールで使うために保存
+            </button>
+            <button
               onClick={() => downloadPng(true)}
               className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm transition-colors"
             >
-              透過PNGでダウンロード（推奨）
+              透過PNGでダウンロード
             </button>
             <div className="grid grid-cols-2 gap-2">
               <button

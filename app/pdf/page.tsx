@@ -8,6 +8,7 @@ import { CategoryHero } from "@/components/category/CategoryHero";
 import { CategoryToolGrid } from "@/components/category/CategoryToolGrid";
 import { CategoryFAQ } from "@/components/category/CategoryFAQ";
 import { CategoryBlogSection } from "@/components/category/CategoryBlogSection";
+import { NandemoPdfBanner } from "@/components/pdf/NandemoPdfBanner";
 
 const config = CATEGORY_CONFIGS["pdf"]!;
 const siteUrl = getSiteUrl();
@@ -85,6 +86,9 @@ export default function PdfCategoryPage() {
           sectionTitle="PDF活用ガイド"
           accentColor={config.accentColor}
         />
+
+        {/* iOSアプリ 導線 */}
+        <NandemoPdfBanner />
 
         {/* FAQ */}
         <CategoryFAQ faqs={config.faqs} accentColor={config.accentColor} />

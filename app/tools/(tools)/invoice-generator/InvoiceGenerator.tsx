@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
+import { getSavedSeals } from "@/lib/seal-storage";
+import type { SavedSeal } from "@/lib/seal-storage";
 
 type LineItem = { id: number; name: string; qty: number; unit: string; price: number };
 
@@ -40,6 +42,14 @@ const defaultForm: InvoiceForm = {
 export function InvoiceGenerator() {
   const [form, setForm] = useState<InvoiceForm>(defaultForm);
   const [toastMsg, setToastMsg] = useState("");
+  const [savedSeals, setSavedSeals] = useState<SavedSeal[]>([]);
+  const [showSeal, setShowSeal] = useState(false);
+  const [sealDataUrl, setSealDataUrl] = useState<string | null>(null);
+  const [sealSize, setSealSize] = useState(64);
+
+  useEffect(() => {
+    setSavedSeals(getSavedSeals());
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem("invoice-form");
@@ -151,6 +161,47 @@ export function InvoiceGenerator() {
         </div>
       </div>
 
+      {/* 印鑑 */}
+      <div className="no-print bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-5">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-semibold text-slate-700 dark:text-zinc-300">印鑑（任意）</h3>
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" checked={showSeal} onChange={(e) => setShowSeal(e.target.checked)} className="rounded accent-blue-600" />
+            <span className="text-xs text-slate-500 dark:text-zinc-400">印鑑を表示する</span>
+          </label>
+        </div>
+        {showSeal && (
+          <div className="space-y-3">
+            {savedSeals.length === 0 ? (
+              <p className="text-xs text-slate-400">
+                保存済み印鑑がありません。
+                <a href="/tools/hanko-generator" className="text-blue-500 hover:underline ml-1">電子印鑑メーカーで作成 →</a>
+              </p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {savedSeals.map((s) => (
+                  <button key={s.id} onClick={() => setSealDataUrl(s.dataUrl)}
+                    className={`p-1.5 rounded-xl border-2 transition-all ${sealDataUrl === s.dataUrl ? "border-red-500" : "border-transparent hover:border-red-300"}`}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={s.dataUrl} alt="印鑑" className="w-12 h-12 object-contain" />
+                  </button>
+                ))}
+                <button onClick={() => setSealDataUrl(null)}
+                  className={`px-3 py-2 text-xs rounded-xl border-2 transition-all ${!sealDataUrl ? "border-slate-400 text-slate-500" : "border-transparent text-slate-400 hover:border-slate-200"}`}>
+                  なし
+                </button>
+              </div>
+            )}
+            {sealDataUrl && (
+              <div>
+                <label className="text-xs text-slate-500 dark:text-zinc-400 block mb-1">サイズ: {sealSize}px</label>
+                <input type="range" min="40" max="120" value={sealSize} onChange={(e) => setSealSize(Number(e.target.value))} className="w-48 accent-red-600" />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
       <div className="no-print bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-5 space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-slate-700 dark:text-zinc-300">明細</h3>
@@ -205,12 +256,23 @@ export function InvoiceGenerator() {
               <p className="text-lg font-semibold text-slate-900">{form.clientName || "御請求先"} 御中</p>
               {form.clientContact && <p className="text-sm text-slate-600">担当: {form.clientContact}</p>}
             </div>
-            <div className="text-right text-sm text-slate-600 space-y-0.5">
+            <div className="relative text-right text-sm text-slate-600 space-y-0.5 pr-2">
               <p className="font-semibold text-slate-900">{form.issuerName || "発行者名"}</p>
               {form.issuerAddress && <p>{form.issuerAddress}</p>}
               {form.issuerPhone && <p>Tel: {form.issuerPhone}</p>}
               {form.issuerEmail && <p>{form.issuerEmail}</p>}
               {form.invoiceRegistrationNumber && <p className="text-xs">登録番号: {form.invoiceRegistrationNumber}</p>}
+              {/* 印鑑 */}
+              {showSeal && sealDataUrl ? (
+                <div className="flex justify-end mt-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={sealDataUrl} alt="印鑑" style={{ width: sealSize, height: sealSize, opacity: 0.85 }} />
+                </div>
+              ) : showSeal && (
+                <div className="flex justify-end mt-2">
+                  <div style={{ width: sealSize, height: sealSize }} className="border-2 border-slate-300 rounded-full flex items-center justify-center text-xs text-slate-300">印</div>
+                </div>
+              )}
             </div>
           </div>
 

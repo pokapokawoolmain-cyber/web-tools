@@ -4,18 +4,18 @@ import { PdfSignature } from "./PdfSignature";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
 export const metadata: Metadata = generateToolMeta(
-  "PDF電子署名ツール",
-  "PDFに手書き署名・テキスト署名を追加してPDFで保存。契約書・NDA・見積書・業務委託への署名に。ブラウザ完結・登録不要・無料。",
+  "PDF電子署名・押印ツール",
+  "PDFに手書き署名・テキスト署名・電子印鑑を追加してPDF保存。PDF印鑑押印・PDF署名・PDF押印を無料でブラウザ完結。契約書・NDA・請求書への押印に。登録不要。",
   "pdf-signature",
-  ["PDF 電子署名", "PDF 署名 無料", "契約書 サイン オンライン", "PDF 印鑑 追加", "電子署名 ブラウザ", "PDF 手書き サイン"]
+  ["PDF 電子署名", "PDF 押印", "PDF 印鑑 押印", "PDF 署名 無料", "電子印鑑 PDF 追加", "PDF 印鑑 追加 無料", "契約書 押印 オンライン"]
 );
 
 const seoContent = (
   <div className="space-y-8">
     <section>
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">PDF電子署名ツールとは</h2>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">PDF電子署名・押印ツールとは</h2>
       <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-        PDFファイルに手書き署名・テキスト署名を直接追加できる無料ツールです。契約書・NDA・業務委託契約書・見積書・請求書などへの署名をブラウザ上で完結できます。アップロードしたPDFはサーバーに送信されず、すべての処理はお使いのデバイス上で行われます。
+        PDFファイルに手書き署名・テキスト署名・電子印鑑を直接追加できる無料ツールです。契約書・NDA・業務委託契約書・見積書・請求書などへの署名・押印をブラウザ上で完結できます。<a href="/tools/hanko-generator" className="text-blue-600 hover:underline">電子印鑑メーカー</a>で作成・保存した印鑑をPDFに押印でき、位置・サイズ・回転・透明度を自由に調整できます。アップロードしたPDFはサーバーに送信されません。
       </p>
     </section>
     <section>
@@ -41,8 +41,8 @@ const seoContent = (
 export default function Page() {
   return (
     <ToolLayout
-      title="PDF電子署名ツール"
-      description="PDFに手書き署名・テキスト署名を追加してPDF保存。契約書・NDA・見積書への署名に。ブラウザ完結・登録不要。"
+      title="PDF電子署名・押印ツール"
+      description="PDFに手書き署名・テキスト署名・電子印鑑を追加してPDF保存。PDF押印・PDF印鑑追加も無料。ブラウザ完結・登録不要。"
       icon="✍️"
       slug="pdf-signature"
       seoContent={seoContent}
