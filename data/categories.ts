@@ -153,12 +153,48 @@ const MONEY_CATEGORY: CategoryConfig = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// ビジネス・契約書カテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const BUSINESS_CATEGORY: CategoryConfig = {
+  slug: "business",
+  name: "ビジネス・契約書",
+  nameEn: "Business & Contracts",
+  tagline: "無料ビジネス書類ツール集｜契約書・請求書・退職届",
+  description: "業務委託契約書・NDA・請求書・見積書・退職届・内容証明を無料で作成。登録不要・ブラウザ完結・PDF保存対応。",
+  longDescription: "フリーランス・個人事業主・会社員に必要なビジネス書類をすべてブラウザで無料作成。アプリ不要・登録不要で、作成した書類はそのままPDF保存・印刷して使用できます。",
+  icon: "📋",
+  gradientFrom: "from-blue-600",
+  gradientTo: "to-indigo-600",
+  gradientLight: "from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/20",
+  accentColor: "text-blue-600 dark:text-blue-400",
+  accentBg: "bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300",
+  title: "無料ビジネス書類ツール集｜契約書・請求書・退職届【登録不要】",
+  keywords: ["業務委託契約書 無料", "請求書 作成 無料", "NDA テンプレ 無料", "退職届 テンプレ", "見積書 無料", "内容証明 テンプレ"],
+  popularToolIds: ["invoice-generator", "business-contract-generator", "resignation-letter-generator"],
+  allToolIds: ["business-contract-generator", "nda-generator", "invoice-generator", "estimate-generator", "resignation-letter-generator", "certified-letter-generator"],
+  stats: [
+    { label: "ビジネスツール数", value: "6種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "PDF保存", value: "対応" },
+  ],
+  faqs: [
+    { q: "作成した書類は法的効力がありますか？", a: "本ツールで作成した書類はひな形・参考資料としてご利用ください。実際の契約締結・法的手続きにあたっては、弁護士・司法書士などの専門家にご相談されることをお勧めします。" },
+    { q: "作成した書類はどうやって保存しますか？", a: "「PDFで保存・印刷」ボタンをクリックするとブラウザの印刷ダイアログが開きます。「PDFに保存」を選択することでPDF形式で保存できます。" },
+    { q: "入力した内容はサーバーに送信されますか？", a: "すべての処理はブラウザ内で完結します。入力した情報が外部サーバーに送信されることは一切ありません。" },
+    { q: "スマホからも使えますか？", a: "はい。スマートフォン・タブレットのブラウザからご利用いただけます。ただし印刷・PDF保存はPCからの利用を推奨します。" },
+    { q: "商用利用はできますか？", a: "無料でご利用いただけます。ただし、作成した書類の内容・効力については責任を負いかねます。重要な書類については専門家にご確認ください。" },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   pdf: PDF_CATEGORY,
   image: IMAGE_CATEGORY,
   money: MONEY_CATEGORY,
+  business: BUSINESS_CATEGORY,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {

@@ -5,7 +5,8 @@ export type ToolCategory =
   | "生活・副業"
   | "テキスト・Web"
   | "学生向け"
-  | "仕事・副業";
+  | "仕事・副業"
+  | "ビジネス・契約書";
 
 export type ToolItem = {
   id: string;
@@ -64,10 +65,17 @@ export const TOOLS: ToolItem[] = [
   { id: "gpa", title: "GPA計算", description: "科目・単位数・成績を入力してGPAを即計算。大学の累積GPAをリアルタイムで確認。", href: "/tools/gpa", emoji: "🎓", category: "学生向け", isNew: true },
   // 仕事・副業
   { id: "resume-builder", title: "履歴書・職務経歴書作成", description: "フォームを埋めるだけで職務経歴書のテキストが完成。そのままコピー・印刷OK。", href: "/tools/resume-builder", emoji: "📄", category: "仕事・副業" },
+  // ビジネス・契約書
+  { id: "business-contract-generator", title: "業務委託契約書作成", seoTitle: "業務委託契約書作成ツール｜無料テンプレート【登録不要】", description: "業務委託契約書を無料で作成。Web制作・動画編集・システム開発など業種別テンプレート対応。PDF保存・印刷・コピー機能付き。", href: "/tools/business-contract-generator", emoji: "📋", category: "ビジネス・契約書", isNew: true },
+  { id: "nda-generator", title: "NDA（秘密保持契約書）作成", seoTitle: "NDA・秘密保持契約書作成ツール｜無料テンプレート", description: "NDA（秘密保持契約書）を無料で作成。正式な契約書フォーマットで自動生成。PDF保存・印刷対応。登録不要。", href: "/tools/nda-generator", emoji: "🤝", category: "ビジネス・契約書", isNew: true },
+  { id: "invoice-generator", title: "請求書作成ツール", seoTitle: "請求書作成ツール｜無料・PDF保存対応【登録不要】", description: "請求書を無料で作成。明細行の追加・消費税計算・インボイス番号対応。PDF保存・印刷。ブラウザ完結。", href: "/tools/invoice-generator", emoji: "🧾", category: "ビジネス・契約書", isNew: true, isPopular: true },
+  { id: "estimate-generator", title: "見積書作成ツール", seoTitle: "見積書作成ツール｜無料・PDF保存対応【登録不要】", description: "見積書を無料で作成。明細行追加・消費税計算・有効期限・承認欄付き。PDF保存・印刷対応。", href: "/tools/estimate-generator", emoji: "📊", category: "ビジネス・契約書", isNew: true },
+  { id: "resignation-letter-generator", title: "退職届作成ツール", seoTitle: "退職届作成ツール｜そのまま提出できるテンプレート", description: "退職届・退職願を無料で作成。一身上の都合など理由別テンプレート対応。A4印刷最適化済み。そのまま提出可能。", href: "/tools/resignation-letter-generator", emoji: "✉️", category: "ビジネス・契約書", isNew: true },
+  { id: "certified-letter-generator", title: "内容証明テンプレ作成", seoTitle: "内容証明テンプレート作成ツール｜無料・文字数ガイド付き", description: "内容証明郵便のテンプレートを無料で作成。日本郵便の書式ルール（1行26文字・20行）に対応した文字数ガイド付き。", href: "/tools/certified-letter-generator", emoji: "📮", category: "ビジネス・契約書", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [
-  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業"
+  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書"
 ];
 
 export function getToolsByCategory() {
@@ -99,6 +107,7 @@ export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
   "テキスト・Web": "text",
   "学生向け": "student",
   "仕事・副業": "work",
+  "ビジネス・契約書": "business",
 };
 
 export function getToolsByCategorySlug(slug: string): ToolItem[] | null {

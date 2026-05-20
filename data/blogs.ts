@@ -11,7 +11,8 @@ export type BlogCategory =
   | "calculator"
   | "text"
   | "student"
-  | "lifestyle";
+  | "lifestyle"
+  | "business";
 
 export type BlogEntry = {
   slug: string;
