@@ -8,6 +8,7 @@ import { getSiteUrl } from "@/lib/utils";
 import { CategoryHero } from "@/components/category/CategoryHero";
 import { CategoryToolGrid } from "@/components/category/CategoryToolGrid";
 import { CategoryFAQ } from "@/components/category/CategoryFAQ";
+import { CategoryBlogSection } from "@/components/category/CategoryBlogSection";
 
 const config = CATEGORY_CONFIGS["money"]!;
 const siteUrl = getSiteUrl();
@@ -80,38 +81,11 @@ export default function MoneyCategoryPage() {
         />
 
         {/* 関連ブログ */}
-        <section>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-5">
-            お金・投資ガイド
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {config.relatedBlogs.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group block rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
-              >
-                <p className={`text-[12px] font-semibold mb-1.5 ${config.accentColor}`}>
-                  📖 解説記事
-                </p>
-                <h3 className="font-semibold text-slate-900 dark:text-white text-[14px] mb-1.5 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {post.title}
-                </h3>
-                <p className="text-[12px] text-slate-500 dark:text-zinc-500 line-clamp-2">
-                  {post.description}
-                </p>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-4 text-right">
-            <Link
-              href="/blog"
-              className="text-[13px] text-slate-400 hover:text-slate-700 dark:hover:text-zinc-300 transition-colors"
-            >
-              すべての記事を見る →
-            </Link>
-          </div>
-        </section>
+        <CategoryBlogSection
+          category="money"
+          sectionTitle="お金・投資ガイド"
+          accentColor={config.accentColor}
+        />
 
         {/* 手取りカテゴリへの導線 */}
         <section className="rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/20 border border-emerald-200 dark:border-emerald-800/50 p-6">

@@ -5,11 +5,7 @@
 
 export type CategoryFaq = { q: string; a: string };
 
-export type CategoryBlogPost = {
-  slug: string;
-  title: string;
-  description: string;
-};
+// ブログ記事は data/blogs.ts で一元管理。CategoryConfig には含まない
 
 export type CategoryConfig = {
   slug: string;
@@ -32,7 +28,7 @@ export type CategoryConfig = {
   popularToolIds: string[];   // 人気ツール（上部フィーチャー）
   allToolIds: string[];       // 全ツール（下部一覧）
   faqs: CategoryFaq[];
-  relatedBlogs: CategoryBlogPost[];
+  // relatedBlogs は data/blogs.ts で一元管理 → getBlogsByCategory() で取得
   stats: { label: string; value: string }[];
 };
 
@@ -75,12 +71,6 @@ const PDF_CATEGORY: CategoryConfig = {
     { q: "ファイルサイズの上限はありますか？", a: "ブラウザのメモリに依存しますが、PCでは数百MB、スマホでは数十MBが目安です。大きなファイルはPCでの操作を推奨します。" },
     { q: "複数のPDFを一度に処理できますか？", a: "PDF結合・JPG→PDFなど一部のツールでは複数ファイルのアップロードに対応しています。各ツールの説明をご確認ください。" },
   ],
-  relatedBlogs: [
-    { slug: "pdf-merge-guide", title: "PDFをスマホで結合する方法", description: "アプリ不要・ブラウザ完結でPDFを無料で結合する手順を解説" },
-    { slug: "pdf-compress-guide", title: "PDFを圧縮・軽量化する方法", description: "メール添付に最適なPDF圧縮の方法と圧縮率の目安" },
-    { slug: "pdf-split-guide", title: "PDFの特定ページだけ取り出す方法", description: "必要なページだけ抽出・分割する手順を解説" },
-    { slug: "iphone-pdf-guide", title: "iPhoneだけでPDFを操作する方法", description: "Safari完結でできるPDF操作のすべて" },
-  ],
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -119,12 +109,6 @@ const IMAGE_CATEGORY: CategoryConfig = {
     { q: "証明写真はコンビニで印刷できますか？", a: "はい。証明写真作成ツールにはL判4面配置（コンビニ印刷モード）が搭載されています。セブン-イレブン・ローソン・ファミリーマートで印刷できる形式で出力できます。" },
     { q: "動画圧縮で対応しているフォーマットは？", a: "MP4・MOV（iPhone動画）・AVI・MKVなど主要な動画形式に対応しています。解像度・品質を自由に調整してファイルサイズを小さくできます。" },
     { q: "ファイルはサーバーにアップロードされますか？", a: "すべての処理はブラウザ内で完結します。画像・動画ファイルが外部に送信されることは一切ありません。" },
-  ],
-  relatedBlogs: [
-    { slug: "image-compress-guide", title: "画像を軽くする方法", description: "JPG・PNG画像の圧縮ガイド。SNS・メール添付の最適サイズも解説" },
-    { slug: "heic-jpg-guide", title: "HEIC→JPG変換の方法", description: "iPhoneのHEIC写真をWindowsで開けるJPGに変換する手順" },
-    { slug: "video-compress-guide", title: "動画の容量を小さくする方法", description: "MP4・MOVをLINEで送れるサイズに圧縮する方法" },
-    { slug: "id-photo-smartphone", title: "スマホで証明写真を作る方法", description: "コンビニ印刷対応の証明写真をスマホだけで作る手順" },
   ],
 };
 
@@ -165,12 +149,6 @@ const MONEY_CATEGORY: CategoryConfig = {
     { q: "手取り計算の精度はどのくらいですか？", a: "独身・会社員・東京都在住の標準的な条件での概算値です。加入する健康保険組合・家族構成・各種控除によって実際の手取りは異なります。目安としてご活用ください。" },
     { q: "住宅ローンシミュレーターで変動金利と固定金利を比較できますか？", a: "はい。金利を自由に設定できるため、変動金利（0.5%前後）と固定金利（1〜2%）の両方を入力して返済額を比較できます。" },
     { q: "ふるさと納税の控除上限額はどうやって調べますか？", a: "年収と家族構成を入力するだけで控除上限額の目安を計算できます。ワンストップ特例と確定申告の使い分けについても確認できます。" },
-  ],
-  relatedBlogs: [
-    { slug: "fire-how-much-needed", title: "FIREに必要な資産はいくら？", description: "年収・生活費別シミュレーション。4%ルールと日本での現実的なFIRE戦略" },
-    { slug: "nisa-monthly-simulation", title: "新NISA積立シミュレーション", description: "月3万・5万・10万×10〜30年の全パターン早見表" },
-    { slug: "salary-takehome-table", title: "手取り早見表2026年版", description: "年収300〜1500万円の月収換算・税金内訳を一覧で確認" },
-    { slug: "mortgage-simulation-guide", title: "住宅ローンシミュレーションガイド", description: "借入額・金利別の月返済額と総返済額の早見表" },
   ],
 };
 
