@@ -22,8 +22,10 @@ const defaultConfig: HankoConfig = {
 
 export function HankoGenerator() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const docPreviewRef = useRef<HTMLCanvasElement>(null);
   const [config, setConfig] = useState<HankoConfig>(defaultConfig);
   const [toastMsg, setToastMsg] = useState("");
+  const [checkerboard, setCheckerboard] = useState(false);
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
@@ -101,7 +103,73 @@ export function HankoGenerator() {
     }
   }, [config]);
 
+  // Draw document preview with seal
+  const drawDocPreview = useCallback(() => {
+    const preview = docPreviewRef.current;
+    const hanko = canvasRef.current;
+    if (!preview || !hanko) return;
+    const ctx = preview.getContext("2d");
+    if (!ctx) return;
+
+    const W = 280;
+    const H = 200;
+    preview.width = W;
+    preview.height = H;
+
+    // Cream paper background
+    ctx.fillStyle = "#faf9f5";
+    ctx.fillRect(0, 0, W, H);
+
+    // Horizontal lines (like ruled paper)
+    ctx.strokeStyle = "#ddd9cc";
+    ctx.lineWidth = 0.5;
+    for (let y = 28; y < H - 10; y += 20) {
+      ctx.beginPath();
+      ctx.moveTo(16, y);
+      ctx.lineTo(W - 16, y);
+      ctx.stroke();
+    }
+
+    // Dummy text blocks
+    ctx.fillStyle = "#aaa";
+    ctx.font = "7px sans-serif";
+    ctx.textAlign = "left";
+    const lines = [
+      "株式会社サンプル 御中",
+      "",
+      "いつもお世話になっております。",
+      "下記の通りご請求申し上げます。",
+      "",
+      "合計金額　￥110,000（税込）",
+    ];
+    lines.forEach((line, i) => {
+      if (line) ctx.fillText(line, 20, 38 + i * 20);
+    });
+
+    // Date
+    ctx.fillStyle = "#999";
+    ctx.font = "6px sans-serif";
+    ctx.textAlign = "right";
+    ctx.fillText("2026年5月21日", W - 16, 20);
+
+    // Seal overlay (bottom-right area)
+    const sealSize = Math.min(60, hanko.width);
+    const sx = W - sealSize - 20;
+    const sy = H - sealSize - 14;
+    ctx.save();
+    ctx.globalAlpha = 0.88;
+    ctx.drawImage(hanko, sx, sy, sealSize, sealSize);
+    ctx.restore();
+  }, []);
+
   useEffect(() => { drawHanko(); }, [drawHanko]);
+
+  // Re-draw doc preview after hanko canvas updates
+  useEffect(() => {
+    // Small delay to ensure hanko canvas has rendered
+    const id = setTimeout(() => drawDocPreview(), 20);
+    return () => clearTimeout(id);
+  }, [drawDocPreview]);
 
   const set = <K extends keyof HankoConfig>(key: K, val: HankoConfig[K]) =>
     setConfig(c => ({ ...c, [key]: val }));
@@ -149,10 +217,10 @@ export function HankoGenerator() {
 
     let shapeEl = "";
     if (config.shape === "circle") {
-      shapeEl = `<circle cx="${s/2}" cy="${s/2}" r="${s/2 - strokeW}" stroke="${color}" stroke-width="${strokeW}" fill="none"/>`;
+      shapeEl = `<circle cx="${s / 2}" cy="${s / 2}" r="${s / 2 - strokeW}" stroke="${color}" stroke-width="${strokeW}" fill="none"/>`;
     } else {
       const pad = s / 20;
-      shapeEl = `<rect x="${pad}" y="${pad}" width="${s - pad*2}" height="${s - pad*2}" stroke="${color}" stroke-width="${strokeW}" fill="none"/>`;
+      shapeEl = `<rect x="${pad}" y="${pad}" width="${s - pad * 2}" height="${s - pad * 2}" stroke="${color}" stroke-width="${strokeW}" fill="none"/>`;
     }
 
     let textEl = "";
@@ -161,11 +229,11 @@ export function HankoGenerator() {
       const totalH = charSize * chars.length;
       const startY = s / 2 - totalH / 2 + charSize / 2;
       textEl = chars.map((ch, i) =>
-        `<text x="${s/2}" y="${startY + i * charSize}" text-anchor="middle" dominant-baseline="middle" font-size="${charSize}" font-family="'Yu Mincho',serif" font-weight="bold" fill="${color}">${ch}</text>`
+        `<text x="${s / 2}" y="${startY + i * charSize}" text-anchor="middle" dominant-baseline="middle" font-size="${charSize}" font-family="'Yu Mincho',serif" font-weight="bold" fill="${color}">${ch}</text>`
       ).join("");
     } else {
       const fontSize = Math.floor(s * 0.6 / Math.max(text.length * 0.7, 1));
-      textEl = `<text x="${s/2}" y="${s/2}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-family="'Yu Mincho',serif" font-weight="bold" fill="${color}">${text}</text>`;
+      textEl = `<text x="${s / 2}" y="${s / 2}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-family="'Yu Mincho',serif" font-weight="bold" fill="${color}">${text}</text>`;
     }
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">${shapeEl}${textEl}</svg>`;
@@ -185,8 +253,11 @@ export function HankoGenerator() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-5">
+      {/* Mobile: preview on top, controls below. Desktop: controls left, preview right */}
+      <div className="flex flex-col lg:flex-row gap-6">
+
+        {/* Controls — below on mobile, left on desktop */}
+        <div className="order-last lg:order-first lg:flex-1 space-y-5">
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-5">
             <h3 className="text-sm font-semibold text-slate-700 dark:text-zinc-300 mb-4">印鑑の内容</h3>
             <div className="space-y-4">
@@ -340,19 +411,53 @@ export function HankoGenerator() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center">
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-8 w-full flex flex-col items-center gap-6">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">プレビュー</p>
-            <div className="relative">
+        {/* Preview — on top on mobile, right on desktop */}
+        <div className="order-first lg:order-last lg:w-72 flex flex-col gap-4">
+          {/* Seal preview */}
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-6 flex flex-col items-center gap-4">
+            <div className="flex items-center justify-between w-full">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">プレビュー</p>
+              <button
+                onClick={() => setCheckerboard(v => !v)}
+                className={`text-xs px-2.5 py-1 rounded-lg border transition-all font-medium ${
+                  checkerboard
+                    ? "bg-slate-700 text-white border-slate-700"
+                    : "border-slate-200 dark:border-zinc-700 text-slate-500 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800"
+                }`}
+                title="透過確認（チェッカーボード）"
+              >
+                透過確認
+              </button>
+            </div>
+            <div
+              className="relative flex items-center justify-center rounded-xl overflow-hidden"
+              style={{
+                width: 160,
+                height: 160,
+                background: checkerboard
+                  ? "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 16px 16px"
+                  : "white",
+              }}
+            >
               <canvas
                 ref={canvasRef}
                 className="relative block"
-                style={{ imageRendering: "crisp-edges" }}
+                style={{ imageRendering: "crisp-edges", maxWidth: 140, maxHeight: 140 }}
               />
             </div>
-            <div className="w-full bg-slate-50 dark:bg-zinc-800 rounded-xl p-4 text-sm text-slate-600 dark:text-zinc-400 text-center">
-              <p className="text-xs text-slate-400">書類に押した雰囲気を再現するため、白背景のPNGや透過PNGで保存して書類に貼り付けてご利用ください。</p>
-            </div>
+          </div>
+
+          {/* Document mockup preview */}
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-4 flex flex-col items-center gap-3">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider self-start">書類に押した場合</p>
+            <canvas
+              ref={docPreviewRef}
+              className="rounded-lg border border-slate-100 dark:border-zinc-700 shadow-sm"
+              style={{ maxWidth: "100%", imageRendering: "crisp-edges" }}
+            />
+            <p className="text-xs text-slate-400 text-center">
+              透過PNGや白背景PNGで保存して書類に貼り付けてご利用ください。
+            </p>
           </div>
         </div>
       </div>
