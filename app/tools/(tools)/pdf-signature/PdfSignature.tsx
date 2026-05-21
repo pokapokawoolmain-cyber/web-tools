@@ -254,6 +254,7 @@ export function PdfSignature() {
   }, [pdfFile, pushHistory]);
 
   const startDrag = (e: React.PointerEvent, sig: Sig) => {
+    if (modeRef.current === "draw") return;
     e.stopPropagation();
     const overlay = overlayRef.current!;
     overlay.setPointerCapture(e.pointerId);
@@ -457,7 +458,7 @@ export function PdfSignature() {
                 {/* PDF canvas */}
                 <canvas
                   ref={pdfCanvasRef}
-                  style={{ display: "block", width: "100%", height: "100%", position: "absolute", inset: 0 }}
+                  style={{ display: "block", width: "100%", height: "100%", position: "absolute", inset: 0, zIndex: 1 }}
                 />
 
                 {/* Signature overlays */}
@@ -472,12 +473,16 @@ export function PdfSignature() {
                         top: pos.top,
                         width: pos.width,
                         height: pos.height,
-                        cursor: "move",
+                        cursor: mode === "draw" ? "crosshair" : "move",
                         border: selectedId === sig.id ? "1.5px dashed #3b82f6" : "1px dashed transparent",
                         boxSizing: "border-box",
                         transform: sig.rot ? `rotate(${sig.rot}deg)` : undefined,
                         transformOrigin: "center center",
                         opacity: sig.opa,
+                        pointerEvents: mode === "draw" ? "none" : "auto",
+                        touchAction: "none",
+                        userSelect: "none",
+                        zIndex: 5,
                       }}
                       onPointerDown={e => startDrag(e, sig)}
                       onClick={() => setSelectedId(sig.id)}
@@ -527,6 +532,7 @@ export function PdfSignature() {
                     height: "100%",
                     display: "block",
                     pointerEvents: "none", // handled imperatively on overlayRef
+                    zIndex: 20,
                   }}
                 />
               </div>
@@ -579,7 +585,10 @@ export function PdfSignature() {
               </div>
 
               {mode === "draw" && (
-                <p className="text-xs text-slate-400 dark:text-zinc-500">PDFの上でドラッグして署名を描いてください。</p>
+                <p className="text-xs text-slate-400 dark:text-zinc-500">
+                  <span className="hidden sm:inline">PDFの上でドラッグして署名を描いてください。</span>
+                  <span className="sm:hidden">PDFの上を指でなぞって署名を描いてください。</span>
+                </p>
               )}
 
               {mode === "text" && (
