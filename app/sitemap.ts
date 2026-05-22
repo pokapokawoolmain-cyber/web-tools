@@ -68,6 +68,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/pdf-watermark-guide`, lastModified: blogDate("pdf-watermark-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/pdf-privacy-guide`, lastModified: blogDate("pdf-privacy-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/pdf-reorder-guide`, lastModified: blogDate("pdf-reorder-guide"), changeFrequency: "monthly", priority: 0.8 },
+    // AI文章ツールカテゴリ
+    { url: `${siteUrl}/ai`, lastModified: new Date("2026-05-22"), changeFrequency: "weekly", priority: 0.92 },
+    { url: `${siteUrl}/blog/chatgpt-format-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/ai-text-natural-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/x-post-format-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.8 },
     // PDF・画像 新規 8記事
     { url: `${siteUrl}/blog/pdf-confidential-watermark`, lastModified: blogDate("pdf-confidential-watermark"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/pdf-draft-watermark`, lastModified: blogDate("pdf-draft-watermark"), changeFrequency: "monthly", priority: 0.85 },
@@ -120,6 +125,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/tools/pdf-reorder`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/tools/pdf-password`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/tools/pdf-metadata-remover`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/tools/chatgpt-format`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/ai-humanize`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/x-post-preview`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/note-format`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/privacy`, lastModified: new Date("2026-05-01"), changeFrequency: "yearly", priority: 0.3 },
     { url: `${siteUrl}/terms`, lastModified: new Date("2026-05-01"), changeFrequency: "yearly", priority: 0.3 },
   ];

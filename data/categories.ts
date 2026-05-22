@@ -188,6 +188,43 @@ const BUSINESS_CATEGORY: CategoryConfig = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// AI文章ツールカテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const AI_CATEGORY: CategoryConfig = {
+  slug: "ai",
+  name: "AI文章ツール",
+  nameEn: "AI Text Tools",
+  tagline: "AI文章ツール集｜整形・自然化・X投稿・note最適化",
+  description:
+    "ChatGPTやClaudeの出力文章を整形・自然化・SNS最適化できる無料ツール集。登録不要・ブラウザ完結・スマホ対応。",
+  longDescription:
+    "AIが生成した文章をそのまま使うと「AIっぽい」と言われる。ToolBoxJPのAI文章ツールなら、ChatGPT出力をnote・ブログ・X・LINEに最適化したり、AI感を自然な日本語に変換したりできます。すべてブラウザ完結・無料・登録不要。",
+  icon: "🤖",
+  gradientFrom: "from-violet-500",
+  gradientTo: "to-fuchsia-600",
+  gradientLight: "from-violet-50 to-fuchsia-50 dark:from-violet-950/30 dark:to-fuchsia-950/20",
+  accentColor: "text-violet-600 dark:text-violet-400",
+  accentBg: "bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300",
+  title: "無料AI文章ツール集｜整形・自然化・X投稿・note最適化【登録不要】",
+  keywords: ["ChatGPT 改行 整形", "AI文章 自然化", "AIっぽい 文章 修正", "X 改行 シミュレーター", "note 整形 AI"],
+  popularToolIds: ["chatgpt-format", "ai-humanize", "x-post-preview", "note-format"],
+  allToolIds: ["chatgpt-format", "ai-humanize", "x-post-preview", "note-format"],
+  stats: [
+    { label: "AIツール数", value: "4種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "処理場所", value: "ブラウザ完結" },
+  ],
+  faqs: [
+    { q: "ChatGPTの文章をnoteに貼り付けると崩れるのはなぜですか？", a: "ChatGPTはMarkdown形式で出力するため、noteの入力欄にそのまま貼ると改行・記号が崩れます。ChatGPT改行整形ツールを使うと、note向けのフォーマットに自動変換できます。" },
+    { q: "AI文章は本当に「バレる」のですか？", a: "はい。「ます/です」の語尾が均一、段落冒頭の「まず/次に/また」の繰り返し、「〜することができます」などの固い表現がAI文章の特徴です。AI文章自然化ツールで自動修正できます。" },
+    { q: "X（旧Twitter）の改行はどう確認しますか？", a: "X投稿プレビューツールを使うと、実際の投稿に近い見た目で改行・文字数・ハッシュタグの表示を確認できます。投稿前のチェックに便利です。" },
+    { q: "処理した文章はサーバーに送信されますか？", a: "すべての処理はブラウザ内で完結します。入力した文章が外部サーバーに送信されることは一切ありません。機密性の高い文章も安心してご利用いただけます。" },
+    { q: "スマホから使えますか？", a: "はい。iPhoneもAndroidもブラウザ（Safari・Chrome等）から利用できます。アプリのインストールは不要です。" },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
@@ -195,6 +232,7 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   image: IMAGE_CATEGORY,
   money: MONEY_CATEGORY,
   business: BUSINESS_CATEGORY,
+  ai: AI_CATEGORY,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {

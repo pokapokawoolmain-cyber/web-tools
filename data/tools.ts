@@ -6,7 +6,8 @@ export type ToolCategory =
   | "テキスト・Web"
   | "学生向け"
   | "仕事・副業"
-  | "ビジネス・契約書";
+  | "ビジネス・契約書"
+  | "AI文章ツール";
 
 export type ToolItem = {
   id: string;
@@ -75,10 +76,15 @@ export const TOOLS: ToolItem[] = [
   { id: "hanko-generator", title: "電子印鑑メーカー", seoTitle: "電子印鑑作成ツール｜PNG・透過対応【無料】", description: "電子印鑑（デジタルはんこ）を無料で作成。円形・角印・縦書き対応。透過PNG・SVG保存でPDFや書類にすぐ使える。", href: "/tools/hanko-generator", emoji: "🔴", category: "ビジネス・契約書", isNew: true, isPopular: true },
   { id: "pdf-signature", title: "PDF電子署名ツール", seoTitle: "PDF電子署名ツール｜契約書にサイン可能【無料】", description: "PDFに手書き署名・テキスト・印鑑を追加してPDFで保存。契約書・NDA・見積書への署名に。ブラウザ完結・登録不要。", href: "/tools/pdf-signature", emoji: "✍️", category: "ビジネス・契約書", isNew: true, isPopular: true },
   { id: "receipt-generator", title: "領収書作成ツール", seoTitle: "領収書作成ツール｜PDF保存・印刷対応【登録不要】", description: "領収書を無料で作成。インボイス登録番号・消費税表示・収入印紙目安対応。PDF保存・印刷。ブラウザ完結。", href: "/tools/receipt-generator", emoji: "🧾", category: "ビジネス・契約書", isNew: true },
+  // AI文章ツール
+  { id: "chatgpt-format", title: "ChatGPT改行整形", seoTitle: "ChatGPT改行整形ツール｜AI文章をnote・ブログ・X向けに自動整形", description: "ChatGPTやAIの出力文章を一瞬で見やすく整形。note・ブログ・X・LINE・Discord向けに自動調整。コピペで崩れる問題を解決。", href: "/tools/chatgpt-format", emoji: "✨", category: "AI文章ツール", isNew: true, isPopular: true },
+  { id: "ai-humanize", title: "AI文章自然化", seoTitle: "AI文章自然化ツール｜AIっぽい文章を人間らしく自動変換", description: "「AIっぽい」と感じさせる文章を自然な日本語に変換。語尾の繰り返し・固い言い回し・不自然な構造を自動修正。AI感スコア表示付き。", href: "/tools/ai-humanize", emoji: "🤖", category: "AI文章ツール", isNew: true, isPopular: true },
+  { id: "x-post-preview", title: "X投稿プレビュー", seoTitle: "X投稿プレビュー・改行シミュレーター｜実際の表示を確認", description: "X（旧Twitter）投稿の実際の表示をプレビュー。改行・文字数・ハッシュタグの見え方をポスト前に確認。スマホ表示も再現。", href: "/tools/x-post-preview", emoji: "𝕏", category: "AI文章ツール", isNew: true },
+  { id: "note-format", title: "note記事整形", seoTitle: "note記事整形ツール｜AI文章をnote向けに自動整形", description: "ChatGPTやAIの出力をnote投稿に最適化。見出し自動検出・適切な空白調整・読みやすさ向上。note風プレビュー付き。", href: "/tools/note-format", emoji: "📝", category: "AI文章ツール", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [
-  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書"
+  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール"
 ];
 
 export function getToolsByCategory() {
@@ -111,6 +117,7 @@ export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
   "学生向け": "student",
   "仕事・副業": "work",
   "ビジネス・契約書": "business",
+  "AI文章ツール": "ai",
 };
 
 export function getToolsByCategorySlug(slug: string): ToolItem[] | null {

@@ -12,7 +12,8 @@ export type BlogCategory =
   | "text"
   | "student"
   | "lifestyle"
-  | "business";
+  | "business"
+  | "ai";
 
 export type BlogEntry = {
   slug: string;
@@ -565,6 +566,44 @@ const OTHER_BLOGS: BlogEntry[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// AI文章ツールカテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const AI_BLOGS: BlogEntry[] = [
+  {
+    slug: "chatgpt-format-guide",
+    title: "ChatGPTのコピペが崩れる問題を解決｜noteやブログへの正しい貼り付け方",
+    description: "ChatGPTの文章をコピーするとnoteやブログで改行が崩れる問題の原因と、ワンクリックで整形する方法を解説。",
+    publishedAt: "2026-05-22",
+    category: "ai",
+    tags: ["ChatGPT", "改行", "note", "ブログ", "整形"],
+    relatedToolIds: ["chatgpt-format", "note-format"],
+    isPopular: true,
+    isFeatured: true,
+  },
+  {
+    slug: "ai-text-natural-guide",
+    title: "AI文章が「バレる」理由と自然化する方法｜ChatGPT・Claude対応",
+    description: "AIが書いた文章の特徴パターンと、読者にバレずに自然な日本語に変換するテクニックを解説。",
+    publishedAt: "2026-05-22",
+    category: "ai",
+    tags: ["AI文章", "自然化", "ChatGPT", "文章術"],
+    relatedToolIds: ["ai-humanize"],
+    isPopular: true,
+    isFeatured: true,
+  },
+  {
+    slug: "x-post-format-guide",
+    title: "X（旧Twitter）投稿の改行テクニック｜バズる投稿の書き方",
+    description: "X投稿で改行が反映される条件と、スマホで見やすい改行の入れ方、文字数の数え方を解説。",
+    publishedAt: "2026-05-22",
+    category: "ai",
+    tags: ["X", "Twitter", "改行", "投稿", "SNS"],
+    relatedToolIds: ["x-post-preview"],
+    isFeatured: false,
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
 // 統合 & エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
 export const ALL_BLOGS: BlogEntry[] = [
@@ -572,6 +611,7 @@ export const ALL_BLOGS: BlogEntry[] = [
   ...IMAGE_BLOGS,
   ...MONEY_BLOGS,
   ...OTHER_BLOGS,
+  ...AI_BLOGS,
 ];
 
 /** カテゴリスラッグで記事を絞り込む */

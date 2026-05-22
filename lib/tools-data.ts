@@ -41,10 +41,12 @@ export const categoryLabels: Record<string, string> = {
   "テキスト・Web": "テキスト・Web",
   "学生向け": "学生向け",
   "仕事・副業": "仕事・副業",
+  "AI文章ツール": "AI文章ツール",
   finance: "お金・投資",
   image: "画像・PDF",
   pdf: "PDF",
   calc: "計算ツール",
   text: "テキスト・Web",
   lifestyle: "生活・副業",
+  ai: "AI文章ツール",
 };
