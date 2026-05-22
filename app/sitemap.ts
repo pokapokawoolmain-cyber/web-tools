@@ -68,6 +68,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/pdf-watermark-guide`, lastModified: blogDate("pdf-watermark-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/pdf-privacy-guide`, lastModified: blogDate("pdf-privacy-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/pdf-reorder-guide`, lastModified: blogDate("pdf-reorder-guide"), changeFrequency: "monthly", priority: 0.8 },
+    // PDF・画像 新規 8記事
+    { url: `${siteUrl}/blog/pdf-confidential-watermark`, lastModified: blogDate("pdf-confidential-watermark"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/pdf-draft-watermark`, lastModified: blogDate("pdf-draft-watermark"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/pdf-remove-personal-info`, lastModified: blogDate("pdf-remove-personal-info"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/pdf-check-metadata`, lastModified: blogDate("pdf-check-metadata"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/heic-to-jpg-iphone`, lastModified: blogDate("heic-to-jpg-iphone"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/id-photo-convenience-store`, lastModified: blogDate("id-photo-convenience-store"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/resume-photo-size`, lastModified: blogDate("resume-photo-size"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/pdf-delete-pages-guide`, lastModified: blogDate("pdf-delete-pages-guide"), changeFrequency: "monthly", priority: 0.85 },
     // 画像変換 3記事
     { url: `${siteUrl}/blog/heic-jpg-guide`, lastModified: blogDate("heic-jpg-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/heic-what-is`, lastModified: blogDate("heic-what-is"), changeFrequency: "monthly", priority: 0.8 },
