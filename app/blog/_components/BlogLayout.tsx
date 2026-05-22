@@ -112,13 +112,17 @@ export function BlogLayout({ post, children }: Props) {
 
           {/* Content */}
           <div className="prose prose-slate dark:prose-invert max-w-none
+            prose-headings:text-slate-900 dark:prose-headings:text-white
             prose-h2:text-xl prose-h2:font-bold prose-h2:mt-12 prose-h2:mb-4
             prose-h3:text-[17px] prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-3
             prose-p:text-[15px] prose-p:leading-relaxed prose-p:text-slate-700 dark:prose-p:text-slate-300
-            prose-li:text-[15px] prose-li:leading-relaxed
+            prose-li:text-[15px] prose-li:leading-relaxed prose-li:text-slate-700 dark:prose-li:text-slate-300
             prose-table:text-[14px]
+            prose-th:text-slate-800 dark:prose-th:text-zinc-200 prose-th:font-semibold
+            prose-td:text-slate-700 dark:prose-td:text-zinc-300
             prose-strong:text-slate-900 dark:prose-strong:text-white
-            prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
+            prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+            prose-hr:border-slate-100 dark:prose-hr:border-zinc-800">
             {children}
           </div>
 

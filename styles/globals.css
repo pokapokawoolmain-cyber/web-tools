@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ダークモード: next-themes が <html class="dark"> を付与するのに合わせる */
+@variant dark (&:where(.dark, .dark *));
 
 /* ========================================
    カスタムCSS変数
