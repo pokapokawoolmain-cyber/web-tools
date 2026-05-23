@@ -13,7 +13,8 @@ export type BlogCategory =
   | "student"
   | "lifestyle"
   | "business"
-  | "ai";
+  | "ai"
+  | "ceremony";
 
 export type BlogEntry = {
   slug: string;
@@ -604,6 +605,34 @@ const AI_BLOGS: BlogEntry[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// 冠婚葬祭・文書カテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const CEREMONY_BLOGS: BlogEntry[] = [
+  {
+    slug: "noshi-paper-guide",
+    title: "のし紙の書き方・選び方完全ガイド｜無料で印刷する方法",
+    description: "のし紙の表書き・水引の種類・名前の書き方を用途別に解説。御祝・内祝・御歳暮など場面別の選び方と無料印刷方法。",
+    publishedAt: "2026-05-22",
+    category: "ceremony",
+    tags: ["のし紙", "御祝", "内祝", "水引", "冠婚葬祭"],
+    relatedToolIds: ["noshi-maker"],
+    isPopular: true,
+    isFeatured: true,
+  },
+  {
+    slug: "koden-writing-guide",
+    title: "香典袋の書き方｜表書き・名前・金額の正しいマナー",
+    description: "香典袋の表書きの選び方、名前・金額の書き方、宗派別のマナーをわかりやすく解説。御霊前・御仏前の使い分けも。",
+    publishedAt: "2026-05-22",
+    category: "ceremony",
+    tags: ["香典袋", "御霊前", "御仏前", "冠婚葬祭", "マナー"],
+    relatedToolIds: ["koden-maker"],
+    isPopular: true,
+    isFeatured: true,
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
 // 統合 & エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
 export const ALL_BLOGS: BlogEntry[] = [
@@ -612,6 +641,7 @@ export const ALL_BLOGS: BlogEntry[] = [
   ...MONEY_BLOGS,
   ...OTHER_BLOGS,
   ...AI_BLOGS,
+  ...CEREMONY_BLOGS,
 ];
 
 /** カテゴリスラッグで記事を絞り込む */

@@ -225,6 +225,43 @@ const AI_CATEGORY: CategoryConfig = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// 冠婚葬祭・文書カテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const CEREMONY_CATEGORY: CategoryConfig = {
+  slug: "ceremony",
+  name: "冠婚葬祭・文書",
+  nameEn: "Ceremony & Documents",
+  tagline: "のし紙・香典袋・退職届・送付状を無料作成",
+  description:
+    "のし紙・香典袋表書き・退職届・送付状を無料で作成できるWebツール集。テンプレートを選んで印刷するだけ。登録不要・スマホ対応。",
+  longDescription:
+    "冠婚葬祭の書類からビジネス文書まで、日本の生活に必要な書類をすべてブラウザで無料作成。アプリ不要・登録不要で、作成した書類はそのままPDF保存・印刷して使えます。",
+  icon: "🎀",
+  gradientFrom: "from-rose-400",
+  gradientTo: "to-pink-600",
+  gradientLight: "from-rose-50 to-pink-50 dark:from-rose-950/30 dark:to-pink-950/20",
+  accentColor: "text-rose-600 dark:text-rose-400",
+  accentBg: "bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300",
+  title: "のし紙・香典袋・退職届を無料作成｜冠婚葬祭・文書ツール集【登録不要】",
+  keywords: ["のし紙 作成 無料", "香典袋 表書き 印刷", "退職届 テンプレ 無料", "送付状 作成 無料", "のし テンプレート 印刷"],
+  popularToolIds: ["noshi-maker", "koden-maker", "resignation-letter", "fax-cover"],
+  allToolIds: ["noshi-maker", "koden-maker", "resignation-letter", "fax-cover"],
+  stats: [
+    { label: "冠婚葬祭ツール数", value: "4種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "PDF保存・印刷", value: "対応" },
+  ],
+  faqs: [
+    { q: "のし紙を無料で印刷できますか？", a: "はい。のし紙作成ツールで表書き・水引・名前を設定してPDF保存し、A4用紙に印刷できます。コンビニのネットプリントにも対応しています。" },
+    { q: "香典袋の表書きはどう書けばいいですか？", a: "宗派によって異なります。仏式は「御霊前」（四十九日以降は「御仏前」）、神式は「御霊前」「玉串料」、キリスト教は「御花料」が一般的です。香典袋表書きメーカーで宗派を選ぶと適切な表書きが選べます。" },
+    { q: "退職届はパワハラを理由にできますか？", a: "退職届の「理由」欄に具体的な内容を書く必要はありません。一般的には「一身上の都合により」で問題ありません。ただしパワハラを記録する目的で詳細を残したい場合は弁護士への相談も検討してください。" },
+    { q: "送付状（FAX送付状）はどんな場面で使いますか？", a: "書類をFAXや郵送で送る際に先頭に添付します。宛先・差出人・送付枚数・件名などを記載することで、受け取り側が書類の内容をすぐに確認できます。" },
+    { q: "作成した書類はサーバーに送信されますか？", a: "すべての処理はブラウザ内で完結します。入力した個人情報・会社名などが外部に送信されることは一切ありません。" },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
@@ -233,6 +270,7 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   money: MONEY_CATEGORY,
   business: BUSINESS_CATEGORY,
   ai: AI_CATEGORY,
+  ceremony: CEREMONY_CATEGORY,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {

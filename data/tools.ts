@@ -7,7 +7,8 @@ export type ToolCategory =
   | "学生向け"
   | "仕事・副業"
   | "ビジネス・契約書"
-  | "AI文章ツール";
+  | "AI文章ツール"
+  | "冠婚葬祭・文書";
 
 export type ToolItem = {
   id: string;
@@ -81,10 +82,15 @@ export const TOOLS: ToolItem[] = [
   { id: "ai-humanize", title: "AI文章自然化", seoTitle: "AI文章自然化ツール｜AIっぽい文章を人間らしく自動変換", description: "「AIっぽい」と感じさせる文章を自然な日本語に変換。語尾の繰り返し・固い言い回し・不自然な構造を自動修正。AI感スコア表示付き。", href: "/tools/ai-humanize", emoji: "🤖", category: "AI文章ツール", isNew: true, isPopular: true },
   { id: "x-post-preview", title: "X投稿プレビュー", seoTitle: "X投稿プレビュー・改行シミュレーター｜実際の表示を確認", description: "X（旧Twitter）投稿の実際の表示をプレビュー。改行・文字数・ハッシュタグの見え方をポスト前に確認。スマホ表示も再現。", href: "/tools/x-post-preview", emoji: "𝕏", category: "AI文章ツール", isNew: true },
   { id: "note-format", title: "note記事整形", seoTitle: "note記事整形ツール｜AI文章をnote向けに自動整形", description: "ChatGPTやAIの出力をnote投稿に最適化。見出し自動検出・適切な空白調整・読みやすさ向上。note風プレビュー付き。", href: "/tools/note-format", emoji: "📝", category: "AI文章ツール", isNew: true },
+  // 冠婚葬祭・文書
+  { id: "noshi-maker", title: "のし紙作成ツール", seoTitle: "のし紙作成ツール｜無料・印刷対応【登録不要】", description: "御祝・内祝・御歳暮・御中元など用途別のし紙を無料で作成。水引・名入れ対応。A4印刷・コンビニ印刷対応。", href: "/tools/noshi-maker", emoji: "🎀", category: "冠婚葬祭・文書", isNew: true, isPopular: true },
+  { id: "koden-maker", title: "香典袋表書きメーカー", seoTitle: "香典袋表書きメーカー｜宗派別・無料印刷対応", description: "御霊前・御仏前・御香典など宗派別に表書きを作成。毛筆風フォント・PDF保存・スマホ完結。", href: "/tools/koden-maker", emoji: "🕯️", category: "冠婚葬祭・文書", isNew: true, isPopular: true },
+  { id: "resignation-letter", title: "退職届ジェネレーター", seoTitle: "退職届ジェネレーター｜パワハラ対応・PDF保存【無料】", description: "退職届を無料で作成。一身上の都合・パワハラ・体調不良・契約満了など理由別テンプレ。A4印刷・PDF対応。", href: "/tools/resignation-letter", emoji: "📄", category: "冠婚葬祭・文書", isNew: true },
+  { id: "fax-cover", title: "送付状作成ツール", seoTitle: "送付状作成ツール｜FAX送付状を無料で作成【登録不要】", description: "FAX送付状・書類送付状を無料で自動作成。日付・宛先・件名・枚数を入力するだけでPDF保存・印刷できます。", href: "/tools/fax-cover", emoji: "📠", category: "冠婚葬祭・文書", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [
-  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール"
+  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書"
 ];
 
 export function getToolsByCategory() {
@@ -118,6 +124,7 @@ export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
   "仕事・副業": "work",
   "ビジネス・契約書": "business",
   "AI文章ツール": "ai",
+  "冠婚葬祭・文書": "ceremony",
 };
 
 export function getToolsByCategorySlug(slug: string): ToolItem[] | null {

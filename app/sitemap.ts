@@ -73,6 +73,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/chatgpt-format-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/ai-text-natural-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/x-post-format-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.8 },
+    // 冠婚葬祭・文書カテゴリ
+    { url: `${siteUrl}/ceremony`, lastModified: new Date("2026-05-22"), changeFrequency: "weekly", priority: 0.92 },
+    { url: `${siteUrl}/tools/noshi-maker`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/koden-maker`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/resignation-letter`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/fax-cover`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/noshi-paper-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/koden-writing-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     // PDF・画像 新規 8記事
     { url: `${siteUrl}/blog/pdf-confidential-watermark`, lastModified: blogDate("pdf-confidential-watermark"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/pdf-draft-watermark`, lastModified: blogDate("pdf-draft-watermark"), changeFrequency: "monthly", priority: 0.85 },

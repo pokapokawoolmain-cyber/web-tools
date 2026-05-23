@@ -49,4 +49,6 @@ export const categoryLabels: Record<string, string> = {
   text: "テキスト・Web",
   lifestyle: "生活・副業",
   ai: "AI文章ツール",
+  "冠婚葬祭・文書": "冠婚葬祭・文書",
+  ceremony: "冠婚葬祭・文書",
 };
