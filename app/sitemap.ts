@@ -43,6 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/takehome-600`, lastModified: blogDate("takehome-600"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/takehome-700`, lastModified: blogDate("takehome-700"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/takehome-800`, lastModified: blogDate("takehome-800"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-900`, lastModified: blogDate("takehome-900"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/takehome-1000`, lastModified: blogDate("takehome-1000"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/nencho-guide`, lastModified: blogDate("nencho-guide"), changeFrequency: "yearly", priority: 0.88 },
+    { url: `${siteUrl}/blog/furusato-limit-by-income`, lastModified: blogDate("furusato-limit-by-income"), changeFrequency: "yearly", priority: 0.86 },
     // 手取り補完 3記事
     { url: `${siteUrl}/blog/takehome-2026`, lastModified: blogDate("takehome-2026"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/takehome-20s`, lastModified: blogDate("takehome-20s"), changeFrequency: "monthly", priority: 0.8 },
@@ -139,6 +143,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/tools/note-format`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/privacy`, lastModified: new Date("2026-05-01"), changeFrequency: "yearly", priority: 0.3 },
     { url: `${siteUrl}/terms`, lastModified: new Date("2026-05-01"), changeFrequency: "yearly", priority: 0.3 },
+    // 補助金・助成金診断セカンドライン
+    { url: `${siteUrl}/subsidy`, lastModified: new Date("2026-05-23"), changeFrequency: "weekly", priority: 0.95 },
+    { url: `${siteUrl}/subsidy/list`, lastModified: new Date("2026-05-23"), changeFrequency: "weekly", priority: 0.85 },
+    { url: `${siteUrl}/subsidy/area`, lastModified: new Date("2026-05-23"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/subsidy/purpose`, lastModified: new Date("2026-05-23"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/subsidy/news`, lastModified: new Date("2026-05-23"), changeFrequency: "weekly", priority: 0.85 },
   ];
 
   // 各ツールページ
