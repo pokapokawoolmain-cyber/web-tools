@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["HEIC JPG 変換 方法", "iPhone 写真 開けない Windows", "HEIC 変換 無料 ブラウザ", "heic to jpg 無料", "iPhone 写真 変換 アプリ不要"],
+  keywords: ["HEIC JPG 変換 無料 スマホ", "iPhone 写真 Windows 開けない 解決", "HEIC 変換 アプリ不要 ブラウザ", "heic to jpg オンライン 無料", "iPhone HEIC 変換 登録不要"],
   type: "article",
 });
 

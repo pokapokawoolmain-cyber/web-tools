@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["PDF結合 スマホ", "PDF まとめる 方法", "iPhone PDF 結合", "PDF 複数 合体 無料", "PDF merger 無料"],
+  keywords: ["PDF 結合 無料 スマホ", "PDF まとめる方法 アプリ不要", "iPhone PDF 結合 Safari", "Android PDF 複数 合体 無料", "PDF 合併 ブラウザ 登録不要"],
   type: "article",
 });
 

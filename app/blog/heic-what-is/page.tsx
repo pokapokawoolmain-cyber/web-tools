@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["HEIC とは", "HEIC JPG 違い", "iPhone 写真 形式", "HEIC 開けない 原因", "HEIC 変換 方法"],
+  keywords: ["HEIC とは わかりやすく", "HEIC JPG 違い 画質 サイズ", "iPhone 写真 形式 変更 方法", "HEIC ファイル 開けない Windows 解決", "iPhone HEIC JPG 変換 アプリ不要"],
   type: "article",
 });
 

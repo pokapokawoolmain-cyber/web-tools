@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["画像 圧縮 無料 ブラウザ", "JPG 軽くする 方法", "PNG 容量 減らす", "画像 ファイルサイズ 小さく", "image compress 無料"],
+  keywords: ["画像 圧縮 無料 スマホ アプリ不要", "JPG 軽くする ブラウザ 登録不要", "PNG 容量 減らす 方法 無料", "画像 ファイルサイズ 小さく メール", "写真 圧縮 LINE 送れない 解決"],
   type: "article",
 });
 

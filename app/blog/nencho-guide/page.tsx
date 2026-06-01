@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["年末調整 書き方", "扶養控除申告書 書き方", "基礎控除申告書 書き方", "年末調整 生命保険", "年末調整 2026"],
+  keywords: ["年末調整 書き方 2026 わかりやすく", "扶養控除申告書 書き方 記入例", "基礎控除申告書 書き方 独身", "年末調整 生命保険 記入方法", "年末調整 いつ 提出 期限"],
   type: "article",
 });
 

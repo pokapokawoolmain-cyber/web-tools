@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["iPhone PDF 編集 無料", "スマホ PDF 操作 方法", "iPhone PDF アプリ不要", "iPhone PDF 結合 分割", "Safari PDF ツール"],
+  keywords: ["iPhone PDF 編集 無料 アプリ不要", "スマホ PDF 結合 分割 無料", "iPhone Safari PDF 操作 方法", "iPhone PDF 変換 圧縮 登録不要", "iPhone PDF まとめる 方法 簡単"],
   type: "article",
 });
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["PDF ページ 抽出 無料", "PDF 分割 方法", "PDF 特定ページ 取り出す", "PDF 一部 保存", "PDF splitter 無料"],
+  keywords: ["PDF ページ 抽出 無料 スマホ", "PDF 分割 アプリ不要 ブラウザ", "PDF 特定ページ 取り出す 方法", "PDF 一部だけ 保存 ダウンロード", "PDF ページ 切り取り 登録不要"],
   type: "article",
 });
 

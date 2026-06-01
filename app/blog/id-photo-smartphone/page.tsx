@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["スマホ 証明写真 作り方 無料", "証明写真 自分で 撮影", "履歴書 写真 スマホ", "証明写真 ブラウザ 無料", "証明写真 アプリ不要"],
+  keywords: ["スマホ 証明写真 作り方 無料 アプリ不要", "証明写真 自分で 撮影 コンビニ 印刷", "履歴書 証明写真 スマホ 無料", "証明写真 ブラウザ 登録不要 即日", "マイナンバー パスポート 証明写真 サイズ"],
   type: "article",
 });
 

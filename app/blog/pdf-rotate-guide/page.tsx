@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["PDF 横向き 直す", "PDF 回転 無料", "PDF 向き 変更 方法", "PDF 縦向き にする", "スキャン PDF 横向き"],
+  keywords: ["PDF 横向き 直す 無料 スマホ", "PDF 回転 アプリ不要 ブラウザ", "PDF 向き 変更 縦向き 方法", "スキャン PDF 横向き 修正 簡単", "PDF 180度 回転 逆向き 直す"],
   type: "article",
 });
 

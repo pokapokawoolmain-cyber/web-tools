@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["年収1000万 手取り", "年収1000万 月収", "年収1000万 税金", "1000万 手取り 独身", "年収1000万 節税"],
+  keywords: ["年収1000万 手取り いくら", "年収1000万 月収 手取り 計算", "1000万 手取り 独身 共働き", "年収1000万 税金 住民税 所得税", "年収1000万 節税 ふるさと納税"],
   type: "article",
 });
 

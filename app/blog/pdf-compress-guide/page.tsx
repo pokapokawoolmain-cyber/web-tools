@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["PDF 圧縮 方法", "PDF 軽くする", "PDF サイズ 縮小 無料", "PDF 容量 減らす", "メール PDF 添付 できない"],
+  keywords: ["PDF 圧縮 無料 スマホ アプリ不要", "PDF 軽くする ブラウザ 登録不要", "PDF サイズ 縮小 メール 添付", "PDF 容量 減らす 方法 簡単", "PDF 重い 送れない 解決"],
   type: "article",
 });
 

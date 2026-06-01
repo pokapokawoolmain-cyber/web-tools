@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["写真 PDF 変換 方法", "画像 PDF まとめる 無料", "iPhone 写真 PDF 変換", "JPG PDF 変換 スマホ", "image to pdf 無料"],
+  keywords: ["写真 PDF 変換 スマホ 無料", "複数 画像 PDF まとめる 方法", "iPhone 写真 PDF 変換 アプリ不要", "JPG PDF まとめる 登録不要", "Android 画像 PDF 変換 ブラウザ"],
   type: "article",
 });
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["ふるさと納税 上限 年収", "ふるさと納税 いくらまで 年収", "ふるさと納税 限度額 早見表", "ふるさと納税 独身 上限", "ふるさと納税 共働き 上限"],
+  keywords: ["ふるさと納税 上限 年収 早見表", "ふるさと納税 いくらまで 年収別 一覧", "ふるさと納税 限度額 計算 独身", "ふるさと納税 共働き 夫婦 上限", "ふるさと納税 超えたら どうなる"],
   type: "article",
 });
 
