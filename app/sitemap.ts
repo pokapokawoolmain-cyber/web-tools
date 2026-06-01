@@ -98,6 +98,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/heic-jpg-guide`, lastModified: blogDate("heic-jpg-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/heic-what-is`, lastModified: blogDate("heic-what-is"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/image-compress-guide`, lastModified: blogDate("image-compress-guide"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/image-resize-guide`, lastModified: blogDate("image-resize-guide"), changeFrequency: "monthly", priority: 0.82 },
+    { url: `${siteUrl}/blog/line-photo-size-guide`, lastModified: blogDate("line-photo-size-guide"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/android-pdf-guide`, lastModified: blogDate("android-pdf-guide"), changeFrequency: "monthly", priority: 0.83 },
     // QR・テキスト 3記事
     { url: `${siteUrl}/blog/qr-create-guide`, lastModified: blogDate("qr-create-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/wifi-qr-guide`, lastModified: blogDate("wifi-qr-guide"), changeFrequency: "monthly", priority: 0.8 },
