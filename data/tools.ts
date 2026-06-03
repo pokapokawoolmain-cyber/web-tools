@@ -8,7 +8,8 @@ export type ToolCategory =
   | "仕事・副業"
   | "ビジネス・契約書"
   | "AI文章ツール"
-  | "冠婚葬祭・文書";
+  | "冠婚葬祭・文書"
+  | "カラーツール";
 
 export type ToolItem = {
   id: string;
@@ -87,10 +88,15 @@ export const TOOLS: ToolItem[] = [
   { id: "koden-maker", title: "香典袋表書きメーカー", seoTitle: "香典袋表書きメーカー｜宗派別・無料印刷対応", description: "御霊前・御仏前・御香典など宗派別に表書きを作成。毛筆風フォント・PDF保存・スマホ完結。", href: "/tools/koden-maker", emoji: "🕯️", category: "冠婚葬祭・文書", isNew: true, isPopular: true },
   { id: "resignation-letter", title: "退職届ジェネレーター", seoTitle: "退職届ジェネレーター｜パワハラ対応・PDF保存【無料】", description: "退職届を無料で作成。一身上の都合・パワハラ・体調不良・契約満了など理由別テンプレ。A4印刷・PDF対応。", href: "/tools/resignation-letter", emoji: "📄", category: "冠婚葬祭・文書", isNew: true },
   { id: "fax-cover", title: "送付状作成ツール", seoTitle: "送付状作成ツール｜FAX送付状を無料で作成【登録不要】", description: "FAX送付状・書類送付状を無料で自動作成。日付・宛先・件名・枚数を入力するだけでPDF保存・印刷できます。", href: "/tools/fax-cover", emoji: "📠", category: "冠婚葬祭・文書", isNew: true },
+  // カラーツール
+  { id: "hex-rgb-converter", title: "カラーコード変換", seoTitle: "HEX・RGB・HSL変換ツール｜カラーコード変換【無料】", description: "HEX・RGB・HSLカラーコードを即変換。カラーピッカー・CSS変数コピー・日本の伝統色辞書付き。デザイン・コーディング作業に。", href: "/tools/hex-rgb-converter", emoji: "🎨", category: "カラーツール", isNew: true, isPopular: true },
+  { id: "color-palette", title: "カラーパレット生成", seoTitle: "カラーパレット生成ツール｜補色・類似色・トライアド【無料】", description: "ベースカラーから補色・類似色・トライアドなど5種類の配色パターンを自動生成。CSS変数でまとめてコピー可能。", href: "/tools/color-palette", emoji: "🖌️", category: "カラーツール", isNew: true },
+  { id: "gradient-generator", title: "グラデーション生成", seoTitle: "CSSグラデーション生成ツール｜linear・radial【無料】", description: "linear・radial・conicグラデーションをビジュアル設定してCSS出力。プリセット20種以上・コピーボタン付き。", href: "/tools/gradient-generator", emoji: "🌈", category: "カラーツール", isNew: true },
+  { id: "contrast-checker", title: "コントラストチェッカー", seoTitle: "WCAGコントラスト比チェッカー｜AA/AAA判定【無料】", description: "前景色・背景色のコントラスト比をリアルタイム計算。WCAG 2.1 AA/AAAの合否判定付き。Webアクセシビリティ対応に。", href: "/tools/contrast-checker", emoji: "👁️", category: "カラーツール", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [
-  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書"
+  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書", "カラーツール"
 ];
 
 export function getToolsByCategory() {
@@ -125,6 +131,7 @@ export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
   "ビジネス・契約書": "business",
   "AI文章ツール": "ai",
   "冠婚葬祭・文書": "ceremony",
+  "カラーツール": "color",
 };
 
 export function getToolsByCategorySlug(slug: string): ToolItem[] | null {

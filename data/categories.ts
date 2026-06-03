@@ -262,6 +262,43 @@ const CEREMONY_CATEGORY: CategoryConfig = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// カラーツールカテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const COLOR_CATEGORY: CategoryConfig = {
+  slug: "color",
+  name: "カラーツール",
+  nameEn: "Color Tools",
+  tagline: "無料カラーツール集｜HEX変換・パレット生成・グラデーション・コントラスト",
+  description:
+    "HEX/RGB/HSL変換・カラーパレット生成・CSSグラデーション生成・WCAGコントラスト比チェックを無料で使えるWebツール集。登録不要・スマホ対応・ブラウザ完結。",
+  longDescription:
+    "Webデザイン・コーディングに必要なカラーツールをすべてブラウザで無料利用。HEX↔RGB↔HSL相互変換・補色/類似色パレット自動生成・CSSグラデーション出力・WCAG AA/AAA準拠コントラスト比チェック。デザイナーにも開発者にも役立つツール集です。",
+  icon: "🎨",
+  gradientFrom: "from-pink-500",
+  gradientTo: "to-violet-600",
+  gradientLight: "from-pink-50 to-violet-50 dark:from-pink-950/30 dark:to-violet-950/20",
+  accentColor: "text-pink-600 dark:text-pink-400",
+  accentBg: "bg-pink-50 dark:bg-pink-950/40 text-pink-700 dark:text-pink-300",
+  title: "無料カラーツール集｜HEX変換・パレット生成・グラデーション【登録不要】",
+  keywords: ["カラーコード 変換 無料", "hex rgb 変換", "カラーパレット 生成 無料", "cssグラデーション 生成", "コントラスト比 チェック WCAG"],
+  popularToolIds: ["hex-rgb-converter", "contrast-checker", "color-palette", "gradient-generator"],
+  allToolIds: ["hex-rgb-converter", "color-palette", "gradient-generator", "contrast-checker"],
+  stats: [
+    { label: "カラーツール数", value: "4種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "処理場所", value: "ブラウザ完結" },
+  ],
+  faqs: [
+    { q: "HEXカラーコードとRGBの違いは何ですか？", a: "HEX（例：#FF6B35）は16進数表記で、RGBは赤・緑・青の各成分を0〜255の10進数で表します。どちらも同じ色を表現する方法で、Webデザインではどちらも広く使われます。相互変換はカラーコード変換ツールで即座に行えます。" },
+    { q: "カラーパレット生成ツールはどう使いますか？", a: "ベースカラーをカラーピッカーまたはHEXコードで入力すると、補色・類似色・トライアドなど5種類の配色パターンが自動生成されます。生成されたパレットはCSS変数としてまとめてコピーできます。" },
+    { q: "CSSグラデーションのコードをそのままコピーできますか？", a: "はい。グラデーション生成ツールで設定した内容はリアルタイムでCSSコードに変換されます。「コピー」ボタンを押すだけでそのままCSSファイルに貼り付けられます。" },
+    { q: "WCAGのコントラスト比とは何ですか？", a: "WCAG（Webコンテンツアクセシビリティガイドライン）では、テキストと背景色のコントラスト比を規定しています。通常テキストは4.5:1（AA）以上、大きなテキストは3:1以上が推奨されています。コントラストチェッカーで即座に確認できます。" },
+    { q: "スマホからも使えますか？", a: "はい。iPhone・Androidのブラウザからすべてのカラーツールをご利用いただけます。アプリのインストールは不要です。" },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
@@ -271,6 +308,7 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   business: BUSINESS_CATEGORY,
   ai: AI_CATEGORY,
   ceremony: CEREMONY_CATEGORY,
+  color: COLOR_CATEGORY,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {

@@ -104,6 +104,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/estimate-guide`, lastModified: blogDate("estimate-guide"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/hanko-create-guide`, lastModified: blogDate("hanko-create-guide"), changeFrequency: "monthly", priority: 0.83 },
     { url: `${siteUrl}/blog/tax-docs-pdf-guide`, lastModified: blogDate("tax-docs-pdf-guide"), changeFrequency: "monthly", priority: 0.87 },
+    // カラーツール 5記事
+    { url: `${siteUrl}/blog/hex-rgb-guide`, lastModified: blogDate("hex-rgb-guide"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/color-palette-guide`, lastModified: blogDate("color-palette-guide"), changeFrequency: "monthly", priority: 0.83 },
+    { url: `${siteUrl}/blog/css-gradient-guide`, lastModified: blogDate("css-gradient-guide"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/contrast-ratio-guide`, lastModified: blogDate("contrast-ratio-guide"), changeFrequency: "monthly", priority: 0.87 },
+    { url: `${siteUrl}/blog/web-color-basics`, lastModified: blogDate("web-color-basics"), changeFrequency: "monthly", priority: 0.82 },
     // QR・テキスト 3記事
     { url: `${siteUrl}/blog/qr-create-guide`, lastModified: blogDate("qr-create-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/wifi-qr-guide`, lastModified: blogDate("wifi-qr-guide"), changeFrequency: "monthly", priority: 0.8 },
@@ -137,6 +143,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/tools/text`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
     { url: `${siteUrl}/tools/student`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
     { url: `${siteUrl}/tools/work`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    // カラーツール
+    { url: `${siteUrl}/color`, lastModified: new Date("2026-06-02"), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${siteUrl}/tools/hex-rgb-converter`, lastModified: new Date("2026-06-02"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/color-palette`, lastModified: new Date("2026-06-02"), changeFrequency: "monthly", priority: 0.83 },
+    { url: `${siteUrl}/tools/gradient-generator`, lastModified: new Date("2026-06-02"), changeFrequency: "monthly", priority: 0.83 },
+    { url: `${siteUrl}/tools/contrast-checker`, lastModified: new Date("2026-06-02"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/tools/pdf-rotate`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/tools/pdf-watermark`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/tools/pdf-delete-pages`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.8 },

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, BookOpen, LayoutGrid } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, BookOpen, LayoutGrid, Landmark } from "lucide-react";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 import { ALL_CATEGORIES } from "@/data/categories";
 
@@ -87,6 +87,15 @@ export function Header() {
                     className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
                     <span className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-white text-sm"><BookOpen className="w-4 h-4" /></span>
                     <span className="text-[15px] font-medium text-slate-900 dark:text-white flex-1">ブログ</span>
+                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
+                  </Link>
+                  <Link href="/subsidy" onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
+                    <span className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-sm"><Landmark className="w-4 h-4" /></span>
+                    <div className="flex-1">
+                      <span className="text-[15px] font-medium text-slate-900 dark:text-white">補助金・助成金診断</span>
+                      <span className="ml-2 text-[10px] font-bold text-indigo-500 bg-indigo-50 dark:bg-indigo-950/50 px-1.5 py-0.5 rounded-full">NEW</span>
+                    </div>
                     <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
                   </Link>
                 </div>

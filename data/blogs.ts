@@ -14,7 +14,8 @@ export type BlogCategory =
   | "lifestyle"
   | "business"
   | "ai"
-  | "ceremony";
+  | "ceremony"
+  | "color";
 
 export type BlogEntry = {
   slug: string;
@@ -805,6 +806,60 @@ const CEREMONY_BLOGS: BlogEntry[] = [
   },
 ];
 
+const COLOR_BLOGS: BlogEntry[] = [
+  {
+    slug: "hex-rgb-guide",
+    title: "HEXカラーコードとRGBの変換方法【Webデザイン基礎】",
+    description: "HEXカラーコードとRGBの仕組みと相互変換方法を解説。CSS変数・日本の伝統色辞書付き無料ツールの使い方まで。",
+    publishedAt: "2026-06-02",
+    updatedAt: "2026-06-02",
+    category: "color",
+    tags: ["HEX", "RGB", "カラーコード", "CSS", "Webデザイン"],
+    relatedToolIds: ["hex-rgb-converter"],
+    isFeatured: true,
+  },
+  {
+    slug: "color-palette-guide",
+    title: "Webデザインの配色の決め方【カラーパレット生成ツールの使い方】",
+    description: "補色・類似色・トライアドでWebデザインの配色を決める方法。無料ツールでCSS変数として即出力。",
+    publishedAt: "2026-06-02",
+    updatedAt: "2026-06-02",
+    category: "color",
+    tags: ["カラーパレット", "配色", "補色", "Webデザイン"],
+    relatedToolIds: ["color-palette"],
+  },
+  {
+    slug: "css-gradient-guide",
+    title: "CSSグラデーションの書き方【コピペコード付き・無料ジェネレーター】",
+    description: "linear-gradient・radial-gradientの書き方を基礎から解説。無料ツールでビジュアル設定してCSSコードを即コピー。",
+    publishedAt: "2026-06-02",
+    updatedAt: "2026-06-02",
+    category: "color",
+    tags: ["CSSグラデーション", "linear-gradient", "CSS"],
+    relatedToolIds: ["gradient-generator"],
+  },
+  {
+    slug: "contrast-ratio-guide",
+    title: "コントラスト比とWCAGとは？Webアクセシビリティ対応チェック方法",
+    description: "WCAG 2.1のコントラスト比基準（AA/AAA）とチェック方法を解説。無料ツールで今すぐ確認できます。",
+    publishedAt: "2026-06-02",
+    updatedAt: "2026-06-02",
+    category: "color",
+    tags: ["WCAG", "コントラスト比", "アクセシビリティ", "Webデザイン"],
+    relatedToolIds: ["contrast-checker"],
+  },
+  {
+    slug: "web-color-basics",
+    title: "Web制作の配色基礎【HEX・RGB・HSLの使い分けと変換方法】",
+    description: "HEX・RGB・HSLの違いと使い分けを初心者向けに解説。実際の変換方法と配色ツールの活用法も。",
+    publishedAt: "2026-06-02",
+    updatedAt: "2026-06-02",
+    category: "color",
+    tags: ["HEX", "RGB", "HSL", "配色基礎", "CSS"],
+    relatedToolIds: ["hex-rgb-converter"],
+  },
+];
+
 // ─────────────────────────────────────────────────────────────────────────────
 // 統合 & エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
@@ -815,6 +870,7 @@ export const ALL_BLOGS: BlogEntry[] = [
   ...OTHER_BLOGS,
   ...AI_BLOGS,
   ...CEREMONY_BLOGS,
+  ...COLOR_BLOGS,
 ];
 
 /** ビジネス・文書カテゴリのエントリを返す（CEREMONY_BLOGSに統合済み） */

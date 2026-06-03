@@ -68,6 +68,9 @@ export function Footer() {
             <Link href="/salary" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-50 dark:bg-teal-950/30 text-[13px] text-teal-600 dark:text-teal-400 hover:opacity-80 transition-opacity border border-teal-100 dark:border-teal-900/40">
               💴 手取り早見表
             </Link>
+            <Link href="/subsidy" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-[13px] text-indigo-600 dark:text-indigo-400 hover:opacity-80 transition-opacity border border-indigo-100 dark:border-indigo-900/40">
+              🏛️ 補助金・助成金診断
+            </Link>
           </div>
         </div>
 
