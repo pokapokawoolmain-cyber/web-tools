@@ -22,6 +22,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: siteUrl, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
     { url: `${siteUrl}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+    // サイト情報ページ（E-E-A-T強化）
+    { url: `${siteUrl}/about`, lastModified: new Date("2026-06-04"), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${siteUrl}/contact`, lastModified: new Date("2026-06-04"), changeFrequency: "yearly", priority: 0.6 },
+    { url: `${siteUrl}/updates`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
     // カテゴリTOPページ（SEO強化）
     { url: `${siteUrl}/pdf`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },
     { url: `${siteUrl}/image`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },

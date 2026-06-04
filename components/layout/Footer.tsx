@@ -74,12 +74,29 @@ export function Footer() {
           </div>
         </div>
 
+        {/* サイト情報リンク */}
+        <div className="mb-6 flex flex-wrap gap-3">
+          <Link href="/about" className="hover:text-slate-800 dark:hover:text-zinc-200 transition-colors text-[13px] text-slate-500 dark:text-zinc-400">
+            ToolBoxについて
+          </Link>
+          <span className="text-slate-200 dark:text-zinc-700">|</span>
+          <Link href="/updates" className="hover:text-slate-800 dark:hover:text-zinc-200 transition-colors text-[13px] text-slate-500 dark:text-zinc-400">
+            更新履歴
+          </Link>
+          <span className="text-slate-200 dark:text-zinc-700">|</span>
+          <Link href="/contact" className="hover:text-slate-800 dark:hover:text-zinc-200 transition-colors text-[13px] text-slate-500 dark:text-zinc-400">
+            お問い合わせ
+          </Link>
+        </div>
+
         {/* Bottom bar */}
         <div className="pt-6 border-t border-slate-200 dark:border-zinc-800 flex flex-col sm:flex-row justify-between gap-3 text-[12px] text-slate-400 dark:text-zinc-600">
           <p>© {currentYear} ToolBox. All rights reserved.</p>
-          <div className="flex gap-4">
+          <div className="flex gap-4 flex-wrap">
+            <Link href="/about" className="hover:text-slate-600 dark:hover:text-zinc-400 transition-colors">運営者情報</Link>
             <Link href="/privacy" className="hover:text-slate-600 dark:hover:text-zinc-400 transition-colors">プライバシーポリシー</Link>
             <Link href="/terms" className="hover:text-slate-600 dark:hover:text-zinc-400 transition-colors">利用規約</Link>
+            <Link href="/contact" className="hover:text-slate-600 dark:hover:text-zinc-400 transition-colors">お問い合わせ</Link>
           </div>
         </div>
       </div>

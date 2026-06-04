@@ -8,6 +8,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { JsonLd } from "@/components/seo/JsonLd";
 import "@/styles/globals.css";
 
 // 英語フォント: Inter（Appleサイト的な洗練感）
@@ -91,6 +92,22 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans bg-white dark:bg-zinc-950 text-slate-900 dark:text-slate-100 antialiased">
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "ToolBox",
+          "url": "https://toolboxjp.com",
+          "description": "登録不要・ブラウザ完結の無料Webツール集。FIRE計算・NISA積立・PDF結合・画像圧縮・カラー変換など80種類以上。",
+          "inLanguage": "ja",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://toolboxjp.com/tools?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        }} />
         <ThemeProvider>
           {/* スキップリンク（アクセシビリティ） */}
           <a
