@@ -93,17 +93,31 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
               <p>
-                きっかけは、「ちょっとしたことを調べるのに、毎回不便を感じていた」ことでした。
+                最初に作ったのは<strong className="text-slate-700 dark:text-zinc-300">ガソリン代計算ツール</strong>でした。
+                会社に毎月通勤費の実費申請をしていたのですが、「往復○km × 燃費 × ガソリン単価」を毎回Excelで計算するのが地味に面倒で。
+                「ブラウザで開いて3項目入れたら終わり」というものを作ったのが始まりです。
               </p>
               <p>
-                例えばFIREに必要な資産額を計算しようとすると、広告だらけのサイトで入力項目が多すぎて結果がわかりにくかったり、
-                PDFを結合しようとするとアップロードに不安があったり。
-                「ブラウザだけで、すぐ、安心して使えるツール」がなかなか見つかりませんでした。
+                次に困ったのがPDF結合でした。取引先に送る書類が「見積書.pdf」「仕様書.pdf」「会社概要.pdf」と3つに分かれてしまい、
+                一つにまとめたかった。オンラインツールを探したところ、大半がファイルをサーバーにアップロードするタイプで、
+                社内文書を外部に送るのはさすがに気が引けました。
+                それで「ブラウザ内で完結するPDF結合ツール」も自分で作ることにしました。
               </p>
               <p>
-                それなら自分で作ろう、と思い立ったのがToolBoxの始まりです。
-                「ユーザーがやりたいことをすぐ達成できる」——それだけを考えて設計しています。
+                こうして「自分が欲しいと思ったものを作る」を繰り返していたら、気づけばFIREシミュレーターや画像圧縮、カラーコード変換まで80種類を超えていました。
+                全部、自分が実際に「あれ、これどこかでサっと計算したい」と感じた瞬間がきっかけです。
               </p>
+
+              {/* 実測データ */}
+              <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-4 border border-blue-100 dark:border-blue-900 text-[13px] space-y-2 mt-2">
+                <p className="font-semibold text-blue-800 dark:text-blue-300">実際に試してみた結果（一例）</p>
+                <ul className="space-y-1 text-blue-700 dark:text-blue-400">
+                  <li>・iPhone 15 Proで撮影した5分の4K動画（1.1GB）→ 動画圧縮ツールで44MBに圧縮、LINEで送信できた</li>
+                  <li>・20ページのPDFを3ファイル → PDF結合で1ファイルに、処理時間は約3秒</li>
+                  <li>・年収500万・積立投資シミュレーション → FIRE達成に必要な額を5秒で試算</li>
+                  <li>・デザイン作業中に「このグレー、コントラスト足りてる？」→ コントラストチェッカーで即確認</li>
+                </ul>
+              </div>
             </div>
           </section>
 
@@ -228,11 +242,15 @@ export default function AboutPage() {
                 </div>
                 <div className="flex gap-4">
                   <dt className="text-slate-400 dark:text-zinc-500 w-24 flex-shrink-0">運営開始</dt>
-                  <dd className="text-slate-700 dark:text-zinc-300">2024年</dd>
+                  <dd className="text-slate-700 dark:text-zinc-300">2024年秋</dd>
                 </div>
                 <div className="flex gap-4">
                   <dt className="text-slate-400 dark:text-zinc-500 w-24 flex-shrink-0">運営者</dt>
-                  <dd className="text-slate-700 dark:text-zinc-300">ToolBox運営チーム</dd>
+                  <dd className="text-slate-700 dark:text-zinc-300">ひゆ（個人運営）</dd>
+                </div>
+                <div className="flex gap-4">
+                  <dt className="text-slate-400 dark:text-zinc-500 w-24 flex-shrink-0">運営形態</dt>
+                  <dd className="text-slate-500 dark:text-zinc-400 text-[13px]">個人が趣味と実益を兼ねて開発・運営。広告収益で維持費をまかなっています。</dd>
                 </div>
                 <div className="flex gap-4">
                   <dt className="text-slate-400 dark:text-zinc-500 w-24 flex-shrink-0">お問い合わせ</dt>
