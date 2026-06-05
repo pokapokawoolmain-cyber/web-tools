@@ -97,7 +97,7 @@ export default function RootLayout({
           "@type": "WebSite",
           "name": "ToolBox",
           "url": "https://toolboxjp.com",
-          "description": "登録不要・ブラウザ完結の無料Webツール集。FIRE計算・NISA積立・PDF結合・画像圧縮・カラー変換など80種類以上。",
+          "description": "登録不要・ブラウザ完結の無料Webツール集。FIRE計算・NISA積立・PDF結合・画像圧縮・カラー変換など58種類以上。",
           "inLanguage": "ja",
           "potentialAction": {
             "@type": "SearchAction",
