@@ -2,20 +2,50 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("shakai-hoken-guide")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "社会保険料の計算方法【2026年最新版】年収別早見表・標準報酬月額わかりやすく解説",
+  description: "年収400万円の社会保険料は年間約58万円。健康保険・厚生年金・雇用保険の計算方法を解説。標準報酬月額とは何か、130万円・106万円の壁、パート・アルバイトの加入条件も。",
   path: `/blog/${post.slug}`,
-  keywords: ["社会保険料 計算方法", "社会保険料 年収別", "標準報酬月額 とは", "社会保険料 130万の壁", "厚生年金 健康保険 計算"],
+  keywords: ["社会保険料 計算方法 わかりやすく", "社会保険料 年収400万", "標準報酬月額 計算 例", "社会保険料 130万の壁 2026", "健康保険 厚生年金 いくら引かれる"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "社会保険料は給料からいくら引かれますか？",
+      acceptedAnswer: { "@type": "Answer", text: "会社員の場合、給与の約14〜15%が社会保険料（健康保険・厚生年金・雇用保険・介護保険）として控除されます。例えば月収30万円なら約4〜4.5万円が社会保険料として引かれます。会社が同額を負担しており、合計では月収の約28〜30%に相当します。" },
+    },
+    {
+      "@type": "Question",
+      name: "社会保険料の130万円の壁とは何ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収130万円以上になると、配偶者の扶養から外れて自分で社会保険に加入（または国民健康保険に加入）する必要が生じます。これにより年間20〜30万円程度の負担増になるため、「130万円の壁」と呼ばれています。2022年からは年収106万円以上でも一定条件を満たすと扶養が外れる「106万円の壁」も存在します。" },
+    },
+    {
+      "@type": "Question",
+      name: "標準報酬月額とは何ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "標準報酬月額とは、社会保険料の計算に使われる給与の基準額です。実際の月給を一定の等級（1〜50等級）に当てはめ、その等級に対応した保険料率をかけて社会保険料を計算します。毎年4〜6月の給与を平均した「定時決定」で見直されます。" },
+    },
+    {
+      "@type": "Question",
+      name: "フリーランス（個人事業主）の社会保険料はどうなりますか？",
+      acceptedAnswer: { "@type": "Answer", text: "フリーランスは国民健康保険と国民年金に加入します。国民年金は2024年度で月16,980円（年間約20万円）定額です。国民健康保険は前年の所得に応じて変わり、年収400万円では年間40〜50万円程度になることが多いです。会社員と比べて国民年金は手取り額が低いため、iDeCoで補うのが一般的な節税策です。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         年収400万円の社会保険料は約<strong>58〜60万円</strong>。健康保険・厚生年金・雇用保険の3種類で構成され、手取りに最も大きな影響を与えます。計算方法・標準報酬月額の仕組み・130万円の壁まで解説します。
@@ -153,10 +183,30 @@ export default function Page() {
         <li><Link href="/blog/takehome-400">年収400万円の手取り詳細</Link></li>
       </ul>
 
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>よくある質問</h2>
+      <dl className="space-y-4">
+        {[
+          { q: "社会保険料は給料からいくら引かれますか？", a: "給与の約14〜15%が社会保険料として引かれます。月収30万円なら約4〜4.5万円。会社も同額を負担しているため、合計では月収の約28〜30%に相当します。" },
+          { q: "社会保険料の130万円の壁とは？", a: "年収130万円以上になると配偶者の扶養から外れ、自分で社会保険または国民健康保険に加入が必要になります。年間20〜30万円程度の負担増になります。" },
+          { q: "標準報酬月額とはなんですか？", a: "社会保険料の計算に使う「基準となる給与額」です。実際の月給を50等級の区分に当てはめて計算します。毎年4〜6月の給与平均で決まります。" },
+        ].map(({ q, a }) => (
+          <div key={q} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-4">
+            <dt className="font-semibold text-slate-800 dark:text-zinc-200 mb-1 flex items-start gap-2">
+              <span className="text-blue-500 font-bold flex-shrink-0">Q.</span>{q}
+            </dt>
+            <dd className="text-slate-600 dark:text-slate-400 text-[14px] flex items-start gap-2">
+              <span className="text-blue-500 font-bold flex-shrink-0">A.</span>{a}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事の数値は協会けんぽ東京都の2026年保険料率に基づく概算です。加入する健康保険組合・標準報酬月額等により実際の社会保険料は異なります。
       </div>
     </BlogLayout>
+    </>
   );
 }

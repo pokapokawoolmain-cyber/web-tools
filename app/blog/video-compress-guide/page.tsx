@@ -2,20 +2,50 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("video-compress-guide")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "動画を圧縮して容量を小さくする方法【無料・アプリ不要・スマホ対応】",
+  description: "iPhoneで撮った動画がLINEで送れない、メールに添付できない——ブラウザだけで解決。MP4・MOV対応・登録不要・無料。1GB動画を数十MBに圧縮できます。",
   path: `/blog/${post.slug}`,
-  keywords: ["動画 圧縮 無料 スマホ アプリ不要", "動画 容量 小さくする ブラウザ", "MP4 MOV 軽くする 方法 簡単", "動画 LINE 送れない 容量 解決", "動画 メール 送れない サイズ 圧縮"],
+  keywords: ["動画 容量 小さくする 無料", "動画圧縮 アプリ不要 ブラウザ", "MP4 圧縮 スマホ", "動画 LINE 送れない 解決", "iPhone 動画 軽くする 方法"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "LINEで動画が送れないのはなぜですか？",
+      acceptedAnswer: { "@type": "Answer", text: "LINEのファイル送信は最大1GBまでですが、Keep機能やノート投稿には5分・200MBなどの制限があります。動画を圧縮してファイルサイズを小さくすることで解決できます。" },
+    },
+    {
+      "@type": "Question",
+      name: "iPhoneで撮った動画を圧縮する方法は？",
+      acceptedAnswer: { "@type": "Answer", text: "アプリ不要の方法として、ブラウザから動画圧縮ツールを使うのが最も手軽です。iPhone設定の「カメラ」→「ビデオ撮影」で4Kから1080p/720pに変更するだけでも容量が1/4〜1/8になります。" },
+    },
+    {
+      "@type": "Question",
+      name: "動画圧縮で画質はどれくらい落ちますか？",
+      acceptedAnswer: { "@type": "Answer", text: "スマートフォンで見る程度なら720p・圧縮率70%でも差はほぼわかりません。元動画が4K60fpsなら1080p30fpsに変換するだけで容量を1/4〜1/10にできます。" },
+    },
+    {
+      "@type": "Question",
+      name: "圧縮した動画はサーバーに保存されますか？",
+      acceptedAnswer: { "@type": "Answer", text: "ToolBoxの動画圧縮ツールはブラウザ内で処理が完結します。アップロードした動画が外部サーバーに送信されることは一切ありません。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         スマホで撮影した動画をLINEで送ろうとしたら「ファイルが大きすぎます」——そんな時はアプリ不要のブラウザツールで解決できます。iPhone・Android・PCどこからでも無料で動画を圧縮できます。
@@ -171,5 +201,6 @@ export default function Page() {
         圧縮処理はブラウザ内で完結します。アップロードした動画ファイルが外部サーバーに送信されることは一切ありません。
       </div>
     </BlogLayout>
+    </>
   );
 }

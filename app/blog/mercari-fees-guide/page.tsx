@@ -2,19 +2,54 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 const post = getBlogPost("mercari-fees-guide")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "メルカリ手数料は何%？送料込みの手取り早見表と損しない価格設定【2026年最新】",
+  description: "メルカリ手数料は販売価格の10%。1,000円で売れると手数料100円＋ネコポス175円＝実質手取り725円。送料別・配送方法別の手取り早見表と、値下げ交渉にも負けない価格設定のコツを解説。",
   path: `/blog/${post.slug}`,
-  keywords: ["メルカリ 手数料", "メルカリ 手数料 計算", "メルカリ 利益計算", "メルカリ 送料 比較", "メルカリ 手取り"],
+  keywords: ["メルカリ 手数料 いくら", "メルカリ 手取り 計算", "メルカリ 送料 いくら", "メルカリ 手数料 10パーセント 計算方法", "メルカリ ネコポス 手取り 早見表"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "メルカリの手数料は何パーセントですか？",
+      acceptedAnswer: { "@type": "Answer", text: "メルカリの販売手数料は一律10%です。例えば1,000円で売れた場合、100円が手数料として自動的に差し引かれ、手元に残る前の金額は900円になります。そこからさらに送料が引かれます。" },
+    },
+    {
+      "@type": "Question",
+      name: "メルカリで1,000円で売ったら手元にいくら残りますか？",
+      acceptedAnswer: { "@type": "Answer", text: "送料込み（ネコポス175円）の場合、1,000円 - 手数料100円 - 送料175円 = 725円が手取りになります。着払いの場合は1,000円 - 手数料100円 = 900円です。" },
+    },
+    {
+      "@type": "Question",
+      name: "メルカリのネコポスとゆうパケットはどちらが安いですか？",
+      acceptedAnswer: { "@type": "Answer", text: "ネコポスは175円、ゆうパケット（ゆうゆうメルカリ便）は230円で、ネコポスのほうが55円安いです。どちらもA4サイズ・厚さ3cm・1kgまで対応しており、ネコポスを優先するのがおすすめです。" },
+    },
+    {
+      "@type": "Question",
+      name: "メルカリで赤字にならない最低価格の計算方法は？",
+      acceptedAnswer: { "@type": "Answer", text: "最低価格 = (送料 + 梱包材費) ÷ 0.9 で計算できます。ネコポス175円・梱包材20円の場合、195÷0.9 ≒ 217円が赤字にならない最低価格です。値下げ交渉に備えてさらに1〜2割上乗せした価格設定が安全です。" },
+    },
+    {
+      "@type": "Question",
+      name: "メルカリの売上に確定申告は必要ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "自宅の不用品（衣類・家電・本など）を売る場合は原則非課税で確定申告は不要です。転売目的で仕入れた商品や手作り品を継続的に販売する場合は、給与所得者なら年間20万円超で確定申告が必要です。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         メルカリで出品するとき「この値段で売ったら手元にいくら残るんだろう」と毎回計算するのは面倒です。手数料<strong>10%</strong>だとわかっていても、送料を加えると実際の手取りがどうなるのか、ぱっとイメージできない人も多い。
@@ -211,6 +246,27 @@ export default function Page() {
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事の送料・手数料は執筆時点の情報に基づきます。変更されている場合がありますので、最新情報はメルカリ公式サイトでご確認ください。税務上の取り扱いについては税理士にご相談ください。
       </div>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>よくある質問</h2>
+      <dl className="space-y-4">
+        {[
+          { q: "メルカリの手数料は何パーセントですか？", a: "販売手数料は一律10%です。300円で売れたなら30円、1,000円なら100円が差し引かれます。最低価格は300円に設定されています。" },
+          { q: "ネコポスとゆうパケット、どちらを使うべきですか？", a: "ネコポス（175円）のほうがゆうパケット（230円）より55円安く、サイズ上限もほぼ同じです。コンビニや宅急便センターからも出せるネコポスが第一選択肢です。" },
+          { q: "値下げ交渉に備えた価格設定はどうすればいいですか？", a: "希望利益額を決めてから「手取り = (販売価格 × 0.9) - 送料 - 梱包材費」で逆算します。10%値下げされても利益が出るよう、希望手取りを0.8で割った価格が目安です。" },
+          { q: "メルカリの売上は税金がかかりますか？", a: "自宅の不用品処分は原則非課税です。転売・ハンドメイドの継続販売は雑所得扱いで、給与所得者は年間20万円超で確定申告が必要になります。" },
+        ].map(({ q, a }) => (
+          <div key={q} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-4">
+            <dt className="font-semibold text-slate-800 dark:text-zinc-200 mb-1 flex items-start gap-2">
+              <span className="text-blue-500 font-bold flex-shrink-0">Q.</span>{q}
+            </dt>
+            <dd className="text-slate-600 dark:text-slate-400 text-[14px] flex items-start gap-2">
+              <span className="text-blue-500 font-bold flex-shrink-0">A.</span>{a}
+            </dd>
+          </div>
+        ))}
+      </dl>
     </BlogLayout>
+    </>
   );
 }

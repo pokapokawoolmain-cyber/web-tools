@@ -2,20 +2,55 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("salary-takehome-table")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "手取り早見表【2026年最新】年収300〜1500万円の月収換算・税金内訳を一覧確認",
+  description: "年収300万→月20万、400万→月26.5万、500万→月32.8万、600万→月38.5万、700万→月44万。年収別の手取りを一覧表でサッと確認。所得税・住民税・社会保険料の内訳と節税方法付き。",
   path: `/blog/${post.slug}`,
-  keywords: ["年収500万 手取り", "年収600万 手取り", "年収400万 手取り", "手取り 早見表 年収別", "年収700万 手取り", "年収1000万 手取り", "手取り計算 会社員"],
+  keywords: ["手取り早見表 2026", "年収別 手取り 一覧", "年収500万 手取り いくら", "年収600万 手取り 月収", "手取り計算 会社員 独身", "年収1000万 手取り"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "年収500万円の手取りは月いくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収500万円（独身・会社員）の手取りは年間約394万円・月平均約32.8万円です。控除内訳は社会保険料約72万円、所得税約13万円、住民税約21万円で、合計約106万円が引かれます。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収600万円の手取りは月いくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収600万円（独身・会社員）の手取りは年間約462万円・月平均約38.5万円です。控除内訳は社会保険料約85万円、所得税約22万円、住民税約31万円で、合計約138万円が引かれます。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収1000万円の手取りは月いくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収1000万円（独身・会社員）の手取りは年間約720万円・月平均約60万円です。控除内訳は社会保険料約120万円、所得税約76万円、住民税約84万円で、合計約280万円が引かれます。" },
+    },
+    {
+      "@type": "Question",
+      name: "手取りを増やす方法はありますか？",
+      acceptedAnswer: { "@type": "Answer", text: "主な方法は①iDeCo（個人型確定拠出年金）で所得控除を活用、②ふるさと納税で住民税・所得税を軽減、③各種所得控除（医療費控除・生命保険料控除）を確実に申告することです。これらで年収500万円なら年10〜30万円程度の節税効果が期待できます。" },
+    },
+    {
+      "@type": "Question",
+      name: "手取り率（手取り÷年収）の平均は何%ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "会社員・独身の場合、年収300〜500万円は手取り率78〜80%程度、600〜800万円は75〜77%、1000万円以上は70%前後です。年収が上がるほど累進課税の影響で手取り率が下がる傾向があります。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「年収600万円って手取りいくら？」と聞かれると、意外と即答できる人が少ない。給与明細は毎月見ているはずなのに、年収ベースで自分の手取りを正確に把握している人は多くありません。
@@ -408,17 +443,50 @@ export default function Page() {
       </div>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>よくある質問</h2>
+      <dl className="space-y-4">
+        {[
+          { q: "年収500万円の手取りは月いくらですか？", a: "独身・会社員の場合、年間約394万円・月平均約32.8万円です。社会保険料・所得税・住民税の合計で約106万円が控除されます。" },
+          { q: "年収600万円の手取りは月いくらですか？", a: "独身・会社員の場合、年間約462万円・月平均約38.5万円です。約138万円が控除され、手取り率は約77%です。" },
+          { q: "手取りを増やすために何ができますか？", a: "iDeCo・ふるさと納税・医療費控除・生命保険料控除などを活用することで、年10〜30万円程度の節税が可能です。" },
+          { q: "手取り率（手取り÷年収）の目安は？", a: "年収300〜500万円は78〜80%程度、600〜800万円は75〜77%、1000万円以上は70%前後。年収が高いほど累進課税の影響で手取り率は下がります。" },
+        ].map(({ q, a }) => (
+          <div key={q} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-4">
+            <dt className="font-semibold text-slate-800 dark:text-zinc-200 mb-1 flex items-start gap-2">
+              <span className="text-blue-500 font-bold flex-shrink-0">Q.</span>{q}
+            </dt>
+            <dd className="text-slate-600 dark:text-slate-400 text-[14px] flex items-start gap-2">
+              <span className="text-blue-500 font-bold flex-shrink-0">A.</span>{a}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収別の詳細解説記事</h2>
-      <ul className="space-y-2">
-        <li><Link href="/blog/takehome-400" className="text-blue-600 dark:text-blue-400 hover:underline">年収400万円の手取りはいくら？</Link> — 月26.5万円の生活費シミュレーション</li>
-        <li><Link href="/blog/takehome-500" className="text-blue-600 dark:text-blue-400 hover:underline">年収500万円の手取りはいくら？</Link> — 月32.8万円、日本の平均年収と比較</li>
-        <li><Link href="/blog/takehome-600" className="text-blue-600 dark:text-blue-400 hover:underline">年収600万円の手取りはいくら？</Link> — 月38.5万円、家族持ちのケース別比較</li>
-      </ul>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {[
+          { href: "/blog/takehome-300", text: "年収300万円の手取り", sub: "月20.3万円" },
+          { href: "/blog/takehome-400", text: "年収400万円の手取り", sub: "月26.5万円" },
+          { href: "/blog/takehome-500", text: "年収500万円の手取り", sub: "月32.8万円" },
+          { href: "/blog/takehome-600", text: "年収600万円の手取り", sub: "月38.5万円" },
+          { href: "/blog/takehome-700", text: "年収700万円の手取り", sub: "月44.0万円" },
+          { href: "/blog/takehome-800", text: "年収800万円の手取り", sub: "月49.5万円" },
+          { href: "/blog/takehome-900", text: "年収900万円の手取り", sub: "月55.0万円" },
+          { href: "/blog/takehome-1000", text: "年収1000万円の手取り", sub: "月60.0万円" },
+        ].map(({ href, text, sub }) => (
+          <Link key={href} href={href} className="flex items-center justify-between px-4 py-3 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <span className="text-[14px] text-blue-600 dark:text-blue-400 font-medium">{text}</span>
+            <span className="text-[13px] text-slate-500 dark:text-zinc-400">{sub}</span>
+          </Link>
+        ))}
+      </div>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事の数値は現行の税率・社会保険料率に基づく概算です。制度改正・個人の状況により実際の手取りは異なります。正確な金額は税理士・社会保険労務士にご相談ください。
       </div>
     </BlogLayout>
+    </>
   );
 }
