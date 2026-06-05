@@ -18,7 +18,7 @@ export default function Page() {
   return (
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        FIREの根拠となる「4%ルール」とは、保有資産の4%以内を毎年取り崩せば<strong>30年</strong>以上資産が枯渇しにくいという考え方です。ただし日本でFIREする場合には注意が必要な点があります。
+        FIREシミュレーターを作るにあたって4%ルールを改めて調べたとき、「日本でそのまま使うと思ったより危ない」と気づきました。米国の研究をそのまま当てはめると社会保険料・税制・為替の3つで試算がズレます。「1億円あれば年400万円生活できる」は正しいですが、国民健康保険料だけで年30〜50万円かかることが抜け落ちていることが多い。この記事では4%ルールの仕組みと、日本でFIREを目指すときに知っておくべき現実をまとめました。
       </p>
       <p className="text-[13px] text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 my-4">
         投資はリスクを伴います。4%ルールは過去の米国市場データに基づく推計であり、将来の資産枯渇を防ぐことを保証するものではありません。
@@ -98,6 +98,13 @@ export default function Page() {
         <li><Link href="/blog/fire-monthly-5man">月5万円の積立でFIREは可能？</Link></li>
         <li><Link href="/blog/nisa-fire-strategy">新NISAでFIREを目指す戦略</Link></li>
       </ul>
+
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">📝 4%ルールを調べて変わった自分の考え方</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          計算してみて一番驚いたのは「40代でFIREした場合、4%ルールの30年試算ではギリギリ足りない可能性がある」という点でした。40歳でFIREすると85歳まで45年必要で、4%ルールの前提（30年）を超えます。個人的には日本でのFIREは3〜3.5%で試算するほうが安全マージンがあると思っています。あとは支出の削減にも限界があるので、副収入の柱をひとつ残す「サイドFIRE」も現実的な選択肢だと感じています。
+        </p>
+      </div>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>

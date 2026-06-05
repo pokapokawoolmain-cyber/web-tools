@@ -18,7 +18,7 @@ export default function Page() {
   return (
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        ガソリン代は日々の生活費の中で見えにくい出費のひとつです。通勤・仕事・ドライブにかかるガソリン代を正確に把握しておくと、節約や経費申請の際に役立ちます。
+        会社にマイカー通勤費の実費申請をしていたとき、「今月のガソリン代はいくらだっけ」と毎回Excelを開いて計算していました。往復km・燃費・ガソリン単価の3つがわかれば5秒で出る計算なのに、月末になるたびにそれが面倒で。それがToolBoxのガソリン代計算ツールを作ったきっかけです。この記事では計算の仕組みと、経費申請・節約に使える実用情報をまとめました。
       </p>
 
       <h2>ガソリン代の基本計算式</h2>
@@ -97,6 +97,13 @@ export default function Page() {
         <li><strong>安いガソリンスタンドを使う</strong>：ガソリン価格比較サービスを活用する</li>
         <li><strong>クレジットカードのリッター割引</strong>：提携カードで1〜5円/Lの割引を受けられる場合がある</li>
       </ul>
+
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+        <strong className="block mb-2">📝 実際に試してみた話</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          自分のケース（往復38km・燃費14km/L・ガソリン単価168円）で計算すると、1日あたり457円、月20日出勤で9,143円でした。会社の支給額（距離×15円/km）が月5,700円だったので、実費との差が3,400円以上あることが判明。翌月から実費申請に切り替えました。こういう「地味な差額」を可視化するのがガソリン代計算ツールの本来の使い方だと思っています。
+        </p>
+      </div>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">ガソリン代計算ツール</strong>

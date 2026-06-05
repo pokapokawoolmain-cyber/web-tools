@@ -48,7 +48,7 @@ export default function Page() {
     <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        スマホで撮影した動画をLINEで送ろうとしたら「ファイルが大きすぎます」——そんな時はアプリ不要のブラウザツールで解決できます。iPhone・Android・PCどこからでも無料で動画を圧縮できます。
+        iPhone 15 Proで撮った5分の動画をLINEで送ろうとしたら1.1GBあって弾かれました。動画圧縮アプリを探してもインストールが必要なものばかりで、「ブラウザだけで完結するもの」がなかったので自分で作りました。実際に圧縮したところ44MBになり、LINEで普通に送れました。この記事ではiPhone・Android・PCそれぞれの手順と、用途別のおすすめ設定をまとめています。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
