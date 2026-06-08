@@ -2,23 +2,58 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("fire-monthly-5man")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "月5万円積立でFIREは何年かかる？年利別シミュレーション【2026年版】",
+  description: "月5万円の積立投資でFIREを達成するには年利5%で約36〜40年かかる試算です。生活費目標別の必要資産額・年数早見表と、達成を早める4つの方法を解説します。",
   path: `/blog/${post.slug}`,
-  keywords: ["月5万 FIRE", "積立 FIRE シミュレーション", "月5万積立 何年", "FIRE 必要年数", "積立投資 FIRE 達成"],
+  keywords: ["月5万 積立 FIRE 何年", "月5万円 投資 30年後 いくら", "FIRE 月5万 必要年数 シミュレーション", "積立NISA 月5万 複利", "サイドFIRE 月5万"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "月5万円の積立でFIREは達成できますか？",
+      acceptedAnswer: { "@type": "Answer", text: "可能ですが長期間が必要です。生活費月20万円・年利5%のケースでは約40年かかる試算です。積立額を増やす・生活費目標を下げる・副収入を組み合わせる「サイドFIRE」にするなどで現実的な期間に短縮できます。" },
+    },
+    {
+      "@type": "Question",
+      name: "月5万円を30年積み立てるといくらになりますか？",
+      acceptedAnswer: { "@type": "Answer", text: "元本は1,800万円ですが、年利5%の複利運用では約4,159万円になる試算です。年利7%なら約6,082万円になります。積立期間が長いほど複利の効果が大きくなります。" },
+    },
+    {
+      "@type": "Question",
+      name: "FIREに必要な資産額はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "一般的に年間生活費の25倍（4%ルール）が目安です。生活費月20万円（年240万円）なら6,000万円、月15万円（年180万円）なら4,500万円が目標額となります。ただし日本では社会保険料や税金も考慮した設計が必要です。" },
+    },
+    {
+      "@type": "Question",
+      name: "月5万円積立をNISAで行うと税金はどうなりますか？",
+      acceptedAnswer: { "@type": "Answer", text: "新NISAの成長投資枠・積立投資枠を使えば運用益・分配金が非課税になります。通常は利益の約20%が税金として引かれますが、NISAなら全額手取りになります。月5万円なら年60万円で積立投資枠（年120万円）の範囲内で非課税運用できます。" },
+    },
+    {
+      "@type": "Question",
+      name: "月5万円より積立を増やせない場合はどうすればいいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "サイドFIREという選択肢があります。フルFIRE（完全な労働不要）ではなく、資産収入＋週数日の仕事で生活を成り立たせる方法です。必要資産額を大幅に下げられるため、月5万円積立でも20〜25年で達成できるケースがあります。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        <strong>月5万円</strong>の積立投資でFIREを目指す場合、<strong>年利・目標資産額・生活費の水準</strong>によって必要な年数が大きく変わります。複数のシナリオでシミュレーション結果を解説します。
+        FIREシミュレーターを作りながら「月5万円だとどのくらいかかるんだろう」と自分でも計算してみました。正直なところ、年利5%・生活費月20万円のケースで約40年という数字が出て少し重くなりました。ただ積立額・生活費目標・サイドFIREの組み合わせ次第で現実的な期間まで縮められます。複数シナリオの計算結果をまとめました。
       </p>
       <p className="text-[13px] text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 my-4">
         投資はリスクを伴います。将来の運用益を保証するものではありません。余裕資金での運用をご検討ください。
@@ -123,10 +158,18 @@ export default function Page() {
         <li><Link href="/blog/nisa-monthly-simulation">新NISAの積立シミュレーション</Link></li>
       </ul>
 
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">📝 計算してみて気づいたこと</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          月5万円だとフルFIREは厳しいと感じたのが正直なところです。ただ「完全にやめる」ではなく「週2〜3日だけ働く」サイドFIREなら、必要資産額を2,000〜3,000万円に設定できるため月5万円でも20年以内に届く計算になります。あとは新NISAで非課税枠を使い切ることで手取りが増えるので、実質的な達成スピードは上がります。
+        </p>
+      </div>
+
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事の試算値は一定の前提条件に基づく参考値です。投資はリスクを伴い、元本が保証されるものではありません。投資判断は自己責任で行い、必要に応じて専門家にご相談ください。
       </div>
     </BlogLayout>
+    </>
   );
 }

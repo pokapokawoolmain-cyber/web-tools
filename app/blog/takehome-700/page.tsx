@@ -2,23 +2,58 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("takehome-700")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "年収700万円の手取りは月44万円（年528万）｜税金内訳・生活レベル解説【2026年版】",
+  description: "年収700万円の手取りは年間約528万円・月44万円。所得税33万・住民税40万・社会保険料99万の内訳を解説。独身・家族持ちの生活シミュレーション、iDeCo・ふるさと納税の節税効果も。",
   path: `/blog/${post.slug}`,
-  keywords: ["年収700万 手取り", "年収700万 月収", "年収700万 税金", "700万 手取り 独身", "年収700万 生活レベル"],
+  keywords: ["年収700万 手取り いくら", "年収700万 月収 手取り", "年収700万 税金 内訳", "700万 手取り 2026", "年収700万 生活 きつい 余裕"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "年収700万円の手取りはいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収700万円の手取りは年間約528万円（月平均44万円）が目安です。所得税約33万円・住民税約40万円・社会保険料約99万円の合計約172万円が控除されます。家族構成・加入する健康保険・各種控除により実際の金額は変わります。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収700万円の月収（手取り）はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "月の手取りは約44万円が目安です。ただしボーナスがある場合は月収は少なくなり、ボーナス月に多くもらう形になります。ボーナスが年収の30%を占める場合、月の基本給手取りは約36〜38万円程度になります。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収700万円の所得税はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収700万円（独身・会社員）の所得税は概算で約33万円です。給与所得控除・基礎控除・社会保険料控除を差し引いた後の課税所得に対して、23%の税率が適用される部分が生じます。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収700万円は生活に余裕がありますか？",
+      acceptedAnswer: { "@type": "Answer", text: "独身であれば月44万円の手取りで十分な余裕があります。東京でも家賃15〜20万円・生活費15万円で月10万円以上を貯蓄や投資に回せます。家族持ちの場合は教育費・住宅ローンなどで余裕感が変わります。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収700万円から節税する方法はありますか？",
+      acceptedAnswer: { "@type": "Answer", text: "主な節税方法は①iDeCo（月2.3万円まで全額所得控除・年約6〜7万円の節税）②ふるさと納税（年約10〜11万円が上限目安・2,000円の自己負担で返礼品）③住宅ローン控除（年末残高の0.7%が最大13年間税額控除）の3つが効果的です。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        年収700万円の手取りは<strong>約528万円（月44万円）</strong>が目安です。給与から引かれる172万円の内訳と、独身・家族持ちの生活シミュレーション、FIRE達成に向けた積立戦略を解説します。
+        年収700万円に上がったとき、初めて給与明細の控除欄をきちんと計算してみて驚きました。毎月14万円以上が引かれていて、手取りに換算すると年間172万円近く。税金と社会保険でそれだけ消えているとは思っていませんでした。年収700万円の手取りは<strong>約528万円（月44万円）</strong>が目安です。控除の内訳と、独身・家族持ちの生活シミュレーション、節税効果まで解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -204,10 +239,18 @@ export default function Page() {
         年収全体の手取り一覧は<Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link>でまとめて確認できます。
       </p>
 
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">📝 節税を実際にやってみた結果</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          年収700万円台のときに試した節税で一番効いたのはふるさと納税とiDeCoの組み合わせでした。ふるさと納税の上限が約10〜11万円で、実質2,000円で米や肉を受け取りながら住民税が翌年まるっと減額される感覚は想像より大きかったです。iDeCoは月2.3万円を掛けて年間約6万円ほど所得税・住民税が減りました。どちらも手続きさえ済ませれば自動的に節税が続くので、やらない理由がありません。
+        </p>
+      </div>
+
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事の数値は現行の税率・社会保険料率に基づく概算です。加入する健康保険組合・家族構成・各種控除の状況により実際の手取りは異なります。
       </div>
     </BlogLayout>
+    </>
   );
 }

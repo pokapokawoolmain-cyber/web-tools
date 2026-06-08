@@ -2,23 +2,58 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("takehome-800")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "年収800万円の手取りは月49万円（年589万）｜税金211万の内訳・節税方法【2026年版】",
+  description: "年収800万円の手取りは年間約589万円・月49.1万円。所得税65万・住民税38万・社会保険料108万、控除211万円の詳細を解説。独身と家族持ちの生活費シミュレーション、ふるさと納税・iDeCoの節税効果も。",
   path: `/blog/${post.slug}`,
-  keywords: ["年収800万 手取り", "年収800万 月収", "年収800万 税金", "800万 手取り 独身", "年収800万 節税"],
+  keywords: ["年収800万 手取り いくら", "年収800万 月収 手取り", "年収800万 税金 内訳", "800万 手取り 2026", "年収800万 節税 iDeCo ふるさと納税"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "年収800万円の手取りはいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収800万円の手取りは年間約589万円（月平均49.1万円）が目安です。所得税約65万円・住民税約38万円・社会保険料約108万円の合計約211万円が控除されます。家族構成・加入する健康保険・各種控除により実際の金額は変わります。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収800万円の月収（手取り）はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "月の手取りは約49.1万円が目安です。ボーナスがある場合、基本給の月手取りはボーナス比率によって変わります。ボーナスが年収の30%を占める場合、月の基本給手取りは約41〜43万円程度になります。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収800万円と700万円の手取りの差はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収700万円の手取り（約528万円）と比べると、年収800万円（約589万円）は年間約61万円多い計算です。ただし所得税の税率が高い区間にかかるため、額面の差100万円に対して手取りの差は61万円と61%になります。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収800万円の所得税はなぜ高いのですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収800万円では課税所得が695万円超の部分に23%の所得税率が適用されます。年収700万円に比べて所得税が約32万円増えており、高い所得税率のブラケットにかかっています。iDeCoやふるさと納税を使うことで課税所得を下げ、節税効果が大きく出る年収帯です。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収800万円から節税する方法はありますか？",
+      acceptedAnswer: { "@type": "Answer", text: "主な節税方法は①ふるさと納税（年収800万・独身で年12〜13万円が上限目安）②iDeCo（月2.3万円まで全額所得控除・年約6〜7万円節税）③住宅ローン控除（年末残高の0.7%を最大13年間税額控除）の3つです。年収800万円台は所得税率23%が適用されるため節税の効果が特に大きい年収帯です。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        年収800万円の手取りは<strong>約589万円（月49.1万円）</strong>が目安です。控除は211万円と大きく、所得税だけで65万円かかります。内訳と節税・FIRE積立の戦略を解説します。
+        年収800万円の給与明細を初めて見たとき、控除欄の合計が211万円という数字に目を疑いました。特に所得税が65万円と年収700万円台から一気に跳ね上がっており、税率の壁を実感しました。年収800万円の手取りは<strong>約589万円（月49.1万円）</strong>が目安です。控除211万円の内訳と節税・FIRE積立の戦略を解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -176,10 +211,18 @@ export default function Page() {
         年収全体の手取り一覧は<Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link>でまとめて確認できます。
       </p>
 
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">📝 年収800万円台で節税してみて気づいたこと</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          この年収帯で一番インパクトがあったのは、ふるさと納税の上限額が思ったより大きかったことです。独身で約12〜13万円まで寄附できるので、米・肉・魚介などをまとめて選んで食費を実質カットしました。iDeCoは掛金が全額所得控除になるため、年収800万円台の23%税率で計算すると月2.3万円の掛金で年間約6万円以上の節税になります。住宅ローン控除と合わせると年間10万円以上の節税になり、手取りを実質的に増やす感覚でした。
+        </p>
+      </div>
+
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事の数値は現行の税率・社会保険料率に基づく概算です。加入する健康保険組合・家族構成・各種控除の状況により実際の手取りは異なります。
       </div>
     </BlogLayout>
+    </>
   );
 }
