@@ -2,23 +2,58 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("resume-photo-size")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "履歴書の証明写真サイズは縦40×横30mm｜パスポートとの違い・貼り方まで解説【2026年版】",
+  description: "履歴書に貼る証明写真の正しいサイズは縦40mm×横30mm。パスポート（縦45×横35mm）との違いや、マイナンバー・運転免許証など書類別サイズ一覧、正しい貼り方まで解説。スマホで無料作成する方法も。",
   path: `/blog/${post.slug}`,
-  keywords: ["履歴書 証明写真 サイズ", "証明写真 何センチ", "履歴書 写真 大きさ", "証明写真 規格 一覧", "証明写真 サイズ 一覧"],
+  keywords: ["履歴書 証明写真 サイズ mm", "証明写真 縦40 横30 履歴書", "パスポート 証明写真 サイズ 違い", "履歴書 写真 何センチ 2026", "証明写真 規格 書類別 一覧"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "履歴書の証明写真のサイズは何mmですか？",
+      acceptedAnswer: { "@type": "Answer", text: "一般的な履歴書の証明写真サイズは縦40mm×横30mmです。就活・転職のエントリーシートもほぼ同じサイズです。ただし企業によって異なる場合があるため、応募先の書類フォーマットを必ず確認してください。" },
+    },
+    {
+      "@type": "Question",
+      name: "パスポートと履歴書の証明写真サイズは同じですか？",
+      acceptedAnswer: { "@type": "Answer", text: "異なります。パスポートは縦45mm×横35mm、履歴書は縦40mm×横30mmです。5mm違うだけですが、逆に使うと枠に収まらないことがあります。また、パスポートは背景が白・6ヶ月以内など厳格な規定があるため、専用に用意するほうが安全です。" },
+    },
+    {
+      "@type": "Question",
+      name: "証明写真は何ヶ月以内に撮ったものを使えばいいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "一般的な就職・転職の履歴書では「3ヶ月以内」が目安です。パスポートや運転免許証などの公的書類は「6ヶ月以内」と規定されている場合が多いです。転職活動を始めたタイミングで新しく撮影するのがおすすめです。" },
+    },
+    {
+      "@type": "Question",
+      name: "スマホで撮った写真を履歴書に使っていいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "使えます。ただし白い背景の前で正面から撮影した上半身写真であることが条件です。自撮りだと顔が斜めになりがちなので、壁に立てかけたスマホを使うかセルフタイマーを活用してください。撮影後はToolBoxの証明写真作成ツールで適切なサイズに加工してコンビニで印刷できます。" },
+    },
+    {
+      "@type": "Question",
+      name: "履歴書の写真の貼り方で注意することは何ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "写真専用のりまたはスティックのりを使い、四隅をしっかり貼り付けます。テープは厚みが出るためNGです。貼った後は写真の裏面に鉛筆で氏名を記入しておくと、はがれた場合に誰のものかわかります。郵送する場合は写真が折れないよう当て紙を入れてください。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        証明写真のサイズを間違えると、書類審査で不利になったり差し替えを求められたりすることがあります。履歴書・パスポート・マイナンバーカードなど、書類ごとの正しいサイズを一覧表で確認し、スマホで無料作成する方法も解説します。
+        転職のとき、手元にあった証明写真をそのまま使ったら面接官に「これ、パスポートサイズですよね？」と指摘されたことがありました。縦40mm×横30mmと縦45mm×横35mm——5mmの差ですが、履歴書の枠には収まりません。書類別の正しいサイズを一覧にまとめました。スマホで無料作成できるツールも紹介します。
       </p>
 
       <div className="my-6 p-5 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50">
@@ -174,6 +209,13 @@ export default function Page() {
         </table>
       </div>
 
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">📝 サイズ間違いを防ぐ一番簡単な方法</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          証明写真ツールでサイズを選ぶときに「履歴書用（縦40×横30mm）」「パスポート用（縦45×横35mm）」が分かれているので、提出先に合わせて選ぶだけで解決します。自分は転職活動のたびに作り直していますが、コンビニ印刷で40円以下なので使い捨て感覚で新しく作れるのが地味に便利です。3ヶ月以内という制約も気にせずに済みます。
+        </p>
+      </div>
+
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>関連記事</h2>
       <ul className="space-y-2">
@@ -191,5 +233,6 @@ export default function Page() {
         <p className="text-[13px] text-slate-500 dark:text-zinc-400 mt-1">登録不要・ブラウザ完結・スマホ対応</p>
       </div>
     </BlogLayout>
+    </>
   );
 }

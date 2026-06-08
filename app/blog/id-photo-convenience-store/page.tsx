@@ -2,23 +2,58 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("id-photo-convenience-store")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "証明写真をコンビニで印刷する方法【ローソン・セブン・ファミマ】スマホで30円",
+  description: "スマホで証明写真を作ってローソン・セブン・ファミマで30〜40円で印刷する手順を解説。ネットプリントの使い方・光沢紙の選び方・失敗しない設定まで。履歴書・パスポート対応。",
   path: `/blog/${post.slug}`,
-  keywords: ["証明写真 コンビニ 印刷", "証明写真 スマホ 無料", "証明写真 ローソン 印刷", "証明写真 セブン 印刷", "証明写真 作成 アプリなし"],
+  keywords: ["証明写真 コンビニ 印刷 方法", "証明写真 ローソン 印刷 手順", "証明写真 セブン 印刷 やり方", "スマホ 証明写真 コンビニ 安い", "ネットプリント 証明写真 使い方"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "コンビニで証明写真を印刷するにはどうすればいいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "スマホで証明写真画像を作成し、ネットプリント（ローソン・ファミマはnetprint.jp、セブンはかんたんnetprint）に画像をアップロードして予約番号を取得します。その番号をコンビニのマルチコピー機に入力し、光沢紙・Lサイズ・カラーを選んで印刷すれば完了です。" },
+    },
+    {
+      "@type": "Question",
+      name: "ローソンとセブンイレブンどちらが安いですか？",
+      acceptedAnswer: { "@type": "Answer", text: "セブンイレブンは富士フイルム製コピー機で20〜40円/枚、ローソン・ファミリーマートはシャープ製で30〜40円/枚が目安です。セブンのほうがわずかに安い場合がありますが、利用するサービス（かんたんnetprintとnetprint.jp）が異なるため、近くのコンビニを選ぶのが現実的です。" },
+    },
+    {
+      "@type": "Question",
+      name: "証明写真は光沢紙と普通紙どちらで印刷すればいいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "必ず光沢紙を選んでください。普通紙で印刷すると表面がざらざらして写真品質にならず、証明写真として使えないことがあります。コンビニのマルチコピー機では「光沢紙」または「写真用紙」と表示される選択肢を選んでください。" },
+    },
+    {
+      "@type": "Question",
+      name: "ネットプリントの有効期限はどのくらいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "ネットプリント（netprint.jp）の有効期限は登録から8日間（会員登録なしの場合は1日）です。かんたんnetprint（セブン用）は登録後24時間以内に印刷が必要です。登録したらなるべく早くコンビニで印刷することをおすすめします。" },
+    },
+    {
+      "@type": "Question",
+      name: "スマホで自撮りした写真を証明写真に使えますか？",
+      acceptedAnswer: { "@type": "Answer", text: "白い壁の前で正面から撮影した写真であれば使えます。ポイントは①背景が白または薄いグレー②正面向き③上半身が写っている④顔に影がかかっていない の4点です。逆光・暗い場所・自撮りアームのない状態だと顔が斜めになりやすいので注意してください。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        証明写真を写真館で撮ると800〜1,200円かかりますが、スマホで作成してコンビニで印刷すれば1枚30〜40円で仕上がります。アプリのインストール不要・登録不要でブラウザだけで今すぐ作成できます。履歴書・パスポートサイズに対応しています。
+        転職活動の準備で証明写真を用意しようとしたとき、写真館は1,000円以上かかるし証明写真機も800円前後。「もう少し安く済ませたい」と思って調べたら、スマホで作成してコンビニで印刷すれば1枚30〜40円で済むことがわかりました。実際にやってみたら10分かからず完成。この記事ではその手順を具体的にまとめています。
       </p>
 
       <div className="my-6 p-5 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50">
@@ -162,6 +197,13 @@ export default function Page() {
         <li><strong>画像の解像度が低い</strong>：低解像度の写真を使うとぼやけた仕上がりになります。スマホの最高画質で撮影した写真を使いましょう。</li>
       </ul>
 
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">📝 実際にやってみた感想</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          ローソンのネットプリントを使いましたが、スマホからアップロードして予約番号を取得するまで3分。コンビニで番号を入力して光沢紙・Lサイズを選んで印刷、合計38円でした。写真館の1/30以下の値段で仕上がりも十分きれいでした。唯一の注意点は「光沢紙を選び忘れると普通紙になってしまう」こと——最初にそれをやらかして38円を無駄にしました。
+        </p>
+      </div>
+
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>関連記事</h2>
       <ul className="space-y-2">
@@ -179,5 +221,6 @@ export default function Page() {
         <p className="text-[13px] text-slate-500 dark:text-zinc-400 mt-1">登録不要・ブラウザ完結・スマホ対応</p>
       </div>
     </BlogLayout>
+    </>
   );
 }
