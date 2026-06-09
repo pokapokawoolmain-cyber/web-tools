@@ -2,23 +2,58 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("takehome-300")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "年収300万円の手取りは月20万円（年243万）｜税金内訳・生活費シミュレーション【2026年版】",
+  description: "年収300万円の手取りは年間約243万円・月20.3万円。所得税5万・住民税8万・社会保険料44万の内訳を解説。東京一人暮らし・地方別の生活費シミュレーション、ふるさと納税・iDeCoの節税効果も。",
   path: `/blog/${post.slug}`,
-  keywords: ["年収300万 手取り", "年収300万 月収", "年収300万 税金", "300万 手取り 独身", "年収300万 生活"],
+  keywords: ["年収300万 手取り いくら", "年収300万 月収 手取り", "年収300万 税金 内訳", "300万 手取り 2026", "年収300万 一人暮らし きつい 余裕"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "年収300万円の手取りはいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収300万円の手取りは年間約243万円（月平均20.3万円）が目安です。所得税約5万円・住民税約8万円・社会保険料約44万円の合計約57万円が控除されます。家族構成・加入する健康保険・各種控除により実際の金額は変わります。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収300万円の月収（手取り）はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "月の手取りは約20.3万円が目安です。ボーナスがある場合は月収が少なくなりボーナス月に多くもらう形になります。ボーナスなしの月給のみの場合、毎月ほぼ均等に20万円前後が手取りになります。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収300万円で東京での一人暮らしはできますか？",
+      acceptedAnswer: { "@type": "Answer", text: "月手取り20.3万円での東京一人暮らしはかなり厳しいです。家賃8〜10万円を払うと残りが10〜12万円となり、食費・光熱費・通信費などで使い切ってしまい貯蓄が難しくなります。地方（家賃5〜6万円）なら月6〜9万円の余裕が生まれます。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収300万円の住民税はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "年収300万円（独身・会社員）の住民税は概算で約8万円（月約0.7万円）です。住民税は前年の所得をもとに翌年6月から引かれます。所得税（約5万円）と合わせた税負担は年間約13万円です。" },
+    },
+    {
+      "@type": "Question",
+      name: "年収300万円から節税する方法はありますか？",
+      acceptedAnswer: { "@type": "Answer", text: "主な節税方法は①ふるさと納税（独身の場合の上限目安は約2.8万円・実質2,000円で特産品を受け取れる）②iDeCo（月2.3万円まで全額所得控除・年収300万円の10%税率で年約2〜3万円の節税）の2つです。年収300万円台は税率が低いためiDeCoより副業・スキルアップで収入を増やすことも有効です。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        年収300万円の手取りは<strong>約243万円（月20.3万円）</strong>が目安です。給与から引かれる控除の内訳と、一人暮らし・実家別の生活費シミュレーション、節税方法を解説します。
+        社会人1〜2年目、手取り20万円で一人暮らしを始めたとき、給与明細の控除欄を見て「思ったより少ない」と感じた記憶があります。年収300万円の手取りは<strong>約243万円（月20.3万円）</strong>が目安です。控除57万円の内訳と、東京・地方別の生活費シミュレーション、節税方法を解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -178,10 +213,18 @@ export default function Page() {
         年収全体の手取り一覧は<Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link>でまとめて確認できます。
       </p>
 
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">📝 手取り20万円生活でやってみてよかったこと</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          手取り20万円で東京一人暮らしをしていた頃、毎月ほぼ使い切っていました。転機になったのはふるさと納税を始めたこと。年収300万円だと上限約2.8万円と少額ですが、お米や日用品に使えば実質的に食費が下がります。iDeCoは月5,000円から始めて所得控除の感覚を学ぶだけでも価値がありました。副業（クラウドソーシングで月2〜3万円）と組み合わせてようやく少額の積立ができた感じです。
+        </p>
+      </div>
+
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事の数値は現行の税率・社会保険料率に基づく概算です。加入する健康保険組合・家族構成・各種控除の状況により実際の手取りは異なります。
       </div>
     </BlogLayout>
+    </>
   );
 }

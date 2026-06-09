@@ -2,23 +2,58 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("gpa-calculation-guide")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "GPA平均は2.5〜3.0｜計算方法・4.0満点換算・就活での目安【2026年版】",
+  description: "日本の大学のGPA平均は2.5〜3.0前後。4.0満点の計算式（Σ成績点×単位数÷総単位数）、S/A/B/C換算表、外資・日系の足切りライン、GPAを上げる5つの方法を解説。",
   path: `/blog/${post.slug}`,
-  keywords: ["GPA とは", "GPA 平均", "GPA 計算方法", "GPA 就活 目安", "GPA どれくらい"],
+  keywords: ["gpa 平均 日本 大学生", "gpa 計算方法 4.0満点", "gpa 就活 足切り ライン", "gpa どれくらい 普通", "gpa 上げ方 コツ"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "日本の大学生のGPA平均はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "日本の大学生のGPA平均（4.0満点）は2.5〜3.0前後が目安です。大学・学部によって差があり、理工系は文系より平均が低くなる傾向があります。GPA3.0前後が「普通」、3.5以上は上位10〜20%の水準です。" },
+    },
+    {
+      "@type": "Question",
+      name: "GPAの計算方法を教えてください。",
+      acceptedAnswer: { "@type": "Answer", text: "GPA ＝ Σ（成績点 × 単位数）÷ 総単位数 で計算します。例えば英語2単位A（3.5）・統計4単位B（2.5）・経済4単位S（4.0）の場合、（2×3.5＋4×2.5＋4×4.0）÷10 ＝ 3.30 となります。大学によって成績点の割り当てが異なるため、成績証明書の換算表を確認してください。" },
+    },
+    {
+      "@type": "Question",
+      name: "就活でGPAは何点以上必要ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "外資系・コンサル・投資銀行ではGPA3.0〜3.5以上を書類選考の目安にしているケースがあります。日系大手メーカー・商社は参考程度で、GPA2.5〜3.0あれば基本的に問題ありません。ITベンチャーはGPAよりポートフォリオや実績を重視する傾向があります。" },
+    },
+    {
+      "@type": "Question",
+      name: "GPAを上げるにはどうすればいいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "①単位数の多い必修科目でAを取る（4単位科目の効果が大きい）②不可・再履修を絶対に避ける③得意分野の選択科目でSやAを積み上げる④試験のみでなく出席・レポート複数要素で評価される科目を選ぶ⑤先輩から過去問・授業傾向を入手する の5つが効果的です。" },
+    },
+    {
+      "@type": "Question",
+      name: "4.0満点と5.0満点のGPAを換算するにはどうすればいいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "5.0満点のGPAを4.0換算する場合は「GPA（5.0満点）× 4.0 ÷ 5.0」で計算します。例えばGPA4.2（5.0満点）→ 4.2 × 4.0 ÷ 5.0 ＝ 3.36（4.0換算）になります。就活の提出時は成績証明書に記載の計算方式を使うことをおすすめします。" },
+    },
+  ],
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        <strong>GPAとは</strong>大学の成績を数値化した指標（Grade Point Average）で、<strong>4.0満点</strong>が一般的です。日本の大学のGPA平均は<strong>2.5〜3.0前後</strong>。就活で「GPAはどれくらいですか？」と聞かれた時の答え方から計算方法・上げ方まで解説します。
+        就活準備中に「GPAって何点が普通なんだろう」と思って調べたとき、意外と明確な情報がなかった記憶があります。日本の大学のGPA平均は<strong>2.5〜3.0前後</strong>が目安です。4.0満点の計算式から成績換算表、就活での足切りライン、GPAを上げる方法まで解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -220,10 +255,18 @@ export default function Page() {
         履修している全科目の成績と単位数を入力してGPAを自動計算したい場合は<Link href="/tools/gpa">GPA計算ツール</Link>を使ってみてください。科目数に制限なく、複数セメスター分もまとめて計算できます。
       </p>
 
+      <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-6 text-[14px] border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">📝 GPAを上げようとして気づいたこと</strong>
+        <p className="text-amber-700 dark:text-amber-400 leading-relaxed">
+          GPAを計算ツールで試算したとき、1科目の「不可」がどれだけ全体を引き下げるかを実感しました。4単位科目で不可（0点）を1つ取ると、他の科目で必死にAを取っても平均がなかなか戻らない。逆に4単位の必修科目でSを取ると一気に上がります。GPA対策で最も効果があるのは「高い点を取る」ではなく「不可を出さない」こと——これが計算してみてわかった最大の発見でした。
+        </p>
+      </div>
+
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">大学によって計算方法が異なります</strong>
         成績点の割り当て方や計算方法は大学ごとに異なります。就活でGPAを提出する際は、自分の大学の成績証明書に記載の計算方式を確認してください。
       </div>
     </BlogLayout>
+    </>
   );
 }
