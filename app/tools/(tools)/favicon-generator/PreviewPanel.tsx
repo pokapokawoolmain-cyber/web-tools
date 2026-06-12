@@ -263,39 +263,187 @@ export function PreviewPanel({ mainDataUrl, maskDataUrl, thumbUrls, settings, on
 
           {/* Android PWA */}
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-5">
-            <p className="text-xs font-medium text-slate-500 dark:text-zinc-500 mb-3">Android ホーム画面 (PWA)</p>
-            <div className="bg-zinc-900 rounded-2xl p-4">
-              <div className="grid grid-cols-4 gap-3">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="flex flex-col items-center gap-1">
-                    <div className="w-12 h-12 bg-white/10 rounded-2xl" />
-                    <div className="w-10 h-1.5 bg-white/20 rounded" />
+            <p className="text-xs font-medium text-slate-500 dark:text-zinc-500 mb-4">Android ホーム画面 (PWA)</p>
+
+            {/* Phone frame */}
+            <div className="flex justify-center">
+              <div
+                className="relative overflow-hidden shadow-2xl"
+                style={{
+                  width: 224,
+                  borderRadius: 36,
+                  border: "6px solid #1a1a1a",
+                  boxShadow: "0 0 0 1px #3a3a3a, 0 24px 64px rgba(0,0,0,0.55), inset 0 0 0 1px #2a2a2a",
+                  background: "#111",
+                }}
+              >
+                {/* Screen */}
+                <div
+                  className="relative overflow-hidden"
+                  style={{
+                    background: "linear-gradient(155deg, #1a1060 0%, #2d1b69 35%, #0d47a1 100%)",
+                    minHeight: 396,
+                  }}
+                >
+                  {/* Wallpaper overlay — Material You style */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at 65% 18%, rgba(99,102,241,0.55) 0%, transparent 48%), " +
+                        "radial-gradient(ellipse at 18% 72%, rgba(124,58,237,0.45) 0%, transparent 42%), " +
+                        "radial-gradient(ellipse at 50% 95%, rgba(30,58,138,0.6) 0%, transparent 35%)",
+                    }}
+                  />
+
+                  {/* Status bar */}
+                  <div className="relative flex items-center justify-between px-4 pt-2 pb-0.5" style={{ height: 26 }}>
+                    <span className="text-white font-bold" style={{ fontSize: 10 }}>9:41</span>
+                    <div className="flex items-center gap-1.5">
+                      {/* Signal bars */}
+                      <div className="flex items-end gap-px">
+                        {[3, 5, 7, 9].map((h, i) => (
+                          <div key={i} className="bg-white rounded-sm" style={{ width: 2, height: h, opacity: i < 3 ? 1 : 0.4 }} />
+                        ))}
+                      </div>
+                      {/* WiFi arcs */}
+                      <svg width="13" height="10" viewBox="0 0 14 11" fill="white">
+                        <circle cx="7" cy="9.5" r="1.2" />
+                        <path d="M4.1 7.2a4.1 4.1 0 015.8 0" stroke="white" strokeWidth="1.3" fill="none" strokeLinecap="round" />
+                        <path d="M1.8 4.9a6.9 6.9 0 0110.4 0" stroke="white" strokeWidth="1.3" fill="none" strokeLinecap="round" />
+                      </svg>
+                      {/* Battery */}
+                      <div className="flex items-center gap-px">
+                        <div className="rounded-sm border border-white/80 flex items-center" style={{ width: 17, height: 8, padding: "1px 1.5px" }}>
+                          <div className="bg-white rounded-sm" style={{ width: "72%", height: "100%" }} />
+                        </div>
+                        <div className="bg-white/55 rounded-r" style={{ width: 2, height: 4 }} />
+                      </div>
+                    </div>
                   </div>
-                ))}
-                <div className="flex flex-col items-center gap-1">
-                  {maskDataUrl || mainDataUrl ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={maskDataUrl || mainDataUrl}
-                      alt={siteName}
-                      className="w-12 h-12 rounded-2xl shadow"
-                      style={{ imageRendering: "auto" }}
-                    />
-                  ) : (
-                    <div className="w-12 h-12 bg-white/20 rounded-2xl" />
-                  )}
-                  <span className="text-white text-[10px] text-center leading-tight w-14 truncate">{siteName}</span>
+
+                  {/* Punch-hole camera */}
+                  <div className="absolute top-1.5 left-1/2 -translate-x-1/2 rounded-full bg-black" style={{ width: 9, height: 9 }} />
+
+                  {/* Date widget — Pixel style */}
+                  <div className="px-4 pt-1 pb-3">
+                    <p className="text-white/50 uppercase tracking-widest" style={{ fontSize: 8 }}>月曜日</p>
+                    <p className="text-white font-thin" style={{ fontSize: 38, lineHeight: 1.05 }}>12</p>
+                  </div>
+
+                  {/* Icon grid */}
+                  <div className="px-2.5">
+                    {/* Row 1 */}
+                    <div className="grid grid-cols-4 gap-x-1 gap-y-3 mb-3">
+                      {[
+                        { bg: "linear-gradient(135deg,#4285F4,#34A8FF)", label: "マップ" },
+                        { bg: "linear-gradient(135deg,#EA4335,#FF6D00)", label: "Gmail" },
+                        { bg: "linear-gradient(135deg,#34A853,#00C853)", label: "カレンダー" },
+                        { bg: "linear-gradient(135deg,#FBBC04,#FF8F00)", label: "ドライブ" },
+                      ].map(({ bg, label }, i) => (
+                        <div key={i} className="flex flex-col items-center gap-0.5">
+                          <div
+                            className="rounded-full shadow-lg"
+                            style={{ width: 44, height: 44, background: bg, flexShrink: 0 }}
+                          />
+                          <span className="text-white/70 text-center truncate" style={{ fontSize: 8, maxWidth: 44 }}>{label}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Row 2: 3 placeholders + our icon */}
+                    <div className="grid grid-cols-4 gap-x-1 gap-y-3 mb-3">
+                      {[
+                        { bg: "linear-gradient(135deg,#FF6D00,#FFAB40)", label: "ニュース" },
+                        { bg: "linear-gradient(135deg,#00ACC1,#4DD0E1)", label: "天気" },
+                        { bg: "linear-gradient(135deg,#7B1FA2,#CE93D8)", label: "フォト" },
+                      ].map(({ bg, label }, i) => (
+                        <div key={i} className="flex flex-col items-center gap-0.5">
+                          <div
+                            className="rounded-full shadow-lg"
+                            style={{ width: 44, height: 44, background: bg, flexShrink: 0 }}
+                          />
+                          <span className="text-white/70 text-center truncate" style={{ fontSize: 8, maxWidth: 44 }}>{label}</span>
+                        </div>
+                      ))}
+
+                      {/* ── Target icon ── */}
+                      <div className="flex flex-col items-center gap-0.5 relative">
+                        {/* Glow */}
+                        <div
+                          className="absolute rounded-full pointer-events-none"
+                          style={{ inset: -4, background: "rgba(255,255,255,0.18)", filter: "blur(6px)" }}
+                        />
+                        <div
+                          className="relative rounded-full overflow-hidden shadow-2xl"
+                          style={{ width: 44, height: 44, flexShrink: 0, outline: "2px solid rgba(255,255,255,0.65)", outlineOffset: 1 }}
+                        >
+                          {(maskDataUrl || mainDataUrl) ? (
+                            /* eslint-disable-next-line @next/next/no-img-element */
+                            <img
+                              src={maskDataUrl || mainDataUrl}
+                              alt={siteName}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-blue-500" />
+                          )}
+                        </div>
+                        <span
+                          className="text-white font-medium text-center truncate drop-shadow"
+                          style={{ fontSize: 8, maxWidth: 44 }}
+                        >
+                          {siteName}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Spacer */}
+                  <div style={{ height: 28 }} />
+
+                  {/* Page indicator dots */}
+                  <div className="flex justify-center items-center gap-1 pb-2">
+                    <div className="bg-white rounded-full" style={{ width: 16, height: 4 }} />
+                    <div className="bg-white/30 rounded-full" style={{ width: 4, height: 4 }} />
+                    <div className="bg-white/30 rounded-full" style={{ width: 4, height: 4 }} />
+                  </div>
+
+                  {/* Dock */}
+                  <div
+                    className="mx-2 mb-2 rounded-2xl flex justify-around items-center"
+                    style={{
+                      padding: "8px 6px",
+                      background: "rgba(255,255,255,0.10)",
+                      backdropFilter: "blur(14px)",
+                      WebkitBackdropFilter: "blur(14px)" as string,
+                      border: "1px solid rgba(255,255,255,0.12)",
+                    }}
+                  >
+                    {[
+                      { bg: "#1E88E5" },
+                      { bg: "#43A047" },
+                      { bg: "#E53935" },
+                      { bg: "#8E24AA" },
+                    ].map(({ bg }, i) => (
+                      <div
+                        key={i}
+                        className="rounded-full shadow-md"
+                        style={{ width: 40, height: 40, background: bg, flexShrink: 0 }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Home indicator */}
+                  <div className="flex justify-center pb-2 pt-0.5">
+                    <div className="bg-white/55 rounded-full" style={{ width: 56, height: 4 }} />
+                  </div>
                 </div>
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i + 5} className="flex flex-col items-center gap-1">
-                    <div className="w-12 h-12 bg-white/10 rounded-2xl" />
-                    <div className="w-10 h-1.5 bg-white/20 rounded" />
-                  </div>
-                ))}
               </div>
             </div>
-            <p className="text-xs text-slate-400 dark:text-zinc-500 mt-2">
-              Maskable Icon (192×192px, purpose: maskable)
+
+            <p className="text-xs text-slate-400 dark:text-zinc-500 mt-3 text-center">
+              Maskable Icon (192px) — Pixel ランチャー・円形マスク適用
             </p>
           </div>
 
