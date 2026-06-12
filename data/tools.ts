@@ -53,6 +53,7 @@ export const TOOLS: ToolItem[] = [
   { id: "pdf-reorder", title: "PDF並び替え", seoTitle: "PDF並び替えツール｜ページ順番を無料で変更", description: "PDFのページ順をドラッグ操作で並び替え。スマホは上下ボタンにも対応。サムネイルで確認しながら操作。", href: "/tools/pdf-reorder", emoji: "↕️", category: "画像・PDF", isNew: true },
   { id: "pdf-password", title: "PDFパスワード設定", seoTitle: "PDFパスワード設定ツール｜PDFに無料でロックを追加", description: "PDFにAES-256暗号化でパスワード保護を追加。ブラウザ完結・登録不要・無料。設定したパスワードで解除も可能。", href: "/tools/pdf-password", emoji: "🔐", category: "画像・PDF", isNew: true },
   { id: "pdf-metadata-remover", title: "PDFメタデータ削除", seoTitle: "PDFメタデータ削除ツール｜作成者・日付を無料で消去", description: "PDFに埋め込まれた作成者・作成日・使用ソフト名などのメタデータを削除。共有前のプライバシー保護に。", href: "/tools/pdf-metadata-remover", emoji: "🧹", category: "画像・PDF", isNew: true },
+  { id: "favicon-generator", title: "ファビコン作成ツール", seoTitle: "ファビコン作成ツール｜favicon.icoを無料生成【ブラウザ完結】", description: "テキスト・絵文字・画像からfavicon.icoを無料作成。16〜64pxのマルチサイズICOとPNG 256pxをブラウザ完結でダウンロード。登録不要。", href: "/tools/favicon-generator", emoji: "🌐", category: "画像・PDF", isNew: true },
   // 生活・副業
   { id: "side-job-profit", title: "副業利益・税金計算", description: "副業収入から経費・税金を差し引いた実質手取りを計算。確定申告の目安も確認。", href: "/tools/side-job-profit", emoji: "💼", category: "生活・副業" },
   { id: "youtube-tools", title: "YouTube SEOツール", description: "タイトル文字数・ハッシュタグ最適化・サムネ比率確認をまとめてチェック。", href: "/tools/youtube-tools", emoji: "🎥", category: "生活・副業" },

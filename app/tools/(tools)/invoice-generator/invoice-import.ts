@@ -57,7 +57,7 @@ async function importFromPdf(
   const arrayBuffer = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
-  let allLines: string[] = [];
+  const allLines: string[] = [];
   let totalChars = 0;
 
   for (let p = 1; p <= Math.min(pdf.numPages, 3); p++) {
@@ -174,11 +174,10 @@ function parseDate(text: string): string | undefined {
 function parseText(lines: string[], ocrConfidence?: number): ParsedInvoice {
   const warnings: ImportWarning[] = [];
   const items: ParsedItem[] = [];
-  let issueDate: string | undefined;
   let issuerName: string | undefined;
 
   const fullText = lines.join("\n");
-  issueDate = parseDate(fullText);
+  const issueDate = parseDate(fullText);
 
   for (const line of lines) {
     if (
