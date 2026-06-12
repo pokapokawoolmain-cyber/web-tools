@@ -2,6 +2,8 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { getSavedSeals } from "@/lib/seal-storage";
 import type { SavedSeal } from "@/lib/seal-storage";
+import { importFromFile } from "./invoice-import";
+import type { ImportWarning } from "./invoice-import";
 
 type LineItem = { id: number; name: string; qty: number; unit: string; price: number };
 
@@ -47,6 +49,9 @@ export function InvoiceGenerator() {
   const [sealDataUrl, setSealDataUrl] = useState<string | null>(null);
   const [sealSize, setSealSize] = useState(64);
   const importRef = useRef<HTMLInputElement>(null);
+  const [importLoading, setImportLoading] = useState(false);
+  const [importProgress, setImportProgress] = useState("");
+  const [importWarnings, setImportWarnings] = useState<ImportWarning[] | null>(null);
 
   useEffect(() => {
     setSavedSeals(getSavedSeals());
@@ -86,59 +91,95 @@ export function InvoiceGenerator() {
   const showToast = (msg: string) => { setToastMsg(msg); setTimeout(() => setToastMsg(""), 2500); };
 
   // ── ファイルインポート ──────────────────────────────────
-  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const text = ev.target?.result as string;
-      try {
-        if (file.name.toLowerCase().endsWith(".json")) {
-          const data = JSON.parse(text);
-          if (data.items && Array.isArray(data.items)) {
-            const items: LineItem[] = data.items.map((item: LineItem, idx: number) => ({
-              ...item,
-              id: Date.now() + idx,
-            }));
-            setForm({ ...defaultForm, ...data, items });
-            showToast("JSONをインポートしました");
-          } else {
-            showToast("JSONの形式が正しくありません（itemsが必要です）");
-          }
-        } else if (file.name.toLowerCase().endsWith(".csv")) {
-          const lines = text.split(/\r?\n/).filter(l => l.trim());
-          // ヘッダー行をスキップ（1列目が数値でない場合）
-          const firstCol = lines[0]?.split(",")[0]?.replace(/"/g, "").trim() ?? "";
-          const dataLines = isNaN(Number(firstCol)) && firstCol !== "" && isNaN(Date.parse(firstCol))
-            ? lines.slice(1)
-            : lines;
-          const items: LineItem[] = dataLines
-            .filter(l => l.trim())
-            .map((line, idx) => {
-              const cols = line.split(",").map(c => c.trim().replace(/^"([\s\S]*)"$/, "$1"));
-              return {
-                id: Date.now() + idx,
-                name: cols[0] ?? "",
-                qty: Number(cols[1]) || 1,
-                unit: cols[2] || "式",
-                price: Number(cols[3]?.replace(/[^\d.-]/g, "")) || 0,
-              };
-            });
-          if (items.length > 0) {
-            setForm(f => ({ ...f, items }));
-            showToast(`${items.length}件の明細をインポートしました`);
-          } else {
-            showToast("明細データが見つかりませんでした");
-          }
-        } else {
-          showToast(".json または .csv ファイルを選択してください");
-        }
-      } catch {
-        showToast("ファイルの読み込みに失敗しました");
-      }
-    };
-    reader.readAsText(file, "utf-8");
     e.target.value = "";
+
+    const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
+
+    // ── JSON / CSV はテキスト処理 ──────────────
+    if (ext === "json" || ext === "csv") {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const text = ev.target?.result as string;
+        try {
+          if (ext === "json") {
+            const data = JSON.parse(text);
+            if (data.items && Array.isArray(data.items)) {
+              const items: LineItem[] = data.items.map((item: LineItem, idx: number) => ({
+                ...item,
+                id: Date.now() + idx,
+              }));
+              setForm({ ...defaultForm, ...data, items });
+              showToast("JSONをインポートしました");
+            } else {
+              showToast("JSONの形式が正しくありません（itemsが必要です）");
+            }
+          } else {
+            const lines = text.split(/\r?\n/).filter(l => l.trim());
+            const firstCol = lines[0]?.split(",")[0]?.replace(/"/g, "").trim() ?? "";
+            const dataLines =
+              isNaN(Number(firstCol)) && firstCol !== "" && isNaN(Date.parse(firstCol))
+                ? lines.slice(1)
+                : lines;
+            const items: LineItem[] = dataLines
+              .filter(l => l.trim())
+              .map((line, idx) => {
+                const cols = line.split(",").map(c => c.trim().replace(/^"([\s\S]*)"$/, "$1"));
+                return {
+                  id: Date.now() + idx,
+                  name: cols[0] ?? "",
+                  qty: Number(cols[1]) || 1,
+                  unit: cols[2] || "式",
+                  price: Number(cols[3]?.replace(/[^\d.-]/g, "")) || 0,
+                };
+              });
+            if (items.length > 0) {
+              setForm(f => ({ ...f, items }));
+              showToast(`${items.length}件の明細をインポートしました`);
+            } else {
+              showToast("明細データが見つかりませんでした");
+            }
+          }
+        } catch {
+          showToast("ファイルの読み込みに失敗しました");
+        }
+      };
+      reader.readAsText(file, "utf-8");
+      return;
+    }
+
+    // ── PDF / 画像 → OCR/テキスト抽出 ──────────
+    const isPdf = ext === "pdf" || file.type === "application/pdf";
+    const isImage = ["jpg", "jpeg", "png", "webp"].includes(ext) || file.type.startsWith("image/");
+    if (!isPdf && !isImage) {
+      showToast(".json / .csv / .pdf / .jpg / .png に対応しています");
+      return;
+    }
+
+    setImportLoading(true);
+    setImportProgress("ファイルを読み込み中...");
+    try {
+      const result = await importFromFile(file, (msg) => setImportProgress(msg));
+      // フォームへ反映
+      setForm(f => ({
+        ...f,
+        items: result.items.length > 0 ? result.items : f.items,
+        ...(result.issueDate ? { issueDate: result.issueDate } : {}),
+        ...(result.issuerName ? { issuerName: result.issuerName } : {}),
+      }));
+      setImportWarnings(result.warnings);
+    } catch (err) {
+      setImportWarnings([{
+        level: "error",
+        message: "ファイルの読み込みに失敗しました。",
+        suggestion: `ファイルが壊れていないか確認してください。\nエラー詳細: ${err instanceof Error ? err.message : String(err)}`,
+      }]);
+    } finally {
+      setImportLoading(false);
+      setImportProgress("");
+    }
   };
 
   // ── JSONエクスポート ──────────────────────────────────
@@ -303,10 +344,78 @@ export function InvoiceGenerator() {
       <input
         ref={importRef}
         type="file"
-        accept=".json,.csv"
+        accept=".json,.csv,.pdf,.jpg,.jpeg,.png,.webp"
         className="hidden"
         onChange={handleImport}
       />
+
+      {/* ── ローディングオーバーレイ ── */}
+      {importLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl p-8 text-center space-y-5 max-w-sm w-full mx-4">
+            <div className="text-5xl animate-bounce">📄</div>
+            <div>
+              <p className="font-bold text-slate-900 dark:text-white text-base mb-1">ファイルを読み取り中</p>
+              <p className="text-sm text-slate-500 dark:text-zinc-400 min-h-[1.5em]">{importProgress}</p>
+            </div>
+            <div className="w-full bg-slate-100 dark:bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+              <div className="bg-blue-500 h-full rounded-full animate-pulse w-2/3" />
+            </div>
+            <p className="text-xs text-slate-400 dark:text-zinc-500">
+              初回はOCR言語データのダウンロードが発生します（約10MB）
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ── 警告モーダル ── */}
+      {importWarnings && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl p-6 max-w-md w-full space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">読み取り結果</h3>
+            <div className="space-y-3">
+              {importWarnings.map((w, i) => {
+                const colors =
+                  w.level === "error"
+                    ? "bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300"
+                    : w.level === "warn"
+                    ? "bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300"
+                    : "bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300";
+                const subColors =
+                  w.level === "error"
+                    ? "text-red-700 dark:text-red-400"
+                    : w.level === "warn"
+                    ? "text-amber-700 dark:text-amber-400"
+                    : "text-blue-700 dark:text-blue-400";
+                const icon =
+                  w.level === "error" ? "❌" : w.level === "warn" ? "⚠️" : "ℹ️";
+                return (
+                  <div key={i} className={`rounded-xl p-4 border text-sm ${colors}`}>
+                    <p className="font-semibold mb-1">{icon} {w.message}</p>
+                    <p className={`text-xs whitespace-pre-line leading-relaxed ${subColors}`}>
+                      {w.suggestion}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex gap-2 pt-1">
+              <button
+                onClick={() => setImportWarnings(null)}
+                className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm transition-colors"
+              >
+                確認して閉じる
+              </button>
+              <button
+                onClick={() => { setImportWarnings(null); importRef.current?.click(); }}
+                className="px-4 py-3 border border-slate-200 dark:border-zinc-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-zinc-800 rounded-xl text-sm transition-colors"
+              >
+                やり直す
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="no-print bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-4">
         <p className="text-xs font-medium text-slate-500 dark:text-zinc-400 mb-3">ファイルから読み込み・保存</p>
@@ -325,8 +434,9 @@ export function InvoiceGenerator() {
           </button>
         </div>
         <p className="text-xs text-slate-400 dark:text-zinc-500 mt-2 leading-relaxed">
-          <span className="font-medium">JSON</span>：このツールで保存した請求書を読み込み（全項目を復元）<br />
-          <span className="font-medium">CSV</span>：品目・数量・単位・単価の4列形式で明細を一括インポート
+          <span className="font-medium">PDF</span>：テキスト埋め込みPDF（freee・マネーフォワード等）は高精度。スキャンPDFはOCR処理<br />
+          <span className="font-medium">画像</span>（jpg/png）：レシート・領収書の写真。OCRで読み取り（70〜80%精度）<br />
+          <span className="font-medium">JSON/CSV</span>：このツールで保存したJSONまたは4列CSVの明細を一括インポート
         </p>
       </div>
 
