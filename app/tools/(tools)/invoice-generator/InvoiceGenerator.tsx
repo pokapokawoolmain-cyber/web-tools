@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { getSavedSeals } from "@/lib/seal-storage";
 import type { SavedSeal } from "@/lib/seal-storage";
 
@@ -46,6 +46,7 @@ export function InvoiceGenerator() {
   const [showSeal, setShowSeal] = useState(false);
   const [sealDataUrl, setSealDataUrl] = useState<string | null>(null);
   const [sealSize, setSealSize] = useState(64);
+  const importRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setSavedSeals(getSavedSeals());
@@ -82,7 +83,75 @@ export function InvoiceGenerator() {
     return { subtotal: sub, tax: t, total: sub + t };
   }, [form.items, form.taxRate]);
 
-  const showToast = (msg: string) => { setToastMsg(msg); setTimeout(() => setToastMsg(""), 2000); };
+  const showToast = (msg: string) => { setToastMsg(msg); setTimeout(() => setToastMsg(""), 2500); };
+
+  // ── ファイルインポート ──────────────────────────────────
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const text = ev.target?.result as string;
+      try {
+        if (file.name.toLowerCase().endsWith(".json")) {
+          const data = JSON.parse(text);
+          if (data.items && Array.isArray(data.items)) {
+            const items: LineItem[] = data.items.map((item: LineItem, idx: number) => ({
+              ...item,
+              id: Date.now() + idx,
+            }));
+            setForm({ ...defaultForm, ...data, items });
+            showToast("JSONをインポートしました");
+          } else {
+            showToast("JSONの形式が正しくありません（itemsが必要です）");
+          }
+        } else if (file.name.toLowerCase().endsWith(".csv")) {
+          const lines = text.split(/\r?\n/).filter(l => l.trim());
+          // ヘッダー行をスキップ（1列目が数値でない場合）
+          const firstCol = lines[0]?.split(",")[0]?.replace(/"/g, "").trim() ?? "";
+          const dataLines = isNaN(Number(firstCol)) && firstCol !== "" && isNaN(Date.parse(firstCol))
+            ? lines.slice(1)
+            : lines;
+          const items: LineItem[] = dataLines
+            .filter(l => l.trim())
+            .map((line, idx) => {
+              const cols = line.split(",").map(c => c.trim().replace(/^"([\s\S]*)"$/, "$1"));
+              return {
+                id: Date.now() + idx,
+                name: cols[0] ?? "",
+                qty: Number(cols[1]) || 1,
+                unit: cols[2] || "式",
+                price: Number(cols[3]?.replace(/[^\d.-]/g, "")) || 0,
+              };
+            });
+          if (items.length > 0) {
+            setForm(f => ({ ...f, items }));
+            showToast(`${items.length}件の明細をインポートしました`);
+          } else {
+            showToast("明細データが見つかりませんでした");
+          }
+        } else {
+          showToast(".json または .csv ファイルを選択してください");
+        }
+      } catch {
+        showToast("ファイルの読み込みに失敗しました");
+      }
+    };
+    reader.readAsText(file, "utf-8");
+    e.target.value = "";
+  };
+
+  // ── JSONエクスポート ──────────────────────────────────
+  const handleExportJson = () => {
+    const blob = new Blob([JSON.stringify(form, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `invoice-${form.invoiceNumber || "draft"}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast("JSONを保存しました");
+  };
 
   const formatDate = (d: string) => {
     if (!d) return "";
@@ -211,9 +280,9 @@ export function InvoiceGenerator() {
           {form.items.map(item => (
             <div key={item.id} className="grid grid-cols-12 gap-2 items-center">
               <input type="text" placeholder="品目" value={item.name} onChange={e => updateItem(item.id, "name", e.target.value)} className="col-span-12 sm:col-span-5 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
-              <input type="number" placeholder="数量" value={item.qty} onChange={e => updateItem(item.id, "qty", Number(e.target.value))} className="col-span-3 sm:col-span-2 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
+              <input type="number" placeholder="数量" value={item.qty} onFocus={e => e.target.select()} onChange={e => updateItem(item.id, "qty", Number(e.target.value))} className="col-span-3 sm:col-span-2 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
               <input type="text" placeholder="単位" value={item.unit} onChange={e => updateItem(item.id, "unit", e.target.value)} className="col-span-3 sm:col-span-1 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
-              <input type="number" placeholder="単価" value={item.price} onChange={e => updateItem(item.id, "price", Number(e.target.value))} className="col-span-4 sm:col-span-3 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
+              <input type="number" placeholder="単価" value={item.price} onFocus={e => e.target.select()} onChange={e => updateItem(item.id, "price", Number(e.target.value))} className="col-span-4 sm:col-span-3 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
               <button onClick={() => removeItem(item.id)} className="col-span-2 sm:col-span-1 text-slate-400 hover:text-red-500 text-sm" aria-label="削除">削除</button>
             </div>
           ))}
@@ -221,13 +290,44 @@ export function InvoiceGenerator() {
 
         <div className="flex items-center gap-3 pt-2">
           <label className="text-xs font-medium text-slate-600 dark:text-zinc-400">消費税率(%)</label>
-          <input type="number" value={form.taxRate} onChange={e => set("taxRate", Number(e.target.value))} className="w-20 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
+          <input type="number" value={form.taxRate} onFocus={e => e.target.select()} onChange={e => set("taxRate", Number(e.target.value))} className="w-20 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
         </div>
       </div>
 
       <div className="no-print bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-5">
         <label className="block text-xs font-medium text-slate-600 dark:text-zinc-400 mb-1">備考（任意）</label>
         <textarea value={form.notes} onChange={e => set("notes", e.target.value)} placeholder="お振込手数料は貴社負担にてお願い申し上げます。" rows={2} className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white" />
+      </div>
+
+      {/* インポートボタン（隠しファイル入力） */}
+      <input
+        ref={importRef}
+        type="file"
+        accept=".json,.csv"
+        className="hidden"
+        onChange={handleImport}
+      />
+
+      <div className="no-print bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-4">
+        <p className="text-xs font-medium text-slate-500 dark:text-zinc-400 mb-3">ファイルから読み込み・保存</p>
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={() => importRef.current?.click()}
+            className="inline-flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-zinc-600 text-slate-700 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800 rounded-lg text-sm transition-colors"
+          >
+            📂 インポート（JSON / CSV）
+          </button>
+          <button
+            onClick={handleExportJson}
+            className="inline-flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-zinc-600 text-slate-700 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800 rounded-lg text-sm transition-colors"
+          >
+            💾 JSONで保存
+          </button>
+        </div>
+        <p className="text-xs text-slate-400 dark:text-zinc-500 mt-2 leading-relaxed">
+          <span className="font-medium">JSON</span>：このツールで保存した請求書を読み込み（全項目を復元）<br />
+          <span className="font-medium">CSV</span>：品目・数量・単位・単価の4列形式で明細を一括インポート
+        </p>
       </div>
 
       <div className="no-print flex gap-3 flex-wrap">
