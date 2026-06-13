@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import type { FaviconSettings, ImageAnalysis } from "./lib/favicon-lib";
 import { calcScore } from "./lib/favicon-lib";
+import { Wrench } from "lucide-react";
 
 interface Props {
   mainDataUrl: string;
@@ -107,7 +108,8 @@ export function ScorePanel({ mainDataUrl, maskDataUrl, settings, analysis, onFix
                   onClick={() => onFix(item.fixId!)}
                   className="mt-1.5 text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                 >
-                  🔧 自動修正する
+                  <Wrench size={12} />
+                  自動修正する
                 </button>
               )}
             </div>

@@ -2,6 +2,8 @@
 import { useRef, useState, useCallback } from "react";
 import type { FaviconSettings, ImageAnalysis } from "./lib/favicon-lib";
 import { analyzeImage } from "./lib/favicon-lib";
+import { SliderRow } from "./SliderRow";
+import { Upload, Wrench, AlertTriangle } from "lucide-react";
 
 interface Props {
   settings: FaviconSettings;
@@ -56,35 +58,14 @@ export function ProMode({ settings, sourceImage, onSettingsChange, onImageChange
     }
   }, [onSettingsChange, onImageChange]);
 
-  const SliderRow = ({
-    label, min, max, value, onChange, unit = "",
-  }: { label: string; min: number; max: number; value: number; onChange: (v: number) => void; unit?: string }) => (
-    <div>
-      <div className="flex justify-between text-xs mb-1">
-        <label className="font-medium text-slate-600 dark:text-zinc-400">{label}</label>
-        <span className="text-slate-500">{value}{unit}</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <input type="range" min={min} max={max} value={value}
-          onChange={e => onChange(Number(e.target.value))}
-          className="flex-1 accent-blue-600"
-        />
-        <input type="number" min={min} max={max} value={value}
-          onChange={e => onChange(Math.min(max, Math.max(min, Number(e.target.value))))}
-          className="w-14 text-xs text-center rounded border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 py-1"
-        />
-      </div>
-    </div>
-  );
-
   return (
     <div className="space-y-4">
-      {/* Sub tabs */}
+      {/* Sub tabs — no emoji prefixes */}
       <div className="flex gap-1 p-1 bg-slate-100 dark:bg-zinc-800 rounded-xl">
         {([
-          ["text", "✏️ テキスト・絵文字"],
-          ["image", "🖼️ 画像"],
-          ["maskable", "🎭 Maskable設定"],
+          ["text", "テキスト・絵文字"],
+          ["image", "画像"],
+          ["maskable", "Maskable設定"],
         ] as const).map(([id, label]) => (
           <button key={id} onClick={() => {
             setTab(id);
@@ -119,7 +100,13 @@ export function ProMode({ settings, sourceImage, onSettingsChange, onImageChange
             )}
           </div>
 
-          <SliderRow label="文字サイズ" min={30} max={90} value={settings.fontSize} onChange={v => onSettingsChange({ fontSize: v })} unit="%" />
+          <SliderRow
+            label="文字サイズ"
+            min={30} max={90} step={1}
+            value={settings.fontSize}
+            onChange={v => onSettingsChange({ fontSize: v })}
+            unit="%"
+          />
 
           <div>
             <label className="block text-xs font-medium text-slate-600 dark:text-zinc-400 mb-2">文字・絵文字の色</label>
@@ -181,9 +168,15 @@ export function ProMode({ settings, sourceImage, onSettingsChange, onImageChange
               onChange={e => { const f = e.target.files?.[0]; if (f) loadFile(f); e.target.value = ""; }}
             />
             <button onClick={() => fileRef.current?.click()}
-              className="w-full py-6 border-2 border-dashed border-slate-300 dark:border-zinc-600 rounded-xl text-slate-500 dark:text-zinc-400 hover:border-blue-400 hover:text-blue-500 transition-colors text-sm"
+              className="w-full py-6 border-2 border-dashed border-slate-300 dark:border-zinc-600 rounded-xl text-slate-500 dark:text-zinc-400 hover:border-blue-400 hover:text-blue-500 transition-colors text-sm flex items-center justify-center gap-2"
             >
-              {uploading ? "読み込み中..." : sourceImage ? "✅ 画像を変更（クリック）" : "📷 画像をアップロード"}
+              {uploading ? (
+                "読み込み中..."
+              ) : sourceImage ? (
+                "画像を変更（クリック）"
+              ) : (
+                <><Upload size={16} className="flex-shrink-0" />画像をアップロード</>
+              )}
             </button>
             {uploadError && (
               <p className="text-xs text-red-600">{uploadError}</p>
@@ -209,10 +202,34 @@ export function ProMode({ settings, sourceImage, onSettingsChange, onImageChange
               </div>
             </div>
 
-            <SliderRow label="余白" min={0} max={40} value={settings.padding} onChange={v => onSettingsChange({ padding: v })} unit="%" />
-            <SliderRow label="明るさ" min={0} max={200} value={settings.brightness} onChange={v => onSettingsChange({ brightness: v })} />
-            <SliderRow label="コントラスト" min={0} max={200} value={settings.contrast} onChange={v => onSettingsChange({ contrast: v })} />
-            <SliderRow label="彩度" min={0} max={200} value={settings.saturation} onChange={v => onSettingsChange({ saturation: v })} />
+            <SliderRow
+              label="余白"
+              min={0} max={40} step={1}
+              value={settings.padding}
+              onChange={v => onSettingsChange({ padding: v })}
+              unit="%"
+            />
+            <SliderRow
+              label="明るさ"
+              min={0} max={200} step={1}
+              value={settings.brightness}
+              onChange={v => onSettingsChange({ brightness: v })}
+              defaultValue={100}
+            />
+            <SliderRow
+              label="コントラスト"
+              min={0} max={200} step={1}
+              value={settings.contrast}
+              onChange={v => onSettingsChange({ contrast: v })}
+              defaultValue={100}
+            />
+            <SliderRow
+              label="彩度"
+              min={0} max={200} step={1}
+              value={settings.saturation}
+              onChange={v => onSettingsChange({ saturation: v })}
+              defaultValue={100}
+            />
 
             {(settings.brightness !== 100 || settings.contrast !== 100 || settings.saturation !== 100) && (
               <button
@@ -303,19 +320,17 @@ export function ProMode({ settings, sourceImage, onSettingsChange, onImageChange
 
           {settings.maskableEnabled && (
             <>
-              <div>
-                <div className="flex justify-between text-xs mb-1">
-                  <label className="font-medium text-slate-600 dark:text-zinc-400">安全領域内のスケール</label>
-                  <span className="text-slate-500">{Math.round(settings.maskableScale * 100)}%</span>
-                </div>
-                <input type="range" min={60} max={95} value={Math.round(settings.maskableScale * 100)}
-                  onChange={e => onSettingsChange({ maskableScale: Number(e.target.value) / 100 })}
-                  className="w-full accent-blue-600"
-                />
-                <p className="text-xs text-slate-400 mt-1">
-                  80-85%推奨。高いほど大きく表示されますが、マスク時に端が切れる場合があります。
-                </p>
-              </div>
+              <SliderRow
+                label="安全領域内のスケール"
+                min={60} max={95} step={1}
+                value={Math.round(settings.maskableScale * 100)}
+                onChange={v => onSettingsChange({ maskableScale: v / 100 })}
+                unit="%"
+                defaultValue={82}
+              />
+              <p className="text-xs text-slate-400 -mt-2">
+                80–85%推奨。高いほど大きく表示されますが、マスク時に端が切れる場合があります。
+              </p>
 
               <div className="flex items-center justify-between">
                 <span className="text-sm text-slate-700 dark:text-zinc-300">安全領域を表示</span>
@@ -328,7 +343,10 @@ export function ProMode({ settings, sourceImage, onSettingsChange, onImageChange
               </div>
 
               <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-3 text-xs text-amber-700 dark:text-amber-300 space-y-1">
-                <p className="font-semibold">⚠️ Maskable Iconの注意点</p>
+                <p className="font-semibold flex items-center gap-1.5">
+                  <AlertTriangle size={13} className="flex-shrink-0" />
+                  Maskable Iconの注意点
+                </p>
                 <p>• 背景は必ず不透明にしてください（現在: {settings.bgType === "transparent" ? "❌ 透明" : "✅ 設定あり"}）</p>
                 <p>• 通常版とは別ファイルとして生成されます</p>
                 <p>• Maskable版を通常版として使用しないでください</p>
@@ -337,9 +355,10 @@ export function ProMode({ settings, sourceImage, onSettingsChange, onImageChange
               {settings.bgType === "transparent" && (
                 <button
                   onClick={() => onSettingsChange({ bgType: "solid", bgColor: "#3b82f6" })}
-                  className="w-full py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm rounded-xl transition-colors"
+                  className="w-full py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm rounded-xl transition-colors flex items-center justify-center gap-2"
                 >
-                  🔧 背景色を設定する（必須）
+                  <Wrench size={14} />
+                  背景色を設定する（必須）
                 </button>
               )}
             </>
@@ -365,26 +384,22 @@ export function ProMode({ settings, sourceImage, onSettingsChange, onImageChange
 
           {settings.smallSizeOptimize && (
             <div className="space-y-3 pt-1">
-              <div>
-                <div className="flex justify-between text-xs mb-1">
-                  <label className="font-medium text-slate-600 dark:text-zinc-400">16px コンテンツスケール</label>
-                  <span className="text-slate-500">{Math.round(settings.s16Scale * 100)}%</span>
-                </div>
-                <input type="range" min={80} max={120} value={Math.round(settings.s16Scale * 100)}
-                  onChange={e => onSettingsChange({ s16Scale: Number(e.target.value) / 100 })}
-                  className="w-full accent-blue-600"
-                />
-              </div>
-              <div>
-                <div className="flex justify-between text-xs mb-1">
-                  <label className="font-medium text-slate-600 dark:text-zinc-400">32px コンテンツスケール</label>
-                  <span className="text-slate-500">{Math.round(settings.s32Scale * 100)}%</span>
-                </div>
-                <input type="range" min={80} max={120} value={Math.round(settings.s32Scale * 100)}
-                  onChange={e => onSettingsChange({ s32Scale: Number(e.target.value) / 100 })}
-                  className="w-full accent-blue-600"
-                />
-              </div>
+              <SliderRow
+                label="16px コンテンツスケール"
+                min={80} max={120} step={1}
+                value={Math.round(settings.s16Scale * 100)}
+                onChange={v => onSettingsChange({ s16Scale: v / 100 })}
+                unit="%"
+                defaultValue={100}
+              />
+              <SliderRow
+                label="32px コンテンツスケール"
+                min={80} max={120} step={1}
+                value={Math.round(settings.s32Scale * 100)}
+                onChange={v => onSettingsChange({ s32Scale: v / 100 })}
+                unit="%"
+                defaultValue={100}
+              />
               <p className="text-xs text-slate-400">
                 100%=マスター設定と同じ。100%超=小さいサイズでコンテンツを大きく表示。
               </p>

@@ -2,6 +2,8 @@
 import { useCallback, useRef, useState } from "react";
 import type { FaviconSettings, ImageAnalysis } from "./lib/favicon-lib";
 import { analyzeImage, trimTransparentPadding } from "./lib/favicon-lib";
+import { SliderRow } from "./SliderRow";
+import { Wrench, AlertTriangle } from "lucide-react";
 
 interface Props {
   settings: FaviconSettings;
@@ -155,8 +157,9 @@ export function EasyMode({ settings, sourceImage, analysis, onSettingsChange, on
         </div>
 
         {uploadError && (
-          <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-3 text-sm text-red-700 dark:text-red-300">
-            ⚠️ {uploadError}
+          <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-3 text-sm text-red-700 dark:text-red-300 flex items-start gap-2">
+            <AlertTriangle size={16} className="flex-shrink-0 mt-0.5" />
+            <span>{uploadError}</span>
           </div>
         )}
 
@@ -175,7 +178,11 @@ export function EasyMode({ settings, sourceImage, analysis, onSettingsChange, on
                 }`}
               >
                 <span className="mt-0.5 flex-shrink-0">
-                  {issue.severity === "error" ? "❌" : issue.severity === "warn" ? "⚠️" : "ℹ️"}
+                  {issue.severity === "error"
+                    ? <span className="text-red-600 dark:text-red-400 font-bold text-sm">✕</span>
+                    : issue.severity === "warn"
+                    ? <AlertTriangle size={14} />
+                    : <span className="text-blue-500 font-bold text-sm">i</span>}
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium">{issue.title}</p>
@@ -183,9 +190,10 @@ export function EasyMode({ settings, sourceImage, analysis, onSettingsChange, on
                   {issue.fixLabel && issue.fixId && (
                     <button
                       onClick={() => applyFix(issue.fixId!)}
-                      className="mt-1.5 px-2.5 py-1 bg-white dark:bg-zinc-800 rounded border text-xs font-medium hover:bg-slate-50 dark:hover:bg-zinc-700 transition-colors"
+                      className="mt-1.5 px-2.5 py-1 bg-white dark:bg-zinc-800 rounded border text-xs font-medium hover:bg-slate-50 dark:hover:bg-zinc-700 transition-colors flex items-center gap-1.5"
                     >
-                      🔧 {issue.fixLabel}
+                      <Wrench size={12} />
+                      {issue.fixLabel}
                     </button>
                   )}
                 </div>
@@ -307,24 +315,13 @@ export function EasyMode({ settings, sourceImage, analysis, onSettingsChange, on
         </div>
 
         {/* Padding */}
-        <div>
-          <div className="flex justify-between text-xs mb-1">
-            <label className="font-medium text-slate-600 dark:text-zinc-400">余白（パディング）</label>
-            <span className="text-slate-500">{settings.padding}%</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="range" min={0} max={40} value={settings.padding}
-              onChange={e => onSettingsChange({ padding: Number(e.target.value) })}
-              className="flex-1 accent-blue-600"
-            />
-            <input
-              type="number" min={0} max={40} value={settings.padding}
-              onChange={e => onSettingsChange({ padding: Math.min(40, Math.max(0, Number(e.target.value))) })}
-              className="w-12 text-xs text-center rounded border border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 py-1"
-            />
-          </div>
-        </div>
+        <SliderRow
+          label="余白（パディング）"
+          min={0} max={40} step={1}
+          value={settings.padding}
+          onChange={v => onSettingsChange({ padding: v })}
+          unit="%"
+        />
       </div>
 
       {/* Border & decoration */}
@@ -341,17 +338,13 @@ export function EasyMode({ settings, sourceImage, analysis, onSettingsChange, on
 
         {settings.border && (
           <div className="space-y-3">
-            <div>
-              <div className="flex justify-between text-xs mb-1">
-                <span className="text-slate-500">枠線の太さ</span>
-                <span className="text-slate-500">{settings.borderWidth}px</span>
-              </div>
-              <input
-                type="range" min={1} max={12} value={settings.borderWidth}
-                onChange={e => onSettingsChange({ borderWidth: Number(e.target.value) })}
-                className="w-full accent-blue-600"
-              />
-            </div>
+            <SliderRow
+              label="枠線の太さ"
+              min={1} max={12} step={1}
+              value={settings.borderWidth}
+              onChange={v => onSettingsChange({ borderWidth: v })}
+              unit="px"
+            />
             <div className="flex items-center gap-3">
               <label className="text-xs text-slate-500">枠線の色</label>
               <input

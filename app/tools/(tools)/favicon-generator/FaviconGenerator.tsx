@@ -105,10 +105,10 @@ export function FaviconGenerator() {
       {/* ── Mode tabs ──────────────────────────────────────────────────── */}
       <div className="flex gap-1 p-1 bg-slate-100 dark:bg-zinc-800 rounded-xl">
         {([
-          ["easy", "✨", "かんたん作成"],
-          ["pro", "🎨", "プロ編集"],
-          ["diagnose", "🔍", "サイト診断"],
-        ] as const).map(([id, icon, label]) => (
+          ["easy", "かんたん作成"],
+          ["pro", "プロ編集"],
+          ["diagnose", "サイト診断"],
+        ] as const).map(([id, label]) => (
           <button
             key={id}
             onClick={() => setMainMode(id)}
@@ -118,8 +118,7 @@ export function FaviconGenerator() {
                 : "text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
-            {icon} <span className="hidden sm:inline">{label}</span>
-            <span className="sm:hidden">{label}</span>
+            {label}
           </button>
         ))}
       </div>
@@ -155,9 +154,9 @@ export function FaviconGenerator() {
         <div className="space-y-4">
           <div className="flex gap-1 p-1 bg-slate-100 dark:bg-zinc-800 rounded-xl">
             {([
-              ["preview", "🖼 プレビュー"],
-              ["score", "⭐ 品質スコア"],
-              ["download", "⬇️ ダウンロード"],
+              ["preview", "プレビュー"],
+              ["score", "品質スコア"],
+              ["download", "ダウンロード"],
             ] as const).map(([id, label]) => (
               <button
                 key={id}

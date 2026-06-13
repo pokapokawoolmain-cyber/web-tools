@@ -1,6 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
 import type { FaviconSettings } from "./lib/favicon-lib";
+import { Download, FileText, Check } from "lucide-react";
 import {
   renderFavicon, buildIco, canvasToBlob,
   buildWebManifest, buildHtmlCode, buildNextjsCode, buildWordPressCode, buildZip,
@@ -187,7 +188,7 @@ export function DownloadPanel({ settings, sourceImage, onSettingsChange }: Props
                 {progress || "生成中..."}
               </>
             ) : (
-              <>⬇️ ZIPをダウンロード（全ファイル一括）</>
+              <><Download size={16} className="flex-shrink-0" />ZIPをダウンロード（全ファイル一括）</>
             )}
           </button>
 
@@ -215,9 +216,10 @@ export function DownloadPanel({ settings, sourceImage, onSettingsChange }: Props
 
           {/* ICO */}
           <button onClick={downloadIco}
-            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors"
+            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
           >
-            ⬇️ favicon.ico（16/32/48px入り）
+            <Download size={14} className="flex-shrink-0" />
+            favicon.ico（16/32/48px入り）
           </button>
 
           {/* PNG grid */}
@@ -262,9 +264,10 @@ export function DownloadPanel({ settings, sourceImage, onSettingsChange }: Props
           {/* Manifest */}
           <button
             onClick={() => downloadBlob(new Blob([manifestJson], { type: "application/json" }), "site.webmanifest")}
-            className="w-full py-2 border border-slate-200 dark:border-zinc-600 text-slate-700 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800 rounded-xl text-xs transition-colors"
+            className="w-full py-2 border border-slate-200 dark:border-zinc-600 text-slate-700 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800 rounded-xl text-xs transition-colors flex items-center justify-center gap-1.5"
           >
-            📄 site.webmanifest
+            <FileText size={13} className="flex-shrink-0" />
+            site.webmanifest
           </button>
         </div>
       )}
@@ -305,13 +308,15 @@ export function DownloadPanel({ settings, sourceImage, onSettingsChange }: Props
                 : "bg-slate-700 hover:bg-slate-600 text-slate-200"
             }`}
           >
-            {copiedCode ? "✅ コピー済み" : "コピー"}
+            {copiedCode
+              ? <span className="flex items-center gap-1"><Check size={12} />コピー済み</span>
+              : "コピー"}
           </button>
         </div>
 
         {codeTab === "nextjs" && (
           <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-3 text-xs text-blue-700 dark:text-blue-300">
-            <p className="font-semibold mb-1">💡 Next.js App Router おすすめの設置方法</p>
+            <p className="font-semibold mb-1">Next.js App Router おすすめの設置方法</p>
             <p>
               <code className="bg-blue-100 dark:bg-blue-900/50 px-1 rounded">app/favicon.ico</code> に配置するだけで自動認識されます。
               <code className="bg-blue-100 dark:bg-blue-900/50 px-1 rounded ml-1">app/icon.png</code>・
@@ -322,8 +327,9 @@ export function DownloadPanel({ settings, sourceImage, onSettingsChange }: Props
 
         {/* Manifest preview */}
         <details className="text-xs">
-          <summary className="text-slate-500 dark:text-zinc-500 cursor-pointer hover:text-slate-700 dark:hover:text-zinc-300 py-1">
-            📄 site.webmanifest の内容を確認
+          <summary className="text-slate-500 dark:text-zinc-500 cursor-pointer hover:text-slate-700 dark:hover:text-zinc-300 py-1 flex items-center gap-1.5">
+            <FileText size={12} className="flex-shrink-0" />
+            site.webmanifest の内容を確認
           </summary>
           <pre className="mt-2 bg-slate-50 dark:bg-zinc-800 rounded-xl p-3 text-slate-600 dark:text-zinc-400 overflow-x-auto whitespace-pre-wrap break-words">
             {manifestJson}
