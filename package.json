@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:subsidy": "tsx scripts/test-subsidy-status.ts",
+    "validate:subsidies": "tsx scripts/validate-subsidies.ts",
+    "check:subsidy-links": "tsx scripts/check-subsidy-links.ts"
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.15",
@@ -39,6 +42,7 @@
     "eslint-config-next": "^15.3.9",
     "postcss": "^8",
     "tailwindcss": "^4.1.7",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   }
 }

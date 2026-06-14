@@ -1,0 +1,34 @@
+# ============================================================
+# 補助金データの鮮度・外部リンク 週次チェック
+#
+# 目的: 締切超過・リンク切れ・公式情報の異常を「検知して通知」する。
+#       制度内容を自動で書き換えることはしない（人が公式を確認して更新）。
+# 頻度: 週1回（公式サイトへの高頻度クロールを避ける）。
+# ============================================================
+name: subsidy-check
+
+on:
+  schedule:
+    # 毎週月曜 00:15 UTC（日本時間 月曜 09:15）
+    - cron: "15 0 * * 1"
+  workflow_dispatch: {} # 手動実行も可
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # スキーマ＋鮮度（締切超過・要再確認を検出）
+      - name: Validate subsidy schema & freshness
+        run: npm run validate:subsidies
+      # 外部リンク（公式の404/410を検出）。ネットワーク不可なら情報出力のみ。
+      - name: Check external official links
+        run: npm run check:subsidy-links
