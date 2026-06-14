@@ -85,7 +85,7 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>印刷して完成</h2>
       <p>
-        ダウンロードした画像をコンビニの写真プリントサービスで「L判」指定で印刷します（40円）。カット線に沿ってハサミで切り取れば完成です。コンビニ印刷の詳細は<Link href="/blog/id-photo-convenience">コンビニで証明写真を印刷する方法</Link>を参照してください。
+        ダウンロードした画像をコンビニの写真プリントサービスで「L判」指定で印刷します（40円）。カット線に沿ってハサミで切り取れば完成です。コンビニ印刷の詳細は<Link href="/blog/id-photo-convenience-store">コンビニで証明写真を印刷する方法</Link>を参照してください。
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />

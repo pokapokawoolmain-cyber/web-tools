@@ -99,7 +99,7 @@ export default function Page() {
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">証明写真を素早く準備したい場合</strong>
-        <Link href="/tools/id-photo" className="text-blue-600 dark:text-blue-400 hover:underline">証明写真作成ツール</Link>を使えば、スマホで撮影した写真から履歴書サイズの証明写真を無料で作成できます。コンビニで40円で印刷するまでの手順は<Link href="/blog/id-photo-convenience" className="text-blue-600 dark:text-blue-400 hover:underline">コンビニ印刷ガイド</Link>を参照してください。
+        <Link href="/tools/id-photo" className="text-blue-600 dark:text-blue-400 hover:underline">証明写真作成ツール</Link>を使えば、スマホで撮影した写真から履歴書サイズの証明写真を無料で作成できます。コンビニで40円で印刷するまでの手順は<Link href="/blog/id-photo-convenience-store" className="text-blue-600 dark:text-blue-400 hover:underline">コンビニ印刷ガイド</Link>を参照してください。
       </div>
     </BlogLayout>
   );

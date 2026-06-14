@@ -244,13 +244,13 @@ const IMAGE_BLOGS: BlogEntry[] = [
     relatedToolIds: ["heic-to-jpg"],
   },
   {
-    slug: "id-photo-convenience",
-    title: "コンビニで証明写真を印刷する方法【スマホで撮影→L判→切り取り】",
-    description: "セブン・ローソン・ファミマのマルチコピー機で証明写真を印刷する手順と料金。",
-    publishedAt: "2026-05-12",
+    slug: "id-photo-convenience-store",
+    title: "証明写真をスマホで作ってコンビニ印刷する方法｜履歴書・パスポート対応",
+    description: "スマホで証明写真を作成してコンビニ（ローソン・セブン・ファミマ）で印刷する手順を解説。無料・登録不要で履歴書・パスポートサイズに対応。写真館より安く作成。",
+    publishedAt: "2026-05-22",
     updatedAt: "2026-06-02",
     category: "image",
-    tags: ["証明写真", "コンビニ印刷", "マルチコピー機"],
+    tags: ["証明写真", "コンビニ印刷", "マルチコピー機", "履歴書", "パスポート"],
     relatedToolIds: ["id-photo"],
   },
   {

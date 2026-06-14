@@ -9,7 +9,7 @@ const post = getBlogPost("shakai-hoken-guide")!;
 
 export const metadata: Metadata = generateMeta({
   title: "社会保険料の計算方法【2026年最新版】年収別早見表・標準報酬月額わかりやすく解説",
-  description: "年収400万円の社会保険料は年間約58万円。健康保険・厚生年金・雇用保険の計算方法を解説。標準報酬月額とは何か、130万円・106万円の壁、パート・アルバイトの加入条件も。",
+  description: "年収300〜1000万円の社会保険料を早見表で確認。年収400万なら年間約58万円。健康保険・厚生年金・雇用保険の計算方法、標準報酬月額の仕組み、106万・130万の壁、節約のポイントまでわかりやすく解説。",
   path: `/blog/${post.slug}`,
   keywords: ["社会保険料 計算方法 わかりやすく", "社会保険料 年収400万", "標準報酬月額 計算 例", "社会保険料 130万の壁 2026", "健康保険 厚生年金 いくら引かれる"],
   type: "article",
@@ -100,6 +100,18 @@ export default function Page() {
         <li>通勤手当・残業代・住宅手当なども月給に含めて計算するため、残業が多い月は保険料が上がる場合がある</li>
       </ul>
 
+      <div className="bg-amber-50 dark:bg-amber-950/20 rounded-xl p-5 my-6 border border-amber-200 dark:border-amber-800">
+        <strong className="text-amber-800 dark:text-amber-300 block mb-2">具体例：月収30万円（39歳・協会けんぽ東京）の社会保険料を計算してみる</strong>
+        <p className="text-[14px] text-slate-700 dark:text-zinc-300 mb-3">標準報酬月額30万円のケースを、実際の料率で1つずつ計算すると次のようになります（いずれも労働者負担分）。</p>
+        <ul className="space-y-1.5 text-[14px]">
+          <li><strong>健康保険料</strong>：30万円 × 9.98% ÷ 2 ＝ 約<strong>14,970円</strong>／月</li>
+          <li><strong>厚生年金保険料</strong>：30万円 × 18.3% ÷ 2 ＝ 約<strong>27,450円</strong>／月</li>
+          <li><strong>雇用保険料</strong>：30万円 × 0.6% ＝ 約<strong>1,800円</strong>／月</li>
+          <li className="pt-1.5 border-t border-amber-200 dark:border-amber-800"><strong>合計</strong>：月 約<strong className="text-amber-700 dark:text-amber-400">44,220円</strong> → 年間 約<strong className="text-amber-700 dark:text-amber-400">53万円</strong></li>
+        </ul>
+        <p className="text-[13px] text-slate-500 dark:text-zinc-500 mt-3">※40歳以上はこれに介護保険料（約0.9%・折半）が加わり、月あたり約1,350円増えます。賞与からも同じ料率で控除されます。</p>
+      </div>
+
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収別・社会保険料早見表（会社員・40歳未満）</h2>
       <div className="overflow-x-auto my-6">
@@ -175,12 +187,14 @@ export default function Page() {
       </ul>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
-      <h2>関連記事</h2>
+      <h2>関連記事・ツール</h2>
       <ul className="space-y-2">
+        <li><Link href="/salary">年収別の手取り早見表（300〜1000万円・カテゴリ一覧）</Link></li>
         <li><Link href="/blog/jumin-zei-guide">住民税の計算方法【年収別早見表】</Link></li>
         <li><Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link></li>
         <li><Link href="/blog/takehome-500">年収500万円の手取り詳細</Link></li>
         <li><Link href="/blog/takehome-400">年収400万円の手取り詳細</Link></li>
+        <li><Link href="/tools/net-income">手取り計算ツール（社会保険料込みで即計算）</Link></li>
       </ul>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />

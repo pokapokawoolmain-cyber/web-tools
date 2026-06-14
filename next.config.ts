@@ -26,11 +26,21 @@ const nextConfig: NextConfig = {
       "pdf-rotate", "pdf-watermark", "pdf-delete-pages", "pdf-reorder",
       "pdf-password", "pdf-metadata-remover",
     ];
-    return toolIds.map((id) => ({
+    const toolRedirects = toolIds.map((id) => ({
       source: `/${id}`,
       destination: `/tools/${id}`,
       permanent: true,
     }));
+    // 重複記事の統合（カニバリゼーション解消）
+    // 旧「コンビニで証明写真」記事を、Googleが上位表示している統合版へ301
+    const blogRedirects = [
+      {
+        source: "/blog/id-photo-convenience",
+        destination: "/blog/id-photo-convenience-store",
+        permanent: true,
+      },
+    ];
+    return [...toolRedirects, ...blogRedirects];
   },
 
   // ヘッダー設定（SEO・セキュリティ）

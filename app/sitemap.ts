@@ -118,8 +118,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/qr-create-guide`, lastModified: blogDate("qr-create-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/wifi-qr-guide`, lastModified: blogDate("wifi-qr-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/url-shorten-guide`, lastModified: blogDate("url-shorten-guide"), changeFrequency: "monthly", priority: 0.8 },
-    // 証明写真 3記事
-    { url: `${siteUrl}/blog/id-photo-convenience`, lastModified: blogDate("id-photo-convenience"), changeFrequency: "monthly", priority: 0.8 },
+    // 証明写真 2記事（id-photo-convenience は id-photo-convenience-store へ301統合）
     { url: `${siteUrl}/blog/id-photo-size-guide`, lastModified: blogDate("id-photo-size-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/id-photo-smartphone`, lastModified: blogDate("id-photo-smartphone"), changeFrequency: "monthly", priority: 0.8 },
     // 投資・お金 3記事

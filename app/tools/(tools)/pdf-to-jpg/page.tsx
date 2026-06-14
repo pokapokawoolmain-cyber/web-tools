@@ -4,6 +4,7 @@ import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PdfToJpg } from "./PdfToJpg";
 import { RelatedPdfTools } from "@/components/pdf/RelatedPdfTools";
+import { RelatedArticles } from "@/app/tools/_components/RelatedArticles";
 
 export const metadata: Metadata = generateMeta({
   title: "PDFをJPGに変換｜PDFページを画像保存【無料】",
@@ -31,6 +32,10 @@ export default function Page() {
       <JsonLd data={faqSchema} />
       <PdfToJpg />
       <div className="max-w-2xl mx-auto px-4 pb-16">
+        <RelatedArticles
+          toolId="pdf-to-jpg"
+          className="pt-10 mb-10 border-t border-slate-200 dark:border-zinc-800"
+        />
         <RelatedPdfTools currentHref="/tools/pdf-to-jpg" />
       </div>
     </>

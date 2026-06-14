@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
+import { TakehomeClusterNav } from "../_components/TakehomeClusterNav";
 import { generateMeta } from "@/lib/seo";
 import Link from "next/link";
 
@@ -193,6 +194,7 @@ export default function Page() {
         <li><Link href="/blog/shakai-hoken-guide">社会保険料の計算方法【年収別早見表・2026年版】</Link></li>
       </ul>
 
+      <TakehomeClusterNav current={1000} />
     </BlogLayout>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
+import { TakehomeClusterNav } from "../_components/TakehomeClusterNav";
 import { generateMeta } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
@@ -166,6 +167,7 @@ export default function Page() {
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事の数値は現行の税率・社会保険料率に基づく概算です。加入する健康保険組合・家族構成・各種控除の状況により実際の手取りは異なります。
       </div>
+      <TakehomeClusterNav current={400} />
     </BlogLayout>
     </>
   );

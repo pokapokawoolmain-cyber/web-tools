@@ -3,6 +3,7 @@ import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
+import Link from "next/link";
 
 const post = getBlogPost("mercari-fees-guide")!;
 
@@ -183,6 +184,42 @@ export default function Page() {
         ネコポスとゆうパケットはサイズ上限がほぼ同じですが、ネコポスのほうが55円安い（175円 vs 230円）です。コンビニ・ヤマト営業所から発送できる手軽さもあり、薄い商品ならネコポスが第一選択肢になります。
       </p>
 
+      <h3>同じ「3,000円」でも配送方法で手取りはこう変わる</h3>
+      <p>
+        販売価格3,000円（手数料300円）の商品を、配送方法だけ変えた場合の手取りを比較すると、選び方ひとつで最大675円の差が出ます。
+      </p>
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">配送方法</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">送料</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">手取り（3,000円の場合）</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["ネコポス", "175円", "2,525円", true],
+              ["ゆうパケット", "230円", "2,470円", false],
+              ["宅急便コンパクト（＋BOX）", "520円", "2,180円", false],
+              ["宅急便60サイズ", "750円", "1,950円", false],
+              ["宅急便80サイズ", "850円", "1,850円", false],
+            ].map(([method, shipping, takehome, best], i) => (
+              <tr key={method as string} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">
+                  {method}{best ? <span className="ml-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">最安</span> : null}
+                </td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-500">{shipping}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium text-blue-600 dark:text-blue-400">{takehome}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[13px] text-slate-500 dark:text-zinc-500">
+        ※商品が薄くて軽いほど安い配送方法を選べます。サイズに余裕があるのに大きい配送方法を選ぶと、手取りを数百円単位で損します。
+      </p>
+
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>梱包材のコストも忘れずに</h2>
       <p>
@@ -239,8 +276,18 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>正確な利益を事前に計算する</h2>
       <p>
-        販売価格・送料・梱包材費を入力して手取り額と利益率を即計算できる当サイトのメルカリ利益計算ツールを使うと、出品前に採算が取れるかどうかを確認できます。赤字出品を防ぐための最低価格の把握にも役立ちます。
+        販売価格・送料・梱包材費を入力して手取り額と利益率を即計算できる
+        <Link href="/tools/mercari-profit" className="text-blue-600 dark:text-blue-400 hover:underline">メルカリ利益計算ツール</Link>
+        を使うと、出品前に採算が取れるかどうかを確認できます。赤字出品を防ぐための最低価格の把握にも役立ちます。
       </p>
+
+      <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
+        <strong className="text-blue-800 dark:text-blue-300 block mb-1">出品前に手取りをチェック</strong>
+        <p className="text-[14px] text-blue-700 dark:text-blue-400 mb-3">販売価格・仕入れ値・送料を入れるだけで、手数料10%を引いた実質手取りと利益率がすぐにわかります。</p>
+        <Link href="/tools/mercari-profit" className="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+          メルカリ利益計算ツールを使う（無料）→
+        </Link>
+      </div>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>

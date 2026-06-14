@@ -10,6 +10,7 @@ import { getSiteUrl } from "@/lib/utils";
 import { getCategoryForTool } from "@/data/categories";
 import { RelatedTools } from "@/components/tools/RelatedTools";
 import { RecentToolsWrapper } from "@/components/tools/RecentToolsWrapper";
+import { RelatedArticles } from "@/app/tools/_components/RelatedArticles";
 
 type ToolLayoutProps = {
   title: string;
@@ -148,6 +149,12 @@ export function ToolLayout({
             {seoContent}
           </div>
         )}
+
+        {/* 関連ガイド記事（ツール→ブログの内部リンク・回遊強化） */}
+        <RelatedArticles
+          toolId={slug}
+          className="mt-10 pt-8 border-t border-slate-100 dark:border-zinc-800"
+        />
 
         {/* 関連ツール自動回遊 */}
         <RelatedTools

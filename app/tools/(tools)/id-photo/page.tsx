@@ -3,6 +3,7 @@ import { generateMeta } from "@/lib/seo";
 import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { IdPhoto } from "./IdPhoto";
+import { RelatedArticles } from "@/app/tools/_components/RelatedArticles";
 
 export const metadata: Metadata = generateMeta({
   title: "証明写真作成ツール｜履歴書・コンビニ印刷対応【無料・登録不要】",
@@ -45,6 +46,11 @@ export default function Page() {
       <ToolJsonLd slug="id-photo" title="証明写真作成" description="履歴書・マイナンバー・パスポート対応。写真をアップロードするだけで証明写真を自動作成。" />
       <JsonLd data={faqSchema} />
       <IdPhoto />
+      <div className="bg-slate-50 dark:bg-zinc-950 border-t border-slate-200 dark:border-zinc-800">
+        <div className="max-w-2xl mx-auto px-4 py-10">
+          <RelatedArticles toolId="id-photo" />
+        </div>
+      </div>
     </>
   );
 }

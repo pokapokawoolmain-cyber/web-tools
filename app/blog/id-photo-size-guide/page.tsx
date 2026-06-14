@@ -87,7 +87,7 @@ export default function Page() {
         <Link href="/tools/id-photo">証明写真作成ツール</Link>では、上記の各サイズに対応したプリセットが用意されています。写真をアップロードして用途に合ったサイズを選ぶだけで、適切なサイズの証明写真を作成できます。
       </p>
       <p>
-        作成後はL判（89×127mm）レイアウトに配置してダウンロードし、コンビニの写真プリントサービスで印刷できます。詳しくは<Link href="/blog/id-photo-convenience">コンビニで証明写真を印刷する方法</Link>を参照してください。
+        作成後はL判（89×127mm）レイアウトに配置してダウンロードし、コンビニの写真プリントサービスで印刷できます。詳しくは<Link href="/blog/id-photo-convenience-store">コンビニで証明写真を印刷する方法</Link>を参照してください。
       </p>
 
       <div className="bg-amber-50 dark:bg-amber-950/30 rounded-xl p-5 my-4 border border-amber-200 dark:border-amber-800">
