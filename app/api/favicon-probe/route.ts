@@ -80,7 +80,7 @@ async function safeFetch(url: string): Promise<Response> {
     const res = await fetch(url, {
       signal: ctrl.signal,
       redirect: "follow",
-      headers: { "User-Agent": "ToolBox/1.0 FaviconChecker (+https://toolboxjp.com)" },
+      headers: { "User-Agent": "ToolBox/1.0 FaviconChecker (+https://www.toolboxjp.com)" },
     });
     clearTimeout(timer);
     return res;

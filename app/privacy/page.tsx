@@ -14,7 +14,7 @@ export default function PrivacyPage() {
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">
           プライバシーポリシー
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-10">最終更新日：2025年11月1日</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mb-10">最終更新日：2026年6月14日</p>
 
         <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
 
@@ -48,16 +48,45 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">4. Google AdSense</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              当サイトはGoogle AdSense（Google LLC）を使用して広告を表示しています。Google AdSenseはCookieを使用して、ユーザーの興味に合わせた広告を配信することがあります。広告のパーソナライズを無効にしたい場合は、Googleの広告設定ページからオプトアウトできます。
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">4. Google AdSenseと第三者配信事業者</h2>
+            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+              当サイトは、第三者配信の広告サービスとしてGoogle AdSense（Google LLC）を利用しています。
             </p>
+            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400 mb-3">
+              <li>Googleなどの第三者配信事業者は、Cookieを使用して、ユーザーの過去のアクセス情報に基づいて広告を配信します。</li>
+              <li>これにより、ユーザーの興味・関心に応じた広告（パーソナライズ広告）が表示される場合があります。</li>
+              <li>当サイトが取得するのは匿名のアクセス情報であり、氏名・住所などの個人を特定する情報は取得しません。</li>
+            </ul>
+            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-2">
+              パーソナライズ広告は、次の方法で無効化（オプトアウト）できます。
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400">
+              <li>
+                Googleの
+                <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">広告設定（My Ad Center）でパーソナライズを管理する</a>
+              </li>
+              <li>
+                <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">aboutads.info で参加事業者の広告をまとめてオプトアウトする</a>
+              </li>
+              <li>
+                第三者配信事業者によるCookie利用の詳細は
+                <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">Googleの「ユーザーがGoogleパートナーのサイトやアプリを使用する際のデータ処理」を確認する</a>
+              </li>
+            </ul>
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">5. Cookieについて</h2>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">5. Cookieと同意管理</h2>
+            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+              Cookieとは、ウェブサイトがブラウザに保存する小さなデータファイルです。当サイトでは目的別に次のCookieを使用します。
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400 mb-3">
+              <li><strong>必須Cookie</strong>：テーマ（ダークモード）設定など、サイトの基本動作に必要なもの。</li>
+              <li><strong>アクセス解析Cookie</strong>：Google Analyticsによる利用状況の把握。</li>
+              <li><strong>広告Cookie</strong>：Google AdSenseによる広告配信・効果測定。</li>
+            </ul>
             <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              Cookieとはウェブサイトがブラウザに保存する小さなデータファイルです。当サイトではアクセス解析・広告配信の目的でCookieを使用しています。ブラウザの設定からCookieを無効にすることができますが、一部機能が正常に動作しない場合があります。
+              欧州経済領域（EEA）・英国・スイスなどからのアクセスについては、Google認定の同意管理ツール（CMP）を通じて、広告・解析Cookieの利用可否を選択いただけるよう対応します。いずれの地域でも、ブラウザの設定からCookieを無効化できますが、その場合は一部機能が正常に動作しないことがあります。
             </p>
           </section>
 

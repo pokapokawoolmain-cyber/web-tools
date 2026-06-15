@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { AdScript } from "@/components/ads/AdScript";
 import "@/styles/globals.css";
 
 // 英語フォント: Inter（Appleサイト的な洗練感）
@@ -85,25 +86,22 @@ export default function RootLayout({
       className={`${inter.variable} ${notoSansJP.variable}`}
     >
       <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8801800417491644"
-          crossOrigin="anonymous"
-        />
+        {/* AdSenseローダー: 本番かつPublisher ID設定時のみ1回読み込む（lib/ads/config） */}
+        <AdScript />
       </head>
       <body className="font-sans bg-white dark:bg-zinc-950 text-slate-900 dark:text-slate-100 antialiased">
         <JsonLd data={{
           "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "ToolBox",
-          "url": "https://toolboxjp.com",
+          "url": "https://www.toolboxjp.com",
           "description": "登録不要・ブラウザ完結の無料Webツール集。FIRE計算・NISA積立・PDF結合・画像圧縮・カラー変換など58種類以上。",
           "inLanguage": "ja",
           "potentialAction": {
             "@type": "SearchAction",
             "target": {
               "@type": "EntryPoint",
-              "urlTemplate": "https://toolboxjp.com/tools?q={search_term_string}"
+              "urlTemplate": "https://www.toolboxjp.com/tools?q={search_term_string}"
             },
             "query-input": "required name=search_term_string"
           }

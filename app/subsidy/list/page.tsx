@@ -6,7 +6,7 @@ import {
   getDaysUntilDeadline, getDeadlineColor,
 } from "@/data/subsidies";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://toolboxjp.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.toolboxjp.com";
 
 // 派生ステータス（締切自動判定）を定期的に再計算するためISR化（1時間）
 export const revalidate = 3600;

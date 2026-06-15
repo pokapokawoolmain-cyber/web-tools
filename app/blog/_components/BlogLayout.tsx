@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronRight, Clock, RefreshCw } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
+import { BottomAd } from "@/components/ads/presets";
 import type { BlogPost } from "@/data/blog-posts";
 
 type Props = {
@@ -174,6 +175,9 @@ export function BlogLayout({ post, children }: Props) {
               ← ブログ一覧に戻る
             </Link>
           </div>
+
+          {/* 記事末尾の広告（操作要素から離れた本文末。審査中は ENABLED=false で非表示） */}
+          <BottomAd />
         </article>
       </div>
     </>

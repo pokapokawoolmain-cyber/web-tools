@@ -4,7 +4,7 @@ import { getAllNews } from "@/lib/subsidy/fetchNews";
 import { NEWS_CATEGORIES, type NewsCategory } from "@/data/subsidyNews";
 import { NewsCard } from "@/components/subsidy/NewsCard";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://toolboxjp.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.toolboxjp.com";
 
 export const metadata: Metadata = {
   title: "補助金・助成金 最新情報｜公募開始・締切・制度変更まとめ",

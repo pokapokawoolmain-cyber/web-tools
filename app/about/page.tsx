@@ -238,7 +238,7 @@ export default function AboutPage() {
                 </div>
                 <div className="flex gap-4">
                   <dt className="text-slate-400 dark:text-zinc-500 w-24 flex-shrink-0">URL</dt>
-                  <dd className="text-slate-700 dark:text-zinc-300 font-mono text-[13px]">https://toolboxjp.com</dd>
+                  <dd className="text-slate-700 dark:text-zinc-300 font-mono text-[13px]">https://www.toolboxjp.com</dd>
                 </div>
                 <div className="flex gap-4">
                   <dt className="text-slate-400 dark:text-zinc-500 w-24 flex-shrink-0">運営開始</dt>
