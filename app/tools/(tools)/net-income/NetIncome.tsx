@@ -26,7 +26,7 @@ export function NetIncome() {
         {/* Title */}
         <div className="px-1">
           <h1 className="text-[28px] font-bold text-slate-900 dark:text-white tracking-tight">手取り計算</h1>
-          <p className="text-[15px] text-slate-500 dark:text-zinc-400 mt-1">年収・月収（額面）から手取り額と税金の内訳を計算します</p>
+          <p className="text-[15px] text-slate-500 dark:text-zinc-400 mt-1">年収から月間・年間の手取り額を計算します</p>
         </div>
 
         {/* Toggle */}
