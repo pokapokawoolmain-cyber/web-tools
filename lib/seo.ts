@@ -33,7 +33,8 @@ export function generateMeta({
   const ogImageUrl = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
 
   return {
-    title: fullTitle,
+    // absolute にしてルートlayoutのtemplate（"%s | ToolBox"）の二重付与を防ぐ
+    title: { absolute: fullTitle },
     description,
     keywords: keywords.join(", "),
     authors: [{ name: siteName }],
