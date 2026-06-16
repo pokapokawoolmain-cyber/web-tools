@@ -3,13 +3,17 @@ import Link from "next/link";
 import { generateMeta } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
+import { calcTakehome } from "@/lib/takehome";
 
 export const metadata: Metadata = generateMeta({
-  title: "年収手取り早見表【2026年版】300万〜1000万円｜月収・税金・社会保険料を一覧比較",
-  description: "年収300〜1000万円の手取り額を早見表で一覧確認。月収換算・所得税・住民税・社会保険料の内訳、節税方法、生活レベルシミュレーションを年収別にまとめた2026年版カテゴリページ。",
+  title: "年収・月収の手取り早見表【2026年版】｜月収50万・年収1000万の手取りを一覧比較",
+  description: "年収300〜1000万円・月収25〜100万円の手取りを早見表で一覧確認。月収から手取りへの換算、所得税・住民税・社会保険料の内訳、節税方法までまとめた2026年版。",
   path: "/salary",
-  keywords: ["手取り 早見表", "年収 手取り", "手取り早見表 2026", "年収 月収 換算", "年収1000万 手取り", "給与 税金 計算"],
+  keywords: ["手取り 早見表", "年収 手取り", "月収 手取り", "月収 手取り 一覧", "手取り早見表 2026", "年収 月収 換算", "年収1000万 手取り"],
 });
+
+// 月収（額面・万円）→ 年収×12 → 手取り。ツールと同一ロジック（独身・基礎控除・賞与なし）
+const MONTHLY_MAN = [25, 30, 34, 40, 50, 60, 70, 80, 90, 100];
 
 const posts = [
   { slug: "takehome-300", title: "年収300万円の手取り", subtitle: "月20.3万円（年243万）", desc: "手取り率81%。一人暮らし・節税シミュレーション付き" },
@@ -66,6 +70,47 @@ export default function SalaryPage() {
               </Link>
             ))}
           </div>
+
+          {/* 月収別 手取り早見表（「月収X万 手取り」需要の受け皿） */}
+          <section className="mt-12">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">月収別の手取り早見表</h2>
+            <p className="text-[13px] text-slate-500 dark:text-zinc-400 mb-4">
+              月収（額面）から手取りの目安を調べられます。月収を12か月分（賞与なし）として年収換算し、社会保険料・所得税・住民税を差し引いた概算です。
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-slate-100 dark:bg-zinc-800">
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">月収（額面）</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">年収換算</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">月の手取り目安</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">手取り率</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {MONTHLY_MAN.map((man, i) => {
+                    const annual = man * 12 * 10000;
+                    const r = calcTakehome(annual);
+                    const monthlyManText = (Math.round(r.monthlyNet / 1000) / 10).toFixed(1);
+                    const rate = Math.round((r.annualNet / annual) * 100);
+                    return (
+                      <tr key={man} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                        <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium">月収{man}万円</td>
+                        <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-slate-500 dark:text-zinc-500">年収{annual / 10000}万円</td>
+                        <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-blue-600 dark:text-blue-400 font-medium">約{monthlyManText}万円</td>
+                        <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2">約{rate}%</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-[13px] text-slate-500 dark:text-zinc-500">
+              ※ 独身・基礎控除のみ・賞与なしの月収ベースの概算です。賞与込みの年収で見たい場合や、扶養がある場合は
+              <Link href="/tools/net-income" className="text-blue-600 dark:text-blue-400 hover:underline">手取り計算ツール</Link>
+              で正確に試算できます。
+            </p>
+          </section>
 
           <div className="mt-10 p-6 rounded-2xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700">
             <p className="text-[14px] font-semibold text-slate-700 dark:text-zinc-300 mb-2">全年収の手取り一覧を確認する</p>

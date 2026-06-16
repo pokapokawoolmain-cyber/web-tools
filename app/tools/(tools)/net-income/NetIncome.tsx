@@ -3,49 +3,13 @@
 import { useState, useMemo } from "react";
 import { SliderInput } from "@/components/ui/SliderInput";
 import { RelatedTools } from "@/components/tools/RelatedTools";
-
-function calcSalaryDeduction(income: number): number {
-  if (income <= 1625000) return 550000;
-  if (income <= 1800000) return income * 0.4 - 100000;
-  if (income <= 3600000) return income * 0.3 + 80000;
-  if (income <= 6600000) return income * 0.2 + 440000;
-  if (income <= 8500000) return income * 0.1 + 1100000;
-  return 1950000;
-}
-
-function calcIncomeTax(taxableIncome: number): number {
-  if (taxableIncome <= 1950000) return taxableIncome * 0.05;
-  if (taxableIncome <= 3300000) return taxableIncome * 0.10 - 97500;
-  if (taxableIncome <= 6950000) return taxableIncome * 0.20 - 427500;
-  if (taxableIncome <= 9000000) return taxableIncome * 0.23 - 636000;
-  if (taxableIncome <= 18000000) return taxableIncome * 0.33 - 1536000;
-  return taxableIncome * 0.40 - 2796000;
-}
+import { calcTakehome } from "@/lib/takehome";
 
 export function NetIncome() {
   const [income, setIncome] = useState(5000000);
   const [showMonthly, setShowMonthly] = useState(true);
 
-  const result = useMemo(() => {
-    const salaryDeduction = calcSalaryDeduction(income);
-    const netIncome = income - salaryDeduction;
-    const socialInsurance = income * 0.1451;
-    const basicDeduction = 480000;
-    const taxableIncome = Math.max(0, netIncome - socialInsurance - basicDeduction);
-    const incomeTax = calcIncomeTax(taxableIncome) * 1.021;
-    const residenceTaxableIncome = Math.max(0, netIncome - socialInsurance - 430000);
-    const residenceTax = residenceTaxableIncome * 0.10;
-    const annualNet = income - socialInsurance - incomeTax - residenceTax;
-    const monthlyNet = annualNet / 12;
-
-    return {
-      monthlyNet: Math.round(monthlyNet),
-      annualNet: Math.round(annualNet),
-      socialInsurance: Math.round(socialInsurance),
-      incomeTax: Math.round(incomeTax),
-      residenceTax: Math.round(residenceTax),
-    };
-  }, [income]);
+  const result = useMemo(() => calcTakehome(income), [income]);
 
   const fmt = (v: number) => `¥${v.toLocaleString()}`;
 

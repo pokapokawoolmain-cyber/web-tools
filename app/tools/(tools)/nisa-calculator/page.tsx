@@ -1,16 +1,32 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { NisaCalculator } from "./NisaCalculator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { calcFutureValueMonthly } from "@/lib/utils";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "新NISA積立計算",
-  "毎月の積立額・運用期間・利回りを入力するだけで将来の資産額を計算。複利効果を可視化。",
-  "nisa-calculator",
-  ["新NISA", "積立NISA", "複利計算", "資産形成", "投資シミュレーション", "つみたて"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "新NISA積立シミュレーション｜毎月いくらで将来いくら【無料・複利計算】",
+  description:
+    "毎月の積立額・運用期間・利回りを入力するだけで将来の資産額を計算。月3万・5万・10万を10〜30年積み立てた場合の早見表つきで、新NISAの複利効果を可視化できます。無料・登録不要・スマホ対応。",
+  path: "/tools/nisa-calculator",
+  keywords: [
+    "新NISA 積立 計算", "nisa 積立 シミュレーション", "新nisa 毎月 いくら",
+    "積立NISA 複利計算", "投資 シミュレーション", "つみたて 計算",
+  ],
+  ogImage: `/api/og?${new URLSearchParams({ title: "新NISA積立シミュレーション", icon: "📈", desc: "毎月いくらで将来いくら？複利を可視化。" }).toString()}`,
+});
+
+// 積立早見表（年利5%・ツールと同一の複利関数で算出）
+const NISA_TABLE = [30000, 50000, 100000].map((monthly) => ({
+  monthly,
+  rows: [10, 20, 30].map((years) => ({
+    years,
+    future: Math.round(calcFutureValueMonthly(monthly, 5, years) / 10000),
+    principal: Math.round((monthly * 12 * years) / 10000),
+  })),
+}));
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -56,13 +72,39 @@ const seoContent = (
       複利の力
     </h3>
     <p>
-      毎月3万円を年利5%で20年積み立てると、元本720万円が約1,233万円になります。複利は「利息にも利息がつく」仕組みで、長期投資ほど効果が大きくなります。30年に延ばすと元本1,080万円が約2,496万円まで成長します。
+      毎月3万円を年利5%で20年積み立てると、元本720万円が約1,238万円になります。複利は「利息にも利息がつく」仕組みで、長期投資ほど効果が大きくなります。30年に延ばすと元本1,080万円が約2,507万円まで成長します。
     </p>
     <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
-      積立額ごとの目安
+      毎月いくらで将来いくら？積立シミュレーション早見表
     </h3>
+    <p>年利5%で運用した場合の将来資産額の目安です（カッコ内は積み立てた元本）。本ツールと同じ計算式で算出しています。</p>
+    <div className="overflow-x-auto not-prose my-3">
+      <table className="w-full border-collapse text-sm">
+        <thead>
+          <tr className="bg-slate-100 dark:bg-zinc-800">
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">毎月の積立額</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">10年後</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">20年後</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">30年後</th>
+          </tr>
+        </thead>
+        <tbody>
+          {NISA_TABLE.map(({ monthly, rows }, i) => (
+            <tr key={monthly} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+              <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium">月{monthly / 10000}万円</td>
+              {rows.map((r) => (
+                <td key={r.years} className="border border-slate-200 dark:border-zinc-700 px-3 py-2">
+                  <span className="text-blue-600 dark:text-blue-400 font-medium">約{r.future.toLocaleString()}万円</span>
+                  <span className="block text-[11px] text-slate-400 dark:text-zinc-500">（元本{r.principal.toLocaleString()}万）</span>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
     <p>
-      月3万円・利回り5%・30年で約2,496万円、月5万円なら約4,161万円、月10万円なら約8,322万円が目安です。早く始めるほど複利の恩恵が大きく、10年の差が資産額を数百万〜1,000万円以上変えることがあります。
+      月3万円・30年で約2,507万円、月5万円なら約4,179万円、月10万円なら約8,357万円が目安です。早く始めるほど複利の恩恵が大きく、10年の差が資産額を数百万〜1,000万円以上変えることがあります（年利は過去実績をもとにした仮定で、運用成果を保証するものではありません）。
     </p>
     <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
       FIREとNISAの組み合わせ
