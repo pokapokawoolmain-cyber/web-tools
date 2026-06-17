@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import { SliderInput } from "@/components/ui/SliderInput";
-import { RelatedTools } from "@/components/tools/RelatedTools";
 import { calcTakehome } from "@/lib/takehome";
 
 export function NetIncome() {
@@ -12,13 +11,6 @@ export function NetIncome() {
   const result = useMemo(() => calcTakehome(income), [income]);
 
   const fmt = (v: number) => `¥${v.toLocaleString()}`;
-
-  const formatMonthly = (v: number) => {
-    const man = Math.floor(v / 10000);
-    const sen = Math.floor((v % 10000) / 1000);
-    if (sen === 0) return `¥${man}万円`;
-    return `¥${man}万${sen}千円`;
-  };
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-zinc-950">
@@ -73,7 +65,7 @@ export function NetIncome() {
             {showMonthly ? "月手取り（概算）" : "年間手取り（概算）"}
           </p>
           <p className="text-[48px] font-semibold text-slate-900 dark:text-white tracking-tight leading-none">
-            {showMonthly ? formatMonthly(result.monthlyNet) : fmt(result.annualNet)}
+            {fmt(showMonthly ? result.monthlyNet : result.annualNet)}
           </p>
         </div>
 
@@ -108,9 +100,6 @@ export function NetIncome() {
         <p className="text-[13px] text-slate-400 dark:text-zinc-500 px-1">
           ※ 独身・基礎控除のみで計算した概算値です。配偶者控除・扶養控除等は含まれません。
         </p>
-
-        {/* Related Tools */}
-        <RelatedTools toolId="net-income" />
       </div>
     </div>
   );
