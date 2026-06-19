@@ -56,10 +56,10 @@ const PDF_CATEGORY: CategoryConfig = {
   allToolIds: [
     "pdf-merge", "pdf-split", "pdf-compress", "pdf-to-jpg", "jpg-to-pdf",
     "pdf-rotate", "pdf-watermark", "pdf-delete-pages", "pdf-reorder",
-    "pdf-password", "pdf-metadata-remover",
+    "pdf-password", "pdf-metadata-remover", "word-to-pdf", "excel-to-pdf",
   ],
   stats: [
-    { label: "PDFツール数", value: "11種類" },
+    { label: "PDFツール数", value: "13種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・インストール", value: "不要" },
     { label: "ファイル送信", value: "なし（ブラウザ完結）" },
