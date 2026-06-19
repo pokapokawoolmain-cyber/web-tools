@@ -8,6 +8,7 @@ import { TOOLS, getToolsByCategory, getPopularTools } from "@/data/tools";
 import { ToolCard } from "@/components/tools/ToolCard";
 import { ALL_CATEGORIES } from "@/data/categories";
 import { ArrowRight } from "lucide-react";
+import { BottomAd } from "@/components/ads/presets";
 
 export const metadata: Metadata = {
   title: "ToolBox | 無料Webツール集 - FIRE・NISA・画像変換など",
@@ -311,6 +312,13 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ページ下部広告（ファーストビュー・主要操作と十分離れた位置） */}
+      <div className="bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800">
+        <div className="container-base">
+          <BottomAd />
+        </div>
+      </div>
 
       {/* よくある質問 */}
       <section className="py-12 sm:py-16 bg-slate-50 dark:bg-zinc-900 border-t border-slate-100 dark:border-zinc-800">

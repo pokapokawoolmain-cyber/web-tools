@@ -119,7 +119,7 @@ const MONEY_CATEGORY: CategoryConfig = {
   slug: "money",
   name: "お金・投資ツール",
   nameEn: "Money & Finance Tools",
-  tagline: "無料お金ツール集｜FIRE・NISA・手取り・住宅ローン計算",
+  tagline: "お金・投資の無料ツール｜FIRE・NISA・手取り・住宅ローン計算",
   description:
     "FIREシミュレーター・新NISA計算・手取り計算・住宅ローン・ふるさと納税シミュレーターなど、お金に関するツールを無料で使えるWebツール集。",
   longDescription:
@@ -130,7 +130,7 @@ const MONEY_CATEGORY: CategoryConfig = {
   gradientLight: "from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/20",
   accentColor: "text-emerald-600 dark:text-emerald-400",
   accentBg: "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300",
-  title: "無料お金・投資ツール集｜FIRE・NISA・手取り・住宅ローン計算",
+  title: "お金・投資の無料ツール集｜FIRE・NISA・手取り・住宅ローン計算",
   keywords: ["FIRE シミュレーター 無料", "新NISA 計算 無料", "手取り 計算", "住宅ローン シミュレーション", "ふるさと納税 上限 計算"],
   popularToolIds: ["fire-simulator", "nisa-calculator", "net-income", "mortgage-calculator", "furusato-simulator"],
   allToolIds: [
@@ -138,7 +138,7 @@ const MONEY_CATEGORY: CategoryConfig = {
     "furusato-simulator", "furusato",
   ],
   stats: [
-    { label: "お金ツール数", value: "6種類" },
+    { label: "計算ツール数", value: "6種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・ログイン", value: "不要" },
     { label: "計算速度", value: "リアルタイム" },

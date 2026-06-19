@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { AdBanner } from "@/components/ads/AdBanner";
+import { AfterToolAd } from "@/components/ads/presets";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
 import { getCategoryForTool } from "@/data/categories";
@@ -149,6 +150,9 @@ export function ToolLayout({
             {seoContent}
           </div>
         )}
+
+        {/* ツールページ下部の広告（ツール操作領域から十分離れた位置） */}
+        <AfterToolAd className="mt-10" />
 
         {/* 関連ガイド記事（ツール→ブログの内部リンク・回遊強化） */}
         <RelatedArticles

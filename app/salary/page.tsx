@@ -4,6 +4,7 @@ import { generateMeta } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
 import { calcTakehome } from "@/lib/takehome";
+import { BottomAd } from "@/components/ads/presets";
 
 export const metadata: Metadata = generateMeta({
   title: "年収・月収の手取り早見表【2026年版】｜月収50万・年収1000万の手取りを一覧比較",
@@ -156,6 +157,9 @@ export default function SalaryPage() {
             </ul>
           </div>
         </div>
+
+        {/* ページ下部広告 */}
+        <BottomAd />
       </div>
     </>
   );

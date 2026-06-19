@@ -3,6 +3,7 @@ import Link from "next/link";
 import { TOOLS, getToolsByCategory, CATEGORY_SLUGS } from "@/data/tools";
 import { ToolCard } from "@/components/tools/ToolCard";
 import { generateMeta } from "@/lib/seo";
+import { BottomAd } from "@/components/ads/presets";
 
 export const metadata: Metadata = generateMeta({
   title: "無料Webツール一覧",
@@ -63,6 +64,9 @@ export default function ToolsPage() {
             </section>
           );
         })}
+
+        {/* ページ下部広告 */}
+        <BottomAd />
       </div>
     </div>
   );

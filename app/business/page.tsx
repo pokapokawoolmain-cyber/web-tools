@@ -8,6 +8,7 @@ import { CategoryHero } from "@/components/category/CategoryHero";
 import { CategoryToolGrid } from "@/components/category/CategoryToolGrid";
 import { CategoryFAQ } from "@/components/category/CategoryFAQ";
 import { CategoryBlogSection } from "@/components/category/CategoryBlogSection";
+import { BottomAd } from "@/components/ads/presets";
 
 const config = CATEGORY_CONFIGS["business"]!;
 const siteUrl = getSiteUrl();
@@ -98,6 +99,9 @@ export default function BusinessCategoryPage() {
             </div>
           </div>
         </div>
+
+        {/* ページ下部広告 */}
+        <BottomAd />
       </div>
     </>
   );

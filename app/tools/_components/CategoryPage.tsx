@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ToolItem, CATEGORY_SLUGS } from "@/data/tools";
 import { ToolCard } from "@/components/tools/ToolCard";
 import { ChevronRight } from "lucide-react";
+import { BottomAd } from "@/components/ads/presets";
 
 type Props = {
   category: string;
@@ -63,6 +64,9 @@ export function CategoryPage({ category, slug, description, tools }: Props) {
               </Link>
             ))}
         </div>
+
+        {/* ページ下部広告 */}
+        <BottomAd className="mt-8" />
       </section>
     </div>
   );

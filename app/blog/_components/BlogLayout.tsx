@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronRight, Clock, RefreshCw } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
-import { BottomAd } from "@/components/ads/presets";
+import { BottomAd, InArticleAd } from "@/components/ads/presets";
 import type { BlogPost } from "@/data/blog-posts";
 
 type Props = {
@@ -110,6 +110,9 @@ export function BlogLayout({ post, children }: Props) {
               )}
             </div>
           </header>
+
+          {/* 記事中広告（本文の前・導入後の自然な区切り） */}
+          <InArticleAd className="not-prose" />
 
           {/* Content */}
           <div className="prose prose-slate dark:prose-invert max-w-none
