@@ -177,6 +177,178 @@ export default function Page() {
         </table>
       </div>
 
+      <h2>費用比較：写真館・証明写真機・コンビニ印刷はどれが安い？</h2>
+      <p>
+        証明写真の作成方法は大きく3つあります。費用・手間・品質の観点からまとめました。
+      </p>
+
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">方法</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">費用（目安）</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">所要時間</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">品質・用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["写真館・フォトスタジオ", "800〜2,500円", "30〜60分（予約含む）", "最高品質。就職・転職の重要書類に最適"],
+              ["証明写真機（ピクチャン等）", "700〜1,200円", "5〜10分", "安定した品質。急ぎのとき・近くに写真館がないとき"],
+              ["スマホ＋コンビニ印刷", "30〜40円", "10〜15分", "コスパ最高。不用品処分・練習用・複数枚必要なとき"],
+              ["スマホアプリ＋自宅プリンタ", "インク代のみ（数十円）", "10〜20分", "プリンタがある場合に最安。用紙品質に注意"],
+            ].map(([method, cost, time, quality], i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">{method}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-blue-600 dark:text-blue-400 font-medium">{cost}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{time}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-500 dark:text-zinc-500 text-xs">{quality}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        コンビニ印刷が断然コスパに優れますが、用途によっては写真館が必要なケースもあります。「練習として一度使ってみる」「急ぎで5枚必要」「予備を作っておきたい」という場合は、コンビニ印刷が圧倒的に便利です。
+      </p>
+
+      <h2>書類の種類別：証明写真のサイズ・規格一覧</h2>
+      <p>
+        証明写真はひとつのサイズで全書類に使い回せるわけではありません。書類ごとにサイズ・背景色・表情などの規定があります。
+      </p>
+
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">書類の種類</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">サイズ（縦×横）</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">背景色</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">注意事項</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["就活・転職履歴書", "縦40mm × 横30mm", "白・薄グレー・青", "スーツ着用推奨。6か月以内に撮影したもの"],
+              ["パスポート（新規・更新）", "縦45mm × 横35mm", "白のみ", "正面・無帽・背景白必須。6か月以内"],
+              ["マイナンバーカード", "縦45mm × 横35mm", "白または薄色", "正面・無帽。5年以内（18歳以上は10年）"],
+              ["運転免許証", "縦30mm × 横24mm", "白または薄色", "正面・無帽。6か月以内。試験場で撮影が一般的"],
+              ["学生証・社員証", "縦30mm × 横24mm（目安）", "白または薄色", "各機関の規定に従う。確認が必要"],
+              ["ビザ（米国ESTA等）", "縦51mm × 横51mm（2インチ）", "白のみ", "国によって規定が大きく異なる。公式サイト確認必須"],
+              ["履歴書（アルバイト用）", "縦40mm × 横30mm", "白・薄グレー・青", "スーツ不要なケースも多い。清潔感が重要"],
+            ].map(([doc, size, bg, note], i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">{doc}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-blue-600 dark:text-blue-400 font-medium">{size}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{bg}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-500 dark:text-zinc-500 text-xs">{note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="my-5 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/40">
+        <p className="text-[14px] text-amber-800 dark:text-amber-300 font-medium">⚠️ パスポートと運転免許証は特に規格が厳しい</p>
+        <p className="text-[13px] text-amber-700 dark:text-amber-400 mt-1">
+          パスポートは「背景は白のみ」「口を閉じている」「メガネは原則禁止」など規定が細かく、審査機関でリジェクトされると再提出が必要になります。提出前に必ず最新の規定をパスポートセンターや外務省のサイトで確認してください。
+        </p>
+      </div>
+
+      <h2>よくある失敗パターンと解決策</h2>
+      <p>コンビニ印刷で証明写真を作るとき、初めてだと失敗しやすいポイントがあります。事前に把握しておけばほぼ防げます。</p>
+
+      <div className="space-y-4 my-6">
+        {[
+          {
+            fail: "普通紙で印刷してしまった",
+            fix: "マルチコピー機の画面で「用紙タイプ」を選ぶ際に「光沢紙」を必ず選択。設定を変えないと自動的に普通紙になるコンビニもある。",
+            level: "red",
+          },
+          {
+            fail: "A4など大きいサイズで印刷してしまった",
+            fix: "用紙サイズは「Lサイズ（89×127mm）」を選択。証明写真データはLサイズ前提でレイアウトされているため、他のサイズを選ぶとサイズが合わなくなる。",
+            level: "red",
+          },
+          {
+            fail: "ネットプリントの有効期限が切れていた",
+            fix: "ローソン・ファミマ用ネットプリントは登録から8日間（非会員は1日間）。セブン用かんたんnetprintは24時間。登録したらその日のうちに印刷するのが安全。",
+            level: "amber",
+          },
+          {
+            fail: "画像の解像度が低くぼやけた仕上がりになった",
+            fix: "スマホのカメラ設定を「最高画質」にして撮影し直す。ScreenshotやSNSからの画像転用は解像度が低く印刷に向かない。",
+            level: "amber",
+          },
+          {
+            fail: "顔の向きが少し斜めになっていた",
+            fix: "自撮りではなく壁にスマホを立てかけてタイマーで撮影するか、別の人に撮ってもらう。正面かどうかは画像を拡大して鼻筋が中心にあるかで確認。",
+            level: "blue",
+          },
+          {
+            fail: "背景が白でなくクリーム・黄色みがかっていた",
+            fix: "証明写真ツールで背景色を「白」に指定して置換する。壁の色や照明の関係でどうしても色がつく場合は、ツールで後処理するのが確実。",
+            level: "blue",
+          },
+        ].map(({ fail, fix, level }) => (
+          <div
+            key={fail}
+            className={`p-4 rounded-xl border ${
+              level === "red"
+                ? "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/40"
+                : level === "amber"
+                ? "bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800/40"
+                : "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800/40"
+            }`}
+          >
+            <p className={`text-[13px] font-semibold mb-1 ${
+              level === "red"
+                ? "text-red-700 dark:text-red-400"
+                : level === "amber"
+                ? "text-amber-700 dark:text-amber-400"
+                : "text-blue-700 dark:text-blue-400"
+            }`}>
+              ✖ 失敗：{fail}
+            </p>
+            <p className={`text-[13px] ${
+              level === "red"
+                ? "text-red-800 dark:text-red-300"
+                : level === "amber"
+                ? "text-amber-800 dark:text-amber-300"
+                : "text-blue-800 dark:text-blue-300"
+            }`}>
+              → 解決策：{fix}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <h2>iPhone・Androidの操作の違い</h2>
+      <p>
+        スマホの種類によって、ネットプリントへのアップロード手順がわずかに異なります。
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+        <div className="p-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-2">iPhone（iOS）</p>
+          <ul className="space-y-1 text-[13px] text-slate-600 dark:text-zinc-400">
+            <li>・Safariからネットプリントにアクセス</li>
+            <li>・写真を選択する際に「写真ライブラリ」から選択</li>
+            <li>・ファイル形式はJPEG/PNGに対応</li>
+            <li>・iCloud上の写真は「ダウンロード済み」にしてから選択</li>
+          </ul>
+        </div>
+        <div className="p-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-2">Android</p>
+          <ul className="space-y-1 text-[13px] text-slate-600 dark:text-zinc-400">
+            <li>・Chrome等のブラウザからアクセス</li>
+            <li>・「ファイル」アプリ経由での選択も可能</li>
+            <li>・Google Photosから直接は選べない場合がある</li>
+            <li>・端末に保存した画像から選択するのが確実</li>
+          </ul>
+        </div>
+      </div>
+
       <h2>証明写真を撮る際のポイント</h2>
       <ul className="space-y-2">
         <li><strong>背景</strong>：白・薄いグレー・青が一般的です。壁の前やカーテン前での撮影が向いています。ツールで背景色を変更できます。</li>

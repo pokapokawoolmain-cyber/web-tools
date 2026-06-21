@@ -259,6 +259,125 @@ export default function Page() {
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>カテゴリ別：おすすめ配送方法とコツ</h2>
+      <p>
+        商品ジャンルによって最適な配送方法は異なります。「なんとなく宅急便」で損しないよう、カテゴリ別の目安をまとめました。
+      </p>
+
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">商品カテゴリ</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">おすすめ配送</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">送料目安</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">注意点</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["文庫本・マンガ（1冊）", "ネコポス", "175円", "A4・3cm以内に収まればネコポス一択"],
+              ["文庫本・マンガ（2〜5冊）", "宅急便コンパクト", "520円（BOX込）", "重さが出るため宅コンかゆうパックへ"],
+              ["薄手のTシャツ・ニット", "ネコポス", "175円", "折りたためばA4・3cm以内に収まることが多い"],
+              ["コート・ジャケット", "宅急便80〜100サイズ", "850〜1,050円", "商品価格に対して送料が高くなりがち、価格設定注意"],
+              ["コスメ（口紅・アイシャドウ等）", "ネコポス or 宅コン", "175〜520円", "破損防止のプチプチ必須、缶・瓶は液漏れ注意"],
+              ["スマホ・タブレット", "宅急便60〜80サイズ", "750〜850円", "動作確認の記載と梱包が評価に直結"],
+              ["ゲームソフト（単品）", "ネコポス", "175円", "ケースごとでもA4・3cm以内が多い"],
+              ["ゲーム本体（Switch等）", "宅急便60〜80サイズ", "750〜850円", "箱あり・なしで梱包サイズが大きく変わる"],
+              ["スニーカー・シューズ", "宅急便60〜80サイズ", "750〜850円", "靴箱ごと送ると80サイズ超えになりやすい"],
+              ["ブランドバッグ・財布", "宅急便80サイズ", "850円", "保護材で丁寧に梱包、高額品は保険付きの配送を推奨"],
+            ].map(([cat, method, price, note], i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">{cat}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-blue-600 dark:text-blue-400">{method}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{price}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-500 dark:text-zinc-500 text-xs">{note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>値下げ交渉への対応：受け方・断り方の実践例</h2>
+      <p>
+        メルカリで出品していると「〇〇円にしてもらえますか？」というコメントは日常茶飯事です。受けるか断るかを事前に決めておくと、毎回悩まずに済みます。
+      </p>
+
+      <h3>値下げを受ける基準を決めておく</h3>
+      <p>
+        たとえば「手取りが〇〇円を下回らなければ応じる」という基準を設けます。
+        <Link href="/tools/mercari-profit" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">メルカリ利益計算ツール</Link>
+        で最低許容価格を事前に確認しておけば、交渉中に慌てて計算する必要がなくなります。
+      </p>
+
+      <div className="my-6 space-y-4">
+        <div className="p-4 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/40">
+          <p className="text-[13px] font-semibold text-green-700 dark:text-green-400 mb-1">✔ 値下げに応じるときの文例</p>
+          <p className="text-[14px] text-green-800 dark:text-green-300 font-mono">「ありがとうございます。〇〇円でしたら対応可能です。よろしければ専用ページをお作りします。」</p>
+        </div>
+        <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/40">
+          <p className="text-[13px] font-semibold text-red-700 dark:text-red-400 mb-1">✖ 値下げを丁寧に断るときの文例</p>
+          <p className="text-[14px] text-red-800 dark:text-red-300 font-mono">「コメントありがとうございます。送料と手数料を考慮した価格設定のため、現在の価格より値下げが難しい状況です。ご理解いただけますと幸いです。」</p>
+        </div>
+        <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800/40">
+          <p className="text-[13px] font-semibold text-blue-700 dark:text-blue-400 mb-1">💡 まとめ買いに誘導するときの文例</p>
+          <p className="text-[14px] text-blue-800 dark:text-blue-300 font-mono">「単品での値下げは難しいですが、他の商品と合わせてご購入いただける場合は同梱でおまとめできます。ご興味ある商品があればご連絡ください。」</p>
+        </div>
+      </div>
+
+      <h3>「大幅値下げ」要求への対処</h3>
+      <p>
+        出品価格1,000円に対して「500円にして」など、半額以下の要求が来ることもあります。このようなケースでは、丁寧に断ったうえで「いいね！」が増えたタイミングや出品から一定期間後に自分で少額値下げする方法が有効です。ユーザーに「値下げアラート」が届くため、購入意欲が再燃することがあります。
+      </p>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>高額商品（3万円以上）を出品するときの注意点</h2>
+
+      <h3>他プラットフォームとの手数料比較</h3>
+      <p>
+        高額商品になるほど手数料の差が利益に直結します。3万円以上の商品はメルカリ以外のプラットフォームも検討する価値があります。
+      </p>
+
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">プラットフォーム</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">販売手数料</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">3万円売れたときの手数料</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">特徴</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["メルカリ", "10%", "3,000円", "ユーザー数が多く売れやすい"],
+              ["ラクマ（楽天）", "3.5〜6%", "1,050〜1,800円", "手数料は安いが出品者・購入者ともやや少ない"],
+              ["ヤフオク", "オークション形式・落札システム利用料あり", "1,500〜2,000円前後", "ブランド品・コレクターズアイテムに強い"],
+              ["PayPayフリマ", "5%", "1,500円", "Yahoo! JAPANとの連携で集客力あり"],
+            ].map(([platform, fee, cost, note], i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">{platform}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{fee}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-600 dark:text-zinc-400">{cost}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-500 dark:text-zinc-500 text-xs">{note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        ブランドバッグや高級時計などは「BUYMA」「ブランディア」「ヴィンテージキングオンライン」など専門買取・フリマサービスのほうが高値が付くこともあります。メルカリに出す前に複数の査定を比較するのがおすすめです。
+      </p>
+
+      <h3>高額取引における注意点</h3>
+      <ul className="space-y-2">
+        <li><strong>真贋保証</strong>：ブランド品は偽物の疑いをかけられないよう、購入証明書・付属品の有無を明記しましょう。</li>
+        <li><strong>補償付きの配送</strong>：高額商品は宅急便の「補償なし」では紛失・破損時にカバーされません。宅急便のオプションで保険をかけるか、メルカリ便を利用して損害を最小化しましょう。</li>
+        <li><strong>個人情報の取り扱い</strong>：10万円を超える取引が複数回続くと、プラットフォーム側から本人確認の連絡が来ることがあります。</li>
+      </ul>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>確定申告が必要になるケース</h2>
       <p>
         メルカリの売上については、税法上の扱いが状況によって変わります。

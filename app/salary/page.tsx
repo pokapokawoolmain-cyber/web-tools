@@ -76,7 +76,7 @@ export default function SalaryPage() {
           <section className="mt-12">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">月収別の手取り早見表</h2>
             <p className="text-[13px] text-slate-500 dark:text-zinc-400 mb-4">
-              月収（額面）から手取りの目安を調べられます。月収を12か月分（賞与なし）として年収換算し、社会保険料・所得税・住民税を差し引いた概算です。
+              月収（額面）から手取りの目安を調べられます。各行をクリックすると税金・節税・生活費シミュレーションの詳細ページへ移動できます。
             </p>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-sm">
@@ -96,7 +96,11 @@ export default function SalaryPage() {
                     const rate = Math.round((r.annualNet / annual) * 100);
                     return (
                       <tr key={man} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
-                        <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium">月収{man}万円</td>
+                        <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium">
+                          <Link href={`/salary/monthly/${man}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                            月収{man}万円
+                          </Link>
+                        </td>
                         <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-slate-500 dark:text-zinc-500">年収{annual / 10000}万円</td>
                         <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-blue-600 dark:text-blue-400 font-medium">約{monthlyManText}万円</td>
                         <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2">約{rate}%</td>
