@@ -96,6 +96,141 @@ export default function Page() {
           </section>
 
           <section>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">スマホ・PC別の操作ガイド</h2>
+            <p className="mb-4">
+              このツールはiPhone・Android・PCのいずれのブラウザからも操作できます。デバイスによって操作の細部が異なるので、初めて使う場合は以下を参考にしてください。
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {([
+                {
+                  device: "iPhone（iOS）",
+                  steps: [
+                    "Safariで本ページを開く",
+                    "「ファイルを選択」をタップ",
+                    "「ファイル」アプリ → PDFを選択",
+                    "変換後、「ダウンロード」をタップ",
+                    "「写真に保存」または「ファイルに保存」",
+                  ],
+                  note: "iCloud DriveやDropbox上のPDFも直接選択できます",
+                },
+                {
+                  device: "Android",
+                  steps: [
+                    "Chromeで本ページを開く",
+                    "「ファイルを選択」をタップ",
+                    "「ファイル」アプリからPDFを選択",
+                    "変換後、「ダウンロード」をタップ",
+                    "端末の「ダウンロード」フォルダに保存",
+                  ],
+                  note: "Google Driveのファイルも選択可能。ZIP形式でダウンロードされます",
+                },
+                {
+                  device: "PC（Windows/Mac）",
+                  steps: [
+                    "Chrome/Safari/Edgeで開く",
+                    "PDFをドラッグ＆ドロップが最速",
+                    "または「ファイルを選択」でPDF選択",
+                    "変換後、「ダウンロード」をクリック",
+                    "指定フォルダに保存される",
+                  ],
+                  note: "複数ページはZIPファイルでダウンロードされます",
+                },
+              ] as { device: string; steps: string[]; note: string }[]).map(({ device, steps, note }) => (
+                <div key={device} className="p-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
+                  <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-2 text-[14px]">{device}</p>
+                  <ol className="space-y-1 text-[12px] text-slate-600 dark:text-zinc-400 list-decimal list-inside">
+                    {steps.map((s, i) => <li key={i}>{s}</li>)}
+                  </ol>
+                  <p className="mt-2 text-[11px] text-slate-400 dark:text-zinc-500 bg-slate-50 dark:bg-zinc-800 rounded-lg px-2 py-1">{note}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">変換後によくある問題と対処法</h2>
+            <p className="mb-4">
+              PDFをJPGに変換したとき、思い通りの結果にならないことがあります。よくある問題と原因・対処法をまとめました。
+            </p>
+            <div className="space-y-3">
+              {([
+                {
+                  problem: "変換後の画像が真っ白になる",
+                  cause: "元PDFが透明なレイヤーや特殊なカラースペース（CMYK等）を使っている場合に発生しやすい",
+                  fix: "別の方法（Adobe AcrobatやPreview）でPDFを一度開き直してから保存し直すと解決することがあります。または元ファイルの作成ソフトでRGBカラーに変換して書き出してください。",
+                },
+                {
+                  problem: "テキストがぼやけて読みにくい",
+                  cause: "元PDFの解像度が低い、またはフォントが画像として埋め込まれているスキャンPDFの場合に起きやすい",
+                  fix: "本ツールは2倍スケールで出力しているため、元PDFの品質以上には改善できません。スキャン品質の高いPDFを使うか、元の文書から直接PDFとして書き出すと品質が向上します。",
+                },
+                {
+                  problem: "変換に時間がかかる・ブラウザが重くなる",
+                  cause: "ページ数が多い（50ページ以上）または1ページあたりのデータ量が大きいPDFで発生しやすい",
+                  fix: "必要なページだけを選択して変換するか、PDFを分割ツールで必要ページだけ抽出してから変換してください。ブラウザのメモリが不足している場合は他のタブを閉じると改善します。",
+                },
+                {
+                  problem: "日本語・中国語などの文字が文字化けする",
+                  cause: "フォントが正しく埋め込まれていないPDFで起きることがある",
+                  fix: "本ツールはPDFをそのまま画像化するため、表示されているとおりに変換されます。文字化けが起きている場合はPDF自体の問題です。元のファイル作成ソフトでフォントを埋め込んで再書き出ししてください。",
+                },
+                {
+                  problem: "画像の色が元のPDFと違う",
+                  cause: "CMYKカラーのPDFをRGBで表示した場合に色の見え方が変わることがある",
+                  fix: "ブラウザはRGBで色を表示するため、印刷用途（CMYK）のPDFは色が多少変わって見えます。印刷用途には元のCMYKデータをそのまま使い、Web用途にのみ本ツールを使うことをおすすめします。",
+                },
+              ] as { problem: string; cause: string; fix: string }[]).map(({ problem, cause, fix }) => (
+                <details key={problem} className="group border border-slate-200 dark:border-zinc-700 rounded-xl overflow-hidden">
+                  <summary className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer select-none list-none bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors">
+                    <span className="text-[14px] font-medium text-slate-800 dark:text-zinc-100">⚠ {problem}</span>
+                    <span className="flex-shrink-0 text-slate-400 group-open:rotate-180 transition-transform duration-200 text-[12px]">▼</span>
+                  </summary>
+                  <div className="px-4 py-3 bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800 space-y-2">
+                    <p className="text-[13px] text-slate-500 dark:text-zinc-400"><span className="font-semibold text-slate-600 dark:text-zinc-300">原因：</span>{cause}</p>
+                    <p className="text-[13px] text-slate-600 dark:text-zinc-300"><span className="font-semibold">対処法：</span>{fix}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">JPG・PNG・WebP の違い：どの形式を選ぶべきか</h2>
+            <p className="mb-4">
+              PDFを画像に変換する際、JPGのほかにPNGやWebP形式を選べる場合があります。用途によって最適な形式が異なります。
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-slate-100 dark:bg-zinc-800">
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">形式</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">特徴</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">向いている用途</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">向いていない用途</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {([
+                    ["JPG（JPEG）", "圧縮率が高くファイルが軽い。色のグラデーションに強い", "SNS投稿・ブログ・Officeへの挿入・メール添付", "文字が多いPDF（圧縮ノイズが出やすい）・透過が必要なとき"],
+                    ["PNG", "可逆圧縮で画質劣化ゼロ。透過（透明背景）対応", "テキスト主体のPDF・図表・ロゴ・印刷向け高品質出力", "写真中心のPDF（ファイルが大きくなりがち）"],
+                    ["WebP", "JPGとPNGの中間。高品質かつ軽量", "Webサイトへの掲載（表示速度重視）", "古いブラウザやOfficeソフトとの互換性が必要なとき"],
+                  ] as string[][]).map(([fmt, feature, good, bad], i) => (
+                    <tr key={fmt} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-bold text-blue-600 dark:text-blue-400">{fmt}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-[13px]">{feature}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-[13px] text-slate-600 dark:text-zinc-300">{good}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-[13px] text-slate-500 dark:text-zinc-500">{bad}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-[13px] text-slate-500 dark:text-zinc-400">
+              <strong className="text-slate-700 dark:text-zinc-200">迷ったらJPGを選べばOK</strong>です。SNS・ブログ・Office全般に対応しており、互換性が最も高い形式です。テキスト中心の書類でどうしても文字をくっきり見せたい場合はPNGを選んでください。
+            </p>
+          </section>
+
+          <section>
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">プライバシーについて</h2>
             <p>
               アップロードしたPDFファイルはサーバーに一切送信されません。すべての処理はブラウザ内のJavaScript（PDF.js）で完結しています。契約書・個人情報が含まれるPDF・機密書類も安心してご利用いただけます。
