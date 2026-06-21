@@ -274,6 +274,7 @@ export default function AboutPage() {
             <Link href="/privacy" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">プライバシーポリシー</Link>
             <Link href="/terms" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">利用規約</Link>
             <Link href="/contact" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">お問い合わせ</Link>
+            <Link href="/about/reprint" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">転載・引用ガイドライン</Link>
           </div>
         </div>
       </div>
