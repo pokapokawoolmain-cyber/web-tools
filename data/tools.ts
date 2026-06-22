@@ -102,6 +102,9 @@ export const TOOLS: ToolItem[] = [
   { id: "gross-profit-calculator", title: "原価率・粗利率計算", seoTitle: "原価率・粗利率計算ツール｜建設業・リフォーム業向け【無料】", description: "売上・原価を入力するだけで原価率・粗利率・粗利額を即計算。目標粗利率から逆算した見積金額も算出。", href: "/tools/gross-profit-calculator", emoji: "📊", category: "建設・リフォーム", isNew: true },
   { id: "exterior-paint-calculator", title: "外壁塗装面積計算", seoTitle: "外壁塗装面積計算ツール｜坪数・延床面積対応【無料】", description: "建物の形状・坪数・階数を入力して外壁塗装面積を自動計算。塗料使用量・工事費目安も算出。", href: "/tools/exterior-paint-calculator", emoji: "🏠", category: "建設・リフォーム", isNew: true },
   { id: "neighbor-greeting", title: "近隣挨拶文メーカー", seoTitle: "工事近隣挨拶文メーカー｜建設・リフォーム向け【無料】", description: "工事名・期間・会社名を入力して近隣への挨拶文を自動生成。騒音・振動・駐車など状況別テンプレート対応。", href: "/tools/neighbor-greeting", emoji: "📝", category: "建設・リフォーム", isNew: true },
+  { id: "construction-photo-pdf", title: "工事写真帳作成", seoTitle: "工事写真帳作成ツール｜施工前・中・後をA4 PDFに整理【無料】", description: "施工前・施工中・施工後の工事写真に工程区分・コメントを付けてA4 PDF形式の写真帳を作成。外壁塗装・リフォーム完了報告に。", href: "/tools/construction-photo-pdf", emoji: "📸", category: "建設・リフォーム", isNew: true },
+  { id: "construction-report", title: "工事完了報告書作成", seoTitle: "工事完了報告書作成ツール｜建設・リフォーム向け【無料】", description: "工事名・施主情報・施工内容・使用材料・工事保証を入力して完了報告書をPDF出力。建設業許可番号対応。", href: "/tools/construction-report", emoji: "📋", category: "建設・リフォーム", isNew: true },
+  { id: "construction-contract", title: "工事請負契約書作成", seoTitle: "工事請負契約書作成ツール｜建設・リフォーム向け【無料】", description: "発注者・請負者情報、工事金額・支払条件・契約不適合責任を入力して工事請負契約書をPDF出力。着手金計算対応。", href: "/tools/construction-contract", emoji: "📑", category: "建設・リフォーム", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [

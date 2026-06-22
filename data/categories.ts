@@ -299,6 +299,59 @@ const COLOR_CATEGORY: CategoryConfig = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// 建設・リフォームカテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const CONSTRUCTION_CATEGORY: CategoryConfig = {
+  slug: "industry/construction",
+  name: "建設・リフォーム業向けツール",
+  nameEn: "Construction Tools",
+  tagline: "建設・リフォーム業向け無料ツール集",
+  description:
+    "工事見積書・工事写真帳・完了報告書・請負契約書・原価率計算・外壁塗装面積計算など、建設・リフォーム業の実務で使えるツールを無料提供。登録不要・ブラウザ完結・スマホ対応。",
+  longDescription:
+    "建設・リフォーム業の現場で即使えるツール集。見積から契約・施工・完了報告まで、業務フロー全体をカバーします。ブラウザ内完結でデータが外部に送信されないため、顧客情報・工事情報も安心して入力できます。",
+  icon: "🏗️",
+  gradientFrom: "from-amber-500",
+  gradientTo: "to-orange-500",
+  gradientLight: "from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/20",
+  accentColor: "text-amber-600 dark:text-amber-400",
+  accentBg: "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300",
+  title: "建設・リフォーム業向け無料ツール集｜工事見積書・写真帳・契約書",
+  keywords: [
+    "建設業 ツール 無料", "リフォーム 見積書 作成", "工事見積書 無料",
+    "工事写真帳 作成", "工事請負契約書 無料", "外壁塗装 面積 計算",
+  ],
+  popularToolIds: [
+    "construction-photo-pdf",
+    "construction-estimate",
+    "construction-report",
+    "construction-contract",
+    "gross-profit-calculator",
+  ],
+  allToolIds: [
+    "construction-estimate",
+    "gross-profit-calculator",
+    "exterior-paint-calculator",
+    "neighbor-greeting",
+    "construction-photo-pdf",
+    "construction-report",
+    "construction-contract",
+  ],
+  stats: [
+    { label: "専用ツール数", value: "7種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "データ送信", value: "なし（ブラウザ完結）" },
+  ],
+  faqs: [
+    { q: "建設業の工事見積書を無料で作成できますか？", a: "はい。工事見積書作成ツールで工事明細・諸経費・消費税を入力してPDF出力できます。施工会社情報は自動保存されます。" },
+    { q: "工事写真をまとめてPDFにできますか？", a: "はい。工事写真帳作成ツールで施工前・施工中・施工後の写真に工程区分・コメントを付けてA4 PDFを作成できます。" },
+    { q: "工事請負契約書も作成できますか？", a: "はい。工事請負契約書作成ツールで発注者・請負者情報・工事金額・支払条件・保証を入力してPDF出力できます。" },
+    { q: "スマホからも使えますか？", a: "はい。すべてのツールはスマートフォン・タブレット対応のレスポンシブデザインです。現場での確認にも活用できます。" },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
@@ -309,6 +362,7 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   ai: AI_CATEGORY,
   ceremony: CEREMONY_CATEGORY,
   color: COLOR_CATEGORY,
+  construction: CONSTRUCTION_CATEGORY,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {

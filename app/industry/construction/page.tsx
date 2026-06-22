@@ -123,19 +123,28 @@ const TOOL_CATEGORIES: { label: string; tools: ToolCard[] }[] = [
     label: "書類・テンプレート",
     tools: [
       {
+        href: "/tools/construction-contract",
+        emoji: "📑",
+        title: "工事請負契約書作成ツール",
+        desc: "発注者・請負者情報、工事金額・支払条件・保証を入力して請負契約書をPDF出力。着手金自動計算対応。",
+        category: "書類・テンプレート",
+        isNew: true,
+      },
+      {
+        href: "/tools/construction-report",
+        emoji: "📋",
+        title: "工事完了報告書作成ツール",
+        desc: "工事内容・使用材料・保証を入力して完了報告書をPDF出力。施主への提出書類として活用。",
+        category: "書類・テンプレート",
+        isNew: true,
+      },
+      {
         href: "/tools/neighbor-greeting",
         emoji: "📝",
         title: "近隣挨拶文メーカー",
         desc: "工事の種類・期間・会社名を入力して状況別の近隣挨拶文を自動生成。解体・リフォーム・外壁塗装等に対応。",
         category: "書類・テンプレート",
         isNew: true,
-      },
-      {
-        href: "/tools/business-contract-generator",
-        emoji: "📑",
-        title: "工事請負契約書テンプレート",
-        desc: "工事請負契約書・業務委託契約書のテンプレート生成ツール。電子署名・印刷対応。",
-        category: "書類・テンプレート",
       },
       {
         href: "/tools/receipt-generator",
@@ -150,10 +159,18 @@ const TOOL_CATEGORIES: { label: string; tools: ToolCard[] }[] = [
     label: "写真・PDF",
     tools: [
       {
+        href: "/tools/construction-photo-pdf",
+        emoji: "📸",
+        title: "工事写真帳作成ツール",
+        desc: "施工前・施工中・施工後の工事写真に工程区分・コメントを付けてA4 PDF写真帳を作成。外壁塗装・リフォーム完了報告に。",
+        category: "写真・PDF",
+        isNew: true,
+      },
+      {
         href: "/tools/jpg-to-pdf",
         emoji: "📷",
-        title: "工事写真→PDF変換",
-        desc: "複数の工事写真（JPG・PNG）をまとめてPDFに変換。完了報告書・工事写真帳の作成に。",
+        title: "写真→PDF変換（汎用）",
+        desc: "複数の工事写真（JPG・PNG）をまとめてPDFに変換。ドラッグで順番変更可能。",
         category: "写真・PDF",
       },
       {
@@ -228,10 +245,12 @@ export default function ConstructionPage() {
             {/* クイックアクセス */}
             <div className="flex flex-wrap gap-2 mt-2">
               {[
+                { href: "/tools/construction-photo-pdf", label: "📸 工事写真帳" },
                 { href: "/tools/construction-estimate", label: "📋 工事見積書" },
+                { href: "/tools/construction-contract", label: "📑 請負契約書" },
+                { href: "/tools/construction-report", label: "📋 完了報告書" },
                 { href: "/tools/gross-profit-calculator", label: "📊 原価率計算" },
                 { href: "/tools/exterior-paint-calculator", label: "🏠 外壁面積計算" },
-                { href: "/tools/neighbor-greeting", label: "📝 近隣挨拶文" },
                 { href: "/subsidy", label: "🏛️ 補助金診断" },
               ].map(({ href, label }) => (
                 <Link
@@ -311,11 +330,11 @@ export default function ConstructionPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[14px]">
               {[
                 { scene: "📞 電話でのヒアリング後すぐ", desc: "スマホで粗利率を即計算して、概算の見積金額を伝える" },
-                { scene: "🏠 現場調査の帰り道", desc: "外壁塗装面積・塗料使用量を計算して、メモしておく" },
-                { scene: "📋 見積書の提出前", desc: "工事見積書ツールで体裁を整えてPDF出力" },
-                { scene: "🤝 工事着工前", desc: "近隣挨拶文を生成・印刷して持参する" },
+                { scene: "🏠 現場調査の帰り道", desc: "外壁塗装面積・塗料使用量を計算してメモしておく" },
+                { scene: "📋 見積書・契約書の提出前", desc: "工事見積書・請負契約書ツールで体裁を整えてPDF出力" },
+                { scene: "🤝 工事着工前", desc: "近隣挨拶文を生成・印刷して近隣に配布する" },
+                { scene: "📸 工事完了後", desc: "施工写真を写真帳ツールでまとめて施主に提出" },
                 { scene: "🏛️ 施主への提案時", desc: "補助金診断ツールで使える補助金を一緒に確認" },
-                { scene: "💰 月末の経費精算", desc: "ガソリン代計算ツールで現場往復の燃料費を算出" },
               ].map(({ scene, desc }) => (
                 <div key={scene} className="flex gap-3">
                   <span className="font-semibold text-amber-700 dark:text-amber-400 flex-shrink-0">{scene}</span>
