@@ -9,7 +9,8 @@ export type ToolCategory =
   | "ビジネス・契約書"
   | "AI文章ツール"
   | "冠婚葬祭・文書"
-  | "カラーツール";
+  | "カラーツール"
+  | "建設・リフォーム";
 
 export type ToolItem = {
   id: string;
@@ -96,10 +97,15 @@ export const TOOLS: ToolItem[] = [
   { id: "color-palette", title: "カラーパレット生成", seoTitle: "カラーパレット生成ツール｜補色・類似色・トライアド【無料】", description: "ベースカラーから補色・類似色・トライアドなど5種類の配色パターンを自動生成。CSS変数でまとめてコピー可能。", href: "/tools/color-palette", emoji: "🖌️", category: "カラーツール", isNew: true },
   { id: "gradient-generator", title: "グラデーション生成", seoTitle: "CSSグラデーション生成ツール｜linear・radial【無料】", description: "linear・radial・conicグラデーションをビジュアル設定してCSS出力。プリセット20種以上・コピーボタン付き。", href: "/tools/gradient-generator", emoji: "🌈", category: "カラーツール", isNew: true },
   { id: "contrast-checker", title: "コントラストチェッカー", seoTitle: "WCAGコントラスト比チェッカー｜AA/AAA判定【無料】", description: "前景色・背景色のコントラスト比をリアルタイム計算。WCAG 2.1 AA/AAAの合否判定付き。Webアクセシビリティ対応に。", href: "/tools/contrast-checker", emoji: "👁️", category: "カラーツール", isNew: true },
+  // 建設・リフォーム
+  { id: "construction-estimate", title: "工事見積書作成", seoTitle: "工事見積書作成ツール｜建設・リフォーム対応【無料】", description: "工事種別・材料費・労務費・諸経費を入力して工事見積書をPDF出力。インボイス対応。登録不要・ブラウザ完結。", href: "/tools/construction-estimate", emoji: "📋", category: "建設・リフォーム", isNew: true },
+  { id: "gross-profit-calculator", title: "原価率・粗利率計算", seoTitle: "原価率・粗利率計算ツール｜建設業・リフォーム業向け【無料】", description: "売上・原価を入力するだけで原価率・粗利率・粗利額を即計算。目標粗利率から逆算した見積金額も算出。", href: "/tools/gross-profit-calculator", emoji: "📊", category: "建設・リフォーム", isNew: true },
+  { id: "exterior-paint-calculator", title: "外壁塗装面積計算", seoTitle: "外壁塗装面積計算ツール｜坪数・延床面積対応【無料】", description: "建物の形状・坪数・階数を入力して外壁塗装面積を自動計算。塗料使用量・工事費目安も算出。", href: "/tools/exterior-paint-calculator", emoji: "🏠", category: "建設・リフォーム", isNew: true },
+  { id: "neighbor-greeting", title: "近隣挨拶文メーカー", seoTitle: "工事近隣挨拶文メーカー｜建設・リフォーム向け【無料】", description: "工事名・期間・会社名を入力して近隣への挨拶文を自動生成。騒音・振動・駐車など状況別テンプレート対応。", href: "/tools/neighbor-greeting", emoji: "📝", category: "建設・リフォーム", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [
-  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書", "カラーツール"
+  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書", "カラーツール", "建設・リフォーム"
 ];
 
 export function getToolsByCategory() {
@@ -135,6 +141,7 @@ export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
   "AI文章ツール": "ai",
   "冠婚葬祭・文書": "ceremony",
   "カラーツール": "color",
+  "建設・リフォーム": "construction",
 };
 
 export function getToolsByCategorySlug(slug: string): ToolItem[] | null {
