@@ -28,7 +28,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "通勤費の非課税上限はいくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "2024年現在、マイカー通勤の非課税通勤手当の上限は片道の通勤距離により異なります。2km以上10km未満は月4,200円、10km以上15km未満は月7,100円、25km以上35km未満は月18,700円などです。詳細は国税庁の公式サイトでご確認ください。" },
+      acceptedAnswer: { "@type": "Answer", text: "現在、マイカー通勤の非課税通勤手当の上限は片道の通勤距離により異なります。2km以上10km未満は月4,200円、10km以上15km未満は月7,100円、25km以上35km未満は月18,700円などです。詳細は国税庁の公式サイトでご確認ください。" },
     },
     {
       "@type": "Question",
@@ -71,7 +71,7 @@ const seoContent = (
     </ul>
 
     <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
-      燃費・ガソリン価格の目安（2024年）
+      燃費・ガソリン価格の目安（参考）
     </h3>
     <div className="text-[13px] bg-slate-50 dark:bg-zinc-900 rounded-xl p-4 border border-slate-100 dark:border-zinc-800">
       <table className="w-full">

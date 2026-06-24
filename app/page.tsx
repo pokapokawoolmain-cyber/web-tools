@@ -9,6 +9,9 @@ import { ToolCard } from "@/components/tools/ToolCard";
 import { ALL_CATEGORIES } from "@/data/categories";
 import { ArrowRight } from "lucide-react";
 import { BottomAd } from "@/components/ads/presets";
+import { getSiteUrl } from "@/lib/utils";
+
+const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
   title: "ToolBox | 無料Webツール集 - FIRE・NISA・画像変換など",
@@ -16,10 +19,13 @@ export const metadata: Metadata = {
     "FIREシミュレーター・NISA積立計算・メルカリ利益計算・画像圧縮など、毎日使える無料ツールを集めたサイト。登録不要・スマホ対応・ブラウザ完結。",
   keywords:
     "無料ツール, FIRE計算, NISA積立, メルカリ利益計算, 画像圧縮, ガソリン代計算, 副業計算",
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     title: "ToolBox | 無料Webツール集",
     description: "毎日使える無料ツールを集めたサイト。登録不要・スマホ対応。",
-    url: "/",
+    url: siteUrl,
     type: "website",
   },
 };

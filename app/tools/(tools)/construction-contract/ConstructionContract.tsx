@@ -1,5 +1,6 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Printer, Copy, CheckCircle2 } from "lucide-react";
 
 type ContractData = {
@@ -95,6 +96,9 @@ export function ConstructionContract() {
     return { base, tax, total, deposit, intermediate, completion };
   }, [data.contractAmount, data.taxRate, data.depositRate, data.intermediateRate]);
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const handlePrint = () => window.print();
 
   const handleCopy = async () => {
@@ -107,19 +111,25 @@ export function ConstructionContract() {
   const inputSm = "w-full rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-[13px] text-slate-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500";
 
   return (
-    <div className="space-y-6">
+    <>
+      {/* 印刷CSS: portal経由でbody直下に配置するためセレクタが確実に機能する */}
       <style>{`
         @media print {
           @page { size: A4 portrait; margin: 20mm 15mm; }
           body > *:not(#contract-print) { display: none !important; }
-          #contract-print { display: block !important; font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+          #contract-print {
+            display: block !important;
+            font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+          }
         }
       `}</style>
 
-      {/* 印刷専用DOM */}
-      <div id="contract-print" className="hidden print:block">
-        <ContractPrintView data={data} amounts={amounts} />
-      </div>
+      {mounted && createPortal(
+        <div id="contract-print" style={{ display: "none" }}>
+          <ContractPrintView data={data} amounts={amounts} />
+        </div>,
+        document.body
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 左：入力フォーム */}
@@ -289,7 +299,7 @@ export function ConstructionContract() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -40,7 +40,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
-    return [...toolRedirects, ...blogRedirects];
+    // non-www → www への正規化（AdSense登録URLとの一致 / canonical統一）
+    const wwwRedirects = [
+      {
+        source: "/:path*",
+        has: [{ type: "host" as const, value: "toolboxjp.com" }],
+        destination: "https://www.toolboxjp.com/:path*",
+        permanent: true,
+      },
+    ];
+    return [...wwwRedirects, ...toolRedirects, ...blogRedirects];
   },
 
   // ヘッダー設定（SEO・セキュリティ）

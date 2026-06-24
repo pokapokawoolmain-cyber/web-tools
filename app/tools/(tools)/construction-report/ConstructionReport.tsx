@@ -1,5 +1,6 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Printer, Copy, CheckCircle2 } from "lucide-react";
 
 type ReportData = {
@@ -55,7 +56,10 @@ export function ConstructionReport() {
     issueDate: new Date().toISOString().slice(0, 10),
   });
   const [copied, setCopied] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => setMounted(true), []);
 
   const set = (key: keyof ReportData, val: string) => setData((prev) => ({ ...prev, [key]: val }));
 
@@ -96,18 +100,8 @@ export function ConstructionReport() {
 
   const inputSm = "w-full rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-[13px] text-slate-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500";
 
-  return (
-    <div className="space-y-6">
-      {/* 印刷専用 */}
-      <style>{`
-        @media print {
-          @page { size: A4 portrait; margin: 20mm 15mm; }
-          body > *:not(#construction-report-print) { display: none !important; }
-          #construction-report-print { display: block !important; font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
-        }
-      `}</style>
-
-      <div id="construction-report-print" className="hidden print:block">
+  const printDom = (
+    <div id="construction-report-print" style={{ display: "none" }}>
         <div style={{ border: "2px solid #1e293b", padding: "24px 28px", fontFamily: "'Hiragino Kaku Gothic ProN', sans-serif" }}>
           <h1 style={{ textAlign: "center", fontSize: "22px", fontWeight: "bold", borderBottom: "2px solid #1e293b", paddingBottom: "12px", marginBottom: "16px" }}>工事完了報告書</h1>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: "16px", fontSize: "13px" }}>
@@ -140,6 +134,23 @@ export function ConstructionReport() {
           </div>
         </div>
       </div>
+  );
+
+  return (
+    <>
+      {/* 印刷CSS: portal経由でbody直下に配置するためセレクタが確実に機能する */}
+      <style>{`
+        @media print {
+          @page { size: A4 portrait; margin: 20mm 15mm; }
+          body > *:not(#construction-report-print) { display: none !important; }
+          #construction-report-print {
+            display: block !important;
+            font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+          }
+        }
+      `}</style>
+
+      {mounted && createPortal(printDom, document.body)}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 左：施工・施主情報 */}
@@ -284,6 +295,6 @@ export function ConstructionReport() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

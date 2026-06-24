@@ -352,6 +352,57 @@ const CONSTRUCTION_CATEGORY: CategoryConfig = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// 飲食店カテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const RESTAURANT_CATEGORY: CategoryConfig = {
+  slug: "industry/restaurant",
+  name: "飲食店向けツール",
+  nameEn: "Restaurant Tools",
+  tagline: "飲食店・カフェ・居酒屋向け無料ツール集",
+  description:
+    "原価率計算・メニュー価格決め・メニュー表作成・口コミ返信・POP作成・人件費計算など、飲食店の日常業務で使えるツールを無料提供。登録不要・ブラウザ完結・スマホ対応。",
+  longDescription:
+    "飲食店・カフェ・居酒屋・キッチンカーの店舗運営で即使えるツール集。原価管理からメニュー表作成、集客・口コミ対応まで業務全体をカバーします。データは外部に送信されないため、レシピや価格情報も安心して入力できます。",
+  icon: "🍽️",
+  gradientFrom: "from-orange-500",
+  gradientTo: "to-red-500",
+  gradientLight: "from-orange-50 to-red-50 dark:from-orange-950/30 dark:to-red-950/20",
+  accentColor: "text-orange-600 dark:text-orange-400",
+  accentBg: "bg-orange-50 dark:bg-orange-950/40 text-orange-700 dark:text-orange-300",
+  title: "飲食店向け無料ツール集｜原価率計算・メニュー表作成・口コミ返信",
+  keywords: [
+    "飲食店 原価率 計算", "メニュー 価格 決め方", "メニュー表 作成 無料",
+    "Google口コミ 返信 飲食店", "飲食店 POP 作成", "飲食店 補助金",
+  ],
+  popularToolIds: [
+    "food-cost-calculator",
+    "menu-price-calculator",
+    "restaurant-menu-maker",
+    "review-reply-generator",
+    "restaurant-pop-generator",
+  ],
+  allToolIds: [
+    "food-cost-calculator",
+    "menu-price-calculator",
+    "restaurant-menu-maker",
+    "review-reply-generator",
+    "restaurant-pop-generator",
+  ],
+  stats: [
+    { label: "専用ツール数", value: "5種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "データ送信", value: "なし（ブラウザ完結）" },
+  ],
+  faqs: [
+    { q: "原価率の目安はどれくらいですか？", a: "飲食業界全般では原価率30〜35%が目安とされています。ただし業態により異なり、ラーメン店・居酒屋は25〜30%、カフェ・スイーツ系は30〜40%、高級レストランは35〜45%程度が一般的です。" },
+    { q: "メニュー価格はどうやって決めればいいですか？", a: "食材費（原価）÷目標原価率で算出した価格を基準に、競合の相場・客層・立地・提供価値を考慮して最終決定します。ただし端数（xxxx円→xxx0円・xxx8円など）は印象に影響するため、心理的価格設定も重要です。" },
+    { q: "Google口コミへの返信は必ずしたほうがいいですか？", a: "はい、すべての口コミへの返信を推奨します。高評価には感謝と再来店への誘導を、低評価には真摯な謝意と改善の姿勢を示すことで、閲覧者への信頼性が高まります。返信時は個人情報に触れず、過度な謝罪や反論も避けましょう。" },
+    { q: "スマホから使えますか？", a: "はい。すべてのツールはスマートフォン対応です。仕込み中の計算や営業中の口コミ確認など、現場での利用を想定した設計になっています。" },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
@@ -363,6 +414,7 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   ceremony: CEREMONY_CATEGORY,
   color: COLOR_CATEGORY,
   construction: CONSTRUCTION_CATEGORY,
+  restaurant: RESTAURANT_CATEGORY,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {

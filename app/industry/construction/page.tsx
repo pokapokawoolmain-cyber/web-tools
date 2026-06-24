@@ -195,8 +195,8 @@ const TOOL_CATEGORIES: { label: string; tools: ToolCard[] }[] = [
       {
         href: "/subsidy",
         emoji: "🏛️",
-        title: "補助金・助成金診断",
-        desc: "リフォーム・省エネ・耐震改修・バリアフリー工事に使える補助金を無料診断。施主への提案にも活用可。",
+        title: "リフォーム補助金・助成金診断",
+        desc: "省エネリフォーム・耐震改修・バリアフリー・子育て支援リフォームに使える補助金を無料診断。施主への提案前に確認できます。",
         category: "補助金・制度",
       },
     ],
@@ -321,6 +321,43 @@ export default function ConstructionPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </section>
+
+          {/* 補助金専用バナー */}
+          <section className="bg-green-50 dark:bg-green-950/20 rounded-2xl border border-green-200 dark:border-green-800/50 p-6 sm:p-8">
+            <div className="flex items-start gap-4">
+              <span className="text-4xl flex-shrink-0">🏛️</span>
+              <div className="flex-1">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">リフォーム補助金を施主と一緒に確認</h2>
+                <p className="text-[14px] text-slate-600 dark:text-zinc-400 leading-relaxed mb-4">
+                  省エネリフォーム（断熱・窓・給湯器）、耐震改修、バリアフリー改修、子育て世帯支援など、
+                  リフォーム工事には多くの補助金・助成金制度が存在します。
+                  施主への提案前に補助金の活用可能性を確認しておくことで、受注率アップにつながります。
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[13px] text-green-700 dark:text-green-400 mb-5">
+                  {[
+                    "省エネ断熱リフォーム（子育てエコホーム支援事業等）",
+                    "窓・ガラスリフォーム（先進的窓リノベ事業等）",
+                    "耐震改修工事（自治体補助金）",
+                    "バリアフリー改修（介護保険住宅改修等）",
+                    "給湯器交換（給湯省エネ事業等）",
+                    "長期優良住宅化リフォーム（長期優良住宅化リフォーム推進事業）",
+                  ].map((item) => (
+                    <div key={item} className="flex gap-2 items-start">
+                      <span className="text-green-500 shrink-0 mt-0.5">✓</span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[12px] text-slate-400 dark:text-zinc-500 mb-4">
+                  ※補助金制度は年度ごとに変更・終了する場合があります。必ず最新の公式情報（国土交通省・環境省・各自治体）をご確認ください。
+                </p>
+                <Link href="/subsidy"
+                  className="inline-flex items-center gap-2 px-5 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl text-[14px] transition-colors">
+                  🏛️ 補助金・助成金診断ツールで確認する
+                </Link>
+              </div>
             </div>
           </section>
 

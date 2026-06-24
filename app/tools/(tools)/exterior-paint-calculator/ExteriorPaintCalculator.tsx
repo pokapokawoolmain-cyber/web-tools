@@ -89,8 +89,8 @@ export function ExteriorPaintCalculator() {
           <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-2">計算方法</label>
           <div className="grid grid-cols-3 gap-2">
             {([
-              { value: "rectangle", label: "間口・奥行から" },
-              { value: "L-shape", label: "坪数から" },
+              { value: "rectangle", label: "間口・奥行から計算" },
+              { value: "L-shape", label: "坪数（床面積）から計算" },
               { value: "custom", label: "面積を直接入力" },
             ] as { value: Shape; label: string }[]).map(({ value, label }) => (
               <button
@@ -231,13 +231,31 @@ export function ExteriorPaintCalculator() {
         </div>
       )}
 
-      {/* 計算式の説明 */}
+      {/* 開口部控除の補足 */}
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-2xl border border-slate-100 dark:border-zinc-800 p-5 space-y-3 text-[13px] text-slate-600 dark:text-zinc-400">
-        <h3 className="text-[14px] font-bold text-slate-800 dark:text-zinc-200">計算式について</h3>
-        <p>「間口・奥行から」：外周（間口+奥行）×2 × 階高 × 0.85（開口部15%控除）</p>
-        <p>「坪数から」：延べ床面積（坪）× 3.306 × 係数（平屋3.2 / 2階2.8 / 3階2.5）</p>
-        <p>塗料使用量：面積 ÷ 塗布量(m²/L) × 塗り回数 × 1.1（ロス係数）</p>
-        <p className="text-[11px] text-slate-400 dark:text-zinc-600">※係数は一般的な住宅の実績値に基づく目安です。実際の計測・現場確認を必ず行ってください。</p>
+        <h3 className="text-[14px] font-bold text-slate-800 dark:text-zinc-200">計算式と控除について</h3>
+        <div className="space-y-1.5">
+          <p>「間口・奥行から計算」：外周（間口+奥行）×2 × 階高 × <strong className="text-slate-700 dark:text-zinc-300">0.85（窓・ドア等の開口部を15%控除）</strong></p>
+          <p>「坪数から計算」：延べ床面積（坪）× 3.306 × 係数（平屋3.2 / 2階2.8 / 3階2.5）</p>
+          <p>塗料使用量：面積 ÷ 塗布量(m²/L) × 塗り回数 × 1.1（ロス係数10%加算）</p>
+        </div>
+        <div className="bg-white dark:bg-zinc-800 rounded-xl p-3 space-y-1 text-[12px]">
+          <p className="font-semibold text-slate-700 dark:text-zinc-300">開口部の控除について</p>
+          <p>本ツールでは窓・玄関ドア・勝手口などの開口部を一律15%控除しています。開口部が多い（腰窓・掃き出し窓が多い）建物では実際の塗装面積はさらに小さくなります。逆に開口部が少ないデザインの建物では実測面積の方が大きくなる場合があります。必ず現地調査で実測してください。</p>
+        </div>
+        <p className="text-[11px] text-slate-400 dark:text-zinc-600">※係数は一般的な住宅の実績値に基づく目安です。足場費用・シーリング打ち替え・付帯部塗装（雨樋・軒天等）は別途計上が必要です。</p>
+      </div>
+
+      {/* 補助金案内バナー */}
+      <div className="rounded-2xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/50 p-4 flex items-start gap-3">
+        <span className="text-2xl shrink-0">🏛️</span>
+        <div>
+          <p className="font-bold text-[14px] text-green-800 dark:text-green-300 mb-1">外壁塗装に補助金が使える可能性があります</p>
+          <p className="text-[13px] text-green-700 dark:text-green-400 leading-relaxed mb-2">省エネ改修・断熱塗料・長期優良住宅化リフォームなどで国・自治体の補助金が適用できる場合があります。施主への提案前に確認しておきましょう。</p>
+          <a href="/subsidy" className="inline-flex items-center gap-1 text-[13px] font-semibold text-green-700 dark:text-green-400 hover:underline">
+            補助金・助成金診断ツールで確認する →
+          </a>
+        </div>
       </div>
     </div>
   );

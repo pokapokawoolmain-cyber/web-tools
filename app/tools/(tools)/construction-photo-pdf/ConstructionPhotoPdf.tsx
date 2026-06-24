@@ -1,5 +1,6 @@
 "use client";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Upload, GripVertical, Loader2, CheckCircle2, Printer } from "lucide-react";
 
 type Phase = "施工前" | "施工中" | "施工後" | "完成" | "その他";
@@ -114,23 +115,15 @@ export function ConstructionPhotoPdf() {
     setPrinting(false);
   };
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const inputSm = "w-full rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 text-[13px] text-slate-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500";
 
   const cols = photosPerPage === 2 ? 2 : 2;
 
-  return (
-    <div className="space-y-6">
-      {/* ── 印刷専用DOM（通常非表示） ── */}
-      <div id="print-report" className="hidden print:block">
-        <style>{`
-          @media print {
-            @page { size: A4 portrait; margin: 15mm 12mm; }
-            body > *:not(#print-report) { display: none !important; }
-            #print-report { display: block !important; font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
-            .print-page-break { page-break-after: always; }
-            .print-avoid-break { page-break-inside: avoid; }
-          }
-        `}</style>
+  const printDom = (
+    <div id="print-report" style={{ display: "none" }}>
 
         {/* 表紙 */}
         <div className="print-page-break" style={{ minHeight: "250mm", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", gap: "16px" }}>
@@ -179,6 +172,25 @@ export function ConstructionPhotoPdf() {
           </div>
         )}
       </div>
+  );
+
+  return (
+    <>
+      {/* 印刷CSS: portal経由でbody直下に配置するためセレクタが確実に機能する */}
+      <style>{`
+        @media print {
+          @page { size: A4 portrait; margin: 15mm 12mm; }
+          body > *:not(#print-report) { display: none !important; }
+          #print-report {
+            display: block !important;
+            font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+          }
+          .print-page-break { page-break-after: always; }
+          .print-avoid-break { page-break-inside: avoid; }
+        }
+      `}</style>
+
+      {mounted && createPortal(printDom, document.body)}
 
       {/* ── 通常UI ── */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -312,6 +324,6 @@ export function ConstructionPhotoPdf() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

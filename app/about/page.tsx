@@ -78,7 +78,7 @@ export default function AboutPage() {
               </p>
               <p>
                 FIRE（経済的自立）シミュレーター・NISA積立計算・PDF結合・画像圧縮・カラーコード変換など、日常生活や仕事で「ちょっと使いたい」場面に応えるツールを揃えています。
-                現在<strong className="text-slate-800 dark:text-zinc-200">58種類以上</strong>のツールが無料で利用でき、すべてアカウント登録不要・スマートフォン対応です。
+                現在<strong className="text-slate-800 dark:text-zinc-200">70種類以上</strong>のツールが無料で利用でき、すべてアカウント登録不要・スマートフォン対応です。
               </p>
               <p>
                 また、各ツールに関連した解説ブログ記事を合わせて提供することで、「ツールで計算するだけでなく、背景知識も身につく」体験を目指しています。
@@ -104,7 +104,7 @@ export default function AboutPage() {
                 それで「ブラウザ内で完結するPDF結合ツール」も自分で作ることにしました。
               </p>
               <p>
-                こうして「自分が欲しいと思ったものを作る」を繰り返していたら、気づけばFIREシミュレーターや画像圧縮、カラーコード変換まで58種類を超えていました。
+                こうして「自分が欲しいと思ったものを作る」を繰り返していたら、気づけばFIREシミュレーターや画像圧縮、カラーコード変換まで70種類を超えていました。
                 全部、自分が実際に「あれ、これどこかでサっと計算したい」と感じた瞬間がきっかけです。
               </p>
 
@@ -242,7 +242,7 @@ export default function AboutPage() {
                 </div>
                 <div className="flex gap-4">
                   <dt className="text-slate-400 dark:text-zinc-500 w-24 flex-shrink-0">運営開始</dt>
-                  <dd className="text-slate-700 dark:text-zinc-300">2024年秋</dd>
+                  <dd className="text-slate-700 dark:text-zinc-300">2026年5月</dd>
                 </div>
                 <div className="flex gap-4">
                   <dt className="text-slate-400 dark:text-zinc-500 w-24 flex-shrink-0">運営者</dt>

@@ -1,5 +1,6 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 type WorkType =
   | "新築工事"
@@ -141,6 +142,9 @@ export function NeighborGreeting() {
       setTimeout(() => setCopied(false), 2000);
     });
   };
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const handlePrint = () => window.print();
 
@@ -303,13 +307,31 @@ export function NeighborGreeting() {
         </div>
       </div>
 
+      {/* 印刷CSS: portal経由でbody直下に配置するためセレクタが確実に機能する */}
       <style>{`
         @media print {
-          body > * { visibility: hidden; }
-          #greeting-preview, #greeting-preview * { visibility: visible; }
-          #greeting-preview { position: fixed; top: 0; left: 0; width: 100%; font-family: serif; font-size: 12pt; }
+          @page { size: A4 portrait; margin: 20mm 18mm; }
+          body > *:not(#greeting-print-root) { display: none !important; }
+          #greeting-print-root {
+            display: block !important;
+            font-family: serif;
+            font-size: 12pt;
+            padding: 0;
+            margin: 0;
+            white-space: pre-wrap;
+            line-height: 2;
+            color: #000;
+          }
         }
       `}</style>
+
+      {/* 印刷専用DOM（portal経由でbody直下へ） */}
+      {mounted && createPortal(
+        <div id="greeting-print-root" style={{ display: "none" }}>
+          {greeting}
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

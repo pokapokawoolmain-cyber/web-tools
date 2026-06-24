@@ -51,8 +51,10 @@ export function calcFutureValueMonthly(
 }
 
 // サイトURLを取得（SSR/CSR両対応）
+// VERCEL_URLはプレビューURLになりcanonicalが汚染されるため本番ドメインを優先する
 export function getSiteUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.NODE_ENV === "production") return "https://www.toolboxjp.com";
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   return "http://localhost:3000";
 }

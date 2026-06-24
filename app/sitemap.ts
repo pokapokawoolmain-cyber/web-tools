@@ -23,9 +23,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: siteUrl, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
     { url: `${siteUrl}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     // サイト情報ページ（E-E-A-T強化）
-    { url: `${siteUrl}/about`, lastModified: new Date("2026-06-04"), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${siteUrl}/about`, lastModified: new Date("2026-06-25"), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${siteUrl}/about/reprint`, lastModified: new Date("2026-06-04"), changeFrequency: "yearly", priority: 0.4 },
     { url: `${siteUrl}/contact`, lastModified: new Date("2026-06-04"), changeFrequency: "yearly", priority: 0.6 },
     { url: `${siteUrl}/updates`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+    // 業界特化ページ
+    { url: `${siteUrl}/industry/construction`, lastModified: new Date("2026-06-20"), changeFrequency: "monthly", priority: 0.88 },
+    { url: `${siteUrl}/industry/restaurant`, lastModified: new Date("2026-06-25"), changeFrequency: "monthly", priority: 0.88 },
     // カテゴリTOPページ（SEO強化）
     { url: `${siteUrl}/pdf`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },
     { url: `${siteUrl}/image`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },

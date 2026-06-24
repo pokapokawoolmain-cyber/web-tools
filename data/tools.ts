@@ -10,7 +10,8 @@ export type ToolCategory =
   | "AI文章ツール"
   | "冠婚葬祭・文書"
   | "カラーツール"
-  | "建設・リフォーム";
+  | "建設・リフォーム"
+  | "飲食店";
 
 export type ToolItem = {
   id: string;
@@ -105,10 +106,17 @@ export const TOOLS: ToolItem[] = [
   { id: "construction-photo-pdf", title: "工事写真帳作成", seoTitle: "工事写真帳作成ツール｜施工前・中・後をA4 PDFに整理【無料】", description: "施工前・施工中・施工後の工事写真に工程区分・コメントを付けてA4 PDF形式の写真帳を作成。外壁塗装・リフォーム完了報告に。", href: "/tools/construction-photo-pdf", emoji: "📸", category: "建設・リフォーム", isNew: true },
   { id: "construction-report", title: "工事完了報告書作成", seoTitle: "工事完了報告書作成ツール｜建設・リフォーム向け【無料】", description: "工事名・施主情報・施工内容・使用材料・工事保証を入力して完了報告書をPDF出力。建設業許可番号対応。", href: "/tools/construction-report", emoji: "📋", category: "建設・リフォーム", isNew: true },
   { id: "construction-contract", title: "工事請負契約書作成", seoTitle: "工事請負契約書作成ツール｜建設・リフォーム向け【無料】", description: "発注者・請負者情報、工事金額・支払条件・契約不適合責任を入力して工事請負契約書をPDF出力。着手金計算対応。", href: "/tools/construction-contract", emoji: "📑", category: "建設・リフォーム", isNew: true },
+
+  // 飲食店
+  { id: "food-cost-calculator", title: "原価率計算ツール", seoTitle: "原価率計算ツール｜飲食店・カフェ向け食材原価・粗利計算【無料】", description: "食材費・販売価格を入力して原価率・粗利率・粗利額を即計算。歩留まり・ロス率・複数食材に対応。目標原価率との差も表示。", href: "/tools/food-cost-calculator", emoji: "🍽️", category: "飲食店", isNew: true },
+  { id: "menu-price-calculator", title: "メニュー価格シミュレーター", seoTitle: "メニュー価格シミュレーター｜原価から販売価格を逆算【無料】", description: "食材費と目標原価率から適正販売価格を逆算。税込・税抜・端数調整に対応。ランチ/ディナー/テイクアウト別シミュレーション。", href: "/tools/menu-price-calculator", emoji: "💴", category: "飲食店", isNew: true },
+  { id: "restaurant-menu-maker", title: "メニュー表作成ツール", seoTitle: "メニュー表作成ツール｜飲食店・カフェ向けA4印刷対応【無料】", description: "カテゴリ・メニュー名・価格・説明・アレルギー情報を入力してA4メニュー表をPDF保存・印刷。カフェ風・居酒屋風テーマ対応。", href: "/tools/restaurant-menu-maker", emoji: "📋", category: "飲食店", isNew: true },
+  { id: "review-reply-generator", title: "Google口コミ返信文メーカー", seoTitle: "Google口コミ返信文メーカー｜飲食店向け無料自動生成", description: "高評価・低評価・クレームなど状況別に、そのままコピーできる自然な口コミ返信文を生成。丁寧・カジュアル・店主らしい文体を選択可。", href: "/tools/review-reply-generator", emoji: "⭐", category: "飲食店", isNew: true },
+  { id: "restaurant-pop-generator", title: "POP・店内案内文メーカー", seoTitle: "POP・店内案内文メーカー｜飲食店向け無料自動生成", description: "本日のおすすめ・期間限定・臨時休業・予約案内など、店内掲示やSNSにそのまま使える案内文を自動生成。コピー・PDF保存対応。", href: "/tools/restaurant-pop-generator", emoji: "📢", category: "飲食店", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [
-  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書", "カラーツール", "建設・リフォーム"
+  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書", "カラーツール", "建設・リフォーム", "飲食店"
 ];
 
 export function getToolsByCategory() {
@@ -145,6 +153,7 @@ export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
   "冠婚葬祭・文書": "ceremony",
   "カラーツール": "color",
   "建設・リフォーム": "construction",
+  "飲食店": "restaurant",
 };
 
 export function getToolsByCategorySlug(slug: string): ToolItem[] | null {
