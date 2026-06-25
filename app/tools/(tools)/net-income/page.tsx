@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { generateMeta } from "@/lib/seo";
 import { calcTakehome } from "@/lib/takehome";
 import { NetIncome } from "./NetIncome";
@@ -47,10 +48,22 @@ function Block({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "手取りは額面の何割くらいですか？", acceptedAnswer: { "@type": "Answer", text: "年収300万円台ではおおむね8割前後、年収が上がるほど税率が上がるため、年収1000万円では約7割まで下がります。上の早見表で年収ごとの目安を確認できます。" } },
+    { "@type": "Question", name: "額面から手取りを逆算できますか？", acceptedAnswer: { "@type": "Answer", text: "年収を入力すると手取りが表示されるため、希望する手取りに近づく額面をスライダーで調整しながら逆算できます。月収ベースでも試算できます。" } },
+    { "@type": "Question", name: "配偶者控除や扶養控除は反映されますか？", acceptedAnswer: { "@type": "Answer", text: "本ツールは独身・基礎控除のみの概算です。配偶者控除・扶養控除・各種保険料控除がある場合、実際の手取りはこれより多くなることがあります。" } },
+    { "@type": "Question", name: "入力したデータは送信されますか？", acceptedAnswer: { "@type": "Answer", text: "計算はすべてブラウザ内で完結します。入力した年収などのデータが外部へ送信されることはありません。" } },
+  ],
+};
+
 export default function Page() {
   return (
     <>
       <ToolJsonLd slug="net-income" title="手取り計算" description="年収・月収を入力するだけで月間・年間の手取り額を計算。社会保険料・所得税・住民税の内訳も確認。" />
+      <JsonLd data={faqSchema} />
       <NetIncome />
 
       {/* ── 解説（ツール本体と同じ slate 背景・白カードで一体化）─────── */}

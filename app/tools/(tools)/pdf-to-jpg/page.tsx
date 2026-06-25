@@ -240,30 +240,13 @@ export default function Page() {
           <section>
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">よくある質問</h2>
             <div className="space-y-3">
-              {[
-                {
-                  q: "PDFから変換したJPGを再度PDFに戻せますか？",
-                  a: "はい。JPGをPDFに戻すには「JPG→PDF変換ツール」をご利用ください。複数のJPGをまとめてPDFに変換できます。",
-                },
-                {
-                  q: "スキャンしたPDFもJPGに変換できますか？",
-                  a: "はい。スキャンPDF（画像埋め込み型）もJPGに変換できます。ただしスキャン品質が低い場合は変換後の画像もぼやける場合があります。",
-                },
-                {
-                  q: "パスワード保護されたPDFは変換できますか？",
-                  a: "パスワード付きPDFは変換できません。先にPDFのパスワードを解除してから変換してください。",
-                },
-                {
-                  q: "何ページまで変換できますか？",
-                  a: "ページ数の上限は設けていませんが、大きなPDF（100ページ以上）はブラウザのメモリ使用量が増えるため、動作が重くなる場合があります。",
-                },
-              ].map(({ q, a }) => (
-                <div key={q} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-4">
+              {faqSchema.mainEntity.map(({ name, acceptedAnswer }) => (
+                <div key={name} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-4">
                   <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1 flex items-start gap-2">
-                    <span className="text-blue-500 font-bold flex-shrink-0">Q.</span>{q}
+                    <span className="text-blue-500 font-bold flex-shrink-0">Q.</span>{name}
                   </p>
                   <p className="text-slate-600 dark:text-slate-400 text-[14px] flex items-start gap-2">
-                    <span className="text-blue-500 font-bold flex-shrink-0">A.</span>{a}
+                    <span className="text-blue-500 font-bold flex-shrink-0">A.</span>{acceptedAnswer.text}
                   </p>
                 </div>
               ))}
