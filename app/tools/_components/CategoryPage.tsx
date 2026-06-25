@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import { ToolItem, CATEGORY_SLUGS } from "@/data/tools";
 import { ToolCard } from "@/components/tools/ToolCard";
@@ -9,9 +10,10 @@ type Props = {
   slug: string;
   description: string;
   tools: ToolItem[];
+  seoContent?: React.ReactNode;
 };
 
-export function CategoryPage({ category, slug, description, tools }: Props) {
+export function CategoryPage({ category, slug, description, tools, seoContent }: Props) {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-zinc-950">
       {/* Breadcrumb */}
@@ -47,6 +49,15 @@ export function CategoryPage({ category, slug, description, tools }: Props) {
           ))}
         </div>
       </section>
+
+      {/* SEO content */}
+      {seoContent && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-10">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-6 sm:p-8">
+            {seoContent}
+          </div>
+        </section>
+      )}
 
       {/* Other categories */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">

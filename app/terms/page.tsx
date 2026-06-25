@@ -14,7 +14,7 @@ export default function TermsPage() {
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">
           利用規約
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-10">最終更新日：2025年11月1日</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mb-10">最終更新日：2026年6月1日</p>
 
         <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
 
