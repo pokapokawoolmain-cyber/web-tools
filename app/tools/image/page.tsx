@@ -17,25 +17,6 @@ export const metadata: Metadata = generateMeta({
 const seoContent = (
   <div className="space-y-8">
     <section>
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">主なツールと用途</h2>
-      <div className="grid sm:grid-cols-2 gap-3">
-        {[
-          { name: "HEIC→JPG変換", use: "iPhoneで撮影したHEICファイルをJPGに変換。Windowsや古い機器で開けない問題を解決。ファイルはサーバーに送信されない。" },
-          { name: "画像圧縮", use: "JPG・PNG・WebPを高品質のまま軽量化。SNS投稿やWebサイトの表示速度改善に。最大で元のサイズの数分の一まで圧縮可能。" },
-          { name: "動画圧縮", use: "MP4・MOV・AVI動画をブラウザで圧縮。品質と解像度を自由に設定して、SNS投稿やメール添付に適したファイルサイズに。" },
-          { name: "証明写真作成", use: "写真をアップロードするだけで、履歴書・マイナンバー・パスポート対応の証明写真を自動作成。L判4枚配置でコンビニ印刷にも対応。" },
-          { name: "PDF結合", use: "複数のPDFファイルをドラッグ操作で順番を決めてまとめる。資料の製本・見積書+仕様書のまとめ送付などに。" },
-          { name: "PDF圧縮", use: "PDFのファイルサイズを軽量化。メール添付のサイズ制限を超える場合や、クラウドストレージの節約に。" },
-        ].map(({ name, use }) => (
-          <div key={name} className="rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 p-3.5">
-            <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">{name}</p>
-            <p className="text-slate-500 dark:text-zinc-400 text-xs leading-relaxed">{use}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">全ツールがブラウザ完結の理由</h2>
       <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         <p>画像やPDFには個人情報や機密情報が含まれることがあります。ToolBoxのツールはすべてブラウザ内でファイルを処理するため、サーバーにアップロードされることはありません。証明写真・履歴書PDF・給与明細などの書類も安心して処理できます。</p>

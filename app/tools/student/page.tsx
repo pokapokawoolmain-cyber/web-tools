@@ -17,20 +17,6 @@ export const metadata: Metadata = generateMeta({
 const seoContent = (
   <div className="space-y-8">
     <section>
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">このカテゴリのツール</h2>
-      <div className="grid sm:grid-cols-2 gap-3">
-        {[
-          { name: "GPA計算", use: "科目・単位数・成績を入力してGPAを即計算。累積GPAを学期ごとにシミュレーションできるので、目標GPA達成のために残りの学期でどれくらいの成績が必要か確認できる。" },
-        ].map(({ name, use }) => (
-          <div key={name} className="rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 p-3.5">
-            <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">{name}</p>
-            <p className="text-slate-500 dark:text-zinc-400 text-xs leading-relaxed">{use}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">GPAの計算方法</h2>
       <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         <p>GPAは「Grade Point Average」の略で、成績の平均値を4点満点（または3点満点）で表した指標です。単純な成績平均ではなく、科目の単位数で加重平均するのが特徴です。</p>

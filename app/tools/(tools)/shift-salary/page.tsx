@@ -100,7 +100,7 @@ export default function Page() {
       <ToolLayout
         title="シフト給与計算"
         description="時給・勤務時間・深夜時間・勤務日数を入力して月収を計算。深夜割増・交通費も対応。"
-        icon="💰"
+        icon="⏰"
         slug="shift-salary"
         seoContent={seoContent}
       >

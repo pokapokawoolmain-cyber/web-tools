@@ -17,23 +17,6 @@ export const metadata: Metadata = generateMeta({
 const seoContent = (
   <div className="space-y-8">
     <section>
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">このカテゴリのツール</h2>
-      <div className="grid sm:grid-cols-2 gap-3">
-        {[
-          {
-            name: "履歴書・職務経歴書作成",
-            use: "フォームに経歴・スキル・自己PRを入力するだけで、そのまま印刷できる書類が完成。転職・就活・アルバイト応募に。",
-          },
-        ].map(({ name, use }) => (
-          <div key={name} className="rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 p-3.5">
-            <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">{name}</p>
-            <p className="text-slate-500 dark:text-zinc-400 text-xs leading-relaxed">{use}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">履歴書・職務経歴書の書き方</h2>
       <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         <p>転職活動で最初に必要になるのが書類作成です。Wordテンプレートをダウンロードして書式を調整して…という手順は意外と時間がかかります。ToolBoxの履歴書作成ツールはフォームに入力するだけで書類の体裁を整えるので、内容を考えることだけに集中できます。</p>

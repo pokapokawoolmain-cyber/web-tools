@@ -18,10 +18,10 @@ const faqSchema = {
   "@type": "FAQPage",
   mainEntity: [
     { "@type": "Question", name: "PDF結合は無料ですか？", acceptedAnswer: { "@type": "Answer", text: "完全無料です。登録・インストール不要でブラウザから即利用できます。" } },
-    { "@type": "Question", name: "ファイルはサーバーに送信されますか？", acceptedAnswer: { "@type": "Answer", text: "いいえ。処理はすべてブラウザ内で完結します。ファイルが外部サーバーに送信されることは一切ありません。" } },
-    { "@type": "Question", name: "スマホでも使えますか？", acceptedAnswer: { "@type": "Answer", text: "はい。iPhone・Androidともに対応しています。" } },
-    { "@type": "Question", name: "PDFの結合順番は変えられますか？", acceptedAnswer: { "@type": "Answer", text: "はい。アップロード後にドラッグ＆ドロップでファイルの順番を自由に並び替えられます。スマホでは上下ボタンで順番を変更できます。" } },
     { "@type": "Question", name: "何ファイルまで結合できますか？", acceptedAnswer: { "@type": "Answer", text: "ファイル数に上限はありませんが、大きなPDFを多数結合するとブラウザのメモリ上限に達する場合があります。合計ファイルサイズが数百MB以内を目安にご利用ください。" } },
+    { "@type": "Question", name: "PDFの結合順番は変えられますか？", acceptedAnswer: { "@type": "Answer", text: "はい。アップロード後にドラッグ＆ドロップでファイルの順番を自由に並び替えられます。スマホでは上下ボタンで順番を変更できます。" } },
+    { "@type": "Question", name: "パスワード付きPDFも結合できますか？", acceptedAnswer: { "@type": "Answer", text: "パスワードで保護されたPDFは、先にパスワードを解除してからご利用ください。パスワード保護されたままでは結合できない場合があります。" } },
+    { "@type": "Question", name: "ファイルはサーバーに送信されますか？", acceptedAnswer: { "@type": "Answer", text: "いいえ。処理はすべてブラウザ内で完結します。ファイルが外部サーバーに送信されることは一切ありません。" } },
   ],
 };
 

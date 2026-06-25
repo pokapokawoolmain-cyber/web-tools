@@ -93,7 +93,7 @@ export default function Page() {
       <ToolLayout
         title="GPA計算ツール"
         description="科目・単位数・成績を入力してGPAを即計算。大学の累積GPAをリアルタイムで確認。"
-        icon="📊"
+        icon="🎓"
         slug="gpa"
         seoContent={seoContent}
       >

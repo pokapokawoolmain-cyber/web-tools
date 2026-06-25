@@ -17,24 +17,6 @@ export const metadata: Metadata = generateMeta({
 const seoContent = (
   <div className="space-y-8">
     <section>
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">このカテゴリのツール一覧</h2>
-      <div className="grid sm:grid-cols-2 gap-3 text-sm">
-        {[
-          { name: "FIREシミュレーター", use: "資産・生活費・利回りを入力してFIRE達成年数を試算。「あと何年働けばいいか」を数値で確認できる。" },
-          { name: "新NISA積立計算", use: "月の積立額と運用期間から複利効果込みの将来額を計算。2024年新NISA制度に対応。" },
-          { name: "住宅ローンシミュレーター", use: "借入金額・金利・返済期間を入力して毎月の返済額と総支払額を計算。グラフ付き。" },
-          { name: "ふるさと納税シミュレーター", use: "年収と家族構成を入力して控除上限額を即計算。2,000円の自己負担でどこまで節税できるか確認。" },
-          { name: "手取り計算", use: "年収を入力するだけで所得税・住民税・社会保険料の内訳と手取り額を計算。" },
-        ].map(({ name, use }) => (
-          <div key={name} className="rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 p-3.5">
-            <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">{name}</p>
-            <p className="text-slate-500 dark:text-zinc-400 text-xs leading-relaxed">{use}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">どんな場面で使う？</h2>
       <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         <p>「早期退職のためにあといくら貯めればいいか」「新NISAで20年積み立てるといくらになるか」「この物件を買ったら毎月の返済はいくら？」——こうした計算をExcelや電卓でやろうとすると、複利の計算式や税率の調べ物で時間がかかります。このカテゴリのツールは、入力項目を埋めるだけで答えを出せるよう設計しています。</p>

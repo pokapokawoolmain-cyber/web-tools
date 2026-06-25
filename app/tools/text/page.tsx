@@ -17,25 +17,6 @@ export const metadata: Metadata = generateMeta({
 const seoContent = (
   <div className="space-y-8">
     <section>
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">このカテゴリのツール一覧</h2>
-      <div className="grid sm:grid-cols-2 gap-3">
-        {[
-          { name: "文字数カウント", use: "入力するだけでリアルタイムに文字数・行数・単語数を計測。X（Twitter）の280文字制限、履歴書の志望動機欄、課題レポートなど文字数上限のある場面に。" },
-          { name: "Markdownエディタ", use: "左側にMarkdown記法で書くと右側にリアルタイムでプレビュー表示。GitHubのREADME・技術ブログ・社内ドキュメント作成に。" },
-          { name: "パスワード生成", use: "長さ・大文字小文字・数字・記号の組み合わせを自由に設定して安全なランダムパスワードを即生成。強度メーター付き。" },
-          { name: "QRコード生成", use: "URL・テキスト・Wi-Fi情報をQRコードに変換。色変更・PNG/SVG形式でダウンロード。名刺・チラシ・店頭POPに使えるQRを素早く作成。" },
-          { name: "Wi-Fi QRコード生成", use: "SSIDとパスワードを入力するだけでWi-Fi接続用QRコードを作成。スキャンするだけで接続できるので、家・カフェ・オフィスに掲示するのに最適。" },
-          { name: "URL短縮 & QR生成", use: "長いURLをコンパクトに整形し、QRコードも同時に生成。SNS投稿やQR印刷時のURL管理を一括処理。" },
-        ].map(({ name, use }) => (
-          <div key={name} className="rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 p-3.5">
-            <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">{name}</p>
-            <p className="text-slate-500 dark:text-zinc-400 text-xs leading-relaxed">{use}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">用途別おすすめツール</h2>
       <div className="space-y-2 text-sm">
         {[

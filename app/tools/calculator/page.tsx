@@ -17,23 +17,6 @@ export const metadata: Metadata = generateMeta({
 const seoContent = (
   <div className="space-y-8">
     <section>
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">このカテゴリのツール一覧</h2>
-      <div className="grid sm:grid-cols-2 gap-3">
-        {[
-          { name: "メルカリ利益計算", use: "販売価格・送料・手数料（10%）を入力して実際の手取り利益と利益率を計算。「この値段で売れば手元にいくら残るか」をすぐに確認。" },
-          { name: "ガソリン代計算", use: "走行距離・燃費・ガソリン単価を入力。往復・月間のガソリン代を計算。通勤・ドライブ前のコスト確認に。" },
-          { name: "シフト給与計算", use: "時給・勤務時間・深夜時間帯・勤務日数を入力して月収を計算。深夜割増（25%増）や交通費の加算にも対応。" },
-          { name: "ポイント還元シミュレーター", use: "PayPay・楽天・Suica・クレカなど主要サービスの還元率を比較。買い物金額から年間の獲得ポイント数を計算。" },
-        ].map(({ name, use }) => (
-          <div key={name} className="rounded-xl bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 p-3.5">
-            <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">{name}</p>
-            <p className="text-slate-500 dark:text-zinc-400 text-xs leading-relaxed">{use}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">どんな場面で役立つ？</h2>
       <div className="space-y-2 text-sm">
         {[
