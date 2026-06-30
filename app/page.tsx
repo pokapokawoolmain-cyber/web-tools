@@ -184,28 +184,29 @@ export default function HomePage() {
         <div className="container-base">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-            {/* 左：スマホモック */}
+            {/* 左：iPhone 15 スタイル スマホモック */}
             <ScrollReveal delay={100} className="flex justify-center order-2 lg:order-1">
               <div className="relative">
-                <div aria-hidden="true" className="absolute inset-0 -m-10 bg-blue-500/8 rounded-full blur-3xl" />
-                <div className="relative w-[200px] sm:w-[240px]">
-                  <div className="bg-[#111] rounded-[44px] p-[6px] shadow-2xl ring-1 ring-white/10">
-                    <div className="bg-[#111] rounded-t-[38px] h-7 flex items-end justify-center pb-[4px]">
-                      <div className="w-20 h-4 bg-[#0a0a0a] rounded-full ring-1 ring-white/10" />
-                    </div>
-                    <div className="overflow-hidden rounded-none">
+                {/* グロー */}
+                <div aria-hidden="true" className="absolute inset-0 -m-12 bg-blue-500/10 dark:bg-blue-400/8 rounded-full blur-3xl pointer-events-none" />
+                {/* iPhone 15 本体 */}
+                <div className="relative w-[210px] sm:w-[248px]">
+                  <div className="bg-[#0d0d0d] rounded-[56px] p-[6px] shadow-[0_32px_64px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.08)]">
+                    {/* スクリーン領域 */}
+                    <div className="relative rounded-[50px] overflow-hidden bg-[#0d0d0d]">
+                      {/* Dynamic Island */}
+                      <div className="absolute top-[10px] left-1/2 -translate-x-1/2 z-20 w-[88px] h-[22px] bg-black rounded-full" />
+                      {/* スクリーンショット — 390:844 自然比率 */}
                       <Image
-                        src="/previews/home/mobile-pdf-merge.jpg"
-                        alt="スマートフォンでのPDF結合ツール表示例"
+                        src="/previews/home/mobile-wifi-qr.jpg"
+                        alt="スマートフォンでのWi-Fi QRコード生成ツール表示例"
                         width={390}
-                        height={788}
-                        className="w-full object-cover object-top"
-                        style={{ height: "400px" }}
+                        height={844}
+                        className="w-full h-auto"
                         unoptimized
                       />
-                    </div>
-                    <div className="bg-white rounded-b-[38px] h-7 flex items-center justify-center">
-                      <div className="w-24 h-[4px] bg-zinc-300 rounded-full" />
+                      {/* ホームインジケーター */}
+                      <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 z-20 w-20 h-1 bg-white/25 rounded-full" />
                     </div>
                   </div>
                 </div>

@@ -159,33 +159,35 @@ export function HeroPreviewDeck() {
         </div>
       </div>
 
-      {/* スマホモックアップ — lgのみ */}
+      {/* iPhone 15 スタイル フローティングモック — lgのみ */}
       <div
         aria-hidden="true"
-        className="hidden lg:block absolute -bottom-10 -left-8 z-10 drop-shadow-2xl"
+        className="hidden lg:block absolute -bottom-12 -left-10 z-10"
       >
-        <div className="w-[110px] bg-[#111] rounded-[24px] p-[4px] ring-1 ring-white/10 shadow-2xl">
-          <div className="bg-[#111] rounded-t-[20px] h-5 flex items-end justify-center pb-[3px]">
-            <div className="w-12 h-3 bg-[#0a0a0a] rounded-full ring-1 ring-white/10" />
-          </div>
-          <div
-            className={[
-              "overflow-hidden transition-opacity duration-200",
-              fading ? "opacity-0" : "opacity-100",
-            ].join(" ")}
-          >
-            <Image
-              src={item.mobileImg}
-              alt=""
-              width={390}
-              height={788}
-              className="w-full object-cover object-top"
-              style={{ height: "196px" }}
-              unoptimized
-            />
-          </div>
-          <div className="h-4 flex items-center justify-center bg-white rounded-b-[20px]">
-            <div className="w-8 h-[3px] bg-zinc-300 rounded-full" />
+        {/* 外枠 */}
+        <div className="w-[120px] bg-[#0d0d0d] rounded-[44px] p-[5px] shadow-[0_24px_48px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.06)]">
+          {/* スクリーン領域 */}
+          <div className="relative rounded-[39px] overflow-hidden bg-[#0d0d0d]">
+            {/* Dynamic Island */}
+            <div className="absolute top-[7px] left-1/2 -translate-x-1/2 z-20 w-[40px] h-[13px] bg-black rounded-full" />
+            {/* スクリーンショット — 390:844 自然比率 */}
+            <div
+              className={[
+                "transition-opacity duration-200",
+                fading ? "opacity-0" : "opacity-100",
+              ].join(" ")}
+            >
+              <Image
+                src={item.mobileImg}
+                alt=""
+                width={390}
+                height={844}
+                className="w-full h-auto"
+                unoptimized
+              />
+            </div>
+            {/* ホームインジケーター */}
+            <div className="absolute bottom-[6px] left-1/2 -translate-x-1/2 z-20 w-9 h-[3px] bg-white/25 rounded-full" />
           </div>
         </div>
       </div>
