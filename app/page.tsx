@@ -6,6 +6,7 @@ import { ALL_CATEGORIES } from "@/data/categories";
 import { ArrowRight } from "lucide-react";
 import { BottomAd } from "@/components/ads/presets";
 import { CategoryTabSection } from "./_components/CategoryTabSection";
+import { HeroPreviewDeck } from "./_components/HeroPreviewDeck";
 import { getSiteUrl } from "@/lib/utils";
 import { JsonLd } from "@/components/seo/JsonLd";
 
@@ -59,12 +60,12 @@ const faqSchema = {
   })),
 };
 
-const PURPOSE_LINKS = [
-  { label: "PDFを編集・変換したい", href: "/pdf", emoji: "📄" },
-  { label: "画像を圧縮・変換したい", href: "/image", emoji: "🖼️" },
-  { label: "お金・税金を計算したい", href: "/money", emoji: "💰" },
-  { label: "書類・契約書を作りたい", href: "/business", emoji: "📋" },
-  { label: "生活の作業を楽にしたい", href: "/tools/lifestyle", emoji: "🏠" },
+const HERO_PURPOSES = [
+  { label: "PDFを変換・編集する", href: "/pdf", emoji: "📄" },
+  { label: "画像を圧縮・変換する", href: "/image", emoji: "🖼️" },
+  { label: "お金・税金を計算する", href: "/money", emoji: "💰" },
+  { label: "書類・請求書を作る", href: "/business", emoji: "📋" },
+  { label: "生活を便利にする", href: "/tools/lifestyle", emoji: "🏠" },
 ];
 
 export default function HomePage() {
@@ -75,102 +76,70 @@ export default function HomePage() {
     <>
       <JsonLd data={faqSchema} />
 
-      {/* ── 1. HERO ── */}
-      <section className="bg-white dark:bg-zinc-950 pt-12 pb-10 sm:pt-20 sm:pb-16 border-b border-slate-100 dark:border-zinc-800">
+      {/* ═══════════════════════════════════════════════
+          1. HERO — 2カラム
+      ═══════════════════════════════════════════════ */}
+      <section className="bg-gradient-to-b from-slate-50 to-white dark:from-zinc-900 dark:to-zinc-950 pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-slate-100 dark:border-zinc-800">
         <div className="container-base">
-          <div className="max-w-2xl">
-            <p className="inline-flex items-center gap-2 text-[12px] font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-3 py-1.5 rounded-full mb-5 border border-blue-100 dark:border-blue-900/40">
-              <span aria-hidden="true">🧰</span>
-              全{TOOLS.length}ツール · 無料 · 登録不要 · ブラウザ完結
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {/* 左：テキスト＋CTA */}
+            <div>
+              <p className="inline-flex items-center gap-2 text-[12px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-3 py-1.5 rounded-full mb-6 border border-blue-100 dark:border-blue-900/40">
+                <span aria-hidden="true">🧰</span>
+                全{TOOLS.length}ツール · 無料 · 登録不要 · ブラウザ完結
+              </p>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-5">
-              PDF、画像、仕事、お金の<br />
-              作業を、ブラウザだけで<wbr />かんたんに。
-            </h1>
-            <p className="text-[16px] sm:text-[17px] text-slate-600 dark:text-slate-400 leading-relaxed mb-8 max-w-xl">
-              登録不要・無料で使える実用ツールをまとめました。スマホでもPCでも、日常のちょっと面倒な作業をすぐに片付けられます。
-            </p>
+              <h1 className="text-3xl sm:text-4xl lg:text-[2.625rem] xl:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight mb-5">
+                PDF、画像、仕事、お金の<br />
+                作業を、ブラウザだけで<br className="sm:hidden" />かんたんに。
+              </h1>
+              <p className="text-[16px] sm:text-[17px] text-slate-600 dark:text-slate-400 leading-relaxed mb-8 max-w-lg">
+                登録不要・無料で使える実用ツールを{TOOLS.length}種類まとめました。スマホでもPCでも、日常のちょっと面倒な作業をすぐに片付けられます。
+              </p>
 
-            {/* 目的別CTA */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {PURPOSE_LINKS.map((p) => (
-                <Link
-                  key={p.href}
-                  href={p.href}
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-[13px] font-medium text-slate-700 dark:text-slate-300 hover:border-blue-300 dark:hover:border-blue-700 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-all min-h-[44px]"
-                >
-                  <span aria-hidden="true">{p.emoji}</span>
-                  {p.label}
-                </Link>
-              ))}
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 mb-6">
+                {HERO_PURPOSES.map((p) => (
+                  <Link
+                    key={p.href}
+                    href={p.href}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-[13px] font-medium text-slate-700 dark:text-slate-300 hover:border-blue-300 dark:hover:border-blue-700 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-all min-h-[44px] shadow-sm"
+                  >
+                    <span aria-hidden="true" className="text-base">{p.emoji}</span>
+                    {p.label}
+                  </Link>
+                ))}
+              </div>
+
+              <p className="text-[12px] text-slate-400 dark:text-zinc-500 flex items-center gap-1.5">
+                <span aria-hidden="true">🔒</span>
+                PDF・画像の処理はすべてブラウザ内で完結。ファイルはサーバーに送信されません。
+              </p>
             </div>
 
-            <p className="text-[13px] text-slate-400 dark:text-zinc-500">
-              ファイルはサーバーに送信されません。PDF・画像の処理はすべてブラウザ内で完結します。
-            </p>
+            {/* 右：実画面プレビューデッキ */}
+            <div className="w-full">
+              <HeroPreviewDeck />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── 2. カテゴリクイックナビ ── */}
-      <section className="py-10 sm:py-12 bg-slate-50 dark:bg-zinc-900 border-b border-slate-100 dark:border-zinc-800">
-        <div className="container-base">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {ALL_CATEGORIES.slice(0, 5).map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/${cat.slug}`}
-                className="group flex flex-col items-center gap-2 py-5 px-3 rounded-2xl bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all text-center"
-              >
-                <span
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo} flex items-center justify-center text-2xl group-hover:scale-105 transition-transform`}
-                  aria-hidden="true"
-                >
-                  {cat.icon}
-                </span>
-                <div>
-                  <p className="text-[13px] font-semibold text-slate-800 dark:text-zinc-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight">
-                    {cat.name}
-                  </p>
-                  <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-0.5">
-                    {cat.allToolIds.length}ツール
-                  </p>
-                </div>
-              </Link>
-            ))}
-            <Link
-              href="/tools"
-              className="group flex flex-col items-center gap-2 py-5 px-3 rounded-2xl bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all text-center"
-            >
-              <span className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-zinc-700 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform" aria-hidden="true">
-                🔍
-              </span>
-              <div>
-                <p className="text-[13px] font-semibold text-slate-800 dark:text-zinc-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight">
-                  全ツール一覧
-                </p>
-                <p className="text-[11px] text-slate-400 dark:text-zinc-500 mt-0.5">
-                  すべて見る
-                </p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. 動的カテゴリ紹介（タブ） ── */}
+      {/* ═══════════════════════════════════════════════
+          2. ToolBoxJPでできること（タブ式）
+      ═══════════════════════════════════════════════ */}
       <CategoryTabSection />
 
-      {/* ── 4. 人気ツール ── */}
-      <section className="py-12 sm:py-16 bg-slate-50 dark:bg-zinc-900 border-t border-slate-100 dark:border-zinc-800">
+      {/* ═══════════════════════════════════════════════
+          3. 人気ツール
+      ═══════════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 bg-slate-50 dark:bg-zinc-900 border-t border-slate-100 dark:border-zinc-800">
         <div className="container-base">
-          <div className="flex items-end justify-between mb-6">
+          <div className="flex items-end justify-between mb-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
+              <p className="text-[12px] font-bold text-orange-500 uppercase tracking-widest mb-1">POPULAR</p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
                 人気のツール
               </h2>
-              <p className="text-slate-500 dark:text-slate-400 text-[14px]">よく使われているツールです</p>
             </div>
             <Link href="/tools" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1 min-h-[44px]">
               すべて見る <ArrowRight className="w-3.5 h-3.5" />
@@ -184,16 +153,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 5. 新着ツール ── */}
+      {/* ═══════════════════════════════════════════════
+          4. 新着ツール
+      ═══════════════════════════════════════════════ */}
       {newTools.length > 0 && (
-        <section className="py-12 sm:py-16 bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800">
+        <section className="py-14 sm:py-20 bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800">
           <div className="container-base">
-            <div className="flex items-end justify-between mb-6">
+            <div className="flex items-end justify-between mb-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
+                <p className="text-[12px] font-bold text-purple-500 uppercase tracking-widest mb-1">NEW</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
                   新着ツール
                 </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-[14px]">最近追加されたツールです</p>
               </div>
               <Link href="/tools" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1 min-h-[44px]">
                 すべて見る <ArrowRight className="w-3.5 h-3.5" />
@@ -208,11 +179,49 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* ── 6. ToolBoxJPとは ── */}
-      <section className="py-12 sm:py-16 bg-slate-50 dark:bg-zinc-900 border-t border-slate-100 dark:border-zinc-800">
+      {/* ═══════════════════════════════════════════════
+          5. カテゴリ別一覧
+      ═══════════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 bg-slate-50 dark:bg-zinc-900 border-t border-slate-100 dark:border-zinc-800">
+        <div className="container-base">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-8">
+            カテゴリ別ツール一覧
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {ALL_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/${cat.slug}`}
+                className="group flex flex-col items-center gap-3 py-6 px-4 rounded-2xl bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all text-center"
+              >
+                <span
+                  className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo} flex items-center justify-center text-2xl group-hover:scale-105 transition-transform shadow-sm`}
+                  aria-hidden="true"
+                >
+                  {cat.icon}
+                </span>
+                <div>
+                  <p className="text-[13px] font-semibold text-slate-800 dark:text-zinc-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight mb-0.5">
+                    {cat.name}
+                  </p>
+                  <p className="text-[11px] text-slate-400 dark:text-zinc-500">
+                    {cat.allToolIds.length}ツール
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          6. ToolBoxJPとは
+      ═══════════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800">
         <div className="container-base">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
+              <p className="text-[12px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-2">ABOUT</p>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">
                 ToolBoxJPとは？
               </h2>
@@ -228,16 +237,10 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/about"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-[13px] text-slate-600 dark:text-zinc-400 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-h-[44px]"
-                >
+                <Link href="/about" className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-[13px] text-slate-600 dark:text-zinc-400 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-h-[44px]">
                   詳しくはこちら <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
-                <Link
-                  href="/updates"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-[13px] text-slate-600 dark:text-zinc-400 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-h-[44px]"
-                >
+                <Link href="/updates" className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 text-[13px] text-slate-600 dark:text-zinc-400 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors min-h-[44px]">
                   <span aria-hidden="true">📋</span> 更新履歴
                 </Link>
               </div>
@@ -245,31 +248,12 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
-                {
-                  icon: "⚡",
-                  title: "登録不要でいますぐ使える",
-                  body: "URLを開くだけで即利用。アカウント作成・アプリインストール・クレジットカード入力は一切不要。",
-                },
-                {
-                  icon: "🔒",
-                  title: "ファイルが外部に出ない",
-                  body: "PDFや画像の処理はすべてブラウザ内で完結。サーバーに送信されないので機密書類も安心。",
-                },
-                {
-                  icon: "📱",
-                  title: "スマホ・PCどこでも",
-                  body: "iPhone・Android・PC問わず動作。最新のブラウザがあれば快適に使えます。",
-                },
-                {
-                  icon: "🆓",
-                  title: "完全無料・制限なし",
-                  body: "利用回数の上限なし。有料プランへの誘導もありません。すべて無料でお使いいただけます。",
-                },
+                { icon: "⚡", title: "登録不要でいますぐ使える", body: "URLを開くだけで即利用。アカウント作成・アプリインストール・クレジットカード入力は一切不要。" },
+                { icon: "🔒", title: "ファイルが外部に出ない", body: "PDFや画像の処理はすべてブラウザ内で完結。サーバーに送信されないので機密書類も安心。" },
+                { icon: "📱", title: "スマホ・PCどこでも", body: "iPhone・Android・PC問わず動作。最新のブラウザがあれば快適に使えます。" },
+                { icon: "🆓", title: "完全無料・制限なし", body: "利用回数の上限なし。有料プランへの誘導もありません。すべて無料でお使いいただけます。" },
               ].map((item) => (
-                <div
-                  key={item.title}
-                  className="flex items-start gap-3 bg-white dark:bg-zinc-800 rounded-xl p-4 border border-slate-100 dark:border-zinc-700"
-                >
+                <div key={item.title} className="flex items-start gap-3 bg-slate-50 dark:bg-zinc-900 rounded-xl p-4 border border-slate-100 dark:border-zinc-800">
                   <span className="text-2xl flex-shrink-0 mt-0.5" aria-hidden="true">{item.icon}</span>
                   <div>
                     <p className="font-semibold text-slate-800 dark:text-zinc-200 text-[14px] mb-1">{item.title}</p>
@@ -282,16 +266,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 7. 広告 ── */}
-      <div className="bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800">
+      {/* ═══════════════════════════════════════════════
+          7. 広告
+      ═══════════════════════════════════════════════ */}
+      <div className="bg-slate-50 dark:bg-zinc-900 border-t border-slate-100 dark:border-zinc-800">
         <div className="container-base">
           <BottomAd />
         </div>
       </div>
 
-      {/* ── 8. よくある質問 ── */}
-      <section className="py-12 sm:py-16 bg-slate-50 dark:bg-zinc-900 border-t border-slate-100 dark:border-zinc-800">
+      {/* ═══════════════════════════════════════════════
+          8. よくある質問
+      ═══════════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800">
         <div className="container-base max-w-3xl">
+          <p className="text-[12px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-2">FAQ</p>
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-8">
             よくある質問
           </h2>
@@ -299,19 +288,19 @@ export default function HomePage() {
             {faqItems.map((item) => (
               <details
                 key={item.q}
-                className="group bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 overflow-hidden"
+                className="group bg-slate-50 dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 overflow-hidden"
               >
-                <summary className="flex items-center justify-between gap-3 px-5 py-4 cursor-pointer list-none text-[14px] font-semibold text-slate-800 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors min-h-[56px]">
-                  <span className="flex items-center gap-2">
-                    <span className="text-blue-500 font-bold flex-shrink-0">Q.</span>
+                <summary className="flex items-center justify-between gap-3 px-5 py-4 cursor-pointer list-none text-[14px] font-semibold text-slate-800 dark:text-zinc-200 hover:bg-white dark:hover:bg-zinc-800 transition-colors min-h-[56px]">
+                  <span className="flex items-center gap-2.5">
+                    <span className="text-blue-500 font-bold flex-shrink-0 text-[15px]">Q.</span>
                     {item.q}
                   </span>
-                  <span className="text-slate-400 group-open:rotate-45 transition-transform duration-200 flex-shrink-0 text-xl font-light leading-none">
+                  <span className="text-slate-400 dark:text-zinc-600 group-open:rotate-45 transition-transform duration-200 flex-shrink-0 text-xl font-light leading-none">
                     +
                   </span>
                 </summary>
-                <div className="px-5 pb-4 text-[14px] text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-zinc-800 pt-3">
-                  <span className="text-blue-500 font-bold mr-2">A.</span>
+                <div className="px-5 pb-5 text-[14px] text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-zinc-800 pt-4 bg-white dark:bg-zinc-900">
+                  <span className="text-blue-500 font-bold mr-2 text-[15px]">A.</span>
                   {item.a}
                 </div>
               </details>
