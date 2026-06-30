@@ -159,17 +159,17 @@ export function HeroPreviewDeck() {
         </div>
       </div>
 
-      {/* iPhone 15 スタイル フローティングモック — lgのみ */}
+      {/* iPhone 17 風フローティングモック — lgのみ */}
       <div
         aria-hidden="true"
         className="hidden lg:block absolute -bottom-12 -left-10 z-10"
       >
-        {/* 外枠 */}
-        <div className="w-[120px] bg-[#0d0d0d] rounded-[44px] p-[5px] shadow-[0_24px_48px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.06)]">
+        {/* チタニウムフレーム — iPhone 17 比率 (外枠半径 ≈ width×12%) */}
+        <div className="relative w-[120px] bg-[#1c1c1e] rounded-[14px] p-[5px] shadow-[0_24px_56px_rgba(0,0,0,0.65),0_0_0_1.5px_rgba(255,255,255,0.12),inset_0_1px_0_rgba(255,255,255,0.06),0_0_20px_rgba(255,255,255,0.08),0_0_40px_rgba(255,255,255,0.03)]">
           {/* スクリーン領域 */}
-          <div className="relative rounded-[39px] overflow-hidden bg-[#0d0d0d]">
-            {/* Dynamic Island */}
-            <div className="absolute top-[7px] left-1/2 -translate-x-1/2 z-20 w-[40px] h-[13px] bg-black rounded-full" />
+          <div className="relative rounded-[10px] overflow-hidden bg-black">
+            {/* Dynamic Island ピル (幅 ≈ 画面幅×32%) */}
+            <div className="absolute top-[5px] left-1/2 -translate-x-1/2 z-20 w-[35px] h-[10px] bg-black rounded-full" />
             {/* スクリーンショット — 390:844 自然比率 */}
             <div
               className={[
@@ -187,8 +187,10 @@ export function HeroPreviewDeck() {
               />
             </div>
             {/* ホームインジケーター */}
-            <div className="absolute bottom-[6px] left-1/2 -translate-x-1/2 z-20 w-9 h-[3px] bg-white/25 rounded-full" />
+            <div className="absolute bottom-[6px] left-1/2 -translate-x-1/2 z-20 w-8 h-[3px] bg-white/20 rounded-full" />
           </div>
+          {/* 電源ボタン */}
+          <div className="absolute right-[-3px] top-[28%] w-[3px] h-8 bg-[#2e2e2e] rounded-r-full" />
         </div>
       </div>
     </div>

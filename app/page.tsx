@@ -189,13 +189,14 @@ export default function HomePage() {
               <div className="relative">
                 {/* グロー */}
                 <div aria-hidden="true" className="absolute inset-0 -m-12 bg-blue-500/10 dark:bg-blue-400/8 rounded-full blur-3xl pointer-events-none" />
-                {/* iPhone 15 本体 */}
+                {/* iPhone 17 風スマホモック */}
                 <div className="relative w-[210px] sm:w-[248px]">
-                  <div className="bg-[#0d0d0d] rounded-[56px] p-[6px] shadow-[0_32px_64px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.08)]">
+                  {/* チタニウムフレーム — iPhone 17 比率 (外枠半径 ≈ width×12%) */}
+                  <div className="bg-[#1c1c1e] rounded-[26px] p-[6px] shadow-[0_40px_80px_rgba(0,0,0,0.55),0_0_0_1.5px_rgba(255,255,255,0.12),inset_0_1px_0_rgba(255,255,255,0.06),0_0_28px_rgba(255,255,255,0.07),0_0_56px_rgba(255,255,255,0.03)]">
                     {/* スクリーン領域 */}
-                    <div className="relative rounded-[50px] overflow-hidden bg-[#0d0d0d]">
-                      {/* Dynamic Island */}
-                      <div className="absolute top-[10px] left-1/2 -translate-x-1/2 z-20 w-[88px] h-[22px] bg-black rounded-full" />
+                    <div className="relative rounded-[20px] overflow-hidden bg-black">
+                      {/* Dynamic Island ピル (幅 ≈ 画面幅×32%) */}
+                      <div className="absolute top-[8px] left-1/2 -translate-x-1/2 z-20 w-[76px] h-[22px] bg-black rounded-full" />
                       {/* スクリーンショット — 390:844 自然比率 */}
                       <Image
                         src="/previews/home/mobile-wifi-qr.jpg"
@@ -206,9 +207,15 @@ export default function HomePage() {
                         unoptimized
                       />
                       {/* ホームインジケーター */}
-                      <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 z-20 w-20 h-1 bg-white/25 rounded-full" />
+                      <div className="absolute bottom-[9px] left-1/2 -translate-x-1/2 z-20 w-[72px] h-[4px] bg-white/20 rounded-full" />
                     </div>
                   </div>
+                  {/* 側面ボタン (音量) */}
+                  <div aria-hidden="true" className="absolute left-[-3px] top-[22%] w-[3px] h-8 bg-[#2e2e2e] rounded-l-full" />
+                  <div aria-hidden="true" className="absolute left-[-3px] top-[32%] w-[3px] h-10 bg-[#2e2e2e] rounded-l-full" />
+                  <div aria-hidden="true" className="absolute left-[-3px] top-[44%] w-[3px] h-10 bg-[#2e2e2e] rounded-l-full" />
+                  {/* 側面ボタン (電源) */}
+                  <div aria-hidden="true" className="absolute right-[-3px] top-[28%] w-[3px] h-14 bg-[#2e2e2e] rounded-r-full" />
                 </div>
               </div>
             </ScrollReveal>
@@ -224,8 +231,8 @@ export default function HomePage() {
                 <ul className="space-y-5 mb-8">
                   {[
                     { Icon: Smartphone, title: "アプリのインストール不要", body: "URLを開くだけ。Safari・Chromeがあれば、今すぐ使えます。" },
-                    { Icon: Zap, title: "スマホ向けUIで設計", body: "タップ・スクロールで快適に動作。小さな画面でも迷わない。" },
-                    { Icon: ShieldCheck, title: "ファイルは端末内で処理", body: "PDFや画像は外部に送信されず、デバイス内だけで完結。" },
+                    { Icon: Zap, title: "スマホ向けUIで快適操作", body: "タップ・スクロールで直感的に動作。小さな画面でも迷わない。" },
+                    { Icon: ShieldCheck, title: "ファイルは端末内で処理", body: "PDFや画像は外部に送信されず、端末内だけで処理が完結。" },
                   ].map(({ Icon, title, body }) => (
                     <li key={title} className="flex items-start gap-4">
                       <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/40 flex items-center justify-center flex-shrink-0 mt-0.5">

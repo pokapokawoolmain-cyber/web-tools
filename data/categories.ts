@@ -96,9 +96,10 @@ const IMAGE_CATEGORY: CategoryConfig = {
   popularToolIds: ["image-compress", "heic-to-jpg", "id-photo", "image-resize", "video-compress"],
   allToolIds: [
     "image-compress", "heic-to-jpg", "id-photo", "image-resize", "video-compress",
+    "favicon-generator",
   ],
   stats: [
-    { label: "画像ツール数", value: "5種類" },
+    { label: "画像ツール数", value: "6種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "対応形式", value: "JPG・PNG・HEIC・MP4他" },
     { label: "ファイル送信", value: "なし（ブラウザ完結）" },
@@ -136,9 +137,10 @@ const MONEY_CATEGORY: CategoryConfig = {
   allToolIds: [
     "fire-simulator", "nisa-calculator", "net-income", "mortgage-calculator",
     "furusato-simulator", "furusato",
+    "mercari-profit", "gas-calculator", "shift-salary", "point-simulator", "side-job-profit",
   ],
   stats: [
-    { label: "計算ツール数", value: "6種類" },
+    { label: "計算ツール数", value: "11種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・ログイン", value: "不要" },
     { label: "計算速度", value: "リアルタイム" },
@@ -171,9 +173,9 @@ const BUSINESS_CATEGORY: CategoryConfig = {
   title: "無料ビジネス書類ツール集｜契約書・請求書・退職届【登録不要】",
   keywords: ["業務委託契約書 無料", "請求書 作成 無料", "NDA テンプレ 無料", "退職届 テンプレ", "見積書 無料", "内容証明 テンプレ"],
   popularToolIds: ["invoice-generator", "business-contract-generator", "resignation-letter-generator", "hanko-generator", "pdf-signature"],
-  allToolIds: ["business-contract-generator", "nda-generator", "invoice-generator", "estimate-generator", "resignation-letter-generator", "certified-letter-generator", "hanko-generator", "pdf-signature", "receipt-generator"],
+  allToolIds: ["business-contract-generator", "nda-generator", "invoice-generator", "estimate-generator", "resignation-letter-generator", "certified-letter-generator", "hanko-generator", "pdf-signature", "receipt-generator", "resume-builder"],
   stats: [
-    { label: "ビジネスツール数", value: "9種類" },
+    { label: "ビジネスツール数", value: "10種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・インストール", value: "不要" },
     { label: "PDF保存", value: "対応" },
