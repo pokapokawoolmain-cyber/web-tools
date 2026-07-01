@@ -123,8 +123,8 @@ export default function SalaryPage() {
             <p className="text-[13px] text-slate-500 dark:text-zinc-400 mb-4">
               2026年（令和8年）の税制改正により、所得税の非課税ライン（いわゆる「年収の壁」）が従来の103万円から
               <strong className="text-slate-700 dark:text-zinc-200">178万円</strong>
-              に大幅引き上げされます。給与所得控除と基礎控除の合計が最大178万円（年収665万円以下）となり、
-              年収665万円以下の約8割の給与所得者は手取りが増えます。
+              に大幅引き上げされます。給与所得控除と基礎控除の合計が最大178万円となり（年収665万円以下の場合）、
+              全給与所得者の約8割が手取り増の恩恵を受けます。
             </p>
             <div className="overflow-x-auto mb-4">
               <table className="w-full border-collapse text-sm">
@@ -159,7 +159,7 @@ export default function SalaryPage() {
               </p>
               <p>
                 <strong className="text-slate-700 dark:text-zinc-300">対象者</strong>
-                　年収665万円以下の給与所得者（全納税者の約8割）。年収665万円超は段階的に縮小されます。
+                　年収665万円以下の給与所得者（全給与所得者の約8割）。年収665万円超は段階的に縮小されます。
               </p>
               <p>
                 <strong className="text-slate-700 dark:text-zinc-300">社会保険の壁は変わらない</strong>

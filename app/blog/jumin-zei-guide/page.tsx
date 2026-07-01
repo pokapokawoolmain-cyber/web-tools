@@ -44,7 +44,7 @@ export default function Page() {
 
       <h2>住民税の計算式</h2>
       <div className="bg-slate-100 dark:bg-zinc-800 rounded-lg p-4 my-4 text-sm font-mono">
-        住民税 ＝ 所得割（課税所得 × 10%）＋ 均等割（約5,000円）
+        住民税 ＝ 所得割（課税所得 × 10%）＋ 均等割（年5,000円程度）
       </div>
       <ul className="space-y-2">
         <li><strong>所得割</strong>：（給与収入 – 給与所得控除 – 所得控除）× 10%。都道府県税4%＋市区町村税6%</li>
@@ -100,7 +100,7 @@ export default function Page() {
       </ul>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
-      <h2>住民税の控除・引き方</h2>
+      <h2>住民税に使える主な控除の種類</h2>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
           <thead>
@@ -130,7 +130,7 @@ export default function Page() {
       </div>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
-      <h2>住民税を合法的に減らす方法</h2>
+      <h2>住民税の節税方法</h2>
       <ul className="space-y-2">
         <li>
           <strong>ふるさと納税</strong>：寄付額から2,000円を除いた全額が翌年の住民税から控除されます。<Link href="/tools/furusato-simulator">ふるさと納税シミュレーター</Link>で上限額を確認しましょう。
@@ -149,7 +149,7 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>2026年6月：住民税通知書が届く時期</h2>
       <p>
-        毎年<strong>6月</strong>に「住民税（特別徴収税額）の通知書」が会社経由で届きます。これは前年（2025年1月〜12月）の所得に基づいて計算された住民税が、2026年6月から2027年5月の12回に分けて給与から天引きされることを示すものです。
+        毎年<strong>6月</strong>に「住民税（特別徴収税額）の通知書」が会社経由で届きます。2026年6月の通知書は、2025年1月〜12月の所得をもとに計算された金額です。その住民税が2026年6月から2027年5月の12回に分けて給与から天引きされます。
       </p>
       <ul className="space-y-2 text-[14px]">
         <li>2026年6月通知書 → <strong>2025年の所得</strong>に対する住民税（2026年6月〜2027年5月に天引き）</li>
