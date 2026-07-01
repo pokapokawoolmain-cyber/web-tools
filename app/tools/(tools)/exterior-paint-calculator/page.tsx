@@ -2,16 +2,92 @@ import type { Metadata } from "next";
 import { generateMeta } from "@/lib/seo";
 import { ExteriorPaintCalculator } from "./ExteriorPaintCalculator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = generateMeta({
-  title: "外壁塗装面積計算ツール｜坪数・間口・奥行から自動計算【無料】",
-  description: "建物の間口・奥行・坪数を入力して外壁塗装面積を自動計算。塗料使用量・工事費目安も算出。シリコン・フッ素・ラジカル・無機塗料に対応。登録不要・ブラウザ完結。",
+  title: "外壁塗装 費用計算ツール【無料】坪数・面積から工事費・塗料使用量を自動算出",
+  description: "建物の坪数・間口・奥行を入力して外壁塗装の面積・塗料使用量・工事費目安を自動計算。30坪で約80〜130万円、40坪で約110〜170万円が目安。シリコン・フッ素・無機塗料の坪単価比較付き。無料・登録不要。",
   path: "/tools/exterior-paint-calculator",
-  keywords: ["外壁塗装 面積 計算", "外壁 塗料 使用量", "塗装 坪数 計算 無料", "外壁塗装 見積 計算", "外壁塗装 費用 目安", "塗装面積 計算方法"],
+  keywords: [
+    "外壁塗装 費用 計算",
+    "外壁塗装 面積 計算",
+    "外壁塗装 坪単価",
+    "外壁塗装 費用 目安 坪数",
+    "塗装 坪数 計算 無料",
+    "外壁塗装 見積 計算",
+  ],
 });
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "30坪の家の外壁塗装費用はいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "30坪（延べ床面積）の場合、外壁面積は約95〜130m²が目安です。シリコン塗料（坪単価4.5〜7万円）で約90〜130万円、フッ素塗料で約120〜160万円が概算です。足場・シーリング・付帯部を含む総額は業者の現地見積で確認してください。" },
+    },
+    {
+      "@type": "Question",
+      name: "外壁塗装の塗料はどれを選べばいいですか？",
+      acceptedAnswer: { "@type": "Answer", text: "コスパ重視ならシリコン（耐用年数10〜15年）、長期メンテナンスを減らしたいならフッ素（15〜20年）か無機（20〜25年）がおすすめです。ただし高グレードほど初期費用が上がるため、次のメンテナンスまでの年数で比較すると判断しやすいです。" },
+    },
+    {
+      "@type": "Question",
+      name: "外壁塗装の面積計算はなぜ坪数と間口・奥行で結果が違いますか？",
+      acceptedAnswer: { "@type": "Answer", text: "坪数法は延べ床面積から外壁面積を推定する概算計算のため、建物形状・バルコニー・吹き抜けなどの影響で実測値と差が生じます。より正確な計算には、建物の間口・奥行・階数を入力する方法をご利用ください。" },
+    },
+    {
+      "@type": "Question",
+      name: "外壁塗装の費用に含まれないものは何ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "このツールで算出する工事費は外壁面のみの塗装費です。足場仮設費（3〜10万円）、シーリング（コーキング）打ち替え費、雨樋・軒天・幕板などの付帯部塗装費、高圧洗浄費は別途発生します。総額の目安は算出金額に30〜40%を加算してください。" },
+    },
+  ],
+};
 
 const seoContent = (
   <div className="space-y-8">
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">外壁塗装 坪数別工事費目安（2026年版）</h2>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+        シリコン塗料を使用した場合の工事費目安です（足場・高圧洗浄含む・付帯部別途）。
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">延べ床面積</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">外壁面積目安</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">シリコン</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">フッ素</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">無機</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["20坪（66m²）", "約85〜100m²", "約60〜90万円", "約80〜115万円", "約100〜140万円"],
+              ["25坪（83m²）", "約100〜120m²", "約75〜110万円", "約100〜140万円", "約120〜170万円"],
+              ["30坪（99m²）", "約115〜135m²", "約90〜130万円", "約120〜160万円", "約145〜200万円"],
+              ["35坪（116m²）", "約130〜155m²", "約105〜150万円", "約135〜180万円", "約165〜230万円"],
+              ["40坪（132m²）", "約145〜170m²", "約120〜170万円", "約155〜205万円", "約185〜260万円"],
+              ["50坪（165m²）", "約175〜210m²", "約145〜210万円", "約190〜255万円", "約230〜320万円"],
+            ].map(([size, area, silicon, fluorine, inorganic], i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium text-[13px]">{size}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-slate-500 dark:text-zinc-500 text-[13px]">{area}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-blue-600 dark:text-blue-400 text-[13px]">{silicon}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-[13px]">{fluorine}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-[13px]">{inorganic}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[12px] text-slate-400 dark:text-zinc-500 mt-2">
+        ※ 足場（仮設費）・高圧洗浄含む概算です。付帯部（雨樋・軒天等）・シーリング打ち替えは別途です。地域・業者・建物形状により変動します。
+      </p>
+    </section>
+
     <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">外壁塗装面積計算ツールの使い方</h2>
       <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
@@ -84,14 +160,17 @@ const seoContent = (
 
 export default function Page() {
   return (
-    <ToolLayout
-      title="外壁塗装面積計算ツール"
-      description="間口・奥行・坪数から外壁塗装面積を自動計算。塗料使用量・工事費目安も算出。"
-      icon="🏠"
-      slug="exterior-paint-calculator"
-      seoContent={seoContent}
-    >
-      <ExteriorPaintCalculator />
-    </ToolLayout>
+    <>
+      <JsonLd data={faqSchema} />
+      <ToolLayout
+        title="外壁塗装 費用計算ツール"
+        description="坪数・間口・奥行から外壁塗装面積・塗料使用量・工事費目安を自動計算。坪数別費用早見表付き。"
+        icon="🏠"
+        slug="exterior-paint-calculator"
+        seoContent={seoContent}
+      >
+        <ExteriorPaintCalculator />
+      </ToolLayout>
+    </>
   );
 }
