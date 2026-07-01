@@ -2,20 +2,33 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
 const post = getBlogPost("jumin-zei-guide")!;
 
 export const metadata: Metadata = generateMeta({
-  title: post.title,
-  description: post.description,
+  title: "住民税の計算方法【2026年版・年収別早見表】いつから引かれる？控除の仕組みを解説",
+  description: "2026年6月通知書対応。年収400万の住民税は約16万円（月1.3万円）。年収別の住民税額早見表、新卒2年目から急に手取りが減る理由、所得割・均等割・ふるさと納税の節税をわかりやすく解説。",
   path: `/blog/${post.slug}`,
-  keywords: ["住民税 計算方法", "住民税 年収別", "住民税 いつから", "新卒 住民税 2年目", "住民税 控除 仕組み"],
+  keywords: ["住民税 計算方法", "住民税 年収別", "住民税 いつから", "新卒 住民税 2年目", "住民税 控除 仕組み", "住民税 2026", "住民税 いくら 2026", "住民税 通知書 いつ"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: post.faqs?.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         住民税は年収400万円で約<strong>16万円（月1.3万円）</strong>が目安。新卒2年目の6月から突然引かれ始めるため、手取りが急減したように感じる原因の一つです。計算方法・年収別早見表・控除の仕組みを解説します。
@@ -134,6 +147,32 @@ export default function Page() {
       </ul>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>2026年6月：住民税通知書が届く時期</h2>
+      <p>
+        毎年<strong>6月</strong>に「住民税（特別徴収税額）の通知書」が会社経由で届きます。これは前年（2025年1月〜12月）の所得に基づいて計算された住民税が、2026年6月から2027年5月の12回に分けて給与から天引きされることを示すものです。
+      </p>
+      <ul className="space-y-2 text-[14px]">
+        <li>2026年6月通知書 → <strong>2025年の所得</strong>に対する住民税（2026年6月〜2027年5月に天引き）</li>
+        <li>通知書で「月いくら引かれるか」を事前に確認できる</li>
+        <li>副業・投資収益がある場合は、ここで追加徴収の金額がわかる</li>
+      </ul>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>よくある質問</h2>
+      <dl className="space-y-4">
+        {post.faqs?.map(({ q, a }) => (
+          <div key={q} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-4">
+            <dt className="font-semibold text-slate-800 dark:text-zinc-200 mb-1 flex items-start gap-2">
+              <span className="text-blue-500 font-bold flex-shrink-0">Q.</span>{q}
+            </dt>
+            <dd className="text-slate-600 dark:text-slate-400 text-[14px] flex items-start gap-2">
+              <span className="text-blue-500 font-bold flex-shrink-0">A.</span>{a}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>関連記事</h2>
       <ul className="space-y-2">
         <li><Link href="/blog/shakai-hoken-guide">社会保険料の計算方法【年収別早見表】</Link></li>
@@ -144,8 +183,9 @@ export default function Page() {
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
-        本記事の数値は現行の税率・控除額に基づく概算です。居住する自治体・家族構成・各種控除の状況により実際の住民税額は異なります。正確な金額は市区町村の税務窓口または確定申告書で確認してください。
+        本記事の数値は2026年現行の税率・控除額に基づく概算です。居住する自治体・家族構成・各種控除の状況により実際の住民税額は異なります。正確な金額は市区町村の税務窓口または確定申告書で確認してください。
       </div>
     </BlogLayout>
+    </>
   );
 }

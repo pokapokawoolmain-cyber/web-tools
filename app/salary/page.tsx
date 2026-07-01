@@ -7,10 +7,10 @@ import { calcTakehome } from "@/lib/takehome";
 import { BottomAd } from "@/components/ads/presets";
 
 export const metadata: Metadata = generateMeta({
-  title: "年収・月収の手取り早見表【2026年版】｜月収50万・年収1000万の手取りを一覧比較",
-  description: "年収300〜1000万円・月収25〜100万円の手取りを早見表で一覧確認。月収から手取りへの換算、所得税・住民税・社会保険料の内訳、節税方法までまとめた2026年版。",
+  title: "年収・手取り早見表【2026年税制改正対応】年収の壁178万円・月収50万・年収1000万の手取り一覧",
+  description: "2026年税制改正（年収の壁178万円）対応の手取り早見表。年収300〜1000万円・月収25〜100万円の手取りを一覧確認。所得税・住民税・社会保険料の内訳、年収別の増税・減税シミュレーション付き。",
   path: "/salary",
-  keywords: ["手取り 早見表", "年収 手取り", "月収 手取り", "月収 手取り 一覧", "手取り早見表 2026", "年収 月収 換算", "年収1000万 手取り"],
+  keywords: ["手取り 早見表", "年収 手取り", "月収 手取り", "月収 手取り 一覧", "手取り早見表 2026", "年収 月収 換算", "年収1000万 手取り", "年収の壁 178万円", "2026年税制改正 手取り", "年収 手取り 計算 2026"],
 });
 
 // 月収（額面・万円）→ 年収×12 → 手取り。ツールと同一ロジック（独身・基礎控除・賞与なし）
@@ -117,6 +117,57 @@ export default function SalaryPage() {
             </p>
           </section>
 
+          {/* 2026年税制改正セクション */}
+          <section className="mt-12">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">2026年税制改正：年収の壁が178万円に引き上げ</h2>
+            <p className="text-[13px] text-slate-500 dark:text-zinc-400 mb-4">
+              2026年（令和8年）の税制改正により、所得税の非課税ライン（いわゆる「年収の壁」）が従来の103万円から
+              <strong className="text-slate-700 dark:text-zinc-200">178万円</strong>
+              に大幅引き上げされます。給与所得控除と基礎控除の合計が最大178万円（年収665万円以下）となり、
+              年収665万円以下の約8割の給与所得者は手取りが増えます。
+            </p>
+            <div className="overflow-x-auto mb-4">
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-slate-100 dark:bg-zinc-800">
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">項目</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">2025年まで（従来）</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">2026年（改正後）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["所得税の非課税ライン（年収の壁）", "103万円", "178万円"],
+                    ["基礎控除（最大）", "48万円", "104万円（特例）"],
+                    ["給与所得控除（最低保証）", "55万円", "74万円（特例）"],
+                    ["合計控除上限", "103万円", "178万円"],
+                  ].map(([item, before, after], i) => (
+                    <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium text-[13px]">{item}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-slate-500 dark:text-zinc-500 text-[13px]">{before}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-blue-600 dark:text-blue-400 font-semibold text-[13px]">{after}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="space-y-2 text-[13px] text-slate-600 dark:text-zinc-400">
+              <p>
+                <strong className="text-slate-700 dark:text-zinc-300">いつから適用？</strong>
+                　2026年1月1日以降の給与に適用。毎月の源泉徴収は従来通りで、増えた分は
+                <strong>2026年12月の年末調整でまとめて還付</strong>されます。
+              </p>
+              <p>
+                <strong className="text-slate-700 dark:text-zinc-300">対象者</strong>
+                　年収665万円以下の給与所得者（全納税者の約8割）。年収665万円超は段階的に縮小されます。
+              </p>
+              <p>
+                <strong className="text-slate-700 dark:text-zinc-300">社会保険の壁は変わらない</strong>
+                　130万円・106万円などの社会保険加入の基準は別制度のため、この改正の影響を受けません。
+              </p>
+            </div>
+          </section>
+
           <div className="mt-10 p-6 rounded-2xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700">
             <p className="text-[14px] font-semibold text-slate-700 dark:text-zinc-300 mb-2">全年収の手取り一覧を確認する</p>
             <p className="text-[13px] text-slate-500 dark:text-zinc-500 mb-3">
@@ -131,7 +182,8 @@ export default function SalaryPage() {
           </div>
 
           <div className="mt-6 p-6 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50">
-            <p className="text-[13px] font-semibold text-blue-600 dark:text-blue-400 mb-1">自分の手取りを正確に計算する</p>
+            <p className="text-[13px] font-semibold text-blue-600 dark:text-blue-400 mb-1">2026年税制改正後の手取りを正確に計算する</p>
+            <p className="text-[12px] text-blue-600 dark:text-blue-500 mb-2">年収・家族構成・各種控除を入力して手取り額を即計算。</p>
             <Link
               href="/tools/net-income"
               className="inline-flex items-center gap-2 text-[17px] font-bold text-blue-700 dark:text-blue-300 hover:opacity-80 transition-opacity"

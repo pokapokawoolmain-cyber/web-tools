@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getBlogPost } from "@/data/blog-posts";
 import { BlogLayout } from "../_components/BlogLayout";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import Link from "next/link";
 
 const post = getBlogPost("nisa-monthly-simulation")!;
 
@@ -9,12 +11,24 @@ export const metadata: Metadata = generateMeta({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
-  keywords: ["新NISA 積立 シミュレーション", "新NISA 月3万 30年", "新NISA いくら積み立て", "新NISA 利回り 計算", "積立NISA 複利 計算"],
+  keywords: ["新NISA 積立 シミュレーション", "新NISA 月3万 30年", "新NISA いくら積み立て", "新NISA 利回り 計算", "積立NISA 複利 計算", "新NISA 毎月 いくら", "新NISA 2000万円 積立 毎月"],
   type: "article",
 });
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: post.faqs?.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         「毎月5万円積み立てたら30年後にいくらになるんだろう」と気になって調べても、&ldquo;複利の力はすごい&rdquo;という話ばかりで具体的な金額が出てこないことが多い。
@@ -22,6 +36,14 @@ export default function Page() {
       <p>
         この記事では、月1万・3万・5万・7万・10万円のパターンを、利回り3%・5%・7%それぞれで10年・20年・30年後の資産額を全部計算してまとめました。あわせて、新NISAの非課税メリットが実際にどれくらいの金額になるか、いつ始めるのがいいか、暴落したときどうするかも書いています。
       </p>
+
+      <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
+        <strong className="text-blue-800 dark:text-blue-300 block mb-1">自分の条件で試算する</strong>
+        <p className="text-[14px] text-blue-700 dark:text-blue-400 mb-3">積立額・年数・利回り・現在の保有資産を入力して、将来の資産額をグラフ付きで即計算。</p>
+        <Link href="/tools/nisa-calculator" className="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+          新NISA積立シミュレーターを使う（無料）→
+        </Link>
+      </div>
 
       <h2>計算の前提を整理する</h2>
       <p>
@@ -409,15 +431,61 @@ export default function Page() {
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
+      <h2>目標額から逆算：毎月いくら積み立てればいい？</h2>
+      <p>
+        「老後に2,000万円用意したい」「10年後に1,000万円貯めたい」など、目標額から必要な毎月の積立額を逆算した早見表です（利回り5%想定）。
+      </p>
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">目標資産</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">10年で達成</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">20年で達成</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">30年で達成</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["500万円", "約3.2万円/月", "約1.2万円/月", "約0.6万円/月"],
+              ["1,000万円", "約6.5万円/月", "約2.4万円/月", "約1.2万円/月"],
+              ["2,000万円", "約12.9万円/月", "約4.9万円/月", "約2.4万円/月"],
+              ["3,000万円", "約19.4万円/月", "約7.3万円/月", "約3.6万円/月"],
+              ["5,000万円（FIRE水準）", "約32.4万円/月", "約12.2万円/月", "約6.0万円/月"],
+            ].map(([target, y10, y20, y30], i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">{target}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-600 dark:text-zinc-400">{y10}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-blue-600 dark:text-blue-400 font-medium">{y20}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-slate-600 dark:text-zinc-400">{y30}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[13px] text-slate-500 dark:text-zinc-500">
+        ※利回り5%・毎月末積立の複利計算。実際の運用成績は変動します。積立開始時点の保有資産がある場合や他の利回りで試算したい場合は下記ツールをご活用ください。
+      </p>
+
+      <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>自分の数字で計算してみる</h2>
       <p>
-        積立額・年数・利回り・開始時点の保有資産を自分の条件で入力して試算したい場合は、新NISA積立計算ツールを使ってみてください。複数パターンを並べて比較することもできます。
+        積立額・年数・利回り・開始時点の保有資産を自分の条件で入力して試算したい場合は、新NISA積立シミュレーターを使ってみてください。複数パターンを並べて比較することもできます。
       </p>
+
+      <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
+        <strong className="text-blue-800 dark:text-blue-300 block mb-1">積立額・期間・利回りを自由に設定して試算</strong>
+        <p className="text-[14px] text-blue-700 dark:text-blue-400 mb-3">グラフ付きで資産推移を確認。複数パターンの比較も無料。</p>
+        <Link href="/tools/nisa-calculator" className="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+          新NISA積立シミュレーターを使う→
+        </Link>
+      </div>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">
         <strong className="text-slate-700 dark:text-zinc-300 block mb-1">免責事項</strong>
         本記事のシミュレーション結果は参考値です。実際の運用成績は将来を保証するものではありません。投資判断はご自身の責任でお願いします。
       </div>
     </BlogLayout>
+    </>
   );
 }
