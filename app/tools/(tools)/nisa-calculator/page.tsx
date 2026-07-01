@@ -7,13 +7,14 @@ import { calcFutureValueMonthly } from "@/lib/utils";
 import Link from "next/link";
 
 export const metadata: Metadata = generateMeta({
-  title: "新NISA積立シミュレーション｜毎月いくらで将来いくら【無料・複利計算】",
+  title: "新NISA積立シミュレーション【2026年版】毎月3万・5万・10万を10年・20年・30年積み立てると？",
   description:
-    "毎月の積立額・運用期間・利回りを入力するだけで将来の資産額を計算。月3万・5万・10万を10〜30年積み立てた場合の早見表つきで、新NISAの複利効果を可視化できます。無料・登録不要・スマホ対応。",
+    "毎月の積立額・運用期間・利回りを入力するだけで将来の資産額を計算。月3万・5万・10万を10〜30年積み立てた場合の早見表つき。利回り3%・5%・7%別比較、新NISAの生涯1800万円枠の活用法も解説。無料・登録不要。",
   path: "/tools/nisa-calculator",
   keywords: [
     "新NISA 積立 計算", "nisa 積立 シミュレーション", "新nisa 毎月 いくら",
-    "積立NISA 複利計算", "投資 シミュレーション", "つみたて 計算",
+    "新NISA 20年後 シミュレーション", "積立NISA 複利計算", "新NISA 1800万 いくら",
+    "新nisa シミュレーション 2026", "つみたて nisa 計算",
   ],
   ogImage: `/api/og?${new URLSearchParams({ title: "新NISA積立シミュレーション", icon: "📈", desc: "毎月いくらで将来いくら？複利を可視化。" }).toString()}`,
 });
@@ -25,6 +26,16 @@ const NISA_TABLE = [30000, 50000, 100000].map((monthly) => ({
     years,
     future: Math.round(calcFutureValueMonthly(monthly, 5, years) / 10000),
     principal: Math.round((monthly * 12 * years) / 10000),
+  })),
+}));
+
+// 利回り別比較表（月5万円固定）
+const RATE_TABLE = [3, 5, 7].map((rate) => ({
+  rate,
+  rows: [10, 20, 30].map((years) => ({
+    years,
+    future: Math.round(calcFutureValueMonthly(50000, rate, years) / 10000),
+    principal: Math.round((50000 * 12 * years) / 10000),
   })),
 }));
 
@@ -105,6 +116,44 @@ const seoContent = (
     </div>
     <p>
       月3万円・30年で約2,507万円、月5万円なら約4,179万円、月10万円なら約8,357万円が目安です。早く始めるほど複利の恩恵が大きく、10年の差が資産額を数百万〜1,000万円以上変えることがあります（年利は過去実績をもとにした仮定で、運用成果を保証するものではありません）。
+    </p>
+    <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
+      利回り別の比較：3%・5%・7%（月5万円の場合）
+    </h3>
+    <p>同じ月5万円でも、利回りによって将来の資産額は大きく変わります。インデックス投資の参考値として3%・5%・7%のシナリオを比較してください。</p>
+    <div className="overflow-x-auto not-prose my-3">
+      <table className="w-full border-collapse text-sm">
+        <thead>
+          <tr className="bg-slate-100 dark:bg-zinc-800">
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">想定利回り</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">10年後</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">20年後</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">30年後</th>
+          </tr>
+        </thead>
+        <tbody>
+          {RATE_TABLE.map(({ rate, rows }, i) => (
+            <tr key={rate} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+              <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium">年利{rate}%</td>
+              {rows.map((r) => (
+                <td key={r.years} className="border border-slate-200 dark:border-zinc-700 px-3 py-2">
+                  <span className="text-blue-600 dark:text-blue-400 font-medium">約{r.future.toLocaleString()}万円</span>
+                  <span className="block text-[11px] text-slate-400 dark:text-zinc-500">（元本{r.principal.toLocaleString()}万）</span>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p className="text-[12px] text-slate-500 dark:text-zinc-500">
+      ※ 保守的シナリオは3%（債券・バランス型）、標準は5%（全世界株式インデックス相当）、楽観的シナリオは7%（米国株インデックス長期平均）が目安です。過去実績であり将来を保証するものではありません。
+    </p>
+    <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
+      新NISAの生涯1,800万円枠を使い切るには？
+    </h3>
+    <p>
+      新NISAの生涯非課税投資枠は1,800万円（成長投資枠は1,200万円が上限）。月10万円で積み立てると15年で枠を使い切ります。月5万円なら30年、月3万円なら50年かかる計算です。
     </p>
     <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
       FIREとNISAの組み合わせ
