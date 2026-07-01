@@ -56,7 +56,7 @@ export default function Page() {
       <h2>iPhoneからそのままJPGに変換する手順</h2>
       <div className="space-y-5 my-6">
         {[
-          { step: "①", title: "SafariでツールページにアクセスRする", body: "iPhoneのSafariでToolBoxJPのHEIC→JPG変換ツールを開きます。ブックマークしておくと次回から便利です。" },
+          { step: "①", title: "Safariでツールページにアクセスする", body: "iPhoneのSafariでToolBoxJPのHEIC→JPG変換ツールを開きます。ブックマークしておくと次回から便利です。" },
           { step: "②", title: "「ファイルを選択」をタップする", body: "ページ内の「ファイルを選択」ボタンをタップします。iPhoneでは「写真ライブラリ」「ファイル」などから選択できます。" },
           { step: "③", title: "変換したいHEICファイルを選ぶ", body: "写真ライブラリから変換したい写真を選択します。複数選択も可能です。" },
           { step: "④", title: "JPGをダウンロードする", body: "変換後、「ダウンロード」ボタンをタップします。iPhoneでは「ファイルに保存」または「写真に保存」から保存先を選べます。" },
