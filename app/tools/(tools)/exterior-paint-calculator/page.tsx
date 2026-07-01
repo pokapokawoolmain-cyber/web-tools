@@ -57,24 +57,22 @@ const seoContent = (
           <thead>
             <tr className="bg-slate-100 dark:bg-zinc-800">
               <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">延べ床面積</th>
-              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">外壁面積目安</th>
-              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">シリコン</th>
-              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">フッ素</th>
-              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">無機</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">シリコン（足場込み）</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">フッ素（足場込み）</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">無機（足場込み）</th>
             </tr>
           </thead>
           <tbody>
             {[
-              ["20坪（66m²）", "約85〜100m²", "約60〜90万円", "約80〜115万円", "約100〜140万円"],
-              ["25坪（83m²）", "約100〜120m²", "約75〜110万円", "約100〜140万円", "約120〜170万円"],
-              ["30坪（99m²）", "約115〜135m²", "約90〜130万円", "約120〜160万円", "約145〜200万円"],
-              ["35坪（116m²）", "約130〜155m²", "約105〜150万円", "約135〜180万円", "約165〜230万円"],
-              ["40坪（132m²）", "約145〜170m²", "約120〜170万円", "約155〜205万円", "約185〜260万円"],
-              ["50坪（165m²）", "約175〜210m²", "約145〜210万円", "約190〜255万円", "約230〜320万円"],
-            ].map(([size, area, silicon, fluorine, inorganic], i) => (
+              ["20坪（66m²）", "約60〜90万円", "約80〜115万円", "約100〜140万円"],
+              ["25坪（83m²）", "約75〜110万円", "約100〜140万円", "約120〜170万円"],
+              ["30坪（99m²）", "約90〜130万円", "約120〜160万円", "約145〜200万円"],
+              ["35坪（116m²）", "約105〜150万円", "約135〜180万円", "約165〜230万円"],
+              ["40坪（132m²）", "約120〜170万円", "約155〜205万円", "約185〜260万円"],
+              ["50坪（165m²）", "約145〜210万円", "約190〜255万円", "約230〜320万円"],
+            ].map(([size, silicon, fluorine, inorganic], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium text-[13px]">{size}</td>
-                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-slate-500 dark:text-zinc-500 text-[13px]">{area}</td>
                 <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-blue-600 dark:text-blue-400 text-[13px]">{silicon}</td>
                 <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-[13px]">{fluorine}</td>
                 <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-[13px]">{inorganic}</td>

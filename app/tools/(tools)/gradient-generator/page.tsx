@@ -24,7 +24,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "グラデーションに使う色を3色以上にできますか？",
-      acceptedAnswer: { "@type": "Answer", text: "はい。「追加」ボタンで最大5色まカラーストップを追加できます。各ストップの色とパーセント位置を自由に調整できます。" },
+      acceptedAnswer: { "@type": "Answer", text: "はい。「追加」ボタンで最大5色までカラーストップを追加できます。各ストップの色とパーセント位置を自由に調整できます。" },
     },
     {
       "@type": "Question",
