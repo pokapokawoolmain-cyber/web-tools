@@ -3,18 +3,26 @@
 // SEO: "FIRE シミュレーター" "FIRE 計算" で上位狙い
 // ========================================
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { FireSimulator } from "./FireSimulator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "FIREシミュレーター",
-  "現在の資産・毎月の積立・生活費を入力するだけでFIRE達成年数と必要資産額を計算。",
-  "fire-simulator",
-  ["FIRE計算", "早期退職", "経済的自由", "4%ルール", "資産運用", "セミリタイア"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "FIREシミュレーター【無料・2026年版】必要資産額・達成年数を4%ルールで計算",
+  description: "現在の資産・毎月の積立・年間生活費を入力するだけでFIRE達成年数と必要資産額を計算。4%ルールによる早期退職シミュレーション。年間生活費300万→7,500万円、400万→1億円の早見表付き。完全無料。",
+  path: "/tools/fire-simulator",
+  keywords: [
+    "FIRE シミュレーション",
+    "FIRE 必要資産額 計算",
+    "早期退職 計算",
+    "4%ルール 計算",
+    "FIRE 何年 計算",
+    "セミリタイア 資産 計算",
+    "経済的自由 シミュレーター",
+  ],
+});
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -63,10 +71,40 @@ const seoContent = (
       「年間生活費の25倍の資産があれば、毎年4%ずつ取り崩しても資産が尽きない」という米国のトリニティ研究をもとにした考え方です。例えば年間生活費が300万円なら7,500万円、400万円なら1億円がFIREの目安です。
     </p>
     <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
-      必要資産額の早見表
+      必要資産額の早見表（生活費×取り崩し率）
     </h3>
-    <p>
-      生活費と取り崩し率の組み合わせで、必要資産額は大きく変わります。月25万円（年300万円）の生活なら4%ルールで7,500万円。月30万円（年360万円）なら9,000万円。取り崩し率を3%に抑えると同じ生活費でも1億円〜1.2億円が必要になります。
+    <p>生活費と取り崩し率の組み合わせで、必要資産額は大きく変わります。</p>
+    <div className="overflow-x-auto not-prose my-3">
+      <table className="w-full border-collapse text-sm">
+        <thead>
+          <tr className="bg-slate-100 dark:bg-zinc-800">
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">年間生活費</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">取り崩し率3.5%</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">取り崩し率4.0%</th>
+            <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">取り崩し率4.5%</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            ["200万円（月17万円）", "約5,700万円", "約5,000万円", "約4,400万円"],
+            ["240万円（月20万円）", "約6,900万円", "約6,000万円", "約5,300万円"],
+            ["300万円（月25万円）", "約8,600万円", "約7,500万円", "約6,700万円"],
+            ["360万円（月30万円）", "約1.03億円", "約9,000万円", "約8,000万円"],
+            ["400万円（月33万円）", "約1.14億円", "約1.0億円", "約8,900万円"],
+            ["480万円（月40万円）", "約1.37億円", "約1.2億円", "約1.07億円"],
+          ].map(([expenses, r35, r40, r45], i) => (
+            <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+              <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium text-[13px]">{expenses}</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-[13px]">{r35}</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-blue-600 dark:text-blue-400 font-medium text-[13px]">{r40}</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-[13px]">{r45}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p className="text-[12px] text-slate-500 dark:text-zinc-500">
+      ※ 4%ルールは米国のトリニティ研究をもとにした目安です。日本では物価・税制を考慮して3.5%で計算することを推奨する専門家もいます。
     </p>
     <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
       新NISAとFIREの組み合わせ

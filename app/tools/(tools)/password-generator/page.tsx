@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { PasswordGenerator } from "./PasswordGenerator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "パスワード生成",
-  "長さ・記号・数字を自由に設定。強度メーター付きの安全なランダムパスワードをブラウザ内で即生成。登録不要・無料。",
-  "password-generator",
-  ["パスワード生成 無料", "安全 パスワード 作り方", "ランダムパスワード 強い", "強いパスワード 生成ツール", "セキュリティ パスワード"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "パスワード自動生成ツール【無料・安全】強いランダムパスワードをブラウザで即作成",
+  description: "長さ・大文字小文字・数字・記号を自由に設定して強いランダムパスワードを即生成。ブラウザ完結でサーバー送信なし・完全安全。12〜20文字・全文字種対応。登録不要・無料。",
+  path: "/tools/password-generator",
+  keywords: [
+    "パスワード 自動生成",
+    "パスワード 作成 ツール",
+    "ランダム パスワード 生成 無料",
+    "強い パスワード 生成",
+    "安全 パスワード 作り方",
+    "パスワード 生成 無料 オンライン",
+  ],
+});
 
 const faqSchema = {
   "@context": "https://schema.org",
