@@ -8,10 +8,10 @@ import { RelatedPdfTools } from "@/components/pdf/RelatedPdfTools";
 import { RelatedArticles } from "@/app/tools/_components/RelatedArticles";
 
 export const metadata: Metadata = generateMeta({
-  title: "PDFをJPGに変換｜PDFページを高画質で画像保存【無料・登録不要】",
-  description: "PDFページをJPG・PNG画像に変換。ブラウザ完結・登録不要・ZIPまとめダウンロード対応。全ページ一括変換・高解像度出力。スマホ・PC両対応。ファイルはサーバーに送信されません。",
+  title: "PDF JPG変換ツール【無料・登録不要】PDFを高画質JPG画像に一括変換｜ブラウザ完結",
+  description: "無料のPDF JPG変換ツール。PDFの全ページを高画質JPG・画像に一括変換してZIPでダウンロード。インストール・登録不要でブラウザ完結、スマホ（iPhone/Android）・PC対応。ファイルはサーバーに送信されず安全です。",
   path: "/tools/pdf-to-jpg",
-  keywords: ["PDF JPG 変換", "PDF 画像 変換 無料", "pdf jpg 変換 ツール", "PDF to image", "PDF ページ 画像保存", "PDF JPEG 変換", "pdf 画像変換 無料", "pdf 画像 変換"],
+  keywords: ["PDF JPG 変換", "pdf jpg 変換 ツール", "無料 pdf jpg 変換 ツール", "PDF 画像 変換 無料", "pdf 画像変換", "pdf 写真変換", "PDF to image", "PDF ページ 画像保存", "PDF JPEG 変換"],
   ogImage: `/api/og?${new URLSearchParams({ title: "PDF→JPG変換", icon: "📄", desc: "PDFページを高画質JPGへ変換。ZIP一括DL対応。" }).toString()}`,
 });
 
@@ -22,6 +22,8 @@ const faqSchema = {
     { "@type": "Question", name: "PDFからJPG変換は無料ですか？", acceptedAnswer: { "@type": "Answer", text: "完全無料です。登録・インストール不要でブラウザから即利用できます。" } },
     { "@type": "Question", name: "複数ページのPDFも変換できますか？", acceptedAnswer: { "@type": "Answer", text: "はい。全ページをJPGに変換してZIPファイルでダウンロードできます。" } },
     { "@type": "Question", name: "変換した画像の画質はどのくらいですか？", acceptedAnswer: { "@type": "Answer", text: "高解像度（2倍スケール）でJPGを生成します。テキストや図表がはっきり読み取れる品質です。" } },
+    { "@type": "Question", name: "iPhoneでPDFを写真として保存できますか？", acceptedAnswer: { "@type": "Answer", text: "できます。SafariでこのツールにアクセスしてPDFをJPGに変換し、ダウンロード後に「写真に保存」を選ぶと、iPhoneの写真アプリにPDFのページが画像として保存されます。アプリのインストールは不要です。" } },
+    { "@type": "Question", name: "アプリのインストールは必要ですか？", acceptedAnswer: { "@type": "Answer", text: "不要です。Chrome・Safari・Edgeなどのブラウザだけで動作します。Adobe Acrobatなどの有料ソフトを購入する必要もありません。" } },
     { "@type": "Question", name: "ファイルはサーバーに送信されますか？", acceptedAnswer: { "@type": "Answer", text: "いいえ。処理はすべてブラウザ内で完結します。PDFファイルが外部サーバーに送信されることは一切ありません。" } },
   ],
 };
@@ -75,6 +77,46 @@ export default function Page() {
                 </tbody>
               </table>
             </div>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">PDFをJPGに変換する方法の比較</h2>
+            <p className="mb-4">
+              PDFを画像に変換する方法は複数あります。それぞれの特徴を比較すると、日常的な用途にはブラウザ完結型のオンラインツールが最も手軽です。
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-slate-100 dark:bg-zinc-800">
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">方法</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">料金</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">インストール</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">ファイル送信</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">一括変換</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {([
+                    ["本ツール（ブラウザ完結）", "無料", "不要", "なし（安全）", "○ ZIP対応"],
+                    ["Adobe Acrobat Pro", "月額制（有料）", "必要", "なし", "○"],
+                    ["他のオンライン変換サイト", "無料〜", "不要", "サーバー送信あり", "○"],
+                    ["スクリーンショット", "無料", "不要", "なし", "×（1画面ずつ）"],
+                    ["Macのプレビュー", "無料", "標準搭載", "なし", "×（1ページずつ書き出し）"],
+                  ] as string[][]).map(([method, price, install, upload, batch], i) => (
+                    <tr key={method} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                      <td className={`border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium ${i === 0 ? "text-blue-600 dark:text-blue-400" : "text-slate-700 dark:text-zinc-200"}`}>{method}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-[13px]">{price}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-[13px]">{install}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-[13px]">{upload}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-[13px]">{batch}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-[13px] text-slate-500 dark:text-zinc-400">
+              一般的なオンライン変換サイトはPDFをサーバーにアップロードして処理しますが、本ツールは<strong className="text-slate-700 dark:text-zinc-200">ブラウザ内（PDF.js）で処理が完結する</strong>ため、契約書や個人情報を含むPDFも外部に送信されません。
+            </p>
           </section>
 
           <section>

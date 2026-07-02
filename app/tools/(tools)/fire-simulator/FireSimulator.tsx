@@ -7,6 +7,7 @@ import { useState, useMemo } from "react";
 import { SliderInput } from "@/components/ui/SliderInput";
 import { NumberInput } from "@/components/ui/NumberInput";
 import { ResultCard } from "@/components/ui/ResultCard";
+import { CopyResultButton } from "@/components/ui/CopyResultButton";
 import { formatJPY, formatPercent } from "@/lib/utils";
 
 // 現在の資産内訳
@@ -232,6 +233,10 @@ export function FireSimulator() {
             value={formatJPY(totalAssets * 10000)}
             subValue={`現金${assets.cash}万 / 投資${assets.stocks}万 / 他${assets.other}万`}
           />
+        </div>
+
+        <div className="text-center">
+          <CopyResultButton text={`FIREシミュレーション: 達成まで${result.yearsToFire === null ? "100年以上" : result.yearsToFire === 0 ? "達成済み" : `約${result.yearsToFire}年`}｜目標資産${formatJPY(result.fireTarget * 10000)}・現在${formatJPY(totalAssets * 10000)}｜https://www.toolboxjp.com/tools/fire-simulator`} />
         </div>
       </div>
 

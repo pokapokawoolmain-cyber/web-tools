@@ -39,6 +39,7 @@ export function ImageResize() {
   const [lockRatio, setLockRatio] = useState(true);
   const [quality, setQuality]     = useState(90);
   const [format, setFormat]       = useState<"jpeg" | "png" | "webp">("jpeg");
+  const [fitMode, setFitMode]     = useState<"crop" | "stretch">("crop");
   const [isDrag, setIsDrag]       = useState(false);
   const [preview, setPreview]     = useState<string | null>(null);
 
@@ -100,11 +101,26 @@ export function ImageResize() {
     const img = new Image();
     img.onload = () => {
       ctx.clearRect(0, 0, targetW, targetH);
-      ctx.drawImage(img, 0, 0, targetW, targetH);
+      if (fitMode === "crop") {
+        // 中央基準で切り抜き（歪みなし）: 出力比率に合わせて元画像の中央部を切り出す
+        const dstRatio = targetW / targetH;
+        const srcRatio = img.width / img.height;
+        let sx = 0, sy = 0, sw = img.width, sh = img.height;
+        if (srcRatio > dstRatio) {
+          sw = img.height * dstRatio;
+          sx = (img.width - sw) / 2;
+        } else {
+          sh = img.width / dstRatio;
+          sy = (img.height - sh) / 2;
+        }
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetW, targetH);
+      } else {
+        ctx.drawImage(img, 0, 0, targetW, targetH);
+      }
       setPreview(canvas.toDataURL(`image/${format}`, quality / 100));
     };
     img.src = image.src;
-  }, [image, targetW, targetH, format, quality]);
+  }, [image, targetW, targetH, format, quality, fitMode]);
 
   useEffect(() => { renderPreview(); }, [renderPreview]);
 
@@ -227,6 +243,32 @@ export function ImageResize() {
               unit="px"
               formatValue={(v) => `${v}px`}
             />
+
+            {/* 変換方法（比率が変わるときの扱い） */}
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">比率が変わるときの変換方法</p>
+              <div className="flex gap-2">
+                <button onClick={() => setFitMode("crop")}
+                  className={`flex-1 py-2 text-sm font-medium rounded-xl border transition-all ${
+                    fitMode === "crop"
+                      ? "bg-blue-50 dark:bg-blue-950/30 border-blue-400 text-blue-600 dark:text-blue-400"
+                      : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-slate-400 hover:border-slate-300"
+                  }`}>
+                  中央切り抜き<span className="text-xs ml-1 text-emerald-500">歪みなし</span>
+                </button>
+                <button onClick={() => setFitMode("stretch")}
+                  className={`flex-1 py-2 text-sm font-medium rounded-xl border transition-all ${
+                    fitMode === "stretch"
+                      ? "bg-blue-50 dark:bg-blue-950/30 border-blue-400 text-blue-600 dark:text-blue-400"
+                      : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-slate-400 hover:border-slate-300"
+                  }`}>
+                  引き伸ばし<span className="text-xs ml-1 text-slate-400">全体を残す</span>
+                </button>
+              </div>
+              <p className="text-[11px] text-slate-400">
+                中央切り抜き: 被写体が歪まず、はみ出た部分がカットされます ／ 引き伸ばし: 画像全体が残りますが縦横比が変わると歪みます
+              </p>
+            </div>
 
             {/* 現在の比率表示 */}
             <p className="text-xs text-slate-400 text-center">

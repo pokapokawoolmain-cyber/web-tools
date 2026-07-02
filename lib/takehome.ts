@@ -37,6 +37,18 @@ export interface TakehomeResult {
   residenceTax: number;
 }
 
+/** 目標の年間手取り（円）から必要な額面年収（円）を二分探索で逆算する */
+export function calcRequiredIncome(targetAnnualNet: number): number {
+  let lo = targetAnnualNet;        // 手取り ≦ 額面
+  let hi = targetAnnualNet * 2.5;  // 高所得帯でも手取り率は40%を下回らない前提
+  for (let i = 0; i < 50; i++) {
+    const mid = (lo + hi) / 2;
+    if (calcTakehome(mid).annualNet < targetAnnualNet) lo = mid;
+    else hi = mid;
+  }
+  return Math.round(hi);
+}
+
 /** 年収（額面・円）から手取りを概算する */
 export function calcTakehome(annualIncome: number): TakehomeResult {
   const salaryDeduction = calcSalaryDeduction(annualIncome);

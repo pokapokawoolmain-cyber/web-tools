@@ -80,9 +80,9 @@ export function ToolLayout({
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* ページヘッダー */}
       <div className="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-zinc-950 dark:to-zinc-900 border-b border-slate-100 dark:border-zinc-800">
-        <div className="container-base py-8 sm:py-12">
+        <div className="container-base py-5 sm:py-12">
           {/* パンくずリスト（SEO + ナビゲーション） */}
-          <nav aria-label="パンくずリスト" className="mb-4">
+          <nav aria-label="パンくずリスト" className="mb-3 sm:mb-4">
             <ol className="flex items-center flex-wrap gap-1 text-sm text-slate-500 dark:text-slate-500">
               <li>
                 <Link href="/" className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
@@ -118,7 +118,7 @@ export function ToolLayout({
       </div>
 
       {/* メインコンテンツ */}
-      <div className="container-base py-8 sm:py-12">
+      <div className="container-base py-6 sm:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* ツール本体（2/3幅） */}
           <div className="lg:col-span-2">

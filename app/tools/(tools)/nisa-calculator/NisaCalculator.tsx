@@ -2,6 +2,7 @@
 import { useState, useMemo } from "react";
 import { SliderInput } from "@/components/ui/SliderInput";
 import { ResultCard } from "@/components/ui/ResultCard";
+import { CopyResultButton } from "@/components/ui/CopyResultButton";
 import { formatJPY, calcFutureValueMonthly } from "@/lib/utils";
 
 export function NisaCalculator() {
@@ -83,6 +84,10 @@ export function NisaCalculator() {
             value={formatJPY(result.profit)}
             subValue={`利益率 +${result.roi.toFixed(0)}%`}
           />
+        </div>
+
+        <div className="text-center">
+          <CopyResultButton text={`新NISA: 毎月${monthly}万円×${years}年（年利${annualReturn}%）→ ${formatJPY(result.futureValue)}（元本${formatJPY(result.principal)}・運用益${formatJPY(result.profit)}）｜https://www.toolboxjp.com/tools/nisa-calculator`} />
         </div>
       </div>
 

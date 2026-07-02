@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { SliderInput } from "@/components/ui/SliderInput";
+import { CopyResultButton } from "@/components/ui/CopyResultButton";
 import { calcTakehome } from "@/lib/takehome";
 
 export function NetIncome() {
@@ -67,6 +68,9 @@ export function NetIncome() {
           <p className="text-[48px] font-semibold text-slate-900 dark:text-white tracking-tight leading-none">
             {fmt(showMonthly ? result.monthlyNet : result.annualNet)}
           </p>
+          <div className="mt-4">
+            <CopyResultButton text={`年収${(income / 10000).toLocaleString()}万円の手取り: 年間${fmt(result.annualNet)}（月${fmt(result.monthlyNet)}）｜社会保険料${fmt(result.socialInsurance)}・所得税${fmt(result.incomeTax)}・住民税${fmt(result.residenceTax)}｜https://www.toolboxjp.com/tools/net-income`} />
+          </div>
         </div>
 
         {/* Details */}

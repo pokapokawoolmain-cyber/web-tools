@@ -38,9 +38,10 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   // ── お金・投資 ────────────────────────────────────────────────
   "fire-simulator":     ["nisa-calculator", "net-income", "mortgage-calculator"],
   "nisa-calculator":    ["fire-simulator", "net-income", "furusato-simulator"],
-  "mortgage-calculator":["fire-simulator", "net-income", "furusato-simulator"],
-  "net-income":         ["fire-simulator", "nisa-calculator", "furusato-simulator"],
-  "furusato-simulator": ["net-income", "fire-simulator", "nisa-calculator"],
+  "mortgage-calculator":["takehome-reverse", "fire-simulator", "net-income", "furusato-simulator"],
+  "net-income":         ["takehome-reverse", "fire-simulator", "nisa-calculator", "furusato-simulator"],
+  "takehome-reverse":   ["net-income", "mortgage-calculator", "furusato-simulator", "nisa-calculator"],
+  "furusato-simulator": ["furusato", "net-income", "fire-simulator", "nisa-calculator"],
   "furusato":           ["furusato-simulator", "net-income"],
 
   // ── テキスト・Web ─────────────────────────────────────────────
@@ -52,11 +53,11 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "password-generator":["word-counter"],
 
   // ── 計算・生活 ────────────────────────────────────────────────
-  "mercari-profit":  ["side-job-profit", "gas-calculator"],
+  "mercari-profit":  ["side-job-profit", "point-simulator", "gas-calculator"],
   "gas-calculator":  ["mercari-profit", "shift-salary"],
   "shift-salary":    ["net-income", "gas-calculator"],
   "side-job-profit": ["mercari-profit", "net-income"],
-  "point-simulator": ["mercari-profit"],
+  "point-simulator": ["mercari-profit", "net-income", "furusato-simulator"],
   "gpa":             ["word-counter"],
   "resume-builder":  ["word-counter", "resignation-letter-generator"],
   "youtube-tools":   ["word-counter", "sns-links"],
