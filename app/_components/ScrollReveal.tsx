@@ -61,8 +61,9 @@ export function ScrollReveal({
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0px)" : "translateY(20px)",
-        transition: `opacity 700ms ${EASING} ${delay}ms, transform 700ms ${EASING} ${delay}ms`,
+        transform: visible ? "translateY(0px)" : "translateY(36px)",
+        filter: visible ? "blur(0px)" : "blur(6px)",
+        transition: `opacity 900ms ${EASING} ${delay}ms, transform 900ms ${EASING} ${delay}ms, filter 900ms ${EASING} ${delay}ms`,
       }}
       // prefers-reduced-motion: skip transform, keep opacity snap
       // (inline styles override Tailwind, so use data-attr or CSS-in-JS workaround)

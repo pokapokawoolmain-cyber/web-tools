@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Lock } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
+import { ScrollScale } from "./ScrollFX";
 
 const STORIES = [
   {
@@ -201,8 +202,8 @@ export function StoryStickySection() {
               {/* Browser frame */}
               <div
                 className={[
-                  "rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-700 transition-all duration-200",
-                  fading ? "opacity-0 scale-[0.97]" : "opacity-100 scale-100",
+                  "rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-700 transition-all duration-300 ease-out",
+                  fading ? "opacity-0 scale-[0.94] blur-sm" : "opacity-100 scale-100 blur-0",
                 ].join(" ")}
               >
                 {/* Chrome bar */}
@@ -269,8 +270,8 @@ export function StoryStickySection() {
               <p className="text-[14px] text-slate-500 dark:text-zinc-400 leading-relaxed mb-5">
                 {s.desc}
               </p>
-              {/* Mini preview */}
-              <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md mb-5">
+              {/* Mini preview（ズームイン演出） */}
+              <ScrollScale from={0.9} className="rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md mb-5">
                 <Image
                   src={s.img}
                   alt={`${s.category}ツール`}
@@ -280,7 +281,7 @@ export function StoryStickySection() {
                   style={{ height: "180px" }}
                   unoptimized
                 />
-              </div>
+              </ScrollScale>
               <div className="flex flex-wrap gap-2">
                 {s.tools.map((t) => (
                   <Link

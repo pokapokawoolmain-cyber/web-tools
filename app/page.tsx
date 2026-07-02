@@ -10,6 +10,7 @@ import { CategoryTabSection } from "./_components/CategoryTabSection";
 import { HeroPreviewDeck } from "./_components/HeroPreviewDeck";
 import { StoryStickySection } from "./_components/StoryStickySection";
 import { ScrollReveal } from "./_components/ScrollReveal";
+import { Parallax, ScrollScale } from "./_components/ScrollFX";
 import { getSiteUrl } from "@/lib/utils";
 import { JsonLd } from "@/components/seo/JsonLd";
 
@@ -81,14 +82,22 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════════
           1. HERO
       ══════════════════════════════════════════════ */}
-      <section className="bg-gradient-to-b from-zinc-950 to-zinc-900 pt-14 pb-24 sm:pt-20 sm:pb-32 overflow-hidden">
-        <div className="container-base">
+      <section className="relative bg-gradient-to-b from-zinc-950 to-zinc-900 pt-14 pb-24 sm:pt-20 sm:pb-32 overflow-hidden">
+        {/* 環境光（奥行き演出・スクロール視差つき） */}
+        <Parallax speed={0.18} className="absolute -top-32 -left-32 pointer-events-none">
+          <div aria-hidden="true" className="w-[480px] h-[480px] rounded-full bg-blue-600/15 blur-[120px]" />
+        </Parallax>
+        <Parallax speed={-0.12} className="absolute top-1/3 -right-40 pointer-events-none">
+          <div aria-hidden="true" className="w-[520px] h-[520px] rounded-full bg-indigo-500/10 blur-[140px]" />
+        </Parallax>
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
+        <div className="container-base relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
             {/* 左：コピー */}
             <div>
               <ScrollReveal delay={0}>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-blue-400 mb-7">
+                <p className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-blue-300 mb-7 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                   全{TOOLS.length}ツール · 無料 · 登録不要 · ブラウザ完結
                 </p>
               </ScrollReveal>
@@ -123,7 +132,7 @@ export default function HomePage() {
                   </Link>
                   <Link
                     href="/pdf"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-white/20 text-zinc-300 hover:border-white/40 hover:text-white text-[15px] font-semibold transition-all min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md text-zinc-300 hover:border-white/35 hover:bg-white/10 hover:text-white text-[15px] font-semibold transition-all min-h-[52px] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
                   >
                     PDFツールを試す
                   </Link>
@@ -138,9 +147,11 @@ export default function HomePage() {
               </ScrollReveal>
             </div>
 
-            {/* 右：PCプレビュー + スマホモック */}
+            {/* 右：PCプレビュー + スマホモック（視差ドリフト） */}
             <ScrollReveal delay={300} className="w-full pb-10 lg:pb-0">
-              <HeroPreviewDeck />
+              <Parallax speed={-0.06}>
+                <HeroPreviewDeck />
+              </Parallax>
             </ScrollReveal>
 
           </div>
@@ -148,21 +159,23 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════════════════════════════════════
-          2. STATS BAR
+          2. STATS BAR（ヒーローに浮かぶガラスパネル）
       ══════════════════════════════════════════════ */}
       <div className="bg-white dark:bg-zinc-900 border-b border-slate-100 dark:border-zinc-800">
         <div className="container-base">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-100 dark:divide-zinc-800">
-            {STATS.map((s) => (
-              <div key={s.label} className="flex flex-col items-center py-5 px-4 gap-0.5">
-                <span className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                  {s.value}
-                </span>
-                <span className="text-[11px] text-slate-400 dark:text-zinc-500 text-center">
-                  {s.label}
-                </span>
-              </div>
-            ))}
+          <div className="relative z-10 -mt-10 sm:-mt-14 mb-6 glass-panel rounded-2xl overflow-hidden">
+            <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-100/70 dark:divide-zinc-800/70">
+              {STATS.map((s) => (
+                <div key={s.label} className="flex flex-col items-center py-5 px-4 gap-0.5">
+                  <span className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                    {s.value}
+                  </span>
+                  <span className="text-[11px] text-slate-400 dark:text-zinc-500 text-center">
+                    {s.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -184,8 +197,8 @@ export default function HomePage() {
         <div className="container-base">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-            {/* 左：iPhone 15 スタイル スマホモック */}
-            <ScrollReveal delay={100} className="flex justify-center order-2 lg:order-1">
+            {/* 左：iPhone 15 スタイル スマホモック（ズームイン） */}
+            <ScrollScale from={0.86} className="flex justify-center order-2 lg:order-1">
               <div className="relative">
                 {/* グロー */}
                 <div aria-hidden="true" className="absolute inset-0 -m-12 bg-blue-500/10 dark:bg-blue-400/8 rounded-full blur-3xl pointer-events-none" />
@@ -218,7 +231,7 @@ export default function HomePage() {
                   <div aria-hidden="true" className="absolute right-[-3px] top-[28%] w-[3px] h-14 bg-[#2e2e2e] rounded-r-full" />
                 </div>
               </div>
-            </ScrollReveal>
+            </ScrollScale>
 
             {/* 右：コピー */}
             <div className="order-1 lg:order-2">
@@ -251,7 +264,7 @@ export default function HomePage() {
                   {["iPhone  /  Safari", "Android  /  Chrome", "iPad", "PC ブラウザ"].map((os) => (
                     <span
                       key={os}
-                      className="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-[12px] font-medium text-slate-500 dark:text-zinc-400"
+                      className="inline-flex items-center px-3 py-1.5 rounded-lg bg-white/60 dark:bg-zinc-900/60 backdrop-blur-sm border border-slate-200/80 dark:border-zinc-800 text-[12px] font-medium text-slate-500 dark:text-zinc-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_1px_2px_rgba(15,23,42,0.04)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                     >
                       {os}
                     </span>
@@ -332,12 +345,14 @@ export default function HomePage() {
       ══════════════════════════════════════════════ */}
       <section className="py-20 sm:py-28 bg-zinc-950 relative overflow-hidden">
         <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.12)_0%,_transparent_70%)]" />
+        <div aria-hidden="true" className="absolute -bottom-24 left-1/4 w-[400px] h-[400px] rounded-full bg-indigo-600/10 blur-[120px] pointer-events-none" />
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
         <div className="container-base text-center relative">
-          <ScrollReveal>
+          <ScrollScale from={0.82} withBlur>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight mb-4">
               必要なツールに、すぐ届く。
             </h2>
-          </ScrollReveal>
+          </ScrollScale>
           <ScrollReveal delay={150}>
             <p className="text-zinc-400 text-[16px] mb-10 max-w-md mx-auto">
               {TOOLS.length}種類のツールを無料で。登録不要、今すぐ使えます。
@@ -370,7 +385,7 @@ export default function HomePage() {
               <ScrollReveal key={cat.slug} delay={i * 40}>
                 <Link
                   href={`/${cat.slug}`}
-                  className="group flex flex-col items-center gap-3 py-6 px-4 rounded-2xl bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 hover:border-slate-300 dark:hover:border-zinc-600 hover:shadow-md hover:-translate-y-0.5 transition-all text-center"
+                  className="group flex flex-col items-center gap-3 py-6 px-4 rounded-2xl bg-white/70 dark:bg-zinc-800/70 backdrop-blur-md border border-slate-200/80 dark:border-zinc-700/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_rgba(15,23,42,0.04)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.2)] hover:border-slate-300 dark:hover:border-zinc-600 hover:shadow-lg hover:-translate-y-1 transition-all text-center"
                 >
                   <span
                     className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo} flex items-center justify-center text-xl group-hover:scale-105 transition-transform shadow-sm`}
@@ -418,7 +433,7 @@ export default function HomePage() {
           <div className="space-y-2">
             {faqItems.map((item, i) => (
               <ScrollReveal key={item.q} delay={i * 40}>
-                <details className="group bg-white dark:bg-zinc-800 rounded-2xl border border-slate-200 dark:border-zinc-700 overflow-hidden">
+                <details className="group bg-white/70 dark:bg-zinc-800/70 backdrop-blur-md rounded-2xl border border-slate-200/80 dark:border-zinc-700/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_rgba(15,23,42,0.04)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.2)] overflow-hidden">
                   <summary className="flex items-center justify-between gap-3 px-5 py-4 cursor-pointer list-none text-[14px] font-semibold text-slate-800 dark:text-zinc-200 hover:bg-slate-50 dark:hover:bg-zinc-750 transition-colors min-h-[56px]">
                     <span className="flex items-center gap-2.5">
                       <span className="text-blue-500 font-bold flex-shrink-0 text-[13px]">Q.</span>
