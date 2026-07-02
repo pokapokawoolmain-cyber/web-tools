@@ -793,6 +793,17 @@ const CEREMONY_BLOGS: BlogEntry[] = [
     isFeatured: true,
   },
   {
+    slug: "construction-greeting-templates",
+    title: "工事の近隣挨拶文 例文テンプレート集【コピペOK】解体・新築・リフォーム・外壁塗装",
+    description: "工事前の近隣挨拶文をそのままコピペで使える例文テンプレート集。解体・新築・リフォーム・外壁塗装の4種類＋挨拶回りのマナー・タイミング・粗品の相場も解説。",
+    publishedAt: "2026-07-03",
+    category: "business",
+    tags: ["工事", "挨拶文", "テンプレート", "例文", "近隣挨拶"],
+    relatedToolIds: ["neighbor-greeting", "exterior-paint-calculator", "construction-estimate"],
+    isPopular: false,
+    isFeatured: true,
+  },
+  {
     slug: "tax-docs-pdf-guide",
     title: "確定申告の書類をスマホでPDFにまとめる方法【e-Tax・郵送提出対応】",
     description: "確定申告の領収書・医療費明細・源泉徴収票などをスマホ撮影してPDFにまとめる手順。e-Tax添付・郵送提出に対応。アプリ不要・無料・Android/iPhone対応。",
