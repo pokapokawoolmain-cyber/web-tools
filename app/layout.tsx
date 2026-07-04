@@ -5,6 +5,7 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -123,6 +124,7 @@ export default function RootLayout({
 
           <Footer />
         </ThemeProvider>
+        <Analytics />
       </body>
       <GoogleAnalytics gaId="G-CM9H4Y9XLD" />
     </html>
