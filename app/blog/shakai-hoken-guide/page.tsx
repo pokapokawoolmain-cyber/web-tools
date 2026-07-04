@@ -8,8 +8,8 @@ import Link from "next/link";
 const post = getBlogPost("shakai-hoken-guide")!;
 
 export const metadata: Metadata = generateMeta({
-  title: "社会保険料の計算方法【2026年最新版】年収別早見表・標準報酬月額わかりやすく解説",
-  description: "年収300〜1000万円の社会保険料を早見表で確認。年収400万なら年間約58万円。健康保険・厚生年金・雇用保険の計算方法、標準報酬月額の仕組み、106万・130万の壁、節約のポイントまでわかりやすく解説。",
+  title: "社会保険料はいくら？月収別早見表＆自動計算ツール【2026年度】給与から引かれる額がすぐわかる",
+  description: "社会保険料は給与の約14〜15%。月収30万円なら約4.4万円が引かれ、年収400万なら月の手取り約26.5万円。月収別早見表と自動計算ツールで、あなたの給与から引かれる額と手取りが今すぐわかります。",
   path: `/blog/${post.slug}`,
   keywords: ["社会保険料 計算方法 わかりやすく", "社会保険料 年収400万", "標準報酬月額 計算 例", "社会保険料 130万の壁 2026", "健康保険 厚生年金 いくら引かれる"],
   type: "article",
@@ -36,6 +36,11 @@ const faqSchema = {
     },
     {
       "@type": "Question",
+      name: "年収別の手取りはいくらですか？",
+      acceptedAnswer: { "@type": "Answer", text: "社会保険料と税金を引いた手取りの目安は、年収400万円で約318万円（月約26.5万円）、年収500万円で約390万円、年収600万円で約460万円です。年収300〜1500万円の詳しい金額は当サイトの「手取り早見表（/blog/salary-takehome-table）」で確認でき、手取り計算ツールなら家族構成も反映した正確な金額を自動計算できます。" },
+    },
+    {
+      "@type": "Question",
       name: "フリーランス（個人事業主）の社会保険料はどうなりますか？",
       acceptedAnswer: { "@type": "Answer", text: "フリーランスは国民健康保険と国民年金に加入します。国民年金は2024年度で月16,980円（年間約20万円）定額です。国民健康保険は前年の所得に応じて変わり、年収400万円では年間40〜50万円程度になることが多いです。会社員と比べて国民年金は手取り額が低いため、iDeCoで補うのが一般的な節税策です。" },
     },
@@ -52,10 +57,10 @@ export default function Page() {
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
-        <strong className="text-blue-800 dark:text-blue-300 block mb-1">社会保険料込みで正確な手取りを計算する</strong>
-        <p className="text-[14px] text-blue-700 dark:text-blue-400 mb-3">年収・家族構成を入力して社会保険料・所得税・住民税をすべて含めた手取りを計算できます。</p>
+        <strong className="text-blue-800 dark:text-blue-300 block mb-1">あなたの社会保険料と手取りを自動計算ツールで今すぐ確認</strong>
+        <p className="text-[14px] text-blue-700 dark:text-blue-400 mb-3">年収・家族構成を入力するだけで、社会保険料・所得税・住民税をすべて含めた手取り額がその場でわかります。</p>
         <Link href="/tools/net-income" className="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-          手取り計算ツールを使う（無料）→
+          自動計算ツールで今すぐ確認（無料）→
         </Link>
       </div>
 
@@ -204,6 +209,7 @@ export default function Page() {
           { q: "社会保険料は給料からいくら引かれますか？", a: "給与の約14〜15%が社会保険料として引かれます。月収30万円なら約4〜4.5万円。会社も同額を負担しているため、合計では月収の約28〜30%に相当します。" },
           { q: "社会保険料の130万円の壁とは？", a: "年収130万円以上になると配偶者の扶養から外れ、自分で社会保険または国民健康保険に加入が必要になります。年間20〜30万円程度の負担増になります。" },
           { q: "標準報酬月額とはなんですか？", a: "社会保険料の計算に使う「基準となる給与額」です。実際の月給を50等級の区分に当てはめて計算します。毎年4〜6月の給与平均で決まります。" },
+          { q: "年収別の手取りはいくらですか？", a: "目安は年収400万円で約318万円（月約26.5万円）、年収500万円で約390万円、年収600万円で約460万円です。年収300〜1500万円の詳細は手取り早見表の記事で確認できます。" },
         ].map(({ q, a }) => (
           <div key={q} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-4">
             <dt className="font-semibold text-slate-800 dark:text-zinc-200 mb-1 flex items-start gap-2">

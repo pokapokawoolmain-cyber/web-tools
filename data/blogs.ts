@@ -429,7 +429,7 @@ const MONEY_BLOGS: BlogEntry[] = [
   },
   {
     slug: "shakai-hoken-guide",
-    title: "社会保険料の計算方法【標準報酬月額・年収別早見表・2026年版】",
+    title: "社会保険料はいくら？月収別早見表＆自動計算ツール【2026年度】給与から引かれる額がすぐわかる",
     description: "年収400万の社会保険料は約58万円。標準報酬月額の仕組み・106万・130万円の壁も解説。",
     publishedAt: "2026-05-15",
     updatedAt: "2026-06-02",
@@ -533,7 +533,7 @@ const MONEY_BLOGS: BlogEntry[] = [
   },
   {
     slug: "mercari-fees-guide",
-    title: "メルカリの手数料は10%｜売値別・手取り早見表と送料比較",
+    title: "メルカリ手数料はいくら？販売10%＋送料＋振込手数料の早見表と利益計算ツール【2026年】",
     description: "メルカリの手数料は一律10%。売値別の手取り早見表、らくらく便・ゆうゆう便の送料比較。",
     publishedAt: "2026-05-11",
     updatedAt: "2026-06-02",

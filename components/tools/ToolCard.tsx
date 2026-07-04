@@ -3,6 +3,7 @@
 // ========================================
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { ToolIcon } from "@/components/tools/ToolIcon";
 type ToolCardProps = {
   tool: {
     id: string;
@@ -23,9 +24,12 @@ export function ToolCard({ tool }: ToolCardProps) {
       <article className="tool-card p-5 h-full">
         <div className="flex items-start justify-between gap-4 mb-3">
           <div className="flex items-center gap-3">
-            <span className="text-3xl" role="img" aria-label={tool.title}>
-              {tool.icon}
-            </span>
+            <ToolIcon
+              toolId={tool.id}
+              size="md"
+              fallbackEmoji={tool.icon}
+              label={tool.title}
+            />
             <div className="flex flex-wrap gap-1">
               {tool.isNew && (
                 <span className="inline-block px-2 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-full">

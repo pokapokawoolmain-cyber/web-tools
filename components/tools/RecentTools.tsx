@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Clock, X } from "lucide-react";
 import { TOOLS } from "@/data/tools";
+import { ToolIcon } from "@/components/tools/ToolIcon";
 
 const STORAGE_KEY = "recent-tools";
 const MAX_RECENT = 8;
@@ -59,9 +60,9 @@ export function RecentTools() {
           <Link
             key={tool.id}
             href={tool.href}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-full text-xs text-slate-600 dark:text-zinc-400 hover:border-blue-300 dark:hover:border-blue-600 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+            className="flex items-center gap-1.5 pl-1.5 pr-3 py-1 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-full text-xs text-slate-600 dark:text-zinc-400 hover:border-blue-300 dark:hover:border-blue-600 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
           >
-            <span>{tool.emoji}</span>
+            <ToolIcon toolId={tool.id} size="sm" fallbackEmoji={tool.emoji} />
             <span>{tool.title}</span>
           </Link>
         ))}

@@ -3,20 +3,49 @@ import { useState, useMemo, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 type WorkType =
-  | "新築工事"
-  | "リフォーム工事"
-  | "外壁塗装工事"
   | "解体工事"
-  | "増築工事"
-  | "屋根工事"
-  | "外構工事"
-  | "設備工事";
+  | "新築工事"
+  | "リフォーム・改修工事"
+  | "外壁・屋根塗装工事"
+  | "マンション大規模修繕"
+  | "外構・舗装工事"
+  | "設備・配管工事"
+  | "増築工事";
 
 type NoiseLevel = "高い（解体・基礎・鉄骨等）" | "中程度（一般的な工事）" | "低め（内装・設備等）";
 
+// 種別ごとの配慮事項テンプレート（掲示形式の切替もここで管理）
+const WORK_TYPE_PRESETS: Record<WorkType, { concern: string; isPosting?: boolean }> = {
+  "解体工事": {
+    concern: "解体作業に伴い、粉じん・振動が発生いたします。防音・防塵シートの設置および散水を行い、飛散防止に最大限努めてまいります。",
+  },
+  "新築工事": {
+    concern: "基礎工事・建方（上棟）など、工程により騒音・振動が大きくなる時期がございます。該当する時期は事前にご案内するよう努めます。",
+  },
+  "リフォーム・改修工事": {
+    concern: "資材の搬入・搬出や内部解体の作業音が発生する場合がございます。騒音の大きい作業日は事前にお知らせするよう努めます。",
+  },
+  "外壁・屋根塗装工事": {
+    concern: "高圧洗浄の水しぶきや塗料の臭い・飛散が生じる場合がございます。飛散防止ネットを設置いたしますが、工事期間中は洗濯物の外干しにご注意いただけますと幸いです。",
+  },
+  "マンション大規模修繕": {
+    concern: "足場の設置・撤去時の騒音や、バルコニー周りでの作業がございます。作業日程の詳細は本掲示のほか、管理会社を通じてご案内いたします。バルコニーの片付け等につきましては別途お知らせいたします。",
+    isPosting: true,
+  },
+  "外構・舗装工事": {
+    concern: "重機による掘削・舗装作業に伴い、騒音・振動や一時的な通行のご不便が生じる場合がございます。誘導員を配置し、安全確保と通行の妨げ防止に努めます。",
+  },
+  "設備・配管工事": {
+    concern: "配管・設備機器の入替作業に伴い、断水・停電や作業音が一時的に発生する場合がございます。影響のある日時は事前にご案内いたします。",
+  },
+  "増築工事": {
+    concern: "基礎・躯体工事の工程では騒音・振動が発生する場合がございます。工事車両の出入りにも十分注意して作業いたします。",
+  },
+};
+
 const WORK_TYPES: WorkType[] = [
-  "新築工事", "リフォーム工事", "外壁塗装工事", "解体工事",
-  "増築工事", "屋根工事", "外構工事", "設備工事",
+  "解体工事", "新築工事", "リフォーム・改修工事", "外壁・屋根塗装工事",
+  "マンション大規模修繕", "外構・舗装工事", "設備・配管工事", "増築工事",
 ];
 
 const NOISE_DESCS: Record<NoiseLevel, string> = {
@@ -70,7 +99,18 @@ function buildGreeting(params: {
     ? `${workHoursStart}〜${workHoursEnd}`
     : "8:00〜18:00（予定）";
 
-  return `拝啓
+  const preset = WORK_TYPE_PRESETS[workType];
+
+  // マンション大規模修繕は掲示板への掲示を想定した形式
+  const header = preset.isPosting
+    ? `ご入居者ならびにご近隣の皆様へ
+
+工事のお知らせ（掲示用）
+
+`
+    : "";
+
+  return `${header}拝啓
 
 　時下ますますご清栄のこととお慶び申し上げます。
 
@@ -94,6 +134,8 @@ function buildGreeting(params: {
 
 ${noiseDesc}
 
+${preset.concern}
+
 ${concernText}
 
 作業にあたっては安全・防音・防塵に最大限配慮し、近隣の皆様へのご迷惑を最小限に抑えるよう努めてまいります。${hasCrane ? "\nクレーン・重機を使用する際は、事前に作業時間のご案内をするよう努めます。" : ""}${hasParking ? "\n工事車両はなるべく工事敷地内に駐車しますが、やむを得ず路上に停車する場合は、通行の妨げにならないよう努めます。" : ""}
@@ -114,7 +156,7 @@ export function NeighborGreeting() {
   const [companyName, setCompanyName] = useState("");
   const [contactName, setContactName] = useState("");
   const [contactPhone, setContactPhone] = useState("");
-  const [workType, setWorkType] = useState<WorkType>("リフォーム工事");
+  const [workType, setWorkType] = useState<WorkType>("リフォーム・改修工事");
   const [address, setAddress] = useState("");
   const [ownerName, setOwnerName] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -147,6 +189,26 @@ export function NeighborGreeting() {
   useEffect(() => setMounted(true), []);
 
   const handlePrint = () => window.print();
+
+  // Word(.doc)ダウンロード: HTMLをWord互換形式で包んでBlob化（外部ライブラリ不使用）
+  const handleWordDownload = () => {
+    const escapeHtml = (s: string) =>
+      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const bodyHtml = greeting
+      .split("\n")
+      .map((line) => `<p style="margin:0">${line ? escapeHtml(line) : "&nbsp;"}</p>`)
+      .join("");
+    const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>工事のお知らせ</title></head><body style="font-family:'MS Mincho',serif;font-size:12pt;line-height:1.8">${bodyHtml}</body></html>`;
+    const blob = new Blob(["﻿", html], { type: "application/msword" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `工事のお知らせ_${workType}.doc`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   const inputClass = "w-full rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-2.5 text-[14px] text-slate-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500";
 
@@ -278,14 +340,20 @@ export function NeighborGreeting() {
 
         {/* プレビュー */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h3 className="text-[14px] font-bold text-slate-800 dark:text-zinc-200">生成された挨拶文</h3>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={handleCopy}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-[13px] font-semibold transition-colors"
               >
                 {copied ? "✓ コピー済み" : "📋 コピー"}
+              </button>
+              <button
+                onClick={handleWordDownload}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors"
+              >
+                📄 Word形式でダウンロード
               </button>
               <button
                 onClick={handlePrint}

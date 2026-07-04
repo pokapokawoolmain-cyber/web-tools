@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { generateMeta } from "@/lib/seo";
 import { NeighborGreeting } from "./NeighborGreeting";
 import { ToolLayout } from "@/components/layout/ToolLayout";
@@ -122,9 +123,9 @@ const seoContent = (
         {[
           { q: "近隣挨拶は法律で義務付けられていますか？", a: "法的な義務ではありませんが、建設業界の慣習として広く行われています。近隣トラブルを未然に防ぐためにも強く推奨されます。特に解体・新築・外壁塗装工事では必須と考えてください。" },
           { q: "留守の場合はどうすればいい？", a: "ポストに挨拶状（文書）と名刺・粗品を置いていく方法が一般的です。訪問した旨のメモも添えると丁寧です。後日電話で一声かけるとなお好印象です。" },
-          { q: "マンションの工事の場合は？", a: "管理組合・管理会社への事前届出が必要な場合が多いです。各戸への配布は管理会社経由で行うケースもあります。共用部への貼り紙も忘れずに。" },
+          { q: "マンションの工事の場合は？", a: "掲示板への掲示と管理会社経由の周知が基本です。管理組合・管理会社への事前届出が必要な場合も多いです。本ツールの「マンション大規模修繕」プリセットを選ぶと、掲示用の文面を作成できます。" },
           { q: "生成した文章をそのまま使えますか？", a: "そのまま使えるよう設計しています。実際の工事内容・状況に合わせて必要に応じて修正してください。「追加で伝えたいこと」欄で個別の事情を追記することをお勧めします。" },
-          { q: "Word・Excelへの書き出しはできますか？", a: "コピーボタンでテキストをコピーし、Word・メモ帳などに貼り付けて使用できます。印刷ボタンから直接印刷することも可能です。" },
+          { q: "Word形式でダウンロードできますか？", a: "できます。「Word形式でダウンロード」ボタンから.docファイルとして保存でき、Wordで開いてそのまま編集・印刷できます。無料・登録不要です。コピー・印刷ボタンも利用できます。" },
         ].map(({ q, a }) => (
           <div key={q} className="rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 p-4">
             <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">Q. {q}</p>
@@ -132,6 +133,9 @@ const seoContent = (
           </div>
         ))}
       </div>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mt-4">
+        そのままコピペで使える例文集は<Link href="/blog/construction-greeting-templates" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">工事の近隣挨拶文 例文テンプレート集</Link>へ。解体・新築・リフォーム・外壁塗装の完成例文を掲載しています。
+      </p>
     </section>
   </div>
 );
@@ -159,6 +163,16 @@ const faqSchema = {
       "@type": "Question",
       name: "近隣に留守の方がいた場合はどうすればいいですか？",
       acceptedAnswer: { "@type": "Answer", text: "ポストに挨拶状（文書）と名刺・粗品を置いていく方法が一般的です。訪問した旨のメモも添えると丁寧です。後日電話で一声かけるとなお好印象です。" },
+    },
+    {
+      "@type": "Question",
+      name: "マンションの工事の場合は？",
+      acceptedAnswer: { "@type": "Answer", text: "掲示板への掲示と管理会社経由の周知が基本です。本ツールのマンション大規模修繕プリセットを選ぶと、掲示用の文面を作成できます。" },
+    },
+    {
+      "@type": "Question",
+      name: "Word形式でダウンロードできますか？",
+      acceptedAnswer: { "@type": "Answer", text: "できます。「Word形式でダウンロード」ボタンから.docファイルとして保存でき、Wordでそのまま編集・印刷できます。無料・登録不要です。" },
     },
   ],
 };

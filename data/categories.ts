@@ -135,7 +135,8 @@ const MONEY_CATEGORY: CategoryConfig = {
   keywords: ["FIRE シミュレーター 無料", "新NISA 計算 無料", "手取り 計算", "住宅ローン シミュレーション", "ふるさと納税 上限 計算"],
   popularToolIds: ["fire-simulator", "nisa-calculator", "net-income", "mortgage-calculator", "furusato-simulator"],
   allToolIds: [
-    "fire-simulator", "nisa-calculator", "net-income", "mortgage-calculator",
+    "fire-simulator", "nisa-calculator", "net-income", "takehome-reverse", "bonus-takehome",
+    "nenshu-kabe", "mortgage-calculator",
     "furusato-simulator", "furusato",
     "mercari-profit", "gas-calculator", "shift-salary", "point-simulator", "side-job-profit",
   ],
@@ -246,8 +247,8 @@ const CEREMONY_CATEGORY: CategoryConfig = {
   accentBg: "bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300",
   title: "のし紙・香典袋・退職届を無料作成｜冠婚葬祭・文書ツール集【登録不要】",
   keywords: ["のし紙 作成 無料", "香典袋 表書き 印刷", "退職届 テンプレ 無料", "送付状 作成 無料", "のし テンプレート 印刷"],
-  popularToolIds: ["noshi-maker", "koden-maker", "resignation-letter", "fax-cover"],
-  allToolIds: ["noshi-maker", "koden-maker", "resignation-letter", "fax-cover"],
+  popularToolIds: ["noshi-maker", "koden-maker", "shugi-maker", "houyou-calculator"],
+  allToolIds: ["noshi-maker", "koden-maker", "shugi-maker", "houyou-calculator", "resignation-letter", "fax-cover"],
   stats: [
     { label: "冠婚葬祭ツール数", value: "4種類" },
     { label: "利用料金", value: "完全無料" },

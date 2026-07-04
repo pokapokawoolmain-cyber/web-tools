@@ -32,6 +32,8 @@ export const TOOLS: ToolItem[] = [
   { id: "mortgage-calculator", title: "住宅ローンシミュレーター", description: "借入金額・金利・年数を入力するだけ。毎月返済額・総返済額・利息合計を即計算。", href: "/tools/mortgage-calculator", emoji: "🏠", category: "お金・投資", isPopular: true },
   { id: "net-income", title: "手取り計算", description: "年収を入力するだけで月間・年間の手取り額を計算。社会保険料・所得税・住民税の内訳も確認。", href: "/tools/net-income", emoji: "💴", category: "お金・投資", isNew: true },
   { id: "takehome-reverse", title: "手取り逆算シミュレーター", description: "欲しい月の手取り額から必要な額面年収を逆算。転職・昇給交渉の希望年収決めに。", href: "/tools/takehome-reverse", emoji: "🔄", category: "お金・投資", isNew: true },
+  { id: "bonus-takehome", title: "ボーナス手取り計算", description: "賞与額と前月の給与を入力するだけでボーナスの手取り額を自動計算。社会保険料・源泉所得税の内訳も確認。", href: "/tools/bonus-takehome", emoji: "💰", category: "お金・投資", isNew: true },
+  { id: "nenshu-kabe", title: "年収の壁シミュレーター", description: "パート・アルバイトの年収から超える壁・社会保険加入の要否を判定。106万円撤廃など2026年制度対応。", href: "/tools/nenshu-kabe", emoji: "🚧", category: "お金・投資", isNew: true },
   { id: "furusato-simulator", title: "ふるさと納税シミュレーター", description: "年収と家族構成を選ぶだけで控除上限額を即計算。2,000円負担で最大限活用。", href: "/tools/furusato-simulator", emoji: "🎁", category: "お金・投資", isPopular: true },
   { id: "furusato", title: "ふるさと納税（詳細版）", description: "年収・扶養人数・配偶者の有無を入力して控除上限額を精密計算。推奨寄付額もわかる。", href: "/tools/furusato", emoji: "🎁", category: "お金・投資", isNew: true },
   // 計算ツール
@@ -92,6 +94,8 @@ export const TOOLS: ToolItem[] = [
   // 冠婚葬祭・文書
   { id: "noshi-maker", title: "のし紙作成ツール", seoTitle: "のし紙作成ツール｜無料・印刷対応【登録不要】", description: "御祝・内祝・御歳暮・御中元など用途別のし紙を無料で作成。水引・名入れ対応。A4印刷・コンビニ印刷対応。", href: "/tools/noshi-maker", emoji: "🎀", category: "冠婚葬祭・文書", isNew: true, isPopular: true },
   { id: "koden-maker", title: "香典袋表書きメーカー", seoTitle: "香典袋表書きメーカー｜宗派別・無料印刷対応", description: "御霊前・御仏前・御香典など宗派別に表書きを作成。毛筆風フォント・PDF保存・スマホ完結。", href: "/tools/koden-maker", emoji: "🕯️", category: "冠婚葬祭・文書", isNew: true, isPopular: true },
+  { id: "shugi-maker", title: "祝儀袋表書きメーカー", seoTitle: "祝儀袋表書きメーカー｜寿・御結婚御祝・連名対応【無料】", description: "寿・御結婚御祝・御出産御祝など慶事の表書きを作成。毛筆風フォント・連名対応・印刷OK。ご祝儀相場表付き。", href: "/tools/shugi-maker", emoji: "🎊", category: "冠婚葬祭・文書", isNew: true },
+  { id: "houyou-calculator", title: "四十九日・法要日程 計算", seoTitle: "四十九日・法要日程 自動計算｜命日から忌日・年忌を算出【無料】", description: "命日を入力するだけで四十九日・一周忌・三回忌などの法要日程を自動計算。日付と曜日を一覧表示。", href: "/tools/houyou-calculator", emoji: "🪷", category: "冠婚葬祭・文書", isNew: true },
   { id: "resignation-letter", title: "退職届ジェネレーター", seoTitle: "退職届ジェネレーター｜パワハラ対応・PDF保存【無料】", description: "退職届を無料で作成。一身上の都合・パワハラ・体調不良・契約満了など理由別テンプレ。A4印刷・PDF対応。", href: "/tools/resignation-letter", emoji: "📄", category: "冠婚葬祭・文書", isNew: true },
   { id: "fax-cover", title: "送付状作成ツール", seoTitle: "送付状作成ツール｜FAX送付状を無料で作成【登録不要】", description: "FAX送付状・書類送付状を無料で自動作成。日付・宛先・件名・枚数を入力するだけでPDF保存・印刷できます。", href: "/tools/fax-cover", emoji: "📠", category: "冠婚葬祭・文書", isNew: true },
   // カラーツール

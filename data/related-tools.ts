@@ -39,8 +39,10 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "fire-simulator":     ["nisa-calculator", "net-income", "mortgage-calculator"],
   "nisa-calculator":    ["fire-simulator", "net-income", "furusato-simulator"],
   "mortgage-calculator":["takehome-reverse", "fire-simulator", "net-income", "furusato-simulator"],
-  "net-income":         ["takehome-reverse", "fire-simulator", "nisa-calculator", "furusato-simulator"],
-  "takehome-reverse":   ["net-income", "mortgage-calculator", "furusato-simulator", "nisa-calculator"],
+  "net-income":         ["takehome-reverse", "bonus-takehome", "nenshu-kabe", "fire-simulator"],
+  "takehome-reverse":   ["net-income", "bonus-takehome", "mortgage-calculator", "nisa-calculator"],
+  "bonus-takehome":     ["net-income", "takehome-reverse", "nenshu-kabe", "furusato-simulator"],
+  "nenshu-kabe":        ["net-income", "bonus-takehome", "takehome-reverse", "furusato-simulator"],
   "furusato-simulator": ["furusato", "net-income", "fire-simulator", "nisa-calculator"],
   "furusato":           ["furusato-simulator", "net-income"],
 
@@ -62,6 +64,12 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "resume-builder":  ["word-counter", "resignation-letter-generator"],
   "youtube-tools":   ["word-counter", "sns-links"],
   "sns-links":       ["qr-generator", "youtube-tools"],
+
+  // ── 冠婚葬祭・文書 ────────────────────────────────────────────
+  "koden-maker":       ["houyou-calculator", "noshi-maker", "shugi-maker"],
+  "shugi-maker":       ["noshi-maker", "koden-maker"],
+  "houyou-calculator": ["koden-maker", "noshi-maker"],
+  "noshi-maker":       ["shugi-maker", "koden-maker"],
 };
 
 /** toolId に関連するツールIDを最大 limit 件返す */

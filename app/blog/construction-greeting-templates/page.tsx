@@ -39,7 +39,7 @@ export default function Page() {
         <Link href="/tools/neighbor-greeting" className="text-[17px] font-bold text-blue-700 dark:text-blue-300 hover:opacity-80">
           工事近隣挨拶文メーカー → 無料で使う
         </Link>
-        <p className="text-[13px] text-slate-500 dark:text-zinc-400 mt-1">工事種別を選んで情報を入れるだけ。登録不要・印刷/PDF対応</p>
+        <p className="text-[13px] text-slate-500 dark:text-zinc-400 mt-1">工事種別を選んで情報を入れるだけ。登録不要・印刷/PDF対応。フォーム入力だけでWord形式のダウンロードも可能です。</p>
       </div>
 
       <h2>挨拶文に必ず書くべき5項目</h2>
@@ -170,7 +170,7 @@ export default function Page() {
         <Link href="/tools/neighbor-greeting" className="text-[17px] font-bold text-blue-700 dark:text-blue-300 hover:opacity-80">
           工事近隣挨拶文メーカー → 無料で使う
         </Link>
-        <p className="text-[13px] text-slate-500 dark:text-zinc-400 mt-1">上の例文がフォーム入力で自動生成されます。印刷・PDF保存対応</p>
+        <p className="text-[13px] text-slate-500 dark:text-zinc-400 mt-1">上の例文がフォーム入力で自動生成されます。印刷・PDF保存対応。フォーム入力だけでWord形式のダウンロードも可能です。</p>
       </div>
 
       <h2>挨拶回りのマナー：タイミング・範囲・粗品</h2>

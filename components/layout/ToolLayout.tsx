@@ -12,6 +12,7 @@ import { getCategoryForTool } from "@/data/categories";
 import { RelatedTools } from "@/components/tools/RelatedTools";
 import { RecentToolsWrapper } from "@/components/tools/RecentToolsWrapper";
 import { RelatedArticles } from "@/app/tools/_components/RelatedArticles";
+import { ToolIcon } from "@/components/tools/ToolIcon";
 
 type ToolLayoutProps = {
   title: string;
@@ -101,9 +102,13 @@ export function ToolLayout({
           </nav>
 
           <div className="flex items-start gap-4">
-            <span className="text-4xl sm:text-5xl" role="img" aria-label={title}>
-              {icon}
-            </span>
+            <ToolIcon
+              toolId={slug}
+              size="lg"
+              fallbackEmoji={icon}
+              label={title}
+              className="flex-shrink-0"
+            />
             <div>
               {/* h1: SEOの最重要タグ */}
               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { TOOLS } from "@/data/tools";
 import { getRelatedToolIds } from "@/data/related-tools";
+import { ToolIcon } from "@/components/tools/ToolIcon";
 
 type Props = {
   toolId: string;
@@ -30,9 +31,12 @@ export function RelatedTools({ toolId, className }: Props) {
         {relatedTools.map((tool) => (
           <Link key={tool.id} href={tool.href} className="group block">
             <div className="flex items-center gap-3 p-4 bg-white dark:bg-zinc-900 rounded-xl border border-slate-200/80 dark:border-zinc-700/80 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-              <span className="text-2xl w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl group-hover:scale-110 transition-transform flex-shrink-0">
-                {tool.emoji}
-              </span>
+              <ToolIcon
+                toolId={tool.id}
+                size="sm"
+                fallbackEmoji={tool.emoji}
+                className="group-hover:scale-110 transition-transform flex-shrink-0"
+              />
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-slate-900 dark:text-white text-sm line-clamp-1">
                   {tool.title}
