@@ -29,7 +29,7 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "pdf-metadata-remover": ["pdf-password", "pdf-watermark"],
 
   // ── 画像 ──────────────────────────────────────────────────────
-  "image-compress": ["image-resize", "heic-to-jpg", "jpg-to-pdf"],
+  "image-compress": ["image-resize", "heic-to-jpg", "speed-test", "jpg-to-pdf"],
   "image-resize":   ["image-compress", "id-photo", "heic-to-jpg"],
   "heic-to-jpg":    ["image-compress", "image-resize", "jpg-to-pdf"],
   "id-photo":       ["image-compress", "image-resize"],
@@ -50,7 +50,7 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "word-counter":      ["markdown-editor", "resume-builder", "certified-letter-generator"],
   "markdown-editor":   ["word-counter"],
   "qr-generator":      ["wifi-qr", "short-link"],
-  "wifi-qr":           ["qr-generator", "short-link"],
+  "wifi-qr":           ["speed-test", "qr-generator", "short-link"],
   "short-link":        ["qr-generator", "wifi-qr"],
   "password-generator":["word-counter"],
 
@@ -64,6 +64,9 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "resume-builder":  ["word-counter", "resignation-letter-generator"],
   "youtube-tools":   ["word-counter", "sns-links"],
   "sns-links":       ["qr-generator", "youtube-tools"],
+
+  // ── 生活便利 ──────────────────────────────────────────────
+  "speed-test":  ["wifi-qr", "image-compress", "pdf-compress", "video-compress"],
 
   // ── 冠婚葬祭・文書 ────────────────────────────────────────────
   "koden-maker":       ["houyou-calculator", "noshi-maker", "shugi-maker"],

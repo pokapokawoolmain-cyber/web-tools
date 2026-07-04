@@ -62,6 +62,7 @@ export const TOOLS: ToolItem[] = [
   { id: "excel-to-pdf", title: "Excel→PDF変換", seoTitle: "ExcelをPDFに変換｜.xlsx/.csvを無料でPDF化【登録不要・ブラウザ完結】", description: "ExcelファイルをPDFに変換。.xlsx・.xls・.csvをアップロードするだけで即変換。シート選択・用紙向き・フォントサイズを選んでブラウザから保存。ファイルはサーバーに送信されません。", href: "/tools/excel-to-pdf", emoji: "📊", category: "画像・PDF", isNew: true },
   { id: "favicon-generator", title: "ファビコン作成ツール", seoTitle: "ファビコン作成ツール｜favicon.icoを無料生成【ブラウザ完結】", description: "テキスト・絵文字・画像からfavicon.icoを無料作成。16〜64pxのマルチサイズICOとPNG 256pxをブラウザ完結でダウンロード。登録不要。", href: "/tools/favicon-generator", emoji: "🌐", category: "画像・PDF", isNew: true },
   // 生活・副業
+  { id: "speed-test", title: "インターネット速度テスト", seoTitle: "インターネット速度テスト｜回線速度を20段階で実用評価【無料】", description: "ダウンロード・アップロード速度をブラウザで実測。動画・ゲーム・4K/8Kなど何が快適かを20段階で診断。10Gbps級対応。", href: "/tools/speed-test", emoji: "🚀", category: "生活・副業", isNew: true, isPopular: true },
   { id: "side-job-profit", title: "副業利益・税金計算", description: "副業収入から経費・税金を差し引いた実質手取りを計算。確定申告の目安も確認。", href: "/tools/side-job-profit", emoji: "💼", category: "生活・副業" },
   { id: "youtube-tools", title: "YouTube SEOツール", description: "タイトル文字数・ハッシュタグ最適化・サムネ比率確認をまとめてチェック。", href: "/tools/youtube-tools", emoji: "🎥", category: "生活・副業" },
   { id: "sns-links", title: "SNSリンクまとめ", description: "X・Instagram・TikTok・YouTubeなど複数のSNSリンクをまとめた共有ページを即生成。", href: "/tools/sns-links", emoji: "🔗", category: "生活・副業", isNew: true },

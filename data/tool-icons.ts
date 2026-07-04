@@ -43,6 +43,7 @@ import {
   FileType,
   FileSpreadsheet,
   // 生活・副業
+  Gauge,
   Briefcase,
   Clapperboard,
   Link2,
@@ -161,6 +162,7 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "excel-to-pdf": { icon: FileSpreadsheet, color: PDF },
 
   // 生活・副業
+  "speed-test": { icon: Gauge, color: AI },
   "side-job-profit": { icon: Briefcase, color: TEXT_WEB },
   "youtube-tools": { icon: Clapperboard, color: TEXT_WEB },
   "sns-links": { icon: Link2, color: TEXT_WEB },

@@ -22,6 +22,7 @@ const TOOL_UPDATED = new Date("2026-07-05");
 const RECENTLY_UPDATED_TOOL_IDS = new Set<string>([
   // 新設ツール
   "takehome-reverse", "bonus-takehome", "nenshu-kabe", "houyou-calculator", "shugi-maker",
+  "speed-test",
   // コンテンツ・機能を大幅更新したツール
   "pdf-to-jpg", "image-resize", "net-income", "nisa-calculator", "fire-simulator",
   "furusato-simulator", "point-simulator", "password-generator",
