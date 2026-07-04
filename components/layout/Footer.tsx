@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 import { ALL_CATEGORIES } from "@/data/categories";
+import { ToolIcon } from "@/components/tools/ToolIcon";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,7 +17,7 @@ export function Footer() {
         {/* Brand */}
         <div className="mb-10">
           <Link href="/" className="inline-flex items-center gap-2 font-bold text-[17px] text-slate-900 dark:text-white hover:opacity-70 transition-opacity mb-3">
-            <span>🧰</span><span>ToolBox</span>
+            <span>ToolBox</span>
           </Link>
           <p className="text-[14px] text-slate-500 dark:text-zinc-500 leading-relaxed max-w-sm">
             「すぐ使える」「シンプルで迷わない」「ブラウザだけで完結する」無料ツール集。
@@ -32,8 +33,8 @@ export function Footer() {
                 {tools.map(t => (
                   <li key={t.id}>
                     <Link href={t.href}
-                      className="text-[13px] text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1.5">
-                      <span className="text-[11px]">{t.emoji}</span>
+                      className="text-[13px] text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-2">
+                      <ToolIcon toolId={t.id} size="sm" fallbackEmoji={t.emoji} />
                       <span>{t.title}</span>
                     </Link>
                   </li>

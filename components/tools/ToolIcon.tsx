@@ -73,28 +73,15 @@ export function ToolIcon({
       aria-hidden={label ? undefined : true}
       className={`inline-flex items-center justify-center flex-shrink-0 ${TILE_CLASS[size]} bg-white/60 dark:bg-white/5 backdrop-blur border border-slate-200/60 dark:border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]${className ? ` ${className}` : ""}`}
     >
-      {/* ライトモード: 弱い発光 */}
+      {/* ネオン発光アイコン（ライト・ダーク両対応の輪郭のみ） */}
       <Icon
         aria-hidden="true"
         size={iconSize}
-        strokeWidth={1.75}
+        strokeWidth={1.6}
         fill="none"
-        className="dark:hidden"
         style={{
           color,
-          filter: `drop-shadow(0 0 2px ${color}33)`,
-        }}
-      />
-      {/* ダークモード: ネオン発光 */}
-      <Icon
-        aria-hidden="true"
-        size={iconSize}
-        strokeWidth={1.5}
-        fill="none"
-        className="hidden dark:block"
-        style={{
-          color,
-          filter: `drop-shadow(0 0 6px ${color}66)`,
+          filter: `drop-shadow(0 0 5px ${color}55)`,
         }}
       />
     </span>

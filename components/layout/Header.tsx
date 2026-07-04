@@ -33,7 +33,6 @@ export function Header() {
           <div className="flex h-14 items-center justify-between">
             <Link href="/" onClick={() => setIsOpen(false)}
               className="flex items-center gap-2 font-bold text-[17px] text-slate-900 dark:text-white hover:opacity-70 transition-opacity">
-              <span className="text-2xl">🧰</span>
               <span>ToolBox</span>
             </Link>
 
