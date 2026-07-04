@@ -16,6 +16,18 @@ function blogDate(slug: string): Date {
 const TOOL_LAUNCH = new Date("2026-05-10");
 const SITE_LAUNCH = new Date("2026-05-10");
 
+// 直近で新設・大幅更新したツール。lastmod を更新日にしてGoogleに変更を伝える
+// （全ツールを一律「最新」にするとlastmodの信頼性を損なうため、実際に更新したものだけ）
+const TOOL_UPDATED = new Date("2026-07-05");
+const RECENTLY_UPDATED_TOOL_IDS = new Set<string>([
+  // 新設ツール
+  "takehome-reverse", "bonus-takehome", "nenshu-kabe", "houyou-calculator", "shugi-maker",
+  // コンテンツ・機能を大幅更新したツール
+  "pdf-to-jpg", "image-resize", "net-income", "nisa-calculator", "fire-simulator",
+  "furusato-simulator", "point-simulator", "password-generator",
+  "exterior-paint-calculator", "gradient-generator", "neighbor-greeting", "koden-maker",
+]);
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
 
@@ -181,7 +193,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 各ツールページ
   const toolRoutes: MetadataRoute.Sitemap = tools.map((tool) => ({
     url: `${siteUrl}${tool.href}`,
-    lastModified: TOOL_LAUNCH,
+    lastModified: RECENTLY_UPDATED_TOOL_IDS.has(tool.id) ? TOOL_UPDATED : TOOL_LAUNCH,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
