@@ -6,9 +6,9 @@ import { SpeedTest } from "./SpeedTest";
 import { SPEED_RANKS } from "./speed-ranks";
 
 export const metadata: Metadata = generateMeta({
-  title: "インターネット速度テスト｜ダウンロード・アップロード速度を20段階で実用評価【無料】",
+  title: "スピードテスト｜インターネット回線速度・Ping・ジッターを測定し20段階で実用診断【無料】",
   description:
-    "ダウンロード速度・アップロード速度・Ping・ジッターをブラウザだけで測定。動画視聴・オンラインゲーム・4K/8K・ビデオ会議など「その速度で何ができるか」を20段階で具体的に診断します。10Gbps級の超高速回線にも対応。無料・登録不要。",
+    "インターネット回線の通信速度（ダウンロード・アップロード）・Ping・ジッターを無料で測定できるスピードテスト。動画・オンラインゲーム・4K/8K・ビデオ会議など「その回線速度で何が快適か」を20段階で具体的に診断。10Gbps級対応・登録不要・ブラウザ完結。",
   path: "/tools/speed-test",
   keywords: [
     "インターネット 速度テスト",
