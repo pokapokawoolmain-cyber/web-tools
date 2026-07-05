@@ -7,6 +7,9 @@
 // ========================================
 
 export const runtime = "edge";
+// 日本のユーザー向けに東京リージョンで実行（デフォルトのsin1だとRTTが増え、
+// 高速回線のスループットを大幅に過小評価してしまう）
+export const preferredRegion = "hnd1";
 
 const CHUNK_SIZE = 65536; // crypto.getRandomValues の1回あたり上限
 const MAX_BYTES = 32 * 1024 * 1024; // 1リクエストの上限 32MB

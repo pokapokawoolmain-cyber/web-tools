@@ -4,6 +4,7 @@
 // ========================================
 
 export const runtime = "edge";
+export const preferredRegion = "hnd1";
 
 export async function GET() {
   return new Response(null, {

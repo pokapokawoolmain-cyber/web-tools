@@ -6,6 +6,7 @@
 // ========================================
 
 export const runtime = "edge";
+export const preferredRegion = "hnd1";
 
 export async function POST(req: Request) {
   let received = 0;
