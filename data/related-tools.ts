@@ -85,6 +85,16 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "shugi-maker":       ["noshi-maker", "koden-maker"],
   "houyou-calculator": ["koden-maker", "noshi-maker"],
   "noshi-maker":       ["shugi-maker", "koden-maker"],
+
+  // ── カラー・デザイン ──────────────────────────────────────────
+  "hex-rgb-converter":     ["color-palette", "color-codes", "brand-color-text", "gradient-generator"],
+  "color-palette":         ["hex-rgb-converter", "palette-accessibility", "gradient-generator", "brand-color-text"],
+  "gradient-generator":    ["color-palette", "hex-rgb-converter", "color-codes", "contrast-checker"],
+  "contrast-checker":      ["brand-color-text", "palette-accessibility", "color-blind-simulator", "hex-rgb-converter"],
+  "brand-color-text":      ["contrast-checker", "palette-accessibility", "color-codes", "color-blind-simulator"],
+  "palette-accessibility": ["contrast-checker", "brand-color-text", "color-blind-simulator", "color-palette"],
+  "color-blind-simulator": ["contrast-checker", "palette-accessibility", "brand-color-text", "color-palette"],
+  "color-codes":           ["brand-color-text", "hex-rgb-converter", "color-palette", "palette-accessibility"],
 };
 
 /** toolId に関連するツールIDを最大 limit 件返す */

@@ -285,10 +285,10 @@ const COLOR_CATEGORY: CategoryConfig = {
   accentBg: "bg-pink-50 dark:bg-pink-950/40 text-pink-700 dark:text-pink-300",
   title: "無料カラーツール集｜HEX変換・パレット生成・グラデーション【登録不要】",
   keywords: ["カラーコード 変換 無料", "hex rgb 変換", "カラーパレット 生成 無料", "cssグラデーション 生成", "コントラスト比 チェック WCAG"],
-  popularToolIds: ["hex-rgb-converter", "contrast-checker", "color-palette", "gradient-generator"],
-  allToolIds: ["hex-rgb-converter", "color-palette", "gradient-generator", "contrast-checker"],
+  popularToolIds: ["brand-color-text", "contrast-checker", "hex-rgb-converter", "palette-accessibility"],
+  allToolIds: ["hex-rgb-converter", "color-palette", "gradient-generator", "contrast-checker", "brand-color-text", "palette-accessibility", "color-blind-simulator", "color-codes"],
   stats: [
-    { label: "カラーツール数", value: "4種類" },
+    { label: "カラーツール数", value: "8種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・インストール", value: "不要" },
     { label: "処理場所", value: "ブラウザ完結" },

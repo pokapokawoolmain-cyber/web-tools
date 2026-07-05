@@ -90,6 +90,9 @@ import {
   Paintbrush,
   Blend,
   Eye,
+  Grid3x3,
+  Glasses,
+  SwatchBook,
   // 建設・リフォーム
   HardHat,
   Percent,
@@ -222,6 +225,10 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "color-palette": { icon: Paintbrush, color: COLOR },
   "gradient-generator": { icon: Blend, color: COLOR },
   "contrast-checker": { icon: Eye, color: COLOR },
+  "brand-color-text": { icon: Type, color: COLOR },
+  "palette-accessibility": { icon: Grid3x3, color: COLOR },
+  "color-blind-simulator": { icon: Glasses, color: COLOR },
+  "color-codes": { icon: SwatchBook, color: COLOR },
 
   // 建設・リフォーム
   "construction-estimate": { icon: HardHat, color: CONSTRUCTION },

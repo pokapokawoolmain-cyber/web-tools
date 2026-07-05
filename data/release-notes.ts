@@ -25,6 +25,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     date: "2026-07-06",
     type: "NEW",
+    target: "配色・デザインツール",
+    href: "/tools/brand-color-text",
+    title: "カラーツールを4つ追加",
+    body: "背景色に合う文字色を提案するツール、配色全体のコントラストを一括判定する配色アクセシビリティチェッカー、色覚シミュレーター、SNS・Webのブランドカラー一覧を追加しました。WCAG基準の判定やコピー機能に対応しています。",
+  },
+  {
+    date: "2026-07-06",
+    type: "NEW",
     target: "AIメール作成ほか",
     href: "/tools/ai-email",
     title: "AI文章ツールを6つ追加",
