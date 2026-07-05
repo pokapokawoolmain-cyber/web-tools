@@ -46,6 +46,18 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "furusato-simulator": ["furusato", "net-income", "fire-simulator", "nisa-calculator"],
   "furusato":           ["furusato-simulator", "net-income"],
 
+  // ── AI文章ツール ─────────────────────────────────────────────
+  "ai-email":        ["ai-keigo", "ai-decline", "ai-apology", "ai-inquiry"],
+  "ai-keigo":        ["ai-email", "ai-humanize", "ai-apology", "ai-inquiry"],
+  "ai-apology":      ["ai-email", "ai-decline", "ai-keigo"],
+  "ai-decline":      ["ai-email", "ai-apology", "ai-keigo"],
+  "ai-inquiry":      ["ai-email", "ai-keigo", "ai-decline"],
+  "prompt-builder":  ["chatgpt-format", "ai-humanize", "ai-email"],
+  "chatgpt-format":  ["ai-humanize", "prompt-builder", "note-format", "x-post-preview"],
+  "ai-humanize":     ["chatgpt-format", "ai-keigo", "prompt-builder", "note-format"],
+  "x-post-preview":  ["chatgpt-format", "note-format", "ai-humanize"],
+  "note-format":     ["chatgpt-format", "ai-humanize", "x-post-preview"],
+
   // ── テキスト・Web ─────────────────────────────────────────────
   "word-counter":      ["markdown-editor", "resume-builder", "certified-letter-generator"],
   "markdown-editor":   ["word-counter"],

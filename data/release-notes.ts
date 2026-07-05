@@ -23,6 +23,14 @@ export type ReleaseNote = {
 // 新しい順に並べる
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    date: "2026-07-06",
+    type: "NEW",
+    target: "AIメール作成ほか",
+    href: "/tools/ai-email",
+    title: "AI文章ツールを6つ追加",
+    body: "ビジネスメール・敬語変換・謝罪文・断り文・問い合わせ文の作成と、ChatGPT用のプロンプト作成補助を追加しました。用途や相手を選んで入力するだけで、そのまま使える下書きを作成できます。",
+  },
+  {
     date: "2026-07-05",
     type: "NEW",
     target: "インターネット速度テスト",

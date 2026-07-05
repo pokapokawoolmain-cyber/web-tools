@@ -73,6 +73,11 @@ import {
   Bot,
   MessageSquare,
   NotebookPen,
+  MessagesSquare,
+  HeartHandshake,
+  Ban,
+  HelpCircle,
+  TerminalSquare,
   // 冠婚葬祭・文書
   Ribbon,
   PenLine,
@@ -193,6 +198,12 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "receipt-generator": { icon: Receipt, color: BUSINESS },
 
   // AI文章ツール
+  "ai-email": { icon: Mail, color: AI },
+  "ai-keigo": { icon: MessagesSquare, color: AI },
+  "ai-apology": { icon: HeartHandshake, color: AI },
+  "ai-decline": { icon: Ban, color: AI },
+  "ai-inquiry": { icon: HelpCircle, color: AI },
+  "prompt-builder": { icon: TerminalSquare, color: AI },
   "chatgpt-format": { icon: Sparkles, color: AI },
   "ai-humanize": { icon: Bot, color: AI },
   "x-post-preview": { icon: MessageSquare, color: AI },

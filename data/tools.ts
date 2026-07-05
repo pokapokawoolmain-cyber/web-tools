@@ -90,6 +90,12 @@ export const TOOLS: ToolItem[] = [
   { id: "pdf-signature", title: "PDF電子署名ツール", seoTitle: "PDF電子署名ツール｜契約書にサイン可能【無料】", description: "PDFに手書き署名・テキスト・印鑑を追加してPDFで保存。契約書・NDA・見積書への署名に。ブラウザ完結・登録不要。", href: "/tools/pdf-signature", emoji: "✍️", category: "ビジネス・契約書", isNew: true, isPopular: true },
   { id: "receipt-generator", title: "領収書作成ツール", seoTitle: "領収書作成ツール｜PDF保存・印刷対応【登録不要】", description: "領収書を無料で作成。インボイス登録番号・消費税表示・収入印紙目安対応。PDF保存・印刷。ブラウザ完結。", href: "/tools/receipt-generator", emoji: "🧾", category: "ビジネス・契約書", isNew: true },
   // AI文章ツール
+  { id: "ai-email", title: "AIメール作成", seoTitle: "AIメール作成｜ビジネスメールを用途・相手別に自動作成【無料】", description: "依頼・お礼・日程調整など、ビジネスメールの文面を用途と相手を選ぶだけで自動作成。件名から署名までまとめて下書き。", href: "/tools/ai-email", emoji: "✉️", category: "AI文章ツール", isNew: true, isPopular: true },
+  { id: "ai-keigo", title: "AI敬語変換", seoTitle: "AI敬語変換｜くだけた文章をビジネス敬語に自動変換【無料】", description: "「了解です」などのカジュアルな表現を、ビジネスで使える丁寧な敬語に自動変換。社外・社内のトーンも選べます。", href: "/tools/ai-keigo", emoji: "🙇", category: "AI文章ツール", isNew: true, isPopular: true },
+  { id: "ai-apology", title: "AI謝罪文作成", seoTitle: "AI謝罪文作成｜お詫びメール・謝罪文を自動作成【無料】", description: "納期遅延・ミス・クレーム対応など、状況を入力するだけで謝罪文を自動作成。原因と再発防止まで含んだ文面を下書き。", href: "/tools/ai-apology", emoji: "🙏", category: "AI文章ツール", isNew: true },
+  { id: "ai-decline", title: "AI断り文作成", seoTitle: "AI断り文作成｜角が立たない丁寧な断り方を自動作成【無料】", description: "誘い・依頼・提案を、相手の気分を害さずに丁寧に断る文面を自動作成。感謝＋理由＋代替案の型で下書き。", href: "/tools/ai-decline", emoji: "🙅", category: "AI文章ツール", isNew: true },
+  { id: "ai-inquiry", title: "AI問い合わせ文作成", seoTitle: "AI問い合わせ文作成｜企業・店舗・役所への問い合わせメールを自動作成【無料】", description: "商品・在庫・予約・不具合・請求など、企業や店舗への問い合わせメールを自動作成。用件を入力するだけで丁寧な文面を下書き。", href: "/tools/ai-inquiry", emoji: "📮", category: "AI文章ツール", isNew: true },
+  { id: "prompt-builder", title: "ChatGPTプロンプト作成補助", seoTitle: "ChatGPTプロンプト作成補助｜役割・出力形式を整えたプロンプトを自動生成【無料】", description: "やりたいことを入力するだけで、役割・出力形式・条件を整えた精度の高いプロンプトを自動生成。ChatGPT・Claude・Geminiに使えます。", href: "/tools/prompt-builder", emoji: "⌨️", category: "AI文章ツール", isNew: true, isPopular: true },
   { id: "chatgpt-format", title: "ChatGPT改行整形", seoTitle: "ChatGPT改行整形ツール｜AI文章をnote・ブログ・X向けに自動整形", description: "ChatGPTやAIの出力文章を一瞬で見やすく整形。note・ブログ・X・LINE・Discord向けに自動調整。コピペで崩れる問題を解決。", href: "/tools/chatgpt-format", emoji: "✨", category: "AI文章ツール", isNew: true, isPopular: true },
   { id: "ai-humanize", title: "AI文章自然化", seoTitle: "AI文章自然化ツール｜AIっぽい文章を人間らしく自動変換", description: "「AIっぽい」と感じさせる文章を自然な日本語に変換。語尾の繰り返し・固い言い回し・不自然な構造を自動修正。AI感スコア表示付き。", href: "/tools/ai-humanize", emoji: "🤖", category: "AI文章ツール", isNew: true, isPopular: true },
   { id: "x-post-preview", title: "X投稿プレビュー", seoTitle: "X投稿プレビュー・改行シミュレーター｜実際の表示を確認", description: "X（旧Twitter）投稿の実際の表示をプレビュー。改行・文字数・ハッシュタグの見え方をポスト前に確認。スマホ表示も再現。", href: "/tools/x-post-preview", emoji: "𝕏", category: "AI文章ツール", isNew: true },
@@ -151,6 +157,9 @@ export function getNewTools(): ToolItem[] {
 // 直近で新設・更新したツールIDと更新日（YYYY-MM-DD）。
 // リリースノートと連動。「最近の更新」の表示に使う。
 export const TOOL_UPDATED_AT: Record<string, string> = {
+  "ai-email": "2026-07-06",
+  "ai-keigo": "2026-07-06",
+  "prompt-builder": "2026-07-06",
   "speed-test": "2026-07-05",
   "bonus-takehome": "2026-07-05",
   "nenshu-kabe": "2026-07-05",
