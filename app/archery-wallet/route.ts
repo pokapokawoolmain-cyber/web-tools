@@ -1,0 +1,221 @@
+// ========================================
+// アーチェリー会員証 Wallet 追加ページ（サブコンテンツ）
+// 元ページ（archery-wallet-code128.onrender.com）の完全コピー。
+// フォームの送信先のみ、稼働中の Render バックエンドの絶対URLに変更している。
+// パス生成（Apple/Google Wallet・証明書・JWT署名）は従来どおり Render 側で処理する。
+// Route Handler で独立配信するため、toolboxjp の Header/Footer/デザインには非干渉。
+// ========================================
+
+const BACKEND = "https://archery-wallet-code128.onrender.com";
+
+const HTML = `<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>会員証をWalletに追加</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(59,130,246,0.12), transparent 35%),
+    linear-gradient(180deg, #081226 0%, #0f172a 100%);
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 48px 18px 40px;
+}
+
+.container {
+  background: rgba(255,255,255,0.06);
+  border-radius: 24px;
+  padding: 34px 22px 26px;
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(59,130,246,0.4);
+  box-shadow:
+    0 0 0 1px rgba(59,130,246,0.2),
+    0 0 25px rgba(59,130,246,0.15),
+    0 18px 40px rgba(0,0,0,0.28);
+}
+
+h1 {
+  margin: 0 0 26px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  height: 54px;
+  border-radius: 14px;
+  padding: 0 16px;
+  font-size: 16px;
+  outline: none;
+  background: rgba(255,255,255,0.95);
+  color: #0f172a;
+  border: 1px solid rgba(59,130,246,0.4);
+  box-shadow:
+    0 0 0 1px rgba(59,130,246,0.2),
+    inset 0 0 6px rgba(59,130,246,0.15);
+}
+
+input::placeholder {
+  color: #94a3b8;
+}
+
+button {
+  width: 100%;
+  height: 56px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow:
+    0 10px 30px rgba(56,189,248,0.5),
+    0 0 15px rgba(56,189,248,0.4);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+#loading {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.72);
+}
+
+.footer-note {
+  margin-top: 20px;
+  font-size: 12px;
+  text-align: center;
+  color: rgba(255,255,255,0.58);
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 34px 14px 28px;
+  }
+
+  .container {
+    padding: 28px 18px 22px;
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-size: 18px;
+    margin-bottom: 22px;
+  }
+
+  input {
+    height: 52px;
+    font-size: 16px;
+  }
+
+  button {
+    height: 54px;
+  }
+}
+</style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <h1>会員証をWalletに追加</h1>
+
+      <form id="issueForm" action="${BACKEND}/generate" method="GET">
+        <div class="form-group">
+          <label for="name">名前</label>
+          <input id="name" type="text" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="memberNumber">会員番号（7桁）</label>
+          <input id="memberNumber" type="text" name="memberNumber" inputmode="numeric" required>
+        </div>
+
+        <div class="form-group">
+          <label for="affiliation">所属</label>
+          <input id="affiliation" type="text" name="affiliation" required>
+        </div>
+
+        <input type="hidden" id="requestId" name="requestId">
+
+        <button id="submitBtn" type="submit">Walletに追加する</button>
+      </form>
+
+      <div id="loading" style="display:none;">
+        発行中です…
+      </div>
+
+      <div class="footer-note">
+        ※本サービスは非公式です。使用可否については各運営の指示に従ってください。
+      </div>
+    </div>
+  </div>
+
+<script>
+const form = document.getElementById("issueForm");
+const loading = document.getElementById("loading");
+const submitBtn = document.getElementById("submitBtn");
+const requestIdInput = document.getElementById("requestId");
+
+requestIdInput.value =
+  Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 10);
+
+let isSubmitting = false;
+
+form.addEventListener("submit", (e) => {
+  if (isSubmitting) {
+    e.preventDefault();
+    return;
+  }
+
+  isSubmitting = true;
+  loading.style.display = "block";
+  submitBtn.disabled = true;
+  submitBtn.textContent = "発行中...";
+});
+</script>
+</body>
+</html>
+`;
+
+export const dynamic = "force-static";
+
+export function GET() {
+  return new Response(HTML, {
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
+}
