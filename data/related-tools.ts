@@ -95,6 +95,14 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "palette-accessibility": ["contrast-checker", "brand-color-text", "color-blind-simulator", "color-palette"],
   "color-blind-simulator": ["contrast-checker", "palette-accessibility", "brand-color-text", "color-palette"],
   "color-codes":           ["brand-color-text", "hex-rgb-converter", "color-palette", "palette-accessibility"],
+
+  // ── 開発者ツール ──────────────────────────────────────────────
+  "json-formatter": ["base64", "url-encode", "unix-time", "hash"],
+  "base64":         ["url-encode", "hash", "json-formatter", "uuid"],
+  "url-encode":     ["base64", "json-formatter", "qr-generator", "uuid"],
+  "uuid":           ["hash", "password-generator", "base64", "json-formatter"],
+  "unix-time":      ["json-formatter", "base64", "hash", "url-encode"],
+  "hash":           ["base64", "uuid", "password-generator", "json-formatter"],
 };
 
 /** toolId に関連するツールIDを最大 limit 件返す */

@@ -10,6 +10,7 @@ export type ToolCategory =
   | "AI文章ツール"
   | "冠婚葬祭・文書"
   | "カラーツール"
+  | "開発者ツール"
   | "建設・リフォーム"
   | "飲食店";
 
@@ -131,10 +132,18 @@ export const TOOLS: ToolItem[] = [
   { id: "restaurant-menu-maker", title: "メニュー表作成ツール", seoTitle: "メニュー表作成ツール｜飲食店・カフェ向けA4印刷対応【無料】", description: "カテゴリ・メニュー名・価格・説明・アレルギー情報を入力してA4メニュー表をPDF保存・印刷。カフェ風・居酒屋風テーマ対応。", href: "/tools/restaurant-menu-maker", emoji: "📋", category: "飲食店", isNew: true },
   { id: "review-reply-generator", title: "Google口コミ返信文メーカー", seoTitle: "Google口コミ返信文メーカー｜飲食店向け無料自動生成", description: "高評価・低評価・クレームなど状況別に、そのままコピーできる自然な口コミ返信文を生成。丁寧・カジュアル・店主らしい文体を選択可。", href: "/tools/review-reply-generator", emoji: "⭐", category: "飲食店", isNew: true },
   { id: "restaurant-pop-generator", title: "POP・店内案内文メーカー", seoTitle: "POP・店内案内文メーカー｜飲食店向け無料自動生成", description: "本日のおすすめ・期間限定・臨時休業・予約案内など、店内掲示やSNSにそのまま使える案内文を自動生成。コピー・PDF保存対応。", href: "/tools/restaurant-pop-generator", emoji: "📢", category: "飲食店", isNew: true },
+
+  // 開発者ツール
+  { id: "json-formatter", title: "JSON整形・圧縮", seoTitle: "JSON整形・圧縮ツール｜バリデーション付き【無料・ブラウザ完結】", description: "JSONを見やすく整形（インデント）・1行に圧縮（minify）。構文エラーの位置も表示。コピー・サンプル対応。データは外部に送信されません。", href: "/tools/json-formatter", emoji: "🧩", category: "開発者ツール", isNew: true, isPopular: true },
+  { id: "base64", title: "Base64エンコード/デコード", seoTitle: "Base64 エンコード・デコードツール｜日本語対応【無料】", description: "テキストをBase64にエンコード、Base64をテキストにデコード。日本語（UTF-8）・URLセーフ形式に対応。ブラウザ内処理で安全。", href: "/tools/base64", emoji: "🔤", category: "開発者ツール", isNew: true },
+  { id: "url-encode", title: "URLエンコード/デコード", seoTitle: "URLエンコード・デコードツール｜パーセントエンコード【無料】", description: "URLやクエリ文字列をパーセントエンコード・デコード。日本語や記号を含むURLの変換に。encodeURIComponent相当。ブラウザ完結。", href: "/tools/url-encode", emoji: "🔗", category: "開発者ツール", isNew: true },
+  { id: "uuid", title: "UUID生成", seoTitle: "UUID生成ツール｜v4ランダムUUIDをまとめて発行【無料】", description: "UUID（v4・ランダム）をワンクリックで生成。1〜100個の一括生成、ハイフンなし・大文字・波括弧などの形式に対応。コピー可能。", href: "/tools/uuid", emoji: "🆔", category: "開発者ツール", isNew: true },
+  { id: "unix-time", title: "Unixタイムスタンプ変換", seoTitle: "Unixタイムスタンプ変換ツール｜日時⇔エポック秒【無料】", description: "Unixタイムスタンプ（エポック秒/ミリ秒）と日時を相互変換。現在時刻の表示、タイムゾーン・ISO 8601表記に対応。", href: "/tools/unix-time", emoji: "🕐", category: "開発者ツール", isNew: true },
+  { id: "hash", title: "ハッシュ生成（SHA）", seoTitle: "ハッシュ生成ツール｜SHA-1/256/384/512【無料・ブラウザ完結】", description: "テキストからSHA-1・SHA-256・SHA-384・SHA-512のハッシュ値を生成。ファイルの改ざん確認や文字列比較に。ブラウザ内処理で安全。", href: "/tools/hash", emoji: "🔒", category: "開発者ツール", isNew: true },
 ];
 
 export const CATEGORIES: ToolCategory[] = [
-  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書", "カラーツール", "建設・リフォーム", "飲食店"
+  "お金・投資", "計算ツール", "画像・PDF", "生活・副業", "テキスト・Web", "学生向け", "仕事・副業", "ビジネス・契約書", "AI文章ツール", "冠婚葬祭・文書", "カラーツール", "開発者ツール", "建設・リフォーム", "飲食店"
 ];
 
 export function getToolsByCategory() {
@@ -201,6 +210,7 @@ export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
   "AI文章ツール": "ai",
   "冠婚葬祭・文書": "ceremony",
   "カラーツール": "color",
+  "開発者ツール": "dev",
   "建設・リフォーム": "construction",
   "飲食店": "restaurant",
 };

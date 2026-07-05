@@ -25,6 +25,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     date: "2026-07-06",
     type: "NEW",
+    target: "開発者ツール",
+    href: "/dev",
+    title: "開発者ツールカテゴリを新設（6ツール）",
+    body: "JSON整形・圧縮、Base64・URLのエンコード／デコード、UUID生成、SHA系ハッシュ生成、Unixタイムスタンプ変換を追加しました。すべてブラウザ内で処理され、入力したデータは外部に送信されません。",
+  },
+  {
+    date: "2026-07-06",
+    type: "NEW",
     target: "配色・デザインツール",
     href: "/tools/brand-color-text",
     title: "カラーツールを4つ追加",

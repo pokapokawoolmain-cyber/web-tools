@@ -409,6 +409,39 @@ const RESTAURANT_CATEGORY: CategoryConfig = {
 // ─────────────────────────────────────────────────────────────────────────────
 // エクスポート
 // ─────────────────────────────────────────────────────────────────────────────
+const DEV_CATEGORY: CategoryConfig = {
+  slug: "dev",
+  name: "開発者ツール",
+  nameEn: "Developer Tools",
+  tagline: "開発者向けツール集｜JSON整形・Base64・UUID・ハッシュ・Unix時刻",
+  description:
+    "JSON整形／圧縮・Base64エンコード・URLエンコード・UUID生成・SHAハッシュ生成・Unixタイムスタンプ変換など、開発でよく使うツールを無料で。すべてブラウザ内で処理され、データは外部に送信されません。登録不要。",
+  longDescription:
+    "エンジニアの日常作業を助ける小さな道具をまとめました。JSONの整形と圧縮、Base64・URLのエンコード／デコード、UUIDの一括生成、SHA系ハッシュの計算、Unixタイムスタンプと日時の相互変換に対応。入力したデータはブラウザ内だけで処理し、サーバーへ送信しません。APIキーやトークンなど機密を含む値も安心して扱えます。",
+  icon: "⌨️",
+  gradientFrom: "from-sky-500",
+  gradientTo: "to-indigo-600",
+  gradientLight: "from-sky-50 to-indigo-50 dark:from-sky-950/30 dark:to-indigo-950/20",
+  accentColor: "text-sky-600 dark:text-sky-400",
+  accentBg: "bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300",
+  title: "無料の開発者ツール集｜JSON整形・Base64・UUID・ハッシュ【登録不要】",
+  keywords: ["json 整形 ツール", "base64 エンコード デコード", "url エンコード", "uuid 生成", "sha256 ハッシュ 生成", "unixタイム 変換"],
+  popularToolIds: ["json-formatter", "base64", "unix-time", "hash"],
+  allToolIds: ["json-formatter", "base64", "url-encode", "uuid", "unix-time", "hash"],
+  stats: [
+    { label: "開発者ツール数", value: "6種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "処理場所", value: "ブラウザ完結" },
+  ],
+  faqs: [
+    { q: "入力したデータはサーバーに送信されますか？", a: "いいえ。すべての処理はお使いのブラウザ内（JavaScript）で完結します。JSON・トークン・ハッシュ対象の文字列などが外部サーバーに送信されることは一切ありません。機密情報を含むデータも安全に扱えます。" },
+    { q: "JSON整形と圧縮（minify）の違いは何ですか？", a: "整形は改行とインデントを付けて人間が読みやすい形にします。圧縮は不要な空白・改行を取り除いて1行にし、通信量やファイルサイズを削減します。APIのレスポンス確認には整形、本番配信には圧縮が向いています。" },
+    { q: "ハッシュツールでMD5は使えますか？", a: "現在はブラウザ標準のWeb Crypto APIに対応するSHA-1・SHA-256・SHA-384・SHA-512を提供しています。MD5は標準APIに含まれないため未対応です。改ざん検知や整合性確認にはSHA-256以上を推奨します。" },
+    { q: "スマホからも使えますか？", a: "はい。iPhone・Androidのブラウザからすべての開発者ツールをご利用いただけます。アプリのインストールは不要です。" },
+  ],
+};
+
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   pdf: PDF_CATEGORY,
   image: IMAGE_CATEGORY,
@@ -417,6 +450,7 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   ai: AI_CATEGORY,
   ceremony: CEREMONY_CATEGORY,
   color: COLOR_CATEGORY,
+  dev: DEV_CATEGORY,
   construction: CONSTRUCTION_CATEGORY,
   restaurant: RESTAURANT_CATEGORY,
 };

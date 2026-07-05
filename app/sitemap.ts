@@ -165,6 +165,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/tools/text`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
     { url: `${siteUrl}/tools/student`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
     { url: `${siteUrl}/tools/work`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
+    // 開発者ツール
+    { url: `${siteUrl}/dev`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     // カラーツール
     { url: `${siteUrl}/color`, lastModified: new Date("2026-06-02"), changeFrequency: "monthly", priority: 0.9 },
     { url: `${siteUrl}/tools/hex-rgb-converter`, lastModified: new Date("2026-06-02"), changeFrequency: "monthly", priority: 0.85 },

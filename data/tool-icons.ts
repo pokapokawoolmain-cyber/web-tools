@@ -93,6 +93,12 @@ import {
   Grid3x3,
   Glasses,
   SwatchBook,
+  // 開発者ツール
+  Braces,
+  Binary,
+  Fingerprint,
+  Clock3,
+  Hash,
   // 建設・リフォーム
   HardHat,
   Percent,
@@ -126,6 +132,7 @@ const CONSTRUCTION = "#fb923c"; // オレンジ
 const RESTAURANT = "#f87171"; // レッド
 const AI = "#22d3ee"; // シアン
 const COLOR = "#c084fc"; // パープル
+const DEV = "#38bdf8"; // スカイ（開発者ツール）
 const STUDENT = "#4ade80"; // グリーン
 
 export const TOOL_ICONS: Record<string, ToolIconDef> = {
@@ -226,6 +233,14 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "gradient-generator": { icon: Blend, color: COLOR },
   "contrast-checker": { icon: Eye, color: COLOR },
   "brand-color-text": { icon: Type, color: COLOR },
+
+  // 開発者ツール
+  "json-formatter": { icon: Braces, color: DEV },
+  "base64": { icon: Binary, color: DEV },
+  "url-encode": { icon: Link2, color: DEV },
+  "uuid": { icon: Fingerprint, color: DEV },
+  "unix-time": { icon: Clock3, color: DEV },
+  "hash": { icon: Hash, color: DEV },
   "palette-accessibility": { icon: Grid3x3, color: COLOR },
   "color-blind-simulator": { icon: Glasses, color: COLOR },
   "color-codes": { icon: SwatchBook, color: COLOR },
