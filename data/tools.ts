@@ -23,6 +23,8 @@ export type ToolItem = {
   category: ToolCategory;
   isPopular?: boolean;
   isNew?: boolean;
+  /** 直近で新設・更新した日（YYYY-MM-DD）。「最近の更新」の並び替えに使う */
+  updatedAt?: string;
 };
 
 export const TOOLS: ToolItem[] = [
@@ -144,6 +146,34 @@ export function getPopularTools(): ToolItem[] {
 
 export function getNewTools(): ToolItem[] {
   return TOOLS.filter(t => t.isNew);
+}
+
+// 直近で新設・更新したツールIDと更新日（YYYY-MM-DD）。
+// リリースノートと連動。「最近の更新」の表示に使う。
+export const TOOL_UPDATED_AT: Record<string, string> = {
+  "speed-test": "2026-07-05",
+  "bonus-takehome": "2026-07-05",
+  "nenshu-kabe": "2026-07-05",
+  "shugi-maker": "2026-07-05",
+  "houyou-calculator": "2026-07-05",
+  "koden-maker": "2026-07-05",
+  "neighbor-greeting": "2026-07-05",
+  "takehome-reverse": "2026-07-03",
+  "image-resize": "2026-07-03",
+  "pdf-to-jpg": "2026-07-01",
+  "exterior-paint-calculator": "2026-07-01",
+};
+
+/** updatedAt が新しい順にツールを返す（最大 limit 件） */
+export function getRecentlyUpdatedTools(limit = 6): (ToolItem & { updatedAt: string })[] {
+  return Object.entries(TOOL_UPDATED_AT)
+    .map(([id, updatedAt]) => {
+      const tool = TOOLS.find(t => t.id === id);
+      return tool ? { ...tool, updatedAt } : null;
+    })
+    .filter((t): t is ToolItem & { updatedAt: string } => t !== null)
+    .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
+    .slice(0, limit);
 }
 
 export const CATEGORY_SLUGS: Record<ToolCategory, string> = {

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { TOOLS, getPopularTools } from "@/data/tools";
+import { TOOLS, getPopularTools, getRecentlyUpdatedTools } from "@/data/tools";
 import { ToolCard } from "@/components/tools/ToolCard";
+import { ToolIcon } from "@/components/tools/ToolIcon";
 import { ALL_CATEGORIES } from "@/data/categories";
+import { getRecentReleaseNotes, RELEASE_TYPE_STYLE, formatReleaseDate } from "@/data/release-notes";
 import { ArrowRight, Lock, Smartphone, ShieldCheck, Zap } from "lucide-react";
 import { BottomAd } from "@/components/ads/presets";
 import { CategoryTabSection } from "./_components/CategoryTabSection";
@@ -74,6 +76,8 @@ const STATS = [
 export default function HomePage() {
   const popularTools = getPopularTools();
   const newTools = TOOLS.filter((t) => t.isNew).slice(0, 6);
+  const recentlyUpdated = getRecentlyUpdatedTools(6);
+  const recentNotes = getRecentReleaseNotes(4);
 
   return (
     <>
@@ -287,7 +291,7 @@ export default function HomePage() {
                 POPULAR
               </p>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-                人気のツール
+                人気ツールランキング
               </h2>
             </div>
             <Link
@@ -299,7 +303,22 @@ export default function HomePage() {
           </ScrollReveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {popularTools.map((tool, i) => (
-              <ScrollReveal key={tool.id} delay={i * 50}>
+              <ScrollReveal key={tool.id} delay={i * 50} className="relative">
+                {/* ランキング番号 */}
+                <span
+                  aria-hidden="true"
+                  className={`absolute -top-2 -left-2 z-10 flex items-center justify-center w-7 h-7 rounded-full text-[13px] font-bold shadow-sm ${
+                    i === 0
+                      ? "bg-amber-400 text-amber-950"
+                      : i === 1
+                        ? "bg-slate-300 text-slate-700"
+                        : i === 2
+                          ? "bg-orange-300 text-orange-900"
+                          : "bg-white dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700"
+                  }`}
+                >
+                  {i + 1}
+                </span>
                 <ToolCard tool={{ ...tool, icon: tool.emoji, keywords: [] }} />
               </ScrollReveal>
             ))}
@@ -339,6 +358,71 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
+      {/* ══════════════════════════════════════════════
+          7.5 最近の更新
+      ══════════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 bg-slate-50 dark:bg-zinc-900 border-t border-slate-100 dark:border-zinc-800">
+        <div className="container-base">
+          <ScrollReveal className="flex items-end justify-between mb-8">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-1.5">
+                CHANGELOG
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                最近の更新
+              </h2>
+            </div>
+            <Link
+              href="/release-notes"
+              className="text-[13px] text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white inline-flex items-center gap-1 min-h-[44px] transition-colors"
+            >
+              リリースノート <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+            {recentNotes.map((note, i) => {
+              const style = RELEASE_TYPE_STYLE[note.type];
+              const inner = (
+                <div className="h-full bg-white dark:bg-zinc-950 border border-slate-100 dark:border-zinc-800 rounded-2xl p-5 hover:border-slate-200 dark:hover:border-zinc-700 transition-colors">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${style.className}`}>
+                      {style.label}
+                    </span>
+                    <time className="text-[12px] text-slate-400 dark:text-zinc-500 font-mono" dateTime={note.date}>
+                      {formatReleaseDate(note.date)}
+                    </time>
+                  </div>
+                  <p className="text-[15px] font-bold text-slate-800 dark:text-zinc-200 mb-1">{note.title}</p>
+                  <p className="text-[13px] text-slate-500 dark:text-zinc-400 leading-relaxed line-clamp-2">{note.body}</p>
+                </div>
+              );
+              return (
+                <ScrollReveal key={i} delay={i * 40}>
+                  {note.href ? <Link href={note.href} className="block h-full">{inner}</Link> : inner}
+                </ScrollReveal>
+              );
+            })}
+          </div>
+
+          {/* 直近で更新されたツール */}
+          <ScrollReveal delay={120} className="mt-6">
+            <p className="text-[12px] text-slate-400 dark:text-zinc-500 mb-3">直近で追加・更新したツール</p>
+            <div className="flex flex-wrap gap-2">
+              {recentlyUpdated.map((tool) => (
+                <Link
+                  key={tool.id}
+                  href={tool.href}
+                  className="inline-flex items-center gap-2 pl-2 pr-3.5 py-1.5 rounded-full bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-[13px] font-medium text-slate-600 dark:text-zinc-300 hover:border-slate-300 dark:hover:border-zinc-600 hover:text-slate-900 dark:hover:text-white transition-colors"
+                >
+                  <ToolIcon toolId={tool.id} size="sm" fallbackEmoji={tool.emoji} />
+                  {tool.title}
+                </Link>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
       {/* ══════════════════════════════════════════════
           8. CTA BANNER

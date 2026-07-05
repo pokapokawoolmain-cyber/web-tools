@@ -191,7 +191,7 @@ export default function AboutPage() {
             <div className="space-y-4 text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
               <p>
                 ToolBoxは定期的に新しいツールの追加と既存ツールの機能改善を行っています。
-                新ツールの追加情報や機能改善の履歴は<Link href="/updates" className="text-blue-600 dark:text-blue-400 hover:underline">更新履歴ページ</Link>でご確認いただけます。
+                新ツールの追加情報や機能改善の履歴は<Link href="/release-notes" className="text-blue-600 dark:text-blue-400 hover:underline">リリースノート</Link>でご確認いただけます。
               </p>
               <p>
                 ブログ記事についても、税制改正・法律変更・最新データへの対応など、情報の正確性を保つために定期的な見直しを実施しています。
@@ -270,7 +270,7 @@ export default function AboutPage() {
           {/* ───── リンク ───── */}
           <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-100 dark:border-zinc-800">
             <Link href="/" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">← トップページへ</Link>
-            <Link href="/updates" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">更新履歴</Link>
+            <Link href="/release-notes" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">リリースノート</Link>
             <Link href="/privacy" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">プライバシーポリシー</Link>
             <Link href="/terms" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">利用規約</Link>
             <Link href="/contact" className="text-[13px] text-blue-600 dark:text-blue-400 hover:underline">お問い合わせ</Link>

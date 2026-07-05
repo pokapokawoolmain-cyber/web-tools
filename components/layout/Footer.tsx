@@ -81,8 +81,8 @@ export function Footer() {
             ToolBoxについて
           </Link>
           <span className="text-slate-200 dark:text-zinc-700">|</span>
-          <Link href="/updates" className="hover:text-slate-800 dark:hover:text-zinc-200 transition-colors text-[13px] text-slate-500 dark:text-zinc-400">
-            更新履歴
+          <Link href="/release-notes" className="hover:text-slate-800 dark:hover:text-zinc-200 transition-colors text-[13px] text-slate-500 dark:text-zinc-400">
+            リリースノート
           </Link>
           <span className="text-slate-200 dark:text-zinc-700">|</span>
           <Link href="/contact" className="hover:text-slate-800 dark:hover:text-zinc-200 transition-colors text-[13px] text-slate-500 dark:text-zinc-400">
