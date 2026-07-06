@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, BookOpen, LayoutGrid, Landmark } from "lucide-react";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 import { ALL_CATEGORIES } from "@/data/categories";
+import { ToolIcon } from "@/components/tools/ToolIcon";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -138,7 +139,7 @@ export function Header() {
                       {popularTools.map(t => (
                         <Link key={t.id} href={t.href} onClick={() => setIsOpen(false)}
                           className="flex items-center gap-2 py-1.5 text-[14px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
-                          <span>{t.emoji}</span><span>{t.title}</span>
+                          <ToolIcon toolId={t.id} size="sm" fallbackEmoji={t.emoji} /><span>{t.title}</span>
                         </Link>
                       ))}
                     </div>
@@ -152,7 +153,7 @@ export function Header() {
                       {newTools.map(t => (
                         <Link key={t.id} href={t.href} onClick={() => setIsOpen(false)}
                           className="flex items-center gap-2 py-1.5 text-[14px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
-                          <span>{t.emoji}</span><span>{t.title}</span>
+                          <ToolIcon toolId={t.id} size="sm" fallbackEmoji={t.emoji} /><span>{t.title}</span>
                         </Link>
                       ))}
                     </div>
@@ -171,7 +172,7 @@ export function Header() {
                       {catTools.map(t => (
                         <Link key={t.id} href={t.href} onClick={() => setIsOpen(false)}
                           className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
-                          <span className="text-xl w-7 text-center">{t.emoji}</span>
+                          <ToolIcon toolId={t.id} size="sm" fallbackEmoji={t.emoji} />
                           <span className="text-[15px] text-slate-900 dark:text-white flex-1">{t.title}</span>
                           {t.isNew && <span className="text-[10px] font-bold text-blue-500 bg-blue-50 dark:bg-blue-950/50 px-1.5 py-0.5 rounded-full">NEW</span>}
                           <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600 flex-shrink-0" />
