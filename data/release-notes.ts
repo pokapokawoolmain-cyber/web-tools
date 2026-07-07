@@ -23,6 +23,13 @@ export type ReleaseNote = {
 // 新しい順に並べる
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    date: "2026-07-07",
+    type: "UPDATE",
+    title: "全95ツールのSEOを総点検",
+    body: "各ツールのページタイトルと説明文を検索キーワードに合わせて個別に見直し、すべてのツールに「よくある質問」を追加しました。カテゴリのアイコンもツールと同じガラス風デザインに統一しています。",
+    href: "/tools",
+  },
+  {
     date: "2026-07-06",
     type: "NEW",
     target: "開発者ツール",
