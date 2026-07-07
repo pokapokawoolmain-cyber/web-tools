@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "Markdownエディタ",
-  "左に書いて右でプレビュー。GitHub対応Markdownをリアルタイムプレビュー。コピー・ダウンロード対応。",
-  "markdown-editor",
-  ["Markdownエディタ オンライン", "Markdown プレビュー リアルタイム", "マークダウン 書き方", "GitHub README 作成", "Markdown 記法 一覧", "Notion Markdown 変換"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "Markdownエディタ【無料・ブラウザ完結】リアルタイムプレビュー付き｜GitHub対応",
+  description: "左に書いて右で即プレビューできるオンラインMarkdownエディタ。GitHub方言（GFM）対応で、表・コードブロック・チェックリストも確認しながら書けます。コピー・ダウンロード対応。無料・登録不要。",
+  path: "/tools/markdown-editor",
+  keywords: ["markdown エディタ オンライン","マークダウン プレビュー","markdown 練習","md エディタ 無料","markdown 表 プレビュー"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "Markdownエディタ", icon: "📝", desc: "リアルタイムプレビュー付きMDエディタ" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

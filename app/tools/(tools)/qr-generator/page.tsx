@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { QrGenerator } from "./QrGenerator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "QRコード生成",
-  "URL・テキスト・WiFi情報をQRコードに変換。色変更・PNG/SVGダウンロード対応。無料・登録不要。",
-  "qr-generator",
-  ["QRコード作成", "QR生成", "QRコード無料", "URL QR", "WiFi QR", "ダウンロード"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "QRコード作成【無料・登録不要】URLやテキストから即生成｜色変更・PNG/SVG保存",
+  description: "URL・テキスト・Wi-Fi情報からQRコードを無料で作成。色のカスタマイズ、PNG・SVG形式でのダウンロードに対応。有効期限なし・商用利用OK・ブラウザ完結でデータは外部に送信されません。",
+  path: "/tools/qr-generator",
+  keywords: ["QRコード 作成 無料","QRコード 生成","QRコード 作り方","URL QRコード 変換","QRコード 無料 登録不要 安全"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "QRコード作成", icon: "📱", desc: "URL・テキストからQRコードを即生成" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

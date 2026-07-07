@@ -2,6 +2,7 @@ import Link from "next/link";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 import { ALL_CATEGORIES } from "@/data/categories";
 import { ToolIcon } from "@/components/tools/ToolIcon";
+import { CategoryIcon } from "@/components/tools/CategoryIcon";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -54,7 +55,7 @@ export function Footer() {
                 href={`/${cat.slug}`}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-zinc-800 text-[13px] text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors border border-slate-200 dark:border-zinc-700 shadow-sm"
               >
-                <span>{cat.icon}</span>
+                <CategoryIcon slug={cat.slug} size="xs" fallbackEmoji={cat.icon} />
                 <span>{cat.name}</span>
               </Link>
             ))}

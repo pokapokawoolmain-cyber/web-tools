@@ -3,6 +3,7 @@
 // ========================================
 import Link from "next/link";
 import type { CategoryConfig } from "@/data/categories";
+import { CategoryIcon } from "@/components/tools/CategoryIcon";
 
 type Props = {
   config: CategoryConfig;
@@ -30,7 +31,7 @@ export function CategoryHero({ config }: Props) {
         <div className="max-w-2xl">
           {/* カテゴリバッジ */}
           <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[12px] font-semibold mb-5 ${config.accentBg}`}>
-            <span>{config.icon}</span>
+            <CategoryIcon slug={config.slug} size="xs" fallbackEmoji={config.icon} />
             <span>{config.nameEn}</span>
           </div>
 

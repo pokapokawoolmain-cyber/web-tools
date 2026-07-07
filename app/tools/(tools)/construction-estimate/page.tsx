@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ConstructionEstimate } from "./ConstructionEstimate";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
@@ -9,6 +10,43 @@ export const metadata: Metadata = generateMeta({
   path: "/tools/construction-estimate",
   keywords: ["工事見積書 作成 無料", "リフォーム 見積書 テンプレ", "建設 見積書 PDF", "工事 見積書 フォーマット", "外壁塗装 見積書 作成", "建設業 見積書 無料"],
 });
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "諸経費は何パーセントが標準？",
+      acceptedAnswer: { "@type": "Answer", text: "現場管理費・一般管理費を合わせて10〜20%が一般的です。小規模工事では15%前後、大規模工事では10%前後が目安です。発注者から「内訳を明示してほしい」と言われることも多いため、諸経費の内容を説明できるようにしておきましょう。" },
+    },
+    {
+      "@type": "Question",
+      name: "消費税はどう扱う？",
+      acceptedAnswer: { "@type": "Answer", text: "工事費は原則10%の消費税がかかります（食品等の軽減税率は適用されません）。インボイス制度対応のため、適格請求書発行事業者番号（T+13桁）の記載が推奨されます。" },
+    },
+    {
+      "@type": "Question",
+      name: "見積書の有効期限はどのくらいにする？",
+      acceptedAnswer: { "@type": "Answer", text: "材料費の変動があるため、30日間が一般的です。資材価格が高騰している時期は14〜21日間に短縮することもあります。" },
+    },
+    {
+      "@type": "Question",
+      name: "建設業許可番号はどこに記載しますか？",
+      acceptedAnswer: { "@type": "Answer", text: "本ツールでは会社情報欄に入力すると自動的に見積書に反映されます。一般建設業・特定建設業の別と許可番号（「国土交通大臣許可（特-00）第○号」など）を正確に記載してください。" },
+    },
+    {
+      "@type": "Question",
+      name: "入力した内容はどこかに保存されますか？",
+      acceptedAnswer: { "@type": "Answer", text: "施工会社情報のみブラウザのLocalStorageに自動保存されます。施主情報・明細はブラウザを閉じると消えます。重要な見積書はPDFで保存してください。" },
+    },
+    {
+      "@type": "Question",
+      name: "見積書として法的に有効ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "本ツールで作成した書類はひな形です。建設業法で定められた書面要件を満たすかどうかは工事内容・金額によって異なります。重要な工事では専門家にご確認ください。" },
+    },
+  ],
+};
 
 const seoContent = (
   <div className="space-y-8">
@@ -69,14 +107,17 @@ const seoContent = (
 
 export default function Page() {
   return (
-    <ToolLayout
-      title="工事見積書作成ツール"
-      description="工事明細・諸経費・消費税を入力して見積書をPDF出力。施工会社情報を自動保存。建設・リフォーム業向け。"
-      icon="📋"
-      slug="construction-estimate"
-      seoContent={seoContent}
-    >
-      <ConstructionEstimate />
-    </ToolLayout>
+    <>
+      <JsonLd data={faqSchema} />
+      <ToolLayout
+        title="工事見積書作成ツール"
+        description="工事明細・諸経費・消費税を入力して見積書をPDF出力。施工会社情報を自動保存。建設・リフォーム業向け。"
+        icon="📋"
+        slug="construction-estimate"
+        seoContent={seoContent}
+      >
+        <ConstructionEstimate />
+      </ToolLayout>
+    </>
   );
 }

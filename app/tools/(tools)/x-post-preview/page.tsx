@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { XPostPreview } from "./XPostPreview";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
-export const metadata: Metadata = generateToolMeta(
-  "X投稿プレビュー・改行シミュレーター",
-  "X（旧Twitter）投稿の実際の表示をプレビュー。改行・文字数・ハッシュタグの見え方をポスト前に確認。スマホ表示も再現。",
-  "x-post-preview",
-  ["X 改行", "Twitter 改行確認", "X投稿 シミュレーター", "X 文字数 カウント", "Twitter 投稿 確認"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "X（Twitter）投稿プレビュー【無料】改行・文字数・見え方を投稿前に確認",
+  description: "X（旧Twitter）の投稿が実際にどう表示されるかを事前にプレビュー。改行位置・文字数カウント・ハッシュタグの見え方をスマホ表示で再現します。下書きの推敲に。無料・登録不要。",
+  path: "/tools/x-post-preview",
+  keywords: ["X 投稿 プレビュー","Twitter 改行 確認","X 文字数 カウント","ツイート プレビュー","X 改行 シミュレーター"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "X（Twitter）投稿プレビュー", icon: "𝕏", desc: "Xの投稿の見え方を事前確認" }).toString()}`,
+});
 
 const faqs = [
   {

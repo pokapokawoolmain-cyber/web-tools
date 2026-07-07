@@ -1,23 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { FaviconGenerator } from "./FaviconGenerator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "ファビコン作成・生成ツール｜画像・文字からICO・PNG・SVGを無料作成",
-  "テキスト・絵文字・画像からfavicon.ico・PNG・Apple Touch Icon・PWAアイコンを無料作成。Maskable Icon・WebManifest・HTMLコードも一括生成。ブラウザ完結・登録不要。",
-  "favicon-generator",
-  [
-    "ファビコン 作成",
-    "favicon 作成 無料",
-    "favicon ico 変換 ツール",
-    "ファビコン ジェネレーター",
-    "Apple Touch Icon 作成",
-    "PWAアイコン 生成",
-    "maskable icon 作成",
-  ]
-);
+export const metadata: Metadata = generateMeta({
+  title: "ファビコン作成ツール【無料】テキスト・絵文字・画像からfavicon.icoを生成",
+  description: "テキスト・絵文字・画像からfavicon.ico（16〜64pxマルチサイズ）とPNGを無料生成。色や角丸も調整でき、ブラウザ完結でダウンロードできます。Webサイト制作の仕上げに。登録不要。",
+  path: "/tools/favicon-generator",
+  keywords: ["ファビコン 作成 無料","favicon 生成","favicon.ico 作り方","ファビコン 画像 変換","favicon ジェネレーター"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "ファビコン作成ツール", icon: "🌐", desc: "favicon.icoをブラウザで生成" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

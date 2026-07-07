@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { HeicConverter } from "./HeicConverter";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "HEIC→JPG変換",
-  "iPhoneで撮影したHEIC形式の写真をJPGに無料変換。ブラウザ完結でプライバシー安全。",
-  "heic-to-jpg",
-  ["HEIC変換", "HEIC JPG", "iPhone写真", "HEICをJPGに変換", "無料", "オンライン"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "HEIC JPG変換【無料・アプリ不要】iPhone写真をブラウザで一括変換",
+  description: "iPhoneのHEIC写真をJPGへ一括変換できる無料ツール。アプリのインストール不要で、WindowsでもMacでもブラウザだけで完結。写真はサーバーに送信されないためプライバシーも安全です。",
+  path: "/tools/heic-to-jpg",
+  keywords: ["HEIC JPG 変換 無料","HEIC 変換 アプリ不要","iPhone 写真 JPG 変換","HEIC 開けない Windows","HEIC 一括変換"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "HEIC JPG変換", icon: "🖼️", desc: "iPhoneのHEICをJPGへ一括変換" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

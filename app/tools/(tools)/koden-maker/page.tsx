@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { KodenMaker } from "./KodenMaker";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
-export const metadata: Metadata = generateToolMeta(
-  "香典袋表書きメーカー",
-  "御霊前・御仏前・御香典など宗派別に表書きを作成。毛筆風フォント・PDF保存・スマホ完結。",
-  "koden-maker",
-  ["香典袋 書き方", "表書き 印刷", "御霊前 名前 印刷", "御仏前 書き方", "香典 表書き 無料", "香典 相場", "御布施 表書き", "御車代 御膳料 書き方"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "香典袋表書きメーカー【無料】御霊前・御仏前を宗派別に作成｜毛筆風・印刷対応",
+  description: "香典袋の表書き（御霊前・御仏前・御香典・御布施）を宗派に合わせて毛筆風フォントで作成。名前入りでそのまま印刷できます。金額相場表・薄墨の使い分け解説付き。無料・登録不要・スマホ対応。",
+  path: "/tools/koden-maker",
+  keywords: ["香典表書きメーカー","香典袋 表書き 印刷","御霊前 名前 印刷","御仏前 書き方","香典 表書き 無料"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "香典袋表書きメーカー", icon: "🕯️", desc: "香典袋の表書きを宗派別に作成" }).toString()}`,
+});
 
 const faqs = [
   {

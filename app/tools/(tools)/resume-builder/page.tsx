@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ResumeBuilder } from "./ResumeBuilder";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "職務経歴書作成ツール",
-  "フォームを埋めるだけで職務経歴書の文章が完成。自己PR・スキル・経歴をそのままコピー可能。転職活動に。",
-  "resume-builder",
-  ["職務経歴書 書き方", "職務経歴書 テンプレート 無料", "転職 職務経歴書 自己PR", "職務経歴書 作り方 例文", "スキルシート 書き方", "転職活動 書類"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "履歴書・職務経歴書 作成ツール【無料】ブラウザで入力してPDF保存｜登録不要",
+  description: "履歴書と職務経歴書をブラウザだけで作成できる無料ツール。JIS規格に準じたレイアウトで、入力内容はサーバーに送信されません。PDF保存してそのまま応募に使えます。スマホ対応。",
+  path: "/tools/resume-builder",
+  keywords: ["履歴書 作成 無料","職務経歴書 テンプレート","履歴書 PDF 作成","履歴書 ブラウザ 作成","履歴書 スマホ 作成 無料"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "履歴書・職務経歴書 作成ツール", icon: "📋", desc: "履歴書・職務経歴書をPDFで作成" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

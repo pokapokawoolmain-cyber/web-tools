@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { YoutubeTools } from "./YoutubeTools";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "YouTube SEOツール",
-  "タイトル文字数・ハッシュタグ最適化・サムネイル比率確認をまとめてチェック。動画SEO改善に。",
-  "youtube-tools",
-  ["YouTube SEO", "YouTubeタイトル 文字数", "ハッシュタグ 最適化", "サムネイル 比率", "動画SEO 改善", "YouTube チャンネル 伸ばし方"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "YouTube SEOチェックツール【無料】タイトル文字数・サムネ比率・ハッシュタグを一括確認",
+  description: "YouTubeのタイトル文字数（全角28文字目安）、サムネイルの16:9比率、ハッシュタグの最適化をまとめてチェック。投稿前のセルフチェックに。無料・登録不要・ブラウザ完結。",
+  path: "/tools/youtube-tools",
+  keywords: ["YouTube タイトル 文字数","YouTube SEO ツール","YouTube サムネイル サイズ 確認","YouTube ハッシュタグ 付け方","YouTube 投稿 チェック"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "YouTube SEOチェックツール", icon: "🎥", desc: "タイトル・サムネ・タグを投稿前に確認" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

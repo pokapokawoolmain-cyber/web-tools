@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { NoshiMaker } from "./NoshiMaker";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
-export const metadata: Metadata = generateToolMeta(
-  "のし紙作成ツール",
-  "御祝・内祝・御歳暮など用途別のし紙を無料で作成。水引・名入れ対応。A4印刷・コンビニ印刷対応。登録不要。",
-  "noshi-maker",
-  ["のし紙 作成 無料", "のし テンプレート 印刷", "無料 のし 印刷", "のし紙 御祝 印刷", "内祝い のし 無料"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "のし紙作成ツール【無料】御祝・内祝・御中元の熨斗を名入れ印刷｜A4対応",
+  description: "御祝・内祝・御歳暮・御中元など用途別ののし紙を無料で作成。水引の種類（蝶結び・結び切り）と名入れに対応し、A4サイズでそのまま印刷できます。登録不要・ブラウザ完結。",
+  path: "/tools/noshi-maker",
+  keywords: ["のし紙 無料 印刷","熨斗 テンプレート","のし 作成","内祝 のし紙","のし紙 名入れ 無料"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "のし紙作成ツール", icon: "🎀", desc: "用途別のし紙を名入れで作成" }).toString()}`,
+});
 
 const faqs = [
   {

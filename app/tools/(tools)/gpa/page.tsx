@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { Gpa } from "./Gpa";
 
-export const metadata: Metadata = generateToolMeta(
-  "GPA計算",
-  "科目・単位数・成績を入力してGPAを即計算。大学の累積GPAをリアルタイムで確認。",
-  "gpa",
-  ["GPA計算", "大学 GPA", "成績計算", "単位 GPA", "累積GPA"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "GPA計算ツール【無料】成績評価から即算出｜4.0・4.3スケール対応",
+  description: "科目ごとの成績（秀・優・良・可など）と単位数を入れるだけでGPAを自動計算。4.0スケール・4.3スケールに対応し、奨学金や留学の基準確認に使えます。無料・登録不要・スマホ対応。",
+  path: "/tools/gpa",
+  keywords: ["GPA 計算","GPA 計算方法","GPA 出し方","大学 成績 GPA 計算","GPA 4.0 換算"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "GPA計算ツール", icon: "🎓", desc: "成績と単位数からGPAを自動計算" }).toString()}`,
+});
 
 const faqs = [
   {

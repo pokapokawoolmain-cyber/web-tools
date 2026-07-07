@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { ReviewReplyGenerator } from "./ReviewReplyGenerator";
 
@@ -9,6 +10,46 @@ export const metadata: Metadata = generateMeta({
   path: "/tools/review-reply-generator",
   keywords: ["Google口コミ 返信 飲食店", "口コミ 返信文 自動生成", "飲食店 口コミ 対応", "Google マップ 返信"],
 });
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+  {
+    "@type": "Question",
+    "name": "低評価の口コミにはどう返信すればいいですか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "①お礼→②不快にさせた点への謝罪→③事実確認と改善策→④再来店のお願い、の順が基本です。感情的な反論や言い訳は逆効果です。本ツールは評価の星数に応じた適切なトーンの返信文を生成します。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "返信はした方がいいのですか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "はい。口コミへの返信は他の閲覧者も見ています。丁寧な返信は店の印象を高め、Googleマップ上の活動シグナルにもなります。特に低評価こそ誠実な返信が重要です。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "生成された文章はそのまま使えますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "下書きとしてお使いください。お客様が指摘した具体的な内容（料理名・日時など）を一文加えるだけで、定型文ではない誠実な返信になります。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "どんな口コミサイトに使えますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Googleマップ・食べログ・ホットペッパーなど、飲食店の主要な口コミサイト全般で使えます。文字数制限がある場合は生成後に調整してください。"
+    }
+  }
+],
+};
+
 
 const seoContent = (
   <div className="space-y-6">
@@ -48,6 +89,8 @@ const seoContent = (
 
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <ToolLayout
       title="Google口コミ返信文メーカー"
       description="高評価・低評価・クレームなど状況別に、そのままコピーできる自然な口コミ返信文を自動生成。"
@@ -57,5 +100,6 @@ export default function Page() {
     >
       <ReviewReplyGenerator />
     </ToolLayout>
+    </>
   );
 }

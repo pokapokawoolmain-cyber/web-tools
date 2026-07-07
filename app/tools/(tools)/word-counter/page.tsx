@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { WordCounter } from "./WordCounter";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "文字数カウント",
-  "入力した瞬間にリアルタイムで文字数・行数・単語数を計測。Twitter/X・Instagram・メール・履歴書など各媒体の制限対応。",
-  "word-counter",
-  ["文字数カウント 無料", "文字数 リアルタイム", "Twitter 文字数 確認", "Instagram キャプション 文字数", "文字数制限 チェック"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "文字数カウント【無料】リアルタイムで文字数・行数・原稿用紙換算｜X・ES・レポートに",
+  description: "入力した瞬間に文字数・単語数・行数・原稿用紙換算を表示する無料カウンター。スペースあり/なしの切り替えに対応し、X(Twitter)の投稿、ES・小論文・レポートの文字数確認に使えます。登録不要。",
+  path: "/tools/word-counter",
+  keywords: ["文字数 カウント","文字数 数える","文字数カウンター 無料","原稿用紙 換算","ES 文字数 確認","レポート 文字数"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "文字数カウント", icon: "✍️", desc: "文字数・行数をリアルタイム計測" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

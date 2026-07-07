@@ -1,14 +1,56 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { PdfSignature } from "./PdfSignature";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
-export const metadata: Metadata = generateToolMeta(
-  "PDF電子署名・押印ツール",
-  "PDFに手書き署名・テキスト署名・電子印鑑を追加してPDF保存。PDF印鑑押印・PDF署名・PDF押印を無料でブラウザ完結。契約書・NDA・請求書への押印に。登録不要。",
-  "pdf-signature",
-  ["PDF 電子署名", "PDF 押印", "PDF 印鑑 押印", "PDF 署名 無料", "電子印鑑 PDF 追加", "PDF 印鑑 追加 無料", "契約書 押印 オンライン"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "PDF電子署名ツール【無料】手書きサイン・印鑑をPDFに追加｜ブラウザ完結",
+  description: "PDFに手書きサインや電子印鑑を追加できる無料ツール。マウスやスマホ指先でサインを書いて、契約書・申込書のPDFに配置するだけ。ファイルはサーバーに送信されず安全です。登録不要。",
+  path: "/tools/pdf-signature",
+  keywords: ["PDF 電子署名 無料","PDF サイン 追加","PDF 印鑑 押す","PDF 署名 手書き","電子サイン PDF"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "PDF電子署名ツール", icon: "✍️", desc: "PDFに手書きサイン・印鑑を追加" }).toString()}`,
+});
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+  {
+    "@type": "Question",
+    "name": "この署名に法的効力はありますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "本ツールで追加するのは画像としての手書きサイン（電子サイン）です。当事者間の合意を示す証跡にはなりますが、電子署名法上の「電子署名」（認証局による本人証明）とは異なります。重要な契約では電子契約サービスの併用をご検討ください。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "スマホでもサインを書けますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "はい。スマートフォンやタブレットなら指先で直接サインを書けるため、マウスよりも自然な筆跡になります。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "PDFはサーバーにアップロードされますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "いいえ。PDFの読み込みも署名の合成もすべてブラウザ内で完結します。契約書などの機密文書が外部に送信されることはありません。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "印鑑画像も押せますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "はい。手書きサインのほか、画像として用意した印鑑（電子印鑑メーカーで作成可能）をPDFに配置することもできます。"
+    }
+  }
+],
+};
+
 
 const seoContent = (
   <div className="space-y-8">
@@ -40,6 +82,8 @@ const seoContent = (
 
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <ToolLayout
       title="PDF電子署名・押印ツール"
       description="PDFに手書き署名・テキスト署名・電子印鑑を追加してPDF保存。PDF押印・PDF印鑑追加も無料。ブラウザ完結・登録不要。"
@@ -49,5 +93,6 @@ export default function Page() {
     >
       <PdfSignature />
     </ToolLayout>
+    </>
   );
 }

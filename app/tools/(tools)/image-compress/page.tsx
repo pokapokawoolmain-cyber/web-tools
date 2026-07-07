@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ImageCompressor } from "./ImageCompressor";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "画像圧縮ツール",
-  "JPG・PNG・WebP画像をブラウザ上で高品質のまま圧縮。ファイルサイズを最大80%削減。登録不要・無料・スマホ対応。",
-  "image-compress",
-  ["画像圧縮 無料", "JPG 圧縮 オンライン", "PNG 軽量化", "画像 ファイルサイズ 削減", "WebP 圧縮 ブラウザ", "写真 軽くする アプリ不要"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "画像圧縮ツール【無料】JPG・PNG・WebPを画質を保って軽量化｜サーバー送信なし",
+  description: "JPG・PNG・WebP画像を画質を保ったままブラウザで圧縮。品質スライダーで仕上がりを見ながら調整でき、ファイルはサーバーに送信されません。SNS投稿・メール添付・サイト高速化に。無料・登録不要。",
+  path: "/tools/image-compress",
+  keywords: ["画像圧縮 無料","画像 軽くする","JPG 圧縮","PNG 圧縮 オンライン","画像 容量 小さく","写真 圧縮 ブラウザ"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "画像圧縮ツール", icon: "🗜️", desc: "JPG・PNG・WebPを高品質のまま圧縮" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

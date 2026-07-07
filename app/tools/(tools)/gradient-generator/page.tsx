@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { GradientGenerator } from "./GradientGenerator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "CSSグラデーション生成",
-  "Linear・Radial・Conicの3種類のCSSグラデーションを視覚的に作成。カラーストップ自由追加、20種プリセット付き。background: linear-gradient(...)をワンクリックコピー。",
-  "gradient-generator",
-  ["CSSグラデーション 生成 無料", "linear-gradient 作成ツール", "グラデーション CSS コピー", "background gradient generator", "radial-gradient conic-gradient"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "CSSグラデーション作成【無料】linear・radial・conicをプレビューしながら生成",
+  description: "CSSグラデーション（linear-gradient・radial-gradient・conic-gradient）をビジュアル操作で作成し、コードをワンクリックでコピー。プリセット20種以上。Web制作・バナー背景に。無料・登録不要。",
+  path: "/tools/gradient-generator",
+  keywords: ["CSS グラデーション 作成","linear-gradient ジェネレーター","グラデーション CSS コピー","背景 グラデーション css","グラデーションカラー 作成"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "CSSグラデーション作成", icon: "🌈", desc: "CSSグラデーションを視覚的に作成" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

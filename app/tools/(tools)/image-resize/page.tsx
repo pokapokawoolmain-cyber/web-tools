@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ImageResize } from "./ImageResize";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "画像のアスペクト比を変更・リサイズ【無料オンラインツール・ブラウザ完結】",
-  "写真・画像のアスペクト比変更とリサイズをブラウザで完結。16:9・1:1・9:16など主要比率に1クリック対応。X・Instagram・YouTube・TikTok・Threads等SNS別の推奨サイズ一覧付き。アプリ不要・登録不要・無料。",
-  "image-resize",
-  ["写真 アスペクト比 変更", "画像 アスペクト比 変換 無料", "アスペクト比 変更 ブラウザ", "画像 リサイズ 無料 スマホ", "画像 サイズ変更 オンライン", "アスペクト比 変更 ツール 無料", "画像 アスペクト比 変更 オンライン"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "画像リサイズ・アスペクト比変更【無料】16:9・1:1・SNSサイズに変換｜ブラウザ完結",
+  description: "画像のサイズ変更とアスペクト比変換をブラウザで完結。16:9・1:1・9:16などの比率プリセットと、X・Instagram・YouTube向けサイズに対応。中央切り抜きで歪みなく変換できます。無料・登録不要。",
+  path: "/tools/image-resize",
+  keywords: ["画像 リサイズ 無料","アスペクト比 変更","画像 サイズ変更 オンライン","写真 アスペクト比 変換","画像 16:9 変換"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "画像リサイズ・アスペクト比変更", icon: "✂️", desc: "画像のリサイズ・比率変換をブラウザで" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { HexRgbConverter } from "./HexRgbConverter";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "カラーコード変換（HEX・RGB・HSL）",
-  "HEX・RGB・HSLカラーコードを即変換。カラーピッカー・CSS変数コピー・日本の伝統色辞書付き。",
-  "hex-rgb-converter",
-  ["カラーコード変換", "HEX RGB 変換", "HSL変換", "CSS カラー", "伝統色", "color picker"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "カラーコード変換【無料】HEX・RGB・HSLを相互変換｜日本の伝統色辞書付き",
+  description: "HEX（#FF6B35）・RGB・HSLのカラーコードを入力した瞬間に相互変換。カラーピッカー・CSS変数コピー・日本の伝統色辞書付きで、デザインとコーディングの行き来がスムーズになります。無料・登録不要。",
+  path: "/tools/hex-rgb-converter",
+  keywords: ["カラーコード 変換","hex rgb 変換","rgb hsl 変換","カラーコード 調べる","16進数 カラーコード"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "カラーコード変換", icon: "🎨", desc: "HEX・RGB・HSLを即相互変換" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

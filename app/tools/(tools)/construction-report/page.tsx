@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ConstructionReport } from "./ConstructionReport";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
@@ -12,6 +13,46 @@ export const metadata: Metadata = generateMeta({
     "外壁塗装 完了報告書", "建設業 完了報告書 フォーマット", "工事 報告書 作成 無料",
   ],
 });
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+  {
+    "@type": "Question",
+    "name": "作業報告書には何を書けばいいですか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "日付・現場名・作業内容・作業時間・使用材料・作業員数・特記事項（変更やトラブル）が基本項目です。本ツールはこれらをフォーム入力するだけで書式に流し込めます。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "施主や元請けへの提出用に使えますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "はい。A4の見やすい書式でPDF保存・印刷できるため、日報・週報として元請けや施主への提出にそのまま使えます。社名や担当者名も入れられます。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "写真は添付できますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "本ツールは報告書本文の作成に特化しています。現場写真をまとめたPDFは、姉妹ツールの「工事写真PDF」で作成し、あわせて提出するのがおすすめです。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "入力した内容は保存されますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "入力内容はサーバーに送信されず、ブラウザ内でのみ処理されます。ページを閉じると消えるため、作成後は必ずPDF保存してください。"
+    }
+  }
+],
+};
+
 
 const seoContent = (
   <div className="space-y-8">
@@ -94,6 +135,8 @@ const seoContent = (
 
 export default function Page() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <ToolLayout
       title="工事完了報告書作成ツール"
       description="工事内容・施主情報・使用材料・工事保証を入力して完了報告書をPDF出力。建設・リフォーム業向け。"
@@ -103,5 +146,6 @@ export default function Page() {
     >
       <ConstructionReport />
     </ToolLayout>
+    </>
   );
 }

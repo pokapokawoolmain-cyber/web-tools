@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { MenuPriceCalculator } from "./MenuPriceCalculator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
@@ -15,6 +16,46 @@ export const metadata: Metadata = generateMeta({
     "値上げ 飲食店 計算",
   ],
 });
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+  {
+    "@type": "Question",
+    "name": "メニュー価格はどう計算しますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "「食材原価 ÷ 目標原価率」が基本です。原価率30%なら原価×3.3倍、35%なら約2.9倍が販売価格の目安になります。本ツールでは原価と目標原価率を入れるだけで適正価格を計算できます。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "原価率と粗利率の違いは何ですか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "原価率は販売価格に占める原価の割合、粗利率は販売価格から原価を引いた利益の割合です。原価率30%なら粗利率70%。両方を表示するので、値付けの妥当性を確認できます。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "値上げするときの価格の決め方は？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "端数は「980円→1,080円」のように心理的価格（8のつく価格帯）を維持しつつ、原価率が目標範囲に収まるかを確認します。本ツールで新旧価格の原価率を比較しながら決めるのがおすすめです。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "ドリンクにも使えますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "使えます。ドリンクは原価率10〜20%と低く設定するのが一般的で、フードの原価率をカバーする役割があります。カテゴリごとに目標原価率を変えて計算してください。"
+    }
+  }
+],
+};
+
 
 const seoContent = (
   <div className="space-y-6">
@@ -74,11 +115,36 @@ const seoContent = (
         </li>
       </ul>
     </section>
+  
+    {/* よくある質問（FAQ構造化データと対応） */}
+    <section className="mt-10">
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">よくある質問</h2>
+      <div className="space-y-3">
+        <div className="rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 p-4">
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">Q. メニュー価格はどう計算しますか？</p>
+          <p className="text-slate-500 dark:text-zinc-400 text-sm leading-relaxed">A. 「食材原価 ÷ 目標原価率」が基本です。原価率30%なら原価×3.3倍、35%なら約2.9倍が販売価格の目安になります。本ツールでは原価と目標原価率を入れるだけで適正価格を計算できます。</p>
+        </div>
+        <div className="rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 p-4">
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">Q. 原価率と粗利率の違いは何ですか？</p>
+          <p className="text-slate-500 dark:text-zinc-400 text-sm leading-relaxed">A. 原価率は販売価格に占める原価の割合、粗利率は販売価格から原価を引いた利益の割合です。原価率30%なら粗利率70%。両方を表示するので、値付けの妥当性を確認できます。</p>
+        </div>
+        <div className="rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 p-4">
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">Q. 値上げするときの価格の決め方は？</p>
+          <p className="text-slate-500 dark:text-zinc-400 text-sm leading-relaxed">A. 端数は「980円→1,080円」のように心理的価格（8のつく価格帯）を維持しつつ、原価率が目標範囲に収まるかを確認します。本ツールで新旧価格の原価率を比較しながら決めるのがおすすめです。</p>
+        </div>
+        <div className="rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 p-4">
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm mb-1">Q. ドリンクにも使えますか？</p>
+          <p className="text-slate-500 dark:text-zinc-400 text-sm leading-relaxed">A. 使えます。ドリンクは原価率10〜20%と低く設定するのが一般的で、フードの原価率をカバーする役割があります。カテゴリごとに目標原価率を変えて計算してください。</p>
+        </div>
+      </div>
+    </section>
   </div>
 );
 
 export default function MenuPriceCalculatorPage() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <ToolLayout
       title="メニュー価格シミュレーター"
       description="食材費と目標原価率から適正販売価格を逆算。端数調整・値上げ前後比較に対応。"
@@ -88,5 +154,6 @@ export default function MenuPriceCalculatorPage() {
     >
       <MenuPriceCalculator />
     </ToolLayout>
+    </>
   );
 }

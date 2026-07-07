@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ConstructionPhotoPdf } from "./ConstructionPhotoPdf";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
@@ -13,6 +14,43 @@ export const metadata: Metadata = generateMeta({
     "施工前 施工後 PDF", "工事写真 コメント 印刷",
   ],
 });
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "写真は何枚まで追加できますか？",
+      acceptedAnswer: { "@type": "Answer", text: "制限はありませんが、ブラウザのメモリ制限上、高解像度写真は30〜50枚程度が目安です。スマホよりもPCが安定して動作します。" },
+    },
+    {
+      "@type": "Question",
+      name: "写真を追加した後にページを更新すると消えますか？",
+      acceptedAnswer: { "@type": "Answer", text: "はい、消えます。ブラウザのメモリ内でのみ管理しているため、更新・タブを閉じると写真はリセットされます。必ず印刷/PDF出力を先に行ってください。" },
+    },
+    {
+      "@type": "Question",
+      name: "建設業の写真台帳（施工管理写真）として使えますか？",
+      acceptedAnswer: { "@type": "Answer", text: "本ツールは工事報告書・施主提出用の写真帳を想定しています。公共工事の写真管理基準（デジタル写真管理情報基準）への対応は含まれていません。" },
+    },
+    {
+      "@type": "Question",
+      name: "PDFではなく印刷（紙）でも使えますか？",
+      acceptedAnswer: { "@type": "Answer", text: "はい。印刷ダイアログで実際のプリンタを選択すれば紙への印刷も可能です。" },
+    },
+    {
+      "@type": "Question",
+      name: "iPhoneで撮影したHEIC写真を使いたい",
+      acceptedAnswer: { "@type": "Answer", text: "iPhoneのSafariからアップロードすると、ブラウザが自動的にJPEGに変換して処理します。そのまま選択してください。" },
+    },
+    {
+      "@type": "Question",
+      name: "完成後にPDFをメールで送りたい",
+      acceptedAnswer: { "@type": "Answer", text: "ブラウザの印刷ダイアログで「PDFに保存」を選択するとPDFファイルとして保存できます。iPhone/MacはAirDropで共有も可能です。" },
+    },
+  ],
+};
 
 const seoContent = (
   <div className="space-y-8">
@@ -125,14 +163,17 @@ const seoContent = (
 
 export default function Page() {
   return (
-    <ToolLayout
-      title="工事写真帳作成ツール"
-      description="施工前・施工中・施工後の写真に工程区分・コメントを付けてA4 PDFの写真帳を作成。登録不要・ブラウザ完結。"
-      icon="📸"
-      slug="construction-photo-pdf"
-      seoContent={seoContent}
-    >
-      <ConstructionPhotoPdf />
-    </ToolLayout>
+    <>
+      <JsonLd data={faqSchema} />
+      <ToolLayout
+        title="工事写真帳作成ツール"
+        description="施工前・施工中・施工後の写真に工程区分・コメントを付けてA4 PDFの写真帳を作成。登録不要・ブラウザ完結。"
+        icon="📸"
+        slug="construction-photo-pdf"
+        seoContent={seoContent}
+      >
+        <ConstructionPhotoPdf />
+      </ToolLayout>
+    </>
   );
 }

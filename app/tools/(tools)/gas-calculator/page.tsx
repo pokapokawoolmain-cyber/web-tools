@@ -1,41 +1,57 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { GasCalculator } from "./GasCalculator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "ガソリン代計算",
-  "走行距離・燃費・ガソリン価格を入力するだけで片道・往復・月間のガソリン代を即計算。通勤費・旅行費用・経費精算に。",
-  "gas-calculator",
-  ["ガソリン代 計算 無料", "燃費計算 ツール", "交通費 ガソリン 計算方法", "通勤費 車 計算", "ドライブ 費用 見積もり"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "ガソリン代計算ツール【無料】走行距離×燃費で通勤・ドライブ費用を即計算",
+  description:
+    "走行距離・燃費・ガソリン単価を入力するだけで、片道・往復・月間のガソリン代を自動計算。通勤費の確認・旅行費用の見積もり・経費精算に使える無料ツール。登録不要・スマホ対応。",
+  path: "/tools/gas-calculator",
+  keywords: [
+    "ガソリン代 計算",
+    "ガソリン代 計算 無料",
+    "燃費 計算 ツール",
+    "通勤 ガソリン代 計算",
+    "交通費 ガソリン 計算方法",
+    "ドライブ 費用 見積もり",
+    "車 経費 精算 ガソリン",
+  ],
+  ogImage: `/api/og?${new URLSearchParams({
+    title: "ガソリン代計算",
+    icon: "⛽",
+    desc: "走行距離・燃費・単価からガソリン代を即計算",
+  }).toString()}`,
+});
+
+const faqs = [
+  {
+    q: "ガソリン代の計算式を教えてください",
+    a: "ガソリン代 = 走行距離（km） ÷ 燃費（km/L） × ガソリン単価（円/L）で計算します。例えば、100km走行・燃費15km/L・ガソリン165円/Lの場合、100÷15×165=1,100円となります。",
+  },
+  {
+    q: "燃費の平均はどのくらいですか？",
+    a: "普通乗用車（ガソリン車）の実燃費は10〜15km/L程度が一般的です。ハイブリッド車は20〜25km/L、軽自動車は15〜20km/Lが目安です。高速道路走行では燃費が改善される傾向があります。",
+  },
+  {
+    q: "通勤費の非課税上限はいくらですか？",
+    a: "現在、マイカー通勤の非課税通勤手当の上限は片道の通勤距離により異なります。2km以上10km未満は月4,200円、10km以上15km未満は月7,100円、25km以上35km未満は月18,700円などです。詳細は国税庁の公式サイトでご確認ください。",
+  },
+  {
+    q: "会社への交通費精算でガソリン代の計算方法は？",
+    a: "会社によって計算方法が異なりますが、一般的には「走行距離（km）× 会社規定の単価（円/km）」で計算します。単価は10〜20円/kmが多いです。本ツールで実費を計算し、会社規定との差を確認するのにも使えます。",
+  },
+];
 
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "ガソリン代の計算式を教えてください",
-      acceptedAnswer: { "@type": "Answer", text: "ガソリン代 = 走行距離（km） ÷ 燃費（km/L） × ガソリン単価（円/L）で計算します。例えば、100km走行・燃費15km/L・ガソリン165円/Lの場合、100÷15×165=1,100円となります。" },
-    },
-    {
-      "@type": "Question",
-      name: "燃費の平均はどのくらいですか？",
-      acceptedAnswer: { "@type": "Answer", text: "普通乗用車（ガソリン車）の実燃費は10〜15km/L程度が一般的です。ハイブリッド車は20〜25km/L、軽自動車は15〜20km/Lが目安です。高速道路走行では燃費が改善される傾向があります。" },
-    },
-    {
-      "@type": "Question",
-      name: "通勤費の非課税上限はいくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "現在、マイカー通勤の非課税通勤手当の上限は片道の通勤距離により異なります。2km以上10km未満は月4,200円、10km以上15km未満は月7,100円、25km以上35km未満は月18,700円などです。詳細は国税庁の公式サイトでご確認ください。" },
-    },
-    {
-      "@type": "Question",
-      name: "会社への交通費精算でガソリン代の計算方法は？",
-      acceptedAnswer: { "@type": "Answer", text: "会社によって計算方法が異なりますが、一般的には「走行距離（km）× 会社規定の単価（円/km）」で計算します。単価は10〜20円/kmが多いです。本ツールで実費を計算し、会社規定との差を確認するのにも使えます。" },
-    },
-  ],
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: { "@type": "Answer", text: faq.a },
+  })),
 };
 
 const seoContent = (
@@ -101,6 +117,21 @@ const seoContent = (
     <p className="text-[12px] text-slate-400 dark:text-zinc-500">
       ※実燃費は走行条件・気温・エアコン使用状況などにより大きく異なります。カタログ燃費の70〜85%程度が実燃費の目安です。
     </p>
+
+    <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
+      よくある質問
+    </h3>
+    <div className="space-y-3">
+      {faqs.map((faq) => (
+        <div
+          key={faq.q}
+          className="rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 p-4"
+        >
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 text-[14px] mb-1">Q. {faq.q}</p>
+          <p className="text-slate-500 dark:text-zinc-400 text-[13px]">A. {faq.a}</p>
+        </div>
+      ))}
+    </div>
   </div>
 );
 

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ColorPalette } from "./ColorPalette";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "カラーパレット生成",
-  "ベースカラーから補色・類似色・トライアドなど5種類の配色パターンを自動生成。CSS変数でまとめてコピー可能。",
-  "color-palette",
-  ["カラーパレット生成", "配色ツール", "補色", "類似色", "トライアド", "Webデザイン配色"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "カラーパレット生成【無料】補色・類似色・トライアドを自動作成｜CSS変数コピー対応",
+  description: "ベースカラーを選ぶだけで補色・類似色・トライアドなど5種類の配色パターンを自動生成。作ったパレットはCSS変数としてまとめてコピーできます。Webデザイン・資料の配色決めに。無料・登録不要。",
+  path: "/tools/color-palette",
+  keywords: ["カラーパレット 生成 無料","配色 自動生成","補色 調べる","配色パターン ツール","カラーパレット 作成 css"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "カラーパレット生成", icon: "🖌️", desc: "ベースカラーから配色を自動生成" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { WifiQr } from "./WifiQr";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
-export const metadata: Metadata = generateToolMeta(
-  "Wi-Fi QRコード生成",
-  "SSIDとパスワードを入力するだけでWi-Fi接続用QRコードを即生成。スキャンするだけで簡単接続。アプリ不要・無料。",
-  "wifi-qr",
-  ["WiFi QRコード 作り方", "Wi-Fi 共有 QRコード", "WiFi パスワード QR 生成", "来客 Wi-Fi 接続 簡単", "WPA2 QRコード"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "Wi-Fi QRコード作成【無料】SSIDとパスワードを入力するだけ｜ゲスト用Wi-Fi共有に",
+  description: "Wi-FiのSSIDとパスワードを入力するだけで、スキャンするだけで接続できるQRコードを作成。来客用・店舗用のWi-Fi案内に。入力情報はブラウザ内で処理され外部に送信されません。無料・登録不要。",
+  path: "/tools/wifi-qr",
+  keywords: ["Wi-Fi QRコード 作成","wifi qr コード 無料","Wi-Fi パスワード QR","ゲストWiFi QRコード","wifi qr 安全"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "Wi-Fi QRコード作成", icon: "📶", desc: "スキャンで繋がるWi-Fi QRを作成" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

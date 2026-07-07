@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { Furusato } from "./Furusato";
 
-export const metadata: Metadata = generateToolMeta(
-  "ふるさと納税シミュレーター（詳細版）",
-  "年収・扶養人数・配偶者の有無を入力して控除上限額を精密計算。推奨寄付額もわかる。",
-  "furusato",
-  ["ふるさと納税", "控除上限", "年収別計算", "配偶者控除", "扶養控除"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "ふるさと納税 控除上限額シミュレーター（詳細版）【無料】扶養・配偶者を考慮して精密計算",
+  description: "年収・配偶者の有無・扶養人数を入力して、ふるさと納税の控除上限額を精密に計算する詳細版シミュレーター。おすすめの寄付額も表示。ワンストップ特例の解説付き。無料・登録不要。",
+  path: "/tools/furusato",
+  keywords: ["ふるさと納税 上限 シミュレーション 詳細","ふるさと納税 控除 計算 扶養","ふるさと納税 限度額 正確","ふるさと納税 共働き 上限"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "ふるさと納税 控除上限額シミュレーター（詳細版）", icon: "🎁", desc: "扶養・配偶者を考慮した精密シミュレーション" }).toString()}`,
+});
 
 const faqs = [
   {

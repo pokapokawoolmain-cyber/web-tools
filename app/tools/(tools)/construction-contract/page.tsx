@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ConstructionContract } from "./ConstructionContract";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
@@ -12,6 +13,48 @@ export const metadata: Metadata = generateMeta({
     "工事 請負契約書 雛形", "外壁塗装 契約書 作成", "建設工事 契約書 フォーマット",
   ],
 });
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "着手金・中間金の割合の目安は？",
+      acceptedAnswer: { "@type": "Answer", text: "建設業界では着手金30%・中間金40%・完成時30%が一般的です。小規模リフォームでは着手金なし（完成時一括払い）のケースもあります。施主との合意を先に取ってから入力してください。" },
+    },
+    {
+      "@type": "Question",
+      name: "契約不適合責任とは何ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "旧「瑕疵担保責任」の後継です。工事完了後に隠れた欠陥（雨漏り・施工不良など）が見つかった場合に施工会社が負う責任期間・内容を定めるものです。住宅の主要構造部と防水は10年保証が法定要件です。" },
+    },
+    {
+      "@type": "Question",
+      name: "消費税は10%で合っていますか？",
+      acceptedAnswer: { "@type": "Answer", text: "工事は基本的に標準税率10%が適用されます（食品等の軽減税率は対象外）。インボイス制度により適格請求書発行事業者番号の記載が推奨されます。" },
+    },
+    {
+      "@type": "Question",
+      name: "特約事項には何を書けばいい？",
+      acceptedAnswer: { "@type": "Answer", text: "近隣トラブル時の対応責任、追加工事の単価基準、施主の立ち入り可否、天災時の対応、工事中断時の費用負担などを明記すると後のトラブルを防げます。" },
+    },
+    {
+      "@type": "Question",
+      name: "このツールで作成した契約書は法的に有効ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "署名・捺印した書面としての効力を持つ場合があります。ただし建設業法の要件（必須記載事項）を全て網羅しているかどうかは工事内容によって異なります。重要な工事では専門家の確認を推奨します。" },
+    },
+    {
+      "@type": "Question",
+      name: "収入印紙は必要ですか？",
+      acceptedAnswer: { "@type": "Answer", text: "建設工事の請負契約書は印紙税の課税文書（第2号文書）です。契約金額に応じた収入印紙が必要です（1万円未満は非課税）。金額別の印紙税額は国税庁のウェブサイトでご確認ください。" },
+    },
+    {
+      "@type": "Question",
+      name: "入力データはどこかに送信されますか？",
+      acceptedAnswer: { "@type": "Answer", text: "一切送信されません。すべてブラウザ内で完結しています。" },
+    },
+  ],
+};
 
 const seoContent = (
   <div className="space-y-8">
@@ -107,14 +150,17 @@ const seoContent = (
 
 export default function Page() {
   return (
-    <ToolLayout
-      title="工事請負契約書作成ツール"
-      description="発注者・請負者情報、工事金額・支払条件を入力して工事請負契約書をPDF出力。建設・リフォーム業向け。"
-      icon="📑"
-      slug="construction-contract"
-      seoContent={seoContent}
-    >
-      <ConstructionContract />
-    </ToolLayout>
+    <>
+      <JsonLd data={faqSchema} />
+      <ToolLayout
+        title="工事請負契約書作成ツール"
+        description="発注者・請負者情報、工事金額・支払条件を入力して工事請負契約書をPDF出力。建設・リフォーム業向け。"
+        icon="📑"
+        slug="construction-contract"
+        seoContent={seoContent}
+      >
+        <ConstructionContract />
+      </ToolLayout>
+    </>
   );
 }

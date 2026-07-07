@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { SnsLinks } from "./SnsLinks";
 
-export const metadata: Metadata = generateToolMeta(
-  "SNSプロフィールリンク生成",
-  "X・Instagram・TikTok・YouTubeなど複数のSNSリンクをまとめた共有ページを即生成。",
-  "sns-links",
-  ["SNSリンクまとめ", "プロフィールリンク", "リンクまとめ", "SNS共有", "bio link"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "SNSリンクまとめページ作成【無料】X・Instagram・TikTokのプロフィールリンクを1つに",
+  description: "X・Instagram・TikTok・YouTubeなど複数のSNSリンクをまとめた共有ページを無料で作成。プロフィールの「リンクは1つだけ」問題を解決。登録不要でその場で発行できます。",
+  path: "/tools/sns-links",
+  keywords: ["SNS リンク まとめ 無料","リンクまとめ 作成","プロフィール リンク まとめ","リットリンク 代わり","SNS まとめページ"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "SNSリンクまとめページ作成", icon: "🔗", desc: "SNSリンクをまとめた共有ページを作成" }).toString()}`,
+});
 
 const faqs = [
   {

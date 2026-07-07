@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { generateMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { FoodCostCalculator } from "./FoodCostCalculator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 
@@ -10,6 +11,46 @@ export const metadata: Metadata = generateMeta({
   path: "/tools/food-cost-calculator",
   keywords: ["飲食店 原価率 計算", "原価率 計算ツール 無料", "食材費 粗利 計算", "飲食店 原価管理"],
 });
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+  {
+    "@type": "Question",
+    "name": "原価率は何%が目安ですか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "飲食店の食材原価率は一般に25〜35%が目安です。30%を基準に、看板メニューはやや高め、ドリンクは低め（10〜20%）に設定してバランスを取るのが定石です。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "原価には何を含めればいいですか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "このツールで扱うのは食材原価（フードコスト）です。廃棄ロスや仕込みロスも見込んで、使用量に2〜5%程度上乗せして計算すると実態に近づきます。人件費や家賃は別途FLコストとして管理します。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "販売価格はどう決めればいいですか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "「原価 ÷ 目標原価率」が基本式です。例えば原価300円で原価率30%なら販売価格1,000円。ただし相場感や競合価格も踏まえ、メニュー全体で原価率をコントロールするのが実務的です。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "入力したレシピ情報は外部に送られますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "いいえ。計算はすべてブラウザ内で行われ、レシピや原価の情報が外部サーバーに送信されることはありません。"
+    }
+  }
+],
+};
+
 
 const seoContent = (
   <div className="space-y-6">
@@ -98,6 +139,8 @@ const seoContent = (
 
 export default function FoodCostCalculatorPage() {
   return (
+    <>
+    <JsonLd data={faqSchema} />
     <ToolLayout
       title="原価率計算ツール"
       description="食材費・販売価格を入力して原価率・粗利を即計算。複数食材・歩留まり対応。"
@@ -107,5 +150,6 @@ export default function FoodCostCalculatorPage() {
     >
       <FoodCostCalculator />
     </ToolLayout>
+    </>
   );
 }

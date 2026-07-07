@@ -1,14 +1,44 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { VideoCompressor } from "./VideoCompressor";
 import { ToolLayout } from "@/components/layout/ToolLayout";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "動画圧縮ツール",
-  "MP4・MOV・AVI・MKV・WebMの動画をブラウザで圧縮。ファイルはサーバーに送信されません。品質・解像度を自由に設定。",
-  "video-compress",
-  ["動画圧縮", "MP4圧縮", "動画ファイルサイズ削減", "動画変換", "無料"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "動画圧縮【無料】MP4・MOVをブラウザで軽量化｜サーバー送信なしでLINE・メール対応",
+  description:
+    "MP4・MOV・AVI・MKV・WebMの動画をブラウザだけで圧縮。ファイルはサーバーに送信されないので安心。品質（CRF）・解像度を自由に設定でき、LINE送信やメール添付のサイズ制限対策に。無料・登録不要・スマホ対応。",
+  path: "/tools/video-compress",
+  keywords: ["動画圧縮 無料", "MP4 圧縮 オンライン", "動画 軽くする", "LINE 動画 送れない 圧縮", "MOV 圧縮 ブラウザ", "動画 ファイルサイズ 削減", "動画圧縮 アプリ不要"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "動画圧縮ツール", icon: "🎬", desc: "MP4・MOVをブラウザで軽量化" }).toString()}`,
+});
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "どの動画形式に対応していますか？",
+      acceptedAnswer: { "@type": "Answer", text: "MP4・MOV・AVI・MKV・WebMに対応しています。iPhoneで撮影したMOVやAndroidのMP4もそのままアップロードできます。" },
+    },
+    {
+      "@type": "Question",
+      name: "動画はサーバーに送信されますか？",
+      acceptedAnswer: { "@type": "Answer", text: "いいえ。処理はすべてブラウザ内で完結します。動画ファイルが外部サーバーに送信されることは一切ありません。" },
+    },
+    {
+      "@type": "Question",
+      name: "スマホからでも圧縮できますか？",
+      acceptedAnswer: { "@type": "Answer", text: "はい。iPhone・Androidのブラウザからご利用いただけます。ただし長時間の動画はブラウザの処理に時間がかかることがあります。" },
+    },
+    {
+      "@type": "Question",
+      name: "圧縮後のファイルサイズはどのくらいになりますか？",
+      acceptedAnswer: { "@type": "Answer", text: "元動画の内容・解像度・品質設定によって大きく異なります。CRF値を上げると同時に解像度も下げると、元の20〜30%程度まで削減できることがあります。" },
+    },
+  ],
+};
 
 const seoContent = (
   <div className="space-y-8">
@@ -71,7 +101,9 @@ const seoContent = (
 
 export default function VideoCompressPage() {
   return (
-    <ToolLayout
+    <>
+      <JsonLd data={faqSchema} />
+      <ToolLayout
       title="動画圧縮ツール"
       description="MP4・MOV・MKVなどの動画をブラウザで完結圧縮。ファイルはサーバーに送信されません。"
       icon="🎬"
@@ -80,5 +112,6 @@ export default function VideoCompressPage() {
     >
       <VideoCompressor />
     </ToolLayout>
+    </>
   );
 }

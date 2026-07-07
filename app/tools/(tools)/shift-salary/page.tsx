@@ -1,16 +1,70 @@
 import type { Metadata } from "next";
 import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { ShiftSalary } from "./ShiftSalary";
 
-export const metadata: Metadata = generateToolMeta(
-  "シフト給与計算",
-  "時給・勤務時間・深夜時間・勤務日数を入力して月収を計算。深夜割増・交通費も対応。",
-  "shift-salary",
-  ["シフト 給与計算", "時給計算", "アルバイト 月収", "深夜手当", "パート 収入計算"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "シフト給与計算ツール【無料】時給×勤務時間で月収を自動計算・深夜割増25%対応",
+  description:
+    "時給・1日の勤務時間・深夜時間・月の勤務日数を入力するだけで、アルバイト・パートの月収を自動計算。深夜割増賃金（25%増し）・交通費にも対応。登録不要・スマホ対応の無料ツール。",
+  path: "/tools/shift-salary",
+  keywords: [
+    "シフト 給与計算",
+    "バイト 給料 計算",
+    "時給 月収 計算",
+    "アルバイト 月収 シミュレーション",
+    "深夜手当 計算",
+    "パート 収入計算",
+    "深夜割増 25%",
+  ],
+  ogImage: `/api/og?${new URLSearchParams({
+    title: "シフト給与計算",
+    icon: "⏰",
+    desc: "時給×勤務時間で月収を自動計算・深夜割増対応",
+  }).toString()}`,
+});
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+  {
+    "@type": "Question",
+    "name": "深夜手当はどう計算されますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "22時〜翌5時の勤務には基本時給の25%増しの深夜割増が適用されます。本ツールでは深夜時間を入力すると自動で割増計算されます。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "交通費も含めて計算できますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "はい。1日あたりの交通費を入力すると、勤務日数分を合算した月収を表示します。交通費は所得税の非課税枠（公共交通機関なら月15万円まで）に収まるのが一般的です。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "扶養の103万円・130万円の壁は確認できますか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "月収の計算結果を12倍すれば年収の目安になります。年収の壁の詳細な判定は、姉妹ツールの「年収の壁シミュレーター」をご利用ください。"
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "計算結果は正確ですか？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "入力された時給・時間に基づく概算です。実際の給与は勤務先の締め日・端数処理・各種手当により異なります。目安としてご活用ください。"
+    }
+  }
+],
+};
+
 
 const faqs = [
   {
@@ -85,6 +139,7 @@ const seoContent = (
 export default function Page() {
   return (
     <>
+      <JsonLd data={faqSchema} />
       <ToolJsonLd slug="shift-salary" title="シフト給与計算" description="時給・勤務時間・深夜時間を入力して月収を計算。深夜割増・交通費も対応。" />
       <JsonLd
         data={{

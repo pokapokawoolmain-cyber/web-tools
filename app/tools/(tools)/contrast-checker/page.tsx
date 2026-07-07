@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ContrastChecker } from "./ContrastChecker";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
 
-export const metadata: Metadata = generateToolMeta(
-  "コントラストチェッカー（WCAG対応）",
-  "文字色と背景色のコントラスト比をWCAG 2.1基準（AA/AAA）で即チェック。Webアクセシビリティ対応に必須の無料ツール。",
-  "contrast-checker",
-  ["コントラスト比 チェック WCAG", "アクセシビリティ 色 チェック", "color contrast checker 無料", "WCAG AA AAA 判定", "文字色 背景色 コントラスト"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "コントラスト比チェッカー【無料】WCAG AA/AAA判定でWebアクセシビリティを確認",
+  description: "文字色と背景色のコントラスト比をリアルタイム計算し、WCAG 2.1のAA/AAA基準で合否判定。読みやすい配色かをその場で確認できます。Webサイト・資料のアクセシビリティ対応に。無料・登録不要。",
+  path: "/tools/contrast-checker",
+  keywords: ["コントラスト比 チェック","コントラストチェッカー","WCAG コントラスト 4.5","アクセシビリティ 色 確認","文字色 背景色 見やすさ"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "コントラスト比チェッカー", icon: "👁️", desc: "配色のWCAG AA/AAA判定を即確認" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",

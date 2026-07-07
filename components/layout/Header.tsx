@@ -6,6 +6,7 @@ import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, BookOpen, Layo
 import { TOOLS, CATEGORIES } from "@/data/tools";
 import { ALL_CATEGORIES } from "@/data/categories";
 import { ToolIcon } from "@/components/tools/ToolIcon";
+import { CategoryIcon } from "@/components/tools/CategoryIcon";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -108,9 +109,7 @@ export function Header() {
                   {ALL_CATEGORIES.map((cat) => (
                     <Link key={cat.slug} href={`/${cat.slug}`} onClick={() => setIsOpen(false)}
                       className="flex items-center gap-3 px-4 py-[13px] hover:opacity-70 transition-opacity">
-                      <span className={`w-8 h-8 rounded-lg bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo} flex items-center justify-center text-base`}>
-                        {cat.icon}
-                      </span>
+                      <CategoryIcon slug={cat.slug} size="sm" fallbackEmoji={cat.icon} />
                       <div className="flex-1 min-w-0">
                         <span className="text-[15px] font-medium text-slate-900 dark:text-white">{cat.name}</span>
                         <span className="ml-2 text-[11px] text-slate-400 dark:text-zinc-500">{cat.allToolIds.length}ツール</span>

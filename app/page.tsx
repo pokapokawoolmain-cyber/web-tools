@@ -4,6 +4,7 @@ import Image from "next/image";
 import { TOOLS, getPopularTools, getRecentlyUpdatedTools } from "@/data/tools";
 import { ToolCard } from "@/components/tools/ToolCard";
 import { ToolIcon } from "@/components/tools/ToolIcon";
+import { CategoryIcon } from "@/components/tools/CategoryIcon";
 import { ALL_CATEGORIES } from "@/data/categories";
 import { getRecentReleaseNotes, RELEASE_TYPE_STYLE, formatReleaseDate } from "@/data/release-notes";
 import { ArrowRight, Lock, Smartphone, ShieldCheck, Zap } from "lucide-react";
@@ -471,12 +472,7 @@ export default function HomePage() {
                   href={`/${cat.slug}`}
                   className="group flex flex-col items-center gap-3 py-6 px-4 rounded-2xl bg-white/70 dark:bg-zinc-800/70 backdrop-blur-md border border-slate-200/80 dark:border-zinc-700/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_rgba(15,23,42,0.04)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.2)] hover:border-slate-300 dark:hover:border-zinc-600 hover:shadow-lg hover:-translate-y-1 transition-all text-center"
                 >
-                  <span
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo} flex items-center justify-center text-xl group-hover:scale-105 transition-transform shadow-sm`}
-                    aria-hidden="true"
-                  >
-                    {cat.icon}
-                  </span>
+                  <CategoryIcon slug={cat.slug} size="lg" fallbackEmoji={cat.icon} className="group-hover:scale-105 transition-transform" />
                   <div>
                     <p className="text-[13px] font-semibold text-slate-800 dark:text-zinc-200 leading-tight mb-0.5">
                       {cat.name}

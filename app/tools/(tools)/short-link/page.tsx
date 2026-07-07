@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { generateToolMeta } from "@/lib/seo";
+import { generateMeta } from "@/lib/seo";
 import { ShortLink } from "./ShortLink";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = generateToolMeta(
-  "URL短縮 & QR生成",
-  "長いURLをコンパクトに整形してQRコードも同時生成。コピー・ダウンロードもワンクリック。",
-  "short-link",
-  ["URL短縮", "短縮リンク", "QRコード生成", "リンク短縮", "無料"]
-);
+export const metadata: Metadata = generateMeta({
+  title: "URL短縮＆QRコード生成【無料】長いURLを整形してQRも同時作成",
+  description: "長いURLを短く整形し、QRコードも同時に生成できる無料ツール。コピー・ダウンロードもワンクリック。チラシ・資料・SNSへの掲載に。登録不要・ブラウザ完結。",
+  path: "/tools/short-link",
+  keywords: ["URL 短縮 無料","URL 短くする","短縮URL 作成","URL QRコード 同時","リンク 短縮 登録不要"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "URL短縮＆QRコード生成", icon: "🔗", desc: "URL短縮とQR生成をまとめて" }).toString()}`,
+});
 
 const faqSchema = {
   "@context": "https://schema.org",
