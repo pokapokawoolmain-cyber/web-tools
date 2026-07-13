@@ -55,7 +55,11 @@ const MODES: Record<ModeId, {
   },
 };
 
-const MAX_REQ = 32 * 1024 * 1024; // /api/speed-test/download の1リクエスト上限
+// 測定先: Cloudflareの公開スピードテストエンドポイント（CORS開放・世界300拠点）
+// 自前サーバー（Vercel）経由だと帯域使用量の上限に達しサイト全体が停止するリスクが
+// あるため、測定トラフィックは外部の専用インフラに逃がす。
+const CF = "https://speed.cloudflare.com";
+const MAX_REQ = 32 * 1024 * 1024; // ダウンロード1リクエストの上限
 const UL_CHUNK = 3 * 1024 * 1024; // Edgeボディ上限を考慮したアップロードチャンク
 
 type Phase = "idle" | "ping" | "download" | "upload" | "done" | "error";
@@ -291,7 +295,7 @@ export function SpeedTest() {
       for (let i = 0; i < cfg.pings; i++) {
         if (cancelledRef.current) throw new Error("cancelled");
         const t0 = performance.now();
-        await fetch(`/api/speed-test/ping?cb=${Date.now()}-${i}`, { cache: "no-store", signal: ac.signal });
+        await fetch(`${CF}/__down?bytes=0&cb=${Date.now()}-${i}`, { cache: "no-store", signal: ac.signal });
         const rtt = performance.now() - t0;
         if (i > 0) rtts.push(rtt); // 初回はウォームアップとして除外
         setProgress(((i + 1) / cfg.pings) * 0.1);
@@ -334,7 +338,7 @@ export function SpeedTest() {
         while (!cancelledRef.current) {
           const elapsed = performance.now() - dlStart;
           if (elapsed >= cfg.dl.ms || dlBytesRef.v >= cfg.dl.cap) break;
-          const res = await fetch(`/api/speed-test/download?bytes=${size}&cb=${Math.random()}`, {
+          const res = await fetch(`${CF}/__down?bytes=${size}&cb=${Math.random()}`, {
             cache: "no-store",
             signal: ac.signal,
           });
@@ -423,7 +427,7 @@ export function SpeedTest() {
             xhrsRef.current.delete(xhr);
             reject(new Error("upload failed"));
           };
-          xhr.open("POST", `/api/speed-test/upload?cb=${Math.random()}`);
+          xhr.open("POST", `${CF}/__up?cb=${Math.random()}`);
           xhr.setRequestHeader("Content-Type", "application/octet-stream");
           xhr.send(payload);
         });
@@ -677,7 +681,7 @@ export function SpeedTest() {
 
       <p className="text-[11px] text-slate-400 dark:text-zinc-600 text-center leading-relaxed">
         ※ 測定値はブラウザ・端末性能・Wi-Fi環境・測定サーバーの状況に影響されます。回線の実力の目安としてご利用ください。<br />
-        ※ 通信はすべて測定用のランダムデータで、個人情報は一切送信されません。
+        ※ 測定はCloudflareの計測サーバー（世界300拠点以上）に対して行われます。通信はすべて測定用のデータで、個人情報は一切送信されません。
       </p>
     </div>
   );
