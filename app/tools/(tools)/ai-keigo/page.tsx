@@ -6,11 +6,21 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { AiTextTool, type AiField } from "@/components/tools/AiTextTool";
 
 export const metadata: Metadata = generateMeta({
-  title: "AI敬語変換｜カジュアルな文章をビジネス敬語に自動変換【無料】",
+  title: "敬語変換ツール【無料】「了解です」をビジネス敬語にワンクリック言い換え｜敬語メーカー",
   description:
-    "「了解です」「確認してください」などのくだけた表現を、ビジネスで使える丁寧な敬語に自動変換。社外向けの丁寧語から社内向けのやわらかい敬語まで調整できます。メール・チャットの言い換えに。登録不要・ブラウザ完結。",
+    "「了解です」「確認してください」などのくだけた表現を、ビジネスで使える丁寧な敬語にワンクリックで自動変換。社外向けのしっかり敬語から社内向けのやわらかい敬語まで選べます。メール・チャットの言い換え・敬語メーカーとして。登録不要・ブラウザ完結・無料。",
   path: "/tools/ai-keigo",
-  keywords: ["AI 敬語 変換", "敬語 変換 ツール", "丁寧語 言い換え", "ビジネス 敬語 例文", "了解しました 敬語"],
+  keywords: [
+    "敬語 変換",
+    "敬語に変換",
+    "敬語 変換 ツール",
+    "敬語メーカー",
+    "敬語 言い換え",
+    "了解です 敬語",
+    "丁寧語 言い換え",
+    "ビジネス 敬語 例文",
+  ],
+  ogImage: `/api/og?${new URLSearchParams({ title: "敬語変換ツール", icon: "🙇", desc: "くだけた文章をビジネス敬語に言い換え" }).toString()}`,
 });
 
 const fields: AiField[] = [
