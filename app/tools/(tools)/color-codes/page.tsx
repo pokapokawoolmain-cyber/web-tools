@@ -6,11 +6,22 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { ColorCodes } from "./ColorCodes";
 
 export const metadata: Metadata = generateMeta({
-  title: "SNS・Webカラーコード一覧｜ブランドカラーのHEX・RGBをコピー【無料】",
+  title: "SNSカラーコード一覧｜TikTok・Twitter・Facebook・Instagram・LINEのブランド色をHEX/RGBでコピー【無料】",
   description:
-    "X・LINE・Instagram・YouTube・PayPayなど主要SNS・サービスのブランドカラーと、Web制作でよく使う基本色・日本の伝統色のカラーコード（HEX・RGB）を一覧掲載。ワンタップでコピーできます。バナー・資料・Webデザインの配色に。",
+    "TikTok・Twitter（X）・Facebook・Instagram・LINE・YouTube・PayPayなど主要SNS・サービスのブランドカラーと、Web制作の基本色・日本の伝統色のカラーコード（HEX・RGB）を一覧掲載。ワンタップでコピーでき、バナー・サムネイル・資料・Webデザインの配色にそのまま使えます。無料・登録不要。",
   path: "/tools/color-codes",
-  keywords: ["カラーコード 一覧", "SNS ブランドカラー", "ブランドカラー hex", "LINE 緑 カラーコード", "web 配色 コード 一覧"],
+  keywords: [
+    "カラーコード 一覧",
+    "tiktok カラーコード",
+    "twitter カラーコード",
+    "facebook カラーコード",
+    "instagram カラーコード",
+    "line カラーコード",
+    "youtube カラーコード",
+    "SNS ブランドカラー",
+    "ブランドカラー hex",
+  ],
+  ogImage: `/api/og?${new URLSearchParams({ title: "SNSカラーコード一覧", icon: "🎨", desc: "SNS・Webのブランドカラーをコピー" }).toString()}`,
 });
 
 const faqSchema = {
