@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
+import { trackToolStarted, trackToolCompleted, trackToolFailed } from "@/lib/analytics/track";
 
 type LineItem = { id: number; name: string; qty: number; unit: string; price: number };
 
@@ -75,6 +76,18 @@ export function EstimateGenerator() {
   }, [form.items, form.taxRate]);
 
   const showToast = (msg: string) => { setToastMsg(msg); setTimeout(() => setToastMsg(""), 2000); };
+
+  const handlePrint = () => {
+    const startedAt = trackToolStarted({ toolId: "estimate-generator", toolCategory: "estimate", toolName: "見積書作成" });
+    try {
+      window.print();
+      // window.print() は完了/キャンセルを区別する確実なシグナルを提供しないブラウザAPIの制約。
+      // ここでの completed は「印刷ダイアログの起動」をもって推定した完了。
+      trackToolCompleted({ toolId: "estimate-generator", toolCategory: "estimate", toolName: "見積書作成", completionType: "print", durationMs: Date.now() - startedAt });
+    } catch {
+      trackToolFailed({ toolId: "estimate-generator", toolCategory: "estimate", toolName: "見積書作成", errorStage: "print" });
+    }
+  };
 
   const formatDate = (d: string) => {
     if (!d) return "";
@@ -181,7 +194,7 @@ export function EstimateGenerator() {
       </div>
 
       <div className="no-print flex gap-3 flex-wrap">
-        <button onClick={() => window.print()} className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm transition-colors">🖨️ PDFで保存・印刷</button>
+        <button onClick={handlePrint} className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm transition-colors">🖨️ PDFで保存・印刷</button>
         <button onClick={() => { setForm(defaultForm); localStorage.removeItem("estimate-form"); showToast("リセットしました"); }} className="inline-flex items-center justify-center gap-2 px-4 py-3 border border-slate-200 dark:border-zinc-600 text-slate-500 hover:bg-slate-50 dark:hover:bg-zinc-800 rounded-xl text-sm transition-colors">リセット</button>
       </div>
 

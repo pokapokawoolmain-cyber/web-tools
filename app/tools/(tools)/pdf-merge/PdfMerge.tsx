@@ -1,6 +1,7 @@
 "use client";
 import { useState, useCallback, useRef } from "react";
 import { Upload, Trash2, GripVertical, Download, Loader2, CheckCircle2 } from "lucide-react";
+import { trackToolStarted, trackToolCompleted, trackToolFailed } from "@/lib/analytics/track";
 
 type PdfFile = { id: string; file: File; name: string; size: number };
 
@@ -52,6 +53,7 @@ export function PdfMerge() {
   const merge = async () => {
     if (files.length < 2) { setError("2つ以上のPDFを追加してください"); return; }
     setMerging(true); setError(null);
+    const startedAt = trackToolStarted({ toolId: "pdf-merge", toolCategory: "pdf", toolName: "PDF結合" });
     try {
       const { PDFDocument } = await import("pdf-lib");
       const merged = await PDFDocument.create();
@@ -67,8 +69,10 @@ export function PdfMerge() {
       const a = document.createElement("a"); a.href = url; a.download = "merged.pdf"; a.click();
       URL.revokeObjectURL(url);
       setDone(true);
+      trackToolCompleted({ toolId: "pdf-merge", toolCategory: "pdf", toolName: "PDF結合", completionType: "processed", durationMs: Date.now() - startedAt, itemCount: files.length });
     } catch {
       setError("結合に失敗しました。ファイルが破損していないか確認してください。");
+      trackToolFailed({ toolId: "pdf-merge", toolCategory: "pdf", toolName: "PDF結合", errorStage: "merge" });
     } finally {
       setMerging(false);
     }

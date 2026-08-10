@@ -1,6 +1,7 @@
 "use client";
 import { useState, useCallback, useRef } from "react";
 import { Upload, Download, Loader2, CheckCircle2, FileText } from "lucide-react";
+import { trackToolStarted, trackToolCompleted, trackToolFailed } from "@/lib/analytics/track";
 
 function formatSize(bytes: number) {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
@@ -40,6 +41,7 @@ export function PdfCompress() {
   const compress = async () => {
     if (!file) return;
     setCompressing(true); setError(null); setProgress(0);
+    const startedAt = trackToolStarted({ toolId: "pdf-compress", toolCategory: "pdf", toolName: "PDF圧縮" });
     try {
       const { PDFDocument } = await import("pdf-lib");
       const pdfjs = await import("pdfjs-dist");
@@ -82,8 +84,10 @@ export function PdfCompress() {
       URL.revokeObjectURL(url);
       setResult({ originalSize: file.size, compressedSize: out.byteLength });
       setProgress(100);
+      trackToolCompleted({ toolId: "pdf-compress", toolCategory: "pdf", toolName: "PDF圧縮", completionType: "processed", durationMs: Date.now() - startedAt });
     } catch {
       setError("圧縮に失敗しました。ファイルを確認してください。");
+      trackToolFailed({ toolId: "pdf-compress", toolCategory: "pdf", toolName: "PDF圧縮", errorStage: "compress" });
     } finally {
       setCompressing(false);
     }

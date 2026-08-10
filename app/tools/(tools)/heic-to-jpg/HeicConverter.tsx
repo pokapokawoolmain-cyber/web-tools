@@ -5,6 +5,7 @@
 // ========================================
 import { useState, useCallback, useRef } from "react";
 import { Upload, Download, AlertCircle } from "lucide-react";
+import { trackToolStarted, trackToolCompleted, trackToolFailed } from "@/lib/analytics/track";
 
 type ConvertedFile = {
   name: string;
@@ -41,6 +42,7 @@ export function HeicConverter() {
 
     setIsConverting(true);
     setError(null);
+    const startedAt = trackToolStarted({ toolId: "heic-to-jpg", toolCategory: "image", toolName: "HEIC→JPG変換" });
 
     try {
       // heic2anyを動的インポート（SSRエラー防止）
@@ -62,10 +64,12 @@ export function HeicConverter() {
       }
 
       setConvertedFiles((prev) => [...prev, ...newFiles]);
+      trackToolCompleted({ toolId: "heic-to-jpg", toolCategory: "image", toolName: "HEIC→JPG変換", completionType: "processed", durationMs: Date.now() - startedAt, itemCount: newFiles.length });
     } catch {
       setError(
         "変換に失敗しました。対応していないファイル形式の可能性があります。"
       );
+      trackToolFailed({ toolId: "heic-to-jpg", toolCategory: "image", toolName: "HEIC→JPG変換", errorStage: "convert" });
     } finally {
       setIsConverting(false);
     }
