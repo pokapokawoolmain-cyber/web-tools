@@ -25,6 +25,7 @@ import {
   Shrink,
   Video,
   Crop,
+  Proportions,
   Camera,
   Globe,
   Images,
@@ -158,6 +159,7 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "image-compress": { icon: Shrink, color: IMAGE },
   "video-compress": { icon: Video, color: IMAGE },
   "image-resize": { icon: Crop, color: IMAGE },
+  "aspect-ratio": { icon: Proportions, color: IMAGE },
   "id-photo": { icon: Camera, color: IMAGE },
   "favicon-generator": { icon: Globe, color: IMAGE },
 

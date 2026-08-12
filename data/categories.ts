@@ -95,11 +95,11 @@ const IMAGE_CATEGORY: CategoryConfig = {
   keywords: ["画像圧縮 無料", "HEIC JPG 変換 無料", "画像リサイズ 無料", "証明写真 無料 スマホ", "動画圧縮 無料"],
   popularToolIds: ["image-compress", "heic-to-jpg", "id-photo", "image-resize", "video-compress"],
   allToolIds: [
-    "image-compress", "heic-to-jpg", "id-photo", "image-resize", "video-compress",
+    "image-compress", "heic-to-jpg", "id-photo", "image-resize", "aspect-ratio", "video-compress",
     "favicon-generator",
   ],
   stats: [
-    { label: "画像ツール数", value: "6種類" },
+    { label: "画像ツール数", value: "7種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "対応形式", value: "JPG・PNG・HEIC・MP4他" },
     { label: "ファイル送信", value: "なし（ブラウザ完結）" },

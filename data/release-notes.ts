@@ -23,6 +23,14 @@ export type ReleaseNote = {
 // 新しい順に並べる
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    date: "2026-08-12",
+    type: "NEW",
+    target: "アスペクト比計算機",
+    href: "/tools/aspect-ratio",
+    title: "アスペクト比計算機を追加",
+    body: "16:9・4:3などの比率から幅・高さを自動計算し、逆に幅と高さから最も簡単な整数比も算出できるツールを追加しました。FHD・4K・OGP・縦動画などの解像度プリセットに対応し、動画・SNS・スライド・Web制作のサイズ決めに使えます。",
+  },
+  {
     date: "2026-07-07",
     type: "UPDATE",
     title: "全95ツールのSEOを総点検",
