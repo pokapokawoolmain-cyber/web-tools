@@ -139,6 +139,7 @@ const MONEY_CATEGORY: CategoryConfig = {
     "resident-tax", "nenshu-kabe", "mortgage-calculator",
     "furusato-simulator", "furusato",
     "mercari-profit", "gas-calculator", "shift-salary", "point-simulator", "side-job-profit",
+    "tax-calculator",
   ],
   stats: [
     { label: "計算ツール数", value: "11種類" },

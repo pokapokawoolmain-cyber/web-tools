@@ -25,6 +25,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     date: "2026-08-12",
     type: "NEW",
+    target: "計算ツール",
+    href: "/tools/age-calculator",
+    title: "定番の計算ツールを4つ追加",
+    body: "年齢計算（満年齢・数え年・干支）、日数・日付計算（2つの日付の差／○日後）、消費税計算（税込⇔税抜・10%/8%）、西暦・和暦変換（令和・平成・昭和⇔西暦）を追加しました。いずれもブラウザ内で完結し、入力したデータは外部に送信されません。",
+  },
+  {
+    date: "2026-08-12",
+    type: "NEW",
     target: "住民税の目安計算",
     href: "/tools/resident-tax",
     title: "住民税の目安計算ツールを追加",

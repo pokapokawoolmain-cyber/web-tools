@@ -45,6 +45,10 @@ export const TOOLS: ToolItem[] = [
   { id: "gas-calculator", title: "ガソリン代計算", description: "走行距離・燃費・ガソリン単価を入力。往復・月間のガソリン代をリアルタイム計算。", href: "/tools/gas-calculator", emoji: "⛽", category: "計算ツール" },
   { id: "shift-salary", title: "シフト給与計算", description: "時給・勤務時間・深夜時間・勤務日数を入力して月収を計算。深夜割増・交通費も対応。", href: "/tools/shift-salary", emoji: "⏰", category: "計算ツール", isNew: true },
   { id: "point-simulator", title: "ポイント還元シミュレーター", description: "PayPay・楽天・クレカなど主要サービスの還元率を比較。年間獲得ポイントを計算。", href: "/tools/point-simulator", emoji: "💳", category: "計算ツール" },
+  { id: "age-calculator", title: "年齢計算", seoTitle: "年齢計算｜生年月日から満年齢・数え年・干支をすぐ計算【無料】", description: "生年月日から満年齢・数え年・干支・星座・生まれてからの日数を自動計算。基準日を変えれば過去・未来の年齢も。", href: "/tools/age-calculator", emoji: "🎂", category: "計算ツール", isNew: true, updatedAt: "2026-08-12" },
+  { id: "date-calculator", title: "日数・日付計算", seoTitle: "日数計算・日付計算｜2つの日付の差／○日後の日付【無料】", description: "2つの日付の差を日数・週・月・年で計算。逆に○日後・○日前の日付も曜日つきで自動計算。", href: "/tools/date-calculator", emoji: "📅", category: "計算ツール", isNew: true, updatedAt: "2026-08-12" },
+  { id: "tax-calculator", title: "消費税計算", seoTitle: "消費税計算｜税込・税抜をワンタップ変換【10%・8%対応】", description: "税抜⇔税込をワンタップで変換。消費税10%・軽減税率8%・任意税率に対応し、消費税額の内訳と端数処理も選べます。", href: "/tools/tax-calculator", emoji: "🧮", category: "計算ツール", isNew: true, updatedAt: "2026-08-12" },
+  { id: "wareki-converter", title: "西暦・和暦変換", seoTitle: "西暦・和暦変換｜令和・平成・昭和⇔西暦をすぐ変換【無料】", description: "西暦から令和・平成・昭和・大正・明治へ、和暦から西暦へワンタップで相互変換。元号対応の早見表つき。", href: "/tools/wareki-converter", emoji: "📆", category: "計算ツール", isNew: true, updatedAt: "2026-08-12" },
   // 画像・PDF
   { id: "heic-to-jpg", title: "HEIC→JPG変換", description: "iPhoneの写真（HEIC）をJPGに変換。ブラウザ完結でアップロード不要、プライバシー安全。", href: "/tools/heic-to-jpg", emoji: "🖼️", category: "画像・PDF" },
   { id: "image-compress", title: "画像圧縮ツール", description: "JPG・PNG・WebPを高品質のまま圧縮。サイト表示速度改善・SNS投稿に最適。", href: "/tools/image-compress", emoji: "🗜️", category: "画像・PDF" },

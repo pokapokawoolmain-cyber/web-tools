@@ -103,6 +103,9 @@ import {
   // 建設・リフォーム
   HardHat,
   Percent,
+  Cake,
+  CalendarDays,
+  CalendarRange,
   PaintRoller,
   DoorOpen,
   ClipboardCheck,
@@ -154,6 +157,10 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "gas-calculator": { icon: Fuel, color: CALC },
   "shift-salary": { icon: Clock, color: CALC },
   "point-simulator": { icon: CreditCard, color: CALC },
+  "age-calculator": { icon: Cake, color: CALC },
+  "date-calculator": { icon: CalendarDays, color: CALC },
+  "tax-calculator": { icon: Calculator, color: CALC },
+  "wareki-converter": { icon: CalendarRange, color: CALC },
 
   // 画像系
   "heic-to-jpg": { icon: ImageDown, color: IMAGE },
