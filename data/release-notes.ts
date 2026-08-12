@@ -25,6 +25,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     date: "2026-08-12",
     type: "NEW",
+    target: "住民税の目安計算",
+    href: "/tools/resident-tax",
+    title: "住民税の目安計算ツールを追加",
+    body: "年収と扶養人数を入れるだけで、1年間に納める住民税のおおよその目安を計算できるツールを追加しました。所得割・均等割の内訳や月あたりの金額、年収別の早見表に加え、住民税が6月から引かれる理由もあわせて解説しています。",
+  },
+  {
+    date: "2026-08-12",
+    type: "NEW",
     target: "アスペクト比計算機",
     href: "/tools/aspect-ratio",
     title: "アスペクト比計算機を追加",

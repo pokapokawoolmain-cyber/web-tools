@@ -142,6 +142,7 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "nisa-calculator": { icon: TrendingUp, color: MONEY },
   "mortgage-calculator": { icon: Home, color: MONEY },
   "net-income": { icon: Wallet, color: MONEY },
+  "resident-tax": { icon: Receipt, color: MONEY },
   "takehome-reverse": { icon: RefreshCcw, color: MONEY },
   "bonus-takehome": { icon: Coins, color: MONEY },
   "nenshu-kabe": { icon: Fence, color: MONEY },

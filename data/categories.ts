@@ -136,7 +136,7 @@ const MONEY_CATEGORY: CategoryConfig = {
   popularToolIds: ["fire-simulator", "nisa-calculator", "net-income", "mortgage-calculator", "furusato-simulator"],
   allToolIds: [
     "fire-simulator", "nisa-calculator", "net-income", "takehome-reverse", "bonus-takehome",
-    "nenshu-kabe", "mortgage-calculator",
+    "resident-tax", "nenshu-kabe", "mortgage-calculator",
     "furusato-simulator", "furusato",
     "mercari-profit", "gas-calculator", "shift-salary", "point-simulator", "side-job-profit",
   ],
