@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "UUID（v4・ランダム）をワンクリックで生成。1〜100個の一括生成に対応し、大文字・ハイフンなし・波括弧付きなどの形式も選べます。各行コピー・全部コピー対応。ブラウザ内で生成され外部に送信されません。",
   path: "/tools/uuid",
+  ogImage: `/api/og?${new URLSearchParams({ title: "UUID生成", icon: "🆔", desc: "UUID（v4・ランダム）をワンクリックで生成" }).toString()}`,
   keywords: ["uuid 生成", "uuid v4 生成", "uuid 作成 無料", "guid 生成", "uuid まとめて 生成"],
 });
 

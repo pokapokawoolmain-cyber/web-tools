@@ -13,6 +13,7 @@ export const metadata: Metadata = generateMeta({
   title: "FIREシミュレーター【無料・2026年版】必要資産額・達成年数を4%ルールで計算",
   description: "現在の資産・毎月の積立・年間生活費を入力するだけでFIRE達成年数と必要資産額を計算。4%ルールによる早期退職シミュレーション。年間生活費300万→7,500万円、400万→1億円の早見表付き。完全無料。",
   path: "/tools/fire-simulator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "FIREシミュレーター", icon: "🔥", desc: "資産・生活費・運用利回りを入力するだけ" }).toString()}`,
   keywords: [
     "FIRE シミュレーション",
     "FIRE 必要資産額 計算",

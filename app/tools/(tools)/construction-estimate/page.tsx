@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "工事見積書作成ツール｜建設・リフォーム対応【無料】",
   description: "工事種別・材料費・労務費・諸経費を入力して工事見積書をPDF出力。施工会社情報は自動保存。建設業許可番号・インボイス番号対応。登録不要・ブラウザ完結。",
   path: "/tools/construction-estimate",
+  ogImage: `/api/og?${new URLSearchParams({ title: "工事見積書作成", icon: "📋", desc: "工事種別・材料費・労務費・諸経費を入力して工事見積書をP" }).toString()}`,
   keywords: ["工事見積書 作成 無料", "リフォーム 見積書 テンプレ", "建設 見積書 PDF", "工事 見積書 フォーマット", "外壁塗装 見積書 作成", "建設業 見積書 無料"],
 });
 

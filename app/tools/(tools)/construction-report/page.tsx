@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "工事完了報告書作成ツール｜建設・リフォーム向け無料テンプレート",
   description: "工事名・施主名・施工内容・使用材料・工事保証を入力して工事完了報告書をPDF出力。施工会社情報・建設業許可番号対応。登録不要・ブラウザ完結・スマホ対応。",
   path: "/tools/construction-report",
+  ogImage: `/api/og?${new URLSearchParams({ title: "工事完了報告書作成", icon: "📋", desc: "工事名・施主情報・施工内容・使用材料・工事保証を入力して" }).toString()}`,
   keywords: [
     "工事完了報告書 作成 無料", "施工完了報告書 テンプレ", "リフォーム 完了報告書 PDF",
     "外壁塗装 完了報告書", "建設業 完了報告書 フォーマット", "工事 報告書 作成 無料",

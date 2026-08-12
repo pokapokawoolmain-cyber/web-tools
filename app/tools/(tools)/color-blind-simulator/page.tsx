@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "選んだ色が、P型・D型・T型・全色盲などの色覚でどのように見えるかをシミュレーション。赤と緑など見分けにくくなる組み合わせを自動で警告します。グラフ・信号・UI配色のアクセシビリティ確認に。登録不要・ブラウザ完結。",
   path: "/tools/color-blind-simulator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "色覚シミュレーター", icon: "🎨", desc: "選んだ色がP型・D型・T型などの色覚でどう見えるかをシミ" }).toString()}`,
   keywords: ["色覚 シミュレーター", "色覚多様性 配色", "色弱 見え方 確認", "カラーユニバーサルデザイン", "赤緑 見分け 配色"],
 });
 

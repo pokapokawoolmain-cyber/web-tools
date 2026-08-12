@@ -9,6 +9,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "食材費・販売価格を入力して原価率・粗利率・粗利額を即計算。複数食材・歩留まり・ロス率対応。目標原価率との比較と値上げ目安も表示。",
   path: "/tools/food-cost-calculator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "原価率計算ツール", icon: "🍽️", desc: "食材費・販売価格を入力して原価率・粗利率・粗利額を即計算" }).toString()}`,
   keywords: ["飲食店 原価率 計算", "原価率 計算ツール 無料", "食材費 粗利 計算", "飲食店 原価管理"],
 });
 

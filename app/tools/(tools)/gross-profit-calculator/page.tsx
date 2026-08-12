@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "粗利率・原価率計算ツール｜業種別目安と逆算対応【無料】",
   description: "売上・原価を入力して粗利率・原価率・粗利額を即計算。目標粗利率から必要見積金額を逆算。建設業・飲食業・小売業など業種別の目安も掲載。登録不要・ブラウザ完結。",
   path: "/tools/gross-profit-calculator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "原価率・粗利率計算", icon: "📊", desc: "売上・原価を入力するだけで原価率・粗利率・粗利額を即計算" }).toString()}`,
   keywords: ["粗利率 計算", "原価率 計算", "粗利 計算 無料", "業種別 粗利率 目安", "粗利 逆算", "建設 粗利率", "飲食店 原価率"],
 });
 

@@ -9,6 +9,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "食材費と目標原価率からメニューの適正販売価格を逆算。税込・税抜・端数調整に対応。ランチ/ディナー/テイクアウト別シミュレーション。値上げ前後の比較も。",
   path: "/tools/menu-price-calculator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "メニュー価格シミュレーター", icon: "💴", desc: "食材費と目標原価率から適正販売価格を逆算" }).toString()}`,
   keywords: [
     "メニュー価格 計算 無料",
     "飲食店 販売価格 逆算",

@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "工事写真帳作成ツール｜施工前・中・後をA4 PDFに整理【無料】",
   description: "工事写真（施工前・施工中・施工後）に工程区分・施工箇所・コメントを付けてA4 PDF形式の工事写真帳を作成。登録不要・ブラウザ完結・スマホ対応。建設・外壁塗装・リフォーム業に。",
   path: "/tools/construction-photo-pdf",
+  ogImage: `/api/og?${new URLSearchParams({ title: "工事写真帳作成", icon: "📸", desc: "施工前・施工中・施工後の工事写真に工程区分・コメントを付" }).toString()}`,
   keywords: [
     "工事写真帳 作成 無料", "施工写真 PDF 整理", "工事写真 報告書 作成",
     "外壁塗装 施工写真 PDF", "リフォーム 工事写真 まとめ", "建設業 写真報告書",

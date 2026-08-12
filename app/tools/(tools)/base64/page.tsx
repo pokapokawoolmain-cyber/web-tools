@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "テキストをBase64にエンコード、Base64をテキストにデコードできる無料ツール。日本語（UTF-8）とURLセーフ形式に対応。データURIやトークンの確認に。ブラウザ内処理でデータは外部に送信されません。",
   path: "/tools/base64",
+  ogImage: `/api/og?${new URLSearchParams({ title: "Base64エンコード/デコード", icon: "🔤", desc: "テキストをBase64にエンコード、Base64をテキス" }).toString()}`,
   keywords: ["base64 エンコード", "base64 デコード", "base64 変換 日本語", "base64 url safe", "base64 ツール 無料"],
 });
 

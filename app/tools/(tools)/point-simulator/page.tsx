@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "ポイント還元率シミュレーター【2026年版】PayPay・楽天・dカード 年間ポイントを一括比較",
   description: "月の支払い額を入力してPayPay・楽天カード・dカード・au PAY・イオンカードなど主要クレカの年間獲得ポイントを一覧比較。還元率0.5%・1%・1.5%の差が年間いくらになるかをシミュレーション。楽天ペイ2026年改定対応。",
   path: "/tools/point-simulator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "ポイント還元シミュレーター", icon: "💳", desc: "PayPay・楽天・クレカなど主要サービスの還元率を比較" }).toString()}`,
   keywords: [
     "ポイント還元率 比較",
     "クレカ 還元率 計算",

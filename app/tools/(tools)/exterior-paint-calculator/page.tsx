@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "外壁塗装 費用計算ツール【無料】坪数・面積から工事費・塗料使用量を自動算出",
   description: "建物の坪数・間口・奥行を入力して外壁塗装の面積・塗料使用量・工事費目安を自動計算。30坪で約80〜130万円、40坪で約110〜170万円が目安。シリコン・フッ素・無機塗料の坪単価比較付き。無料・登録不要。",
   path: "/tools/exterior-paint-calculator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "外壁塗装面積計算", icon: "🏠", desc: "建物の形状・坪数・階数を入力して外壁塗装面積を自動計算" }).toString()}`,
   keywords: [
     "外壁塗装 費用 計算",
     "外壁塗装 面積 計算",

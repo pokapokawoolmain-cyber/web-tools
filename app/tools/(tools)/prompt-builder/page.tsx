@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "やりたいことを入力するだけで、役割・依頼内容・出力形式・条件を整理した精度の高いプロンプトを自動生成。ChatGPTやClaude、Geminiにそのまま貼れる形で作成します。登録不要・ブラウザ完結。",
   path: "/tools/prompt-builder",
+  ogImage: `/api/og?${new URLSearchParams({ title: "ChatGPTプロンプト作成補助", icon: "⌨️", desc: "やりたいことを入力するだけで、役割・出力形式・条件を整え" }).toString()}`,
   keywords: ["ChatGPT プロンプト 作成", "プロンプト テンプレート", "プロンプト 書き方", "AI 指示文 作成", "プロンプトエンジニアリング 初心者"],
 });
 

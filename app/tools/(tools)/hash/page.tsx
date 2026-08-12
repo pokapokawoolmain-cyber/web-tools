@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "テキストからSHA-1・SHA-256・SHA-384・SHA-512のハッシュ値をリアルタイム生成できる無料ツール。ファイルの改ざん確認や文字列の整合性チェックに。処理はブラウザ内で完結し、入力は外部に送信されません。",
   path: "/tools/hash",
+  ogImage: `/api/og?${new URLSearchParams({ title: "ハッシュ生成（SHA）", icon: "🔒", desc: "テキストからSHA-1・SHA-256・SHA-384・" }).toString()}`,
   keywords: ["ハッシュ 生成", "sha256 生成", "sha1 sha512 生成", "ハッシュ値 計算 ツール", "文字列 ハッシュ化"],
 });
 

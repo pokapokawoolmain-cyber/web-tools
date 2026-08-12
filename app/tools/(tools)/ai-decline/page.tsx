@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "誘い・依頼・提案・勧誘を、相手の気分を害さずに丁寧に断る文面を自動作成。感謝＋理由＋代替案の型で、角が立たないお断りメールを下書きできます。登録不要・ブラウザ完結。",
   path: "/tools/ai-decline",
+  ogImage: `/api/og?${new URLSearchParams({ title: "AI断り文作成", icon: "🙅", desc: "誘い・依頼・提案を、相手の気分を害さずに丁寧に断る文面を" }).toString()}`,
   keywords: ["AI 断り文 作成", "断り方 メール 例文", "丁寧な 断り方 ビジネス", "お断りメール テンプレート", "誘い 断る 文面"],
 });
 

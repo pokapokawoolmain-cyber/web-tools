@@ -9,6 +9,7 @@ export const metadata: Metadata = generateMeta({
   title: "工事近隣挨拶文メーカー【無料・コピーOK】解体・新築・リフォーム・外壁塗装の例文テンプレート",
   description: "工事種別・期間・会社情報を入力して近隣挨拶文を即生成。解体・新築・外壁塗装・リフォーム工事に対応。騒音・粉塵・重機などの注意事項も自動挿入。ダウンロード不要・ブラウザで完結・コピー印刷対応。",
   path: "/tools/neighbor-greeting",
+  ogImage: `/api/og?${new URLSearchParams({ title: "近隣挨拶文メーカー", icon: "📝", desc: "工事名・期間・会社名を入力して近隣への挨拶文を自動生成" }).toString()}`,
   keywords: [
     "工事 近隣 挨拶文",
     "工事 挨拶状 テンプレート",

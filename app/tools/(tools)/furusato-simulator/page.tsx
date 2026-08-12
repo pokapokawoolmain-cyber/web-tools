@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "ふるさと納税シミュレーター【2026年版】年収別・家族構成別の控除上限額を無料で即計算",
   description: "年収と家族構成を選ぶだけでふるさと納税の控除上限額（限度額）を即計算。年収300万〜2000万の早見表付き。ワンストップ特例・確定申告の違いも解説。登録不要・完全無料。",
   path: "/tools/furusato-simulator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "ふるさと納税シミュレーター", icon: "🎁", desc: "年収と家族構成を選ぶだけで控除上限額を即計算" }).toString()}`,
   keywords: [
     "ふるさと納税 シミュレーション",
     "ふるさと納税 限度額",

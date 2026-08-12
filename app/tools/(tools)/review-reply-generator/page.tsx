@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "Google口コミ返信文メーカー｜飲食店向け無料自動生成",
   description: "高評価・低評価・クレームなど状況別に、そのままコピーできる自然な口コミ返信文を自動生成。丁寧・カジュアル・店主らしい文体を選択可。炎上しにくい表現で安心。",
   path: "/tools/review-reply-generator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "Google口コミ返信文メーカー", icon: "⭐", desc: "高評価・低評価・クレームなど状況別に、そのままコピーでき" }).toString()}`,
   keywords: ["Google口コミ 返信 飲食店", "口コミ 返信文 自動生成", "飲食店 口コミ 対応", "Google マップ 返信"],
 });
 

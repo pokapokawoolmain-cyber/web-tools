@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "Unixタイムスタンプ（エポック秒・ミリ秒）と日時を相互変換できる無料ツール。現在のタイムスタンプをリアルタイム表示。UTC・ISO 8601表記にも対応。ログの時刻確認やAPI開発に。ブラウザ内処理で安全。",
   path: "/tools/unix-time",
+  ogImage: `/api/og?${new URLSearchParams({ title: "Unixタイムスタンプ変換", icon: "🕐", desc: "Unixタイムスタンプ（エポック秒/ミリ秒）と日時を相互" }).toString()}`,
   keywords: ["unix タイムスタンプ 変換", "エポック秒 変換", "タイムスタンプ 日時 変換", "unixtime 変換", "現在 タイムスタンプ"],
 });
 

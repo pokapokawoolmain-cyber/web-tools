@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "依頼・お礼・日程調整・報告・督促など、ビジネスメールの文面を用途と相手を選ぶだけで自動作成。件名・宛名・挨拶・本文・結び・署名までそろった下書きをすぐにコピーできます。登録不要・ブラウザ完結。",
   path: "/tools/ai-email",
+  ogImage: `/api/og?${new URLSearchParams({ title: "AIメール作成", icon: "✉️", desc: "依頼・お礼・日程調整など、ビジネスメールの文面を用途と相" }).toString()}`,
   keywords: ["AI メール 作成", "ビジネスメール 例文 自動作成", "メール 文面 作成 無料", "お礼メール 作成", "依頼メール テンプレート"],
 });
 

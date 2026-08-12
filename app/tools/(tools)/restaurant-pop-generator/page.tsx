@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "POP・店内案内文メーカー｜飲食店向け無料作成・印刷対応",
   description: "飲食店向けのPOP・店内案内文を無料で作成できます。本日のおすすめ・期間限定・テイクアウト・営業時間変更・臨時休業・SNSフォロー用QRコード付きPOPに対応。A4・A5・横長・正方形など形を選んでそのまま印刷・PDF保存できます。",
   path: "/tools/restaurant-pop-generator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "POP・店内案内文メーカー", icon: "📢", desc: "本日のおすすめ・期間限定・臨時休業・予約案内など、店内掲" }).toString()}`,
   keywords: [
     "飲食店 POP 作成 無料",
     "店内案内文 テンプレート",

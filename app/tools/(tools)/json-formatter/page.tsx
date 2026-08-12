@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "JSONを見やすく整形（インデント）、または1行に圧縮（minify）できる無料ツール。構文エラーの位置も表示します。APIレスポンスの確認や設定ファイルの整理に。データはブラウザ内で処理され外部に送信されません。",
   path: "/tools/json-formatter",
+  ogImage: `/api/og?${new URLSearchParams({ title: "JSON整形・圧縮", icon: "🧩", desc: "JSONを見やすく整形（インデント）・1行に圧縮（min" }).toString()}`,
   keywords: ["json 整形", "json フォーマッター", "json 圧縮 minify", "json 整形 ツール 無料", "json バリデーション"],
 });
 

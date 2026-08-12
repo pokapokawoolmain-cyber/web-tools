@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "使用する複数の色（パレット）をまとめて登録し、すべての文字色×背景色の組み合わせをWCAG AA / AAA基準で一括チェック。コントラスト比を行列で可視化し、本文に使える安全な組み合わせがひと目でわかります。Webデザインのアクセシビリティ対応に。",
   path: "/tools/palette-accessibility",
+  ogImage: `/api/og?${new URLSearchParams({ title: "配色アクセシビリティチェッカー", icon: "🎨", desc: "複数の色をまとめて登録し、全組み合わせのコントラストをW" }).toString()}`,
   keywords: ["配色 アクセシビリティ チェック", "パレット コントラスト 一括", "WCAG 配色 判定", "アクセシビリティ 配色 ツール", "コントラスト比 一覧"],
 });
 

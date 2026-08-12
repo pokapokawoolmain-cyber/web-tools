@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "パスワード自動生成ツール【無料・安全】強いランダムパスワードをブラウザで即作成",
   description: "長さ・大文字小文字・数字・記号を自由に設定して強いランダムパスワードを即生成。ブラウザ完結でサーバー送信なし・完全安全。12〜20文字・全文字種対応。登録不要・無料。",
   path: "/tools/password-generator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "パスワード生成", icon: "🔐", desc: "長さ・記号・数字を自由に設定" }).toString()}`,
   keywords: [
     "パスワード 自動生成",
     "パスワード 作成 ツール",

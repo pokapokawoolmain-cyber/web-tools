@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "ブランドカラー（背景色）を選ぶだけで、読みやすい文字色をWCAG AA / AAA基準で自動提案。コントラスト比・ライブプレビュー・アクセントカラー・HEX/RGB/CSS/Tailwind形式のコピーに対応。Webデザインの配色決めに。",
   path: "/tools/brand-color-text",
+  ogImage: `/api/og?${new URLSearchParams({ title: "ブランドカラー×文字色 提案", icon: "🎨", desc: "背景色を選ぶだけで読みやすい文字色をWCAG基準で自動提" }).toString()}`,
   keywords: ["ブランドカラー 文字色", "背景色 文字色 組み合わせ", "配色 文字色 読みやすい", "コントラスト 文字色 自動", "Webデザイン 配色 アクセシビリティ"],
 });
 

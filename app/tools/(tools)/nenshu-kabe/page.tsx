@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "パート・アルバイトの年収を入力するだけで、超える壁・超えない壁を自動判定。106万円の壁撤廃（2026年10月）・130万円・136万円・178万円など2026年の制度変更に対応。社会保険加入の要否もわかる。無料・登録不要。",
   path: "/tools/nenshu-kabe",
+  ogImage: `/api/og?${new URLSearchParams({ title: "年収の壁シミュレーター", icon: "🚧", desc: "パート・アルバイトの年収から超える壁・社会保険加入の要否" }).toString()}`,
   keywords: [
     "年収の壁 2026",
     "106万の壁 いつ廃止",

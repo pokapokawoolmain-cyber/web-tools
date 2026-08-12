@@ -8,6 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "工事請負契約書作成ツール｜建設・リフォーム向け無料テンプレート",
   description: "工事請負契約書を無料で作成。発注者・請負者情報、工事金額・支払条件・保証を入力してPDF出力。建設業許可番号・消費税・着手金分割払いに対応。登録不要・ブラウザ完結。",
   path: "/tools/construction-contract",
+  ogImage: `/api/og?${new URLSearchParams({ title: "工事請負契約書作成", icon: "📑", desc: "発注者・請負者情報、工事金額・支払条件・契約不適合責任を" }).toString()}`,
   keywords: [
     "工事請負契約書 作成 無料", "リフォーム 請負契約書 テンプレ", "建設業 契約書 無料 PDF",
     "工事 請負契約書 雛形", "外壁塗装 契約書 作成", "建設工事 契約書 フォーマット",

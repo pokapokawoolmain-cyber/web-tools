@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "URLやクエリ文字列をパーセントエンコード・デコードできる無料ツール。日本語や記号・スペースを含むURLの変換に。encodeURIComponent相当と、URL構造を保持する変換の両方に対応。ブラウザ完結で安全。",
   path: "/tools/url-encode",
+  ogImage: `/api/og?${new URLSearchParams({ title: "URLエンコード/デコード", icon: "🔗", desc: "URLやクエリ文字列をパーセントエンコード・デコード" }).toString()}`,
   keywords: ["url エンコード", "url デコード", "パーセントエンコード", "url 変換 日本語", "encodeuricomponent ツール"],
 });
 

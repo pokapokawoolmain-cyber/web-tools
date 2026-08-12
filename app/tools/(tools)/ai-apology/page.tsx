@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "納期遅延・ミス・クレーム対応など、ビジネスの謝罪文（お詫びメール）を状況を入力するだけで自動作成。原因説明と再発防止まで含んだ、そのまま使える文面を作成できます。登録不要・ブラウザ完結。",
   path: "/tools/ai-apology",
+  ogImage: `/api/og?${new URLSearchParams({ title: "AI謝罪文作成", icon: "🙏", desc: "納期遅延・ミス・クレーム対応など、状況を入力するだけで謝" }).toString()}`,
   keywords: ["AI 謝罪文 作成", "お詫びメール 例文", "謝罪文 ビジネス テンプレート", "お詫び 文面 作成", "謝罪メール 書き方"],
 });
 

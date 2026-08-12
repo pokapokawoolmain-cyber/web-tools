@@ -9,6 +9,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "飲食店向けのメニュー表を無料で作成できます。カフェ、居酒屋、和食、バー、定食屋などのデザインテーマに対応。横書き・縦書き、税込・税抜入力、A4印刷・PDF保存にも対応したブラウザ完結型のメニュー表作成ツールです。",
   path: "/tools/restaurant-menu-maker",
+  ogImage: `/api/og?${new URLSearchParams({ title: "メニュー表作成ツール", icon: "📋", desc: "カテゴリ・メニュー名・価格・説明・アレルギー情報を入力し" }).toString()}`,
   keywords: [
     "メニュー表 作成 無料",
     "飲食店 メニュー表",

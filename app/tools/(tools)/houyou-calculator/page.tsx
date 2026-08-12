@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "命日を入力するだけで四十九日・一周忌・三回忌などの法要日程を自動計算。初七日から三十三回忌までの日付と曜日を一覧表示。忌日の数え方・繰り上げ法要・香典の表書きの変わるタイミングも解説。無料・登録不要。",
   path: "/tools/houyou-calculator",
+  ogImage: `/api/og?${new URLSearchParams({ title: "四十九日・法要日程 計算", icon: "🪷", desc: "命日を入力するだけで四十九日・一周忌・三回忌などの法要日" }).toString()}`,
   keywords: [
     "四十九日 計算",
     "法要 日程 計算",

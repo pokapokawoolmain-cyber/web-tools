@@ -10,6 +10,7 @@ export const metadata: Metadata = generateMeta({
   description:
     "商品・在庫・予約・不具合・請求など、企業や店舗、役所への問い合わせメールを自動作成。用件を入力するだけで、失礼のない丁寧な問い合わせ文を下書きできます。登録不要・ブラウザ完結。",
   path: "/tools/ai-inquiry",
+  ogImage: `/api/og?${new URLSearchParams({ title: "AI問い合わせ文作成", icon: "📮", desc: "商品・在庫・予約・不具合・請求など、企業や店舗への問い合" }).toString()}`,
   keywords: ["AI 問い合わせ 文 作成", "問い合わせメール 例文", "問い合わせ 文面 ビジネス", "問い合わせ 書き方 メール", "カスタマーサポート 問い合わせ 例文"],
 });
 
