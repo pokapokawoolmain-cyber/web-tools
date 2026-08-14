@@ -45,6 +45,9 @@ import {
   FileSpreadsheet,
   // 生活・副業
   Gauge,
+  Keyboard,
+  Mouse,
+  Mic,
   Briefcase,
   Clapperboard,
   Link2,
@@ -135,6 +138,7 @@ const CEREMONY = "#e2c08d"; // シャンパンゴールド
 const CONSTRUCTION = "#fb923c"; // オレンジ
 const RESTAURANT = "#f87171"; // レッド
 const AI = "#22d3ee"; // シアン
+const DEVICE = "#2dd4bf"; // ティール（デバイス診断・テスト系）
 const COLOR = "#c084fc"; // パープル
 const DEV = "#38bdf8"; // スカイ（開発者ツール）
 const STUDENT = "#4ade80"; // グリーン
@@ -188,6 +192,9 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
 
   // 生活・副業
   "speed-test": { icon: Gauge, color: AI },
+  "keyboard-test": { icon: Keyboard, color: DEVICE },
+  "mouse-test": { icon: Mouse, color: DEVICE },
+  "mic-test": { icon: Mic, color: DEVICE },
   "side-job-profit": { icon: Briefcase, color: TEXT_WEB },
   "youtube-tools": { icon: Clapperboard, color: TEXT_WEB },
   "sns-links": { icon: Link2, color: TEXT_WEB },

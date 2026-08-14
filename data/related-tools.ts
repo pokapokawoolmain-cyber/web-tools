@@ -72,6 +72,9 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "mercari-profit":  ["side-job-profit", "point-simulator", "gas-calculator"],
   "gas-calculator":  ["mercari-profit", "shift-salary"],
   "shift-salary":    ["net-income", "gas-calculator"],
+  "keyboard-test":   ["mouse-test", "mic-test", "speed-test"],
+  "mouse-test":      ["keyboard-test", "mic-test", "speed-test"],
+  "mic-test":        ["keyboard-test", "mouse-test", "speed-test"],
   "side-job-profit": ["mercari-profit", "net-income"],
   "point-simulator": ["mercari-profit", "net-income", "furusato-simulator"],
   "age-calculator":  ["wareki-converter", "date-calculator", "houyou-calculator"],
@@ -84,7 +87,7 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "sns-links":       ["qr-generator", "youtube-tools"],
 
   // ── 生活便利 ──────────────────────────────────────────────
-  "speed-test":  ["wifi-qr", "image-compress", "pdf-compress", "video-compress"],
+  "speed-test":  ["keyboard-test", "mouse-test", "mic-test", "wifi-qr"],
 
   // ── 冠婚葬祭・文書 ────────────────────────────────────────────
   "koden-maker":       ["houyou-calculator", "noshi-maker", "shugi-maker"],

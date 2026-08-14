@@ -72,6 +72,9 @@ export const TOOLS: ToolItem[] = [
   { id: "favicon-generator", title: "ファビコン作成ツール", seoTitle: "ファビコン作成ツール｜favicon.icoを無料生成【ブラウザ完結】", description: "テキスト・絵文字・画像からfavicon.icoを無料作成。16〜64pxのマルチサイズICOとPNG 256pxをブラウザ完結でダウンロード。登録不要。", href: "/tools/favicon-generator", emoji: "🌐", category: "画像・PDF", isNew: true },
   // 生活・副業
   { id: "speed-test", title: "インターネット速度テスト", seoTitle: "スピードテスト｜回線速度・Pingを測定し20段階で実用診断【無料】", description: "ダウンロード・アップロード速度をブラウザで実測。動画・ゲーム・4K/8Kなど何が快適かを20段階で診断。10Gbps級対応。", href: "/tools/speed-test", emoji: "🚀", category: "生活・副業", isNew: true, isPopular: true },
+  { id: "keyboard-test", title: "キーボードテスト", seoTitle: "キーボードテスト｜押したキーが光る・反応しないキーを即チェック【無料】", description: "押したキーが光り、反応しないキーを1つずつ確認できるブラウザ完結の診断。同時押し・キーコード確認にも対応。", href: "/tools/keyboard-test", emoji: "⌨️", category: "生活・副業", isNew: true, updatedAt: "2026-08-14" },
+  { id: "mouse-test", title: "マウステスト", seoTitle: "マウステスト｜左右・ホイール・サイドボタンの反応をチェック【無料】", description: "左右クリック・ホイール・サイドボタン・ダブルクリックの反応をブラウザで確認できるマウス診断ツール。", href: "/tools/mouse-test", emoji: "🖱️", category: "生活・副業", isNew: true, updatedAt: "2026-08-14" },
+  { id: "mic-test", title: "マイクテスト", seoTitle: "マイクテスト｜マイクが使えるか音量メーターで即チェック【無料】", description: "声を出すと音量メーターと波形が動く、ブラウザ完結のマイク動作確認。Web会議・配信の前に。音声は録音・送信されません。", href: "/tools/mic-test", emoji: "🎤", category: "生活・副業", isNew: true, updatedAt: "2026-08-14" },
   { id: "side-job-profit", title: "副業利益・税金計算", description: "副業収入から経費・税金を差し引いた実質手取りを計算。確定申告の目安も確認。", href: "/tools/side-job-profit", emoji: "💼", category: "生活・副業" },
   { id: "youtube-tools", title: "YouTube SEOツール", description: "タイトル文字数・ハッシュタグ最適化・サムネ比率確認をまとめてチェック。", href: "/tools/youtube-tools", emoji: "🎥", category: "生活・副業" },
   { id: "sns-links", title: "SNSリンクまとめ", description: "X・Instagram・TikTok・YouTubeなど複数のSNSリンクをまとめた共有ページを即生成。", href: "/tools/sns-links", emoji: "🔗", category: "生活・副業", isNew: true },
