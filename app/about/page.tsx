@@ -21,7 +21,7 @@ const organizationSchema = {
   "inLanguage": "ja",
   "publisher": {
     "@type": "Person",
-    "name": "ToolBox運営",
+    "name": "ひゆ",
     "url": `${siteUrl}/about`,
   },
 };
@@ -78,7 +78,7 @@ export default function AboutPage() {
               </p>
               <p>
                 FIRE（経済的自立）シミュレーター・NISA積立計算・PDF結合・画像圧縮・カラーコード変換など、日常生活や仕事で「ちょっと使いたい」場面に応えるツールを揃えています。
-                現在<strong className="text-slate-800 dark:text-zinc-200">70種類以上</strong>のツールが無料で利用でき、すべてアカウント登録不要・スマートフォン対応です。
+                現在<strong className="text-slate-800 dark:text-zinc-200">100種類以上</strong>のツールが無料で利用でき、すべてアカウント登録不要・スマートフォン対応です。
               </p>
               <p>
                 また、各ツールに関連した解説ブログ記事を合わせて提供することで、「ツールで計算するだけでなく、背景知識も身につく」体験を目指しています。
@@ -104,7 +104,7 @@ export default function AboutPage() {
                 それで「ブラウザ内で完結するPDF結合ツール」も自分で作ることにしました。
               </p>
               <p>
-                こうして「自分が欲しいと思ったものを作る」を繰り返していたら、気づけばFIREシミュレーターや画像圧縮、カラーコード変換まで70種類を超えていました。
+                こうして「自分が欲しいと思ったものを作る」を繰り返していたら、気づけばFIREシミュレーターや画像圧縮、カラーコード変換まで100種類を超えていました。
                 全部、自分が実際に「あれ、これどこかでサっと計算したい」と感じた瞬間がきっかけです。
               </p>
 
@@ -164,13 +164,17 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[14px]">
               {[
                 { emoji: "💰", cat: "お金・投資ツール", desc: "FIREシミュレーター・NISA積立・住宅ローン計算など" },
-                { emoji: "📄", cat: "PDFツール", desc: "結合・分割・圧縮・圧縮・パスワード設定など11種類" },
+                { emoji: "📄", cat: "PDFツール", desc: "結合・分割・圧縮・回転・パスワード設定など14種類" },
                 { emoji: "🖼️", cat: "画像ツール", desc: "圧縮・HEIC変換・リサイズ・証明写真作成など" },
                 { emoji: "🎨", cat: "カラーツール", desc: "HEX/RGB/HSL変換・パレット生成・グラデーション作成など" },
                 { emoji: "📝", cat: "ビジネス書類", desc: "業務委託契約書・NDA・請求書・見積書・退職届など" },
                 { emoji: "🤖", cat: "AI文章ツール", desc: "ChatGPT整形・AI文章自然化・X投稿プレビューなど" },
                 { emoji: "🎌", cat: "冠婚葬祭・文書", desc: "のし紙・香典袋・祝儀袋の表書き作成など" },
-                { emoji: "🧮", cat: "計算ツール", desc: "GPA計算・ガソリン代・シフト給与計算など" },
+                { emoji: "🧮", cat: "計算ツール", desc: "GPA・年齢・住民税・消費税・ガソリン代計算など" },
+                { emoji: "🏗️", cat: "建設・リフォーム", desc: "工事挨拶文・外壁塗装費用・原価計算など" },
+                { emoji: "🍽️", cat: "飲食店", desc: "食材原価計算・メニュー価格・POP作成など" },
+                { emoji: "🖥️", cat: "デバイス診断", desc: "キーボード・マウス・マイク・回線速度テストなど" },
+                { emoji: "⚙️", cat: "開発者ツール", desc: "JSON整形・Base64・ハッシュ・UUID生成など" },
               ].map((item) => (
                 <div key={item.cat} className="flex items-start gap-3 bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 rounded-xl px-4 py-3">
                   <span className="text-xl flex-shrink-0 mt-0.5">{item.emoji}</span>
@@ -220,7 +224,7 @@ export default function AboutPage() {
                 • 法制度・税制の変更等により、一部の情報が最新でない場合があります。重要事項は必ず公式サイトや一次情報源でご確認ください。
               </p>
               <p>
-                • 本サイトはGoogle AdSenseによる広告収益により運営されています。広告の内容は運営者と無関係です。
+                • 本サイトは無料で提供しており、運営者が個人で維持・管理しています。将来的に広告を掲載する場合があり、その際の広告内容は配信事業者により自動的に決定されるため、運営者が個別に関与するものではありません。
               </p>
             </div>
           </section>
