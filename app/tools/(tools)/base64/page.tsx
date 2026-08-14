@@ -37,13 +37,93 @@ const seoContent = (
       </ol>
     </section>
     <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Base64の仕組み — なぜ約1.33倍になるのか</h2>
+      <p className="mb-3">
+        Base64は、任意のバイト列を <code>A-Z a-z 0-9 + /</code> の64種類の文字だけで表す方式です。
+        <strong>3バイト（24ビット）を6ビットずつ4つに区切り、4文字に変換</strong>します。3バイトが4文字になるため、データ量は約 <strong>4/3＝1.33倍</strong> に増えます。
+        端数は末尾の <code>=</code>（パディング）で調整します。
+      </p>
+      <div className="rounded-xl bg-slate-50 dark:bg-zinc-800 px-4 py-3 font-mono text-[12px] text-slate-700 dark:text-zinc-200 mb-2 overflow-x-auto leading-relaxed">
+        &quot;Man&quot; → 01001101 01100001 01101110 → 010011 010110 000101 101110 → <span className="text-sky-600 dark:text-sky-400">TWFu</span>
+      </div>
+      <p className="text-[13px] text-slate-500 dark:text-zinc-500">
+        バイナリを「テキストしか通れない経路」に安全に載せるための仕組みで、圧縮でも暗号化でもありません。
+      </p>
+    </section>
+
+    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">よくある用途</h2>
       <ul className="space-y-1.5">
-        <li>・データURI（画像などをテキストとして埋め込む）の確認</li>
-        <li>・Basic認証ヘッダやトークンの中身の確認</li>
-        <li>・メール（MIME）やAPIで受け取ったBase64文字列の復元</li>
+        <li>・<strong>データURI：</strong>小さな画像やフォントをHTML/CSSに <code>data:image/png;base64,...</code> として埋め込み、HTTPリクエストを減らす</li>
+        <li>・<strong>Basic認証：</strong><code>Authorization: Basic</code> ヘッダの <code>ユーザー名:パスワード</code> をBase64化（＝暗号化ではないのでHTTPS必須）</li>
+        <li>・<strong>メール（MIME）：</strong>添付ファイルや日本語本文をテキスト経路で送るためにエンコード</li>
+        <li>・<strong>JWT：</strong>ヘッダ・ペイロードをURLセーフBase64で連結（中身は誰でもデコード可能）</li>
       </ul>
     </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">標準形式とURLセーフ形式の違い</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-[13px]">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">項目</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">標準</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">URLセーフ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["62番目の文字", "+", "-"],
+              ["63番目の文字", "/", "_"],
+              ["末尾のパディング", "= を付ける", "省略することが多い"],
+              ["主な用途", "メール・データURI", "URL・クエリ・JWT・ファイル名"],
+            ].map(([k, a, b], i) => (
+              <tr key={k as string} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium">{k}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-mono">{a}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-mono">{b}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-3 text-[13px] text-slate-500 dark:text-zinc-500">
+        <code>+</code> や <code>/</code> はURLで特別な意味を持つため、URLに載せるときはURLセーフ形式を使います。このツールは両形式を切り替えられます。
+      </p>
+    </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">つまずきやすいポイント</h2>
+      <ul className="space-y-1.5">
+        <li>・<strong>暗号化ではない：</strong>Base64は誰でも元に戻せます。パスワードやトークンの「保護」にはならず、通信の秘匿にはHTTPSや暗号化を使ってください。</li>
+        <li>・<strong>日本語の文字化け：</strong>マルチバイト文字はまずUTF-8のバイト列にしてからBase64化する必要があります（このツールは自動でUTF-8処理します）。素朴な <code>btoa()</code> は日本語で例外になります。</li>
+        <li>・<strong>サイズが増える：</strong>約1.33倍になるため、大きなファイルをデータURIで埋め込むとHTMLが重くなります。大画像は通常のファイル参照が有利です。</li>
+        <li>・<strong>改行の混入：</strong>メール用のBase64は76文字ごとに改行が入ることがあり、そのままデコードすると失敗する場合があります。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">言語別のエンコード例</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-[13px]">
+          <tbody>
+            {[
+              ["JavaScript", "btoa(unescape(encodeURIComponent(s)))"],
+              ["Python", "base64.b64encode(s.encode())"],
+              ["PHP", "base64_encode($s)"],
+              ["Linux CLI", "echo -n 'text' | base64"],
+            ].map(([lang, code], i) => (
+              <tr key={lang as string} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium whitespace-nowrap">{lang}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-mono text-[12px]">{code}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">関連ツール</h2>
       <ul className="space-y-1.5">
