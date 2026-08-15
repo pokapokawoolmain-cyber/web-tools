@@ -43,6 +43,7 @@ import {
   Eraser,
   FileType,
   FileSpreadsheet,
+  Sheet,
   // 生活・副業
   Gauge,
   Keyboard,
@@ -197,6 +198,8 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "pdf-metadata-remover": { icon: Eraser, color: PDF },
   "word-to-pdf": { icon: FileType, color: PDF },
   "excel-to-pdf": { icon: FileSpreadsheet, color: PDF },
+  "pdf-to-excel": { icon: Sheet, color: PDF },
+  "pdf-to-word": { icon: FileText, color: PDF },
 
   // 生活・副業
   "speed-test": { icon: Gauge, color: AI },

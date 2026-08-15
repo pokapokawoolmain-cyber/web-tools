@@ -23,6 +23,14 @@ export type ReleaseNote = {
 // 新しい順に並べる
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    date: "2026-08-15",
+    type: "NEW",
+    target: "PDF→Excel・PDF→Word変換",
+    href: "/tools/pdf-to-excel",
+    title: "PDFをExcel・Wordに変換するツールを追加",
+    body: "PDFの表を読み取ってExcel（.xlsx）に書き出す変換と、PDFの文章を読み取ってWordで編集できる文書（.doc）に変換するツールを追加しました。いずれも処理はすべてブラウザ内で完結し、ファイルはサーバーに送信されません。文字ベースのPDFが対象です。",
+  },
+  {
     date: "2026-08-14",
     type: "NEW",
     target: "割り勘・BMI・パーセント計算機",

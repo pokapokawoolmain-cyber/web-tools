@@ -57,6 +57,7 @@ const PDF_CATEGORY: CategoryConfig = {
     "pdf-merge", "pdf-split", "pdf-compress", "pdf-to-jpg", "jpg-to-pdf",
     "pdf-rotate", "pdf-watermark", "pdf-delete-pages", "pdf-reorder",
     "pdf-password", "pdf-metadata-remover", "word-to-pdf", "excel-to-pdf",
+    "pdf-to-word", "pdf-to-excel",
   ],
   stats: [
     { label: "PDFツール数", value: "13種類" },
