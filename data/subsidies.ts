@@ -4,7 +4,7 @@
 // ============================================================
 
 // ─── UI表示用（日本語）型 ───────────────────────────────────
-export type BusinessType = "法人" | "個人事業主" | "創業予定";
+export type BusinessType = "法人" | "個人事業主" | "創業予定" | "個人・家庭";
 export type Industry =
   | "飲食" | "美容" | "小売" | "建設" | "IT"
   | "士業" | "医療・介護" | "教育" | "製造" | "その他";
@@ -27,7 +27,7 @@ export type Provider =
   | "中小企業庁" | "厚生労働省" | "経済産業省"
   | "自治体" | "中小機構" | "その他";
 export type StatusCode = "open" | "scheduled" | "closed" | "unknown";
-export type TargetBusinessTypeCode = "corporation" | "sole_proprietor" | "startup";
+export type TargetBusinessTypeCode = "corporation" | "sole_proprietor" | "startup" | "individual";
 
 // ─── 拡張SubsidyData型 ──────────────────────────────────────
 export interface SubsidyData {
@@ -108,8 +108,9 @@ export interface SubsidyData {
   nextSteps: string[];
 }
 
-// ─── 補助金・助成金データ本体（17件 + 拡張23件）────────────
+// ─── 補助金・助成金データ本体（コア + 拡張 + 個人・家庭向け）──
 import { SUBSIDIES_EXTENDED } from "./subsidies-extended";
+import { SUBSIDIES_INDIVIDUAL } from "./subsidies-individual";
 
 const SUBSIDIES_CORE: SubsidyData[] = [
 
@@ -125,15 +126,12 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     sourceLabel: "中小企業庁・日本商工会議所",
     sourceUrl: "https://r3.jizokukahojokin.info/",
     officialUrl: "https://r3.jizokukahojokin.info/",
-    status: "受付中",
+    status: "随時受付",
     statusCode: "open",
-    applicationStartDate: "2025-03-01",
-    applicationEndDate: "2025-09-30",
-    deadlineDate: "2025-09-30",
-    deadline: "2025年度 第16回〜（公募要領で最新の締切を確認）",
-    deadlineNote: "公募回ごとに締切が異なります。最新の公募要領をご確認ください",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    deadline: "2026年度も公募予定。公募回ごとに締切が異なります（公式で最新を確認）",
+    deadlineNote: "公募回ごとに締切が異なります。最新の公募要領を公式サイトでご確認ください",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["0人", "1〜5人", "6〜20人"],
@@ -201,15 +199,12 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     sourceLabel: "中小企業庁・IT導入補助金事務局",
     sourceUrl: "https://it-shien.smrj.go.jp/",
     officialUrl: "https://it-shien.smrj.go.jp/",
-    status: "受付中",
+    status: "随時受付",
     statusCode: "open",
-    applicationStartDate: "2025-04-01",
-    applicationEndDate: "2025-12-31",
-    deadlineDate: "2025-12-31",
-    deadline: "2025年度 随時申請受付（締切は公式サイトを確認）",
+    deadline: "2026年度も公募予定。締切は公式サイトで最新をご確認ください",
     deadlineNote: "ITベンダーと共同申請が必要です。余裕を持って準備してください",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["0人", "1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -275,15 +270,12 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     sourceLabel: "中小企業庁・全国中小企業団体中央会",
     sourceUrl: "https://portal.monodukuri-hojo.jp/",
     officialUrl: "https://portal.monodukuri-hojo.jp/",
-    status: "受付中",
+    status: "随時受付",
     statusCode: "open",
-    applicationStartDate: "2025-04-01",
-    applicationEndDate: "2025-08-31",
-    deadlineDate: "2025-08-31",
-    deadline: "2025年度 公募回ごとに締切が異なります（公式サイト確認）",
+    deadline: "2026年度も公募予定。公募回ごとに締切が異なります（公式サイト確認）",
     deadlineNote: "毎年複数回公募があります。最新の公募回を公式サイトでご確認ください",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["0人", "1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -349,15 +341,12 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     sourceLabel: "中小企業庁・中小機構",
     sourceUrl: "https://shoryokuka.smrj.go.jp/",
     officialUrl: "https://shoryokuka.smrj.go.jp/",
-    status: "受付中",
+    status: "随時受付",
     statusCode: "open",
-    applicationStartDate: "2025-04-01",
-    applicationEndDate: "2025-11-30",
-    deadlineDate: "2025-11-30",
-    deadline: "2025年度 随時公募（カタログ型・予算枯渇次第終了）",
-    deadlineNote: "公式カタログに掲載されている製品のみ対象です",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    deadline: "随時公募（カタログ型・予算枯渇次第終了）。最新は公式サイトで確認",
+    deadlineNote: "公式カタログに掲載されている製品のみ対象です。予算上限に達すると終了します",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["0人", "1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -425,8 +414,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "unknown",
     deadline: "公募時期は公式サイトをご確認ください",
     deadlineNote: "制度内容・公募スケジュールは公式サイトで最新情報をご確認ください",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -485,14 +474,12 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     sourceLabel: "中小企業庁・事業承継引継ぎ支援センター",
     sourceUrl: "https://jigyo-shoukei.jp/",
     officialUrl: "https://jigyo-shoukei.jp/",
-    status: "準備中",
-    statusCode: "scheduled",
-    applicationEndDate: "2025-08-31",
-    deadlineDate: "2025-08-31",
-    deadline: "2025年度 公募スケジュールは公式サイトを参照",
-    deadlineNote: "年複数回の公募が予定されています",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    status: "随時受付",
+    statusCode: "open",
+    deadline: "2026年度も公募予定。公募スケジュールは公式サイトを参照",
+    deadlineNote: "年複数回の公募が予定されています。最新の公募回を公式サイトでご確認ください",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["0人", "1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -557,8 +544,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "unknown",
     deadline: "公募時期は公式サイトをご確認ください",
     deadlineNote: "年1〜2回程度の公募が行われています",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人"],
     targetIndustries: ["IT", "製造", "医療・介護", "その他"],
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -623,8 +610,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付（ハローワークへ申請）",
     deadlineNote: "雇入れ前にハローワークへ計画書の提出が必要です",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -687,8 +674,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付（予算終了次第締切）",
     deadlineNote: "都道府県の労働局へ申請。予算状況を事前に確認してください",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -754,8 +741,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付",
     deadlineNote: "コースごとに申請タイミングが異なります。計画届の提出が先に必要です",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -821,8 +808,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付（訓練開始日の前日までに申請）",
     deadlineNote: "訓練開始日の前日までに申請が必要です（遡って申請不可）",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -888,8 +875,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付",
     deadlineNote: "経済状況により助成内容が変更される場合があります。最新情報を確認してください",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -952,8 +939,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付",
     deadlineNote: "ハローワーク経由で採用した場合のみ対象です",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["0人", "1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -1017,8 +1004,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付",
     deadlineNote: "ハローワーク経由で対象者を雇用した場合のみ対象です",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["0人", "1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -1080,8 +1067,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付",
     deadlineNote: "制度内容が変更される場合があります。最新情報は公式サイトでご確認ください",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["0人", "1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -1142,8 +1129,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "随時受付",
     deadlineNote: "コースにより申請タイミングが異なります",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -1205,8 +1192,8 @@ const SUBSIDIES_CORE: SubsidyData[] = [
     statusCode: "open",
     deadline: "年度内（予算終了次第締切）",
     deadlineNote: "年度予算の範囲内での助成です。早めに申請してください",
-    updatedAt: "2025-05-23",
-    lastCheckedAt: "2025-05-23",
+    updatedAt: "2026-08-15",
+    lastCheckedAt: "2026-08-15",
     targetBusinessTypes: ["法人", "個人事業主"],
     targetIndustries: "all",
     targetEmployeeCounts: ["1〜5人", "6〜20人", "21〜50人", "51人以上"],
@@ -1262,7 +1249,7 @@ const SUBSIDIES_CORE: SubsidyData[] = [
 // 「受付中」のまま表示される事故を防ぐ（鮮度の自動担保）。
 import { computeSubsidyStatus, mapToStatusCode } from "../lib/subsidy/status";
 
-const SUBSIDIES_RAW: SubsidyData[] = [...SUBSIDIES_CORE, ...SUBSIDIES_EXTENDED];
+const SUBSIDIES_RAW: SubsidyData[] = [...SUBSIDIES_CORE, ...SUBSIDIES_EXTENDED, ...SUBSIDIES_INDIVIDUAL];
 
 export const SUBSIDIES: SubsidyData[] = SUBSIDIES_RAW.map((s) => {
   const liveStatus = computeSubsidyStatus({
@@ -1311,6 +1298,10 @@ export function diagnose(input: DiagnosisInput): DiagnosisResult[] {
     const matchedReasons: string[] = [];
     const unmatchReasons: string[] = [];
 
+    // 個人・家庭向けの制度は、事業者向けの「業種・従業員数・事業目的」の質問で
+    // 不利に採点しない（診断フローは事業者向けのため）。
+    const isIndividualUser = input.businessType === "個人・家庭";
+
     if (subsidy.targetBusinessTypes.includes(input.businessType)) {
       score += 20;
     } else {
@@ -1321,7 +1312,7 @@ export function diagnose(input: DiagnosisInput): DiagnosisResult[] {
     if (subsidy.targetEmployeeCounts.includes(input.employeeCount)) {
       score += 15;
       matchedReasons.push("従業員規模が対象範囲内の可能性があります");
-    } else {
+    } else if (!isIndividualUser) {
       unmatchReasons.push(`従業員数「${input.employeeCount}」は対象外の可能性があります`);
       score -= 20;
     }
@@ -1330,7 +1321,7 @@ export function diagnose(input: DiagnosisInput): DiagnosisResult[] {
     if (matchedPurposes.length > 0) {
       score += matchedPurposes.length * 15;
       matchedReasons.push(`「${matchedPurposes.join("・")}」の目的に合致する可能性があります`);
-    } else {
+    } else if (!isIndividualUser) {
       unmatchReasons.push("選択した目的が補助対象に合わない可能性があります");
       score -= 10;
     }

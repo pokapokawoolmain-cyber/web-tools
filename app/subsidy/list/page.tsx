@@ -13,7 +13,7 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "補助金・助成金一覧｜最新の公募情報【2025年度】",
-  description: "個人事業主・中小企業向けの最新補助金・助成金一覧。小規模事業者持続化補助金・IT導入補助金・業務改善助成金など、補助率・締切・難易度を一覧で確認できます。",
+  description: "中小企業・個人事業主・個人/家庭向けの最新補助金・助成金一覧。持続化補助金・IT導入補助金に加え、教育訓練給付・住宅省エネ補助・EV購入補助など、補助率・締切・難易度を一覧で確認できます。",
   keywords: "補助金一覧 2025, 助成金一覧, 持続化補助金, IT導入補助金, 業務改善助成金, キャリアアップ助成金",
   alternates: { canonical: `${SITE_URL}/subsidy/list` },
   openGraph: {

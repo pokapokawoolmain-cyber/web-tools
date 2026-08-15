@@ -148,7 +148,7 @@ export function DiagnosisForm() {
         {/* Step 0: 事業形態 */}
         {step === 0 && (
           <div className="space-y-2.5">
-            {(["法人", "個人事業主", "創業予定"] as BusinessType[]).map((v) => (
+            {(["法人", "個人事業主", "創業予定", "個人・家庭"] as BusinessType[]).map((v) => (
               <OptionCard key={v} value={v} selected={form.businessType === v} onClick={() => set("businessType", v)} />
             ))}
           </div>
