@@ -43,6 +43,9 @@ export const TOOLS: ToolItem[] = [
   // 計算ツール
   { id: "mercari-profit", title: "メルカリ利益計算", description: "販売価格・送料・手数料を入力。手取り利益と利益率を瞬時に計算します。", href: "/tools/mercari-profit", emoji: "🛍️", category: "計算ツール", isPopular: true },
   { id: "gas-calculator", title: "ガソリン代計算", description: "走行距離・燃費・ガソリン単価を入力。往復・月間のガソリン代をリアルタイム計算。", href: "/tools/gas-calculator", emoji: "⛽", category: "計算ツール" },
+  { id: "warikan-calculator", title: "割り勘計算機", seoTitle: "割り勘計算機｜合計と人数で1人いくらか即計算【無料】", description: "合計金額と人数から1人あたりの割り勘額を即計算。100円単位の端数丸めや、上司が多めに払う傾斜配分にも対応。", href: "/tools/warikan-calculator", emoji: "💸", category: "計算ツール", isNew: true, updatedAt: "2026-08-14" },
+  { id: "bmi-calculator", title: "BMI計算", seoTitle: "BMI計算｜身長と体重で肥満度と標準体重を判定【無料】", description: "身長と体重からBMIと肥満度を判定。日本肥満学会の区分、標準体重、普通体重の範囲も表示。健康管理の目安に。", href: "/tools/bmi-calculator", emoji: "⚖️", category: "計算ツール", isNew: true, updatedAt: "2026-08-14" },
+  { id: "percentage-calculator", title: "パーセント計算機", seoTitle: "パーセント計算機｜割引・割合・増減率をすぐ計算【無料】", description: "「◯の△%」「◯は△の何%」「◯を△%増減」「増減率」の4モードで、割引・割合・前年比をすぐ計算。", href: "/tools/percentage-calculator", emoji: "％", category: "計算ツール", isNew: true, updatedAt: "2026-08-14" },
   { id: "shift-salary", title: "シフト給与計算", description: "時給・勤務時間・深夜時間・勤務日数を入力して月収を計算。深夜割増・交通費も対応。", href: "/tools/shift-salary", emoji: "⏰", category: "計算ツール", isNew: true },
   { id: "point-simulator", title: "ポイント還元シミュレーター", description: "PayPay・楽天・クレカなど主要サービスの還元率を比較。年間獲得ポイントを計算。", href: "/tools/point-simulator", emoji: "💳", category: "計算ツール" },
   { id: "age-calculator", title: "年齢計算", seoTitle: "年齢計算｜生年月日から満年齢・数え年・干支をすぐ計算【無料】", description: "生年月日から満年齢・数え年・干支・星座・生まれてからの日数を自動計算。基準日を変えれば過去・未来の年齢も。", href: "/tools/age-calculator", emoji: "🎂", category: "計算ツール", isNew: true, updatedAt: "2026-08-12" },

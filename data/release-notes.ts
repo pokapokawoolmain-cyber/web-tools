@@ -25,6 +25,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     date: "2026-08-14",
     type: "NEW",
+    target: "割り勘・BMI・パーセント計算機",
+    href: "/tools/warikan-calculator",
+    title: "定番の計算ツールを3つ追加",
+    body: "飲み会の割り勘計算機（端数の丸め・傾斜配分対応）、身長体重から肥満度を判定するBMI計算、割引や増減率を求めるパーセント計算機を追加しました。使い方の解説や早見表、間違えやすいポイントもあわせて掲載しています。すべてブラウザ内で完結します。",
+  },
+  {
+    date: "2026-08-14",
+    type: "NEW",
     target: "Webカメラ・スピーカー・ドット抜け・解像度・リフレッシュレート",
     href: "/tools/webcam-test",
     title: "デバイス診断ツールを5種追加",

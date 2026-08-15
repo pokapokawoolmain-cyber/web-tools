@@ -52,6 +52,7 @@ import {
   Grid2x2,
   Monitor,
   MonitorPlay,
+  Scale,
   Briefcase,
   Clapperboard,
   Link2,
@@ -163,6 +164,9 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   // 計算ツール
   "mercari-profit": { icon: ShoppingBag, color: CALC },
   "gas-calculator": { icon: Fuel, color: CALC },
+  "warikan-calculator": { icon: HandCoins, color: CALC },
+  "bmi-calculator": { icon: Scale, color: CALC },
+  "percentage-calculator": { icon: Percent, color: CALC },
   "shift-salary": { icon: Clock, color: CALC },
   "point-simulator": { icon: CreditCard, color: CALC },
   "age-calculator": { icon: Cake, color: CALC },
