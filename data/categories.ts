@@ -94,9 +94,9 @@ const IMAGE_CATEGORY: CategoryConfig = {
   accentBg: "bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300",
   title: "無料画像ツール集｜圧縮・HEIC変換・リサイズ・証明写真【登録不要】",
   keywords: ["画像圧縮 無料", "HEIC JPG 変換 無料", "画像リサイズ 無料", "証明写真 無料 スマホ", "動画圧縮 無料"],
-  popularToolIds: ["image-compress", "heic-to-jpg", "id-photo", "image-resize", "video-compress"],
+  popularToolIds: ["image-converter", "image-compress", "heic-to-jpg", "image-resize", "id-photo"],
   allToolIds: [
-    "image-compress", "heic-to-jpg", "id-photo", "image-resize", "aspect-ratio", "video-compress",
+    "image-converter", "image-compress", "heic-to-jpg", "id-photo", "image-resize", "aspect-ratio", "video-compress",
     "favicon-generator",
   ],
   stats: [

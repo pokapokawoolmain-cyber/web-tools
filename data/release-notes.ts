@@ -23,6 +23,14 @@ export type ReleaseNote = {
 // 新しい順に並べる
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    date: "2026-08-19",
+    type: "NEW",
+    target: "画像一括変換ラボ",
+    href: "/tools/image-converter",
+    title: "画像一括変換ラボを公開（看板ツール）",
+    body: "JPG・PNG・WebP・AVIFをブラウザ内でまとめて変換できる大型ツールを公開しました。20枚以上の一括変換に対応し、同時処理数を抑えたキュー方式でスマホでも固まりません。用途別プリセット、変換前後のサイズ比較、ZIP一括ダウンロードに対応。画像はサーバーに送信されず、すべて端末内で処理されます。",
+  },
+  {
     date: "2026-08-15",
     type: "NEW",
     target: "PDF→Excel・PDF→Word変換",

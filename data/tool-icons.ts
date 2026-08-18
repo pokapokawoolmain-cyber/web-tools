@@ -177,6 +177,7 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
 
   // 画像系
   "heic-to-jpg": { icon: ImageDown, color: IMAGE },
+  "image-converter": { icon: Images, color: IMAGE },
   "image-compress": { icon: Shrink, color: IMAGE },
   "video-compress": { icon: Video, color: IMAGE },
   "image-resize": { icon: Crop, color: IMAGE },

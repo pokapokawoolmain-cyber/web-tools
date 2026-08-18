@@ -31,10 +31,11 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "pdf-metadata-remover": ["pdf-password", "pdf-watermark"],
 
   // ── 画像 ──────────────────────────────────────────────────────
-  "image-compress": ["image-resize", "heic-to-jpg", "speed-test", "jpg-to-pdf"],
-  "image-resize":   ["aspect-ratio", "image-compress", "id-photo", "heic-to-jpg"],
-  "aspect-ratio":   ["image-resize", "image-compress", "id-photo"],
-  "heic-to-jpg":    ["image-compress", "image-resize", "jpg-to-pdf"],
+  "image-converter": ["image-compress", "heic-to-jpg", "image-resize", "favicon-generator"],
+  "image-compress": ["image-converter", "image-resize", "heic-to-jpg", "jpg-to-pdf"],
+  "image-resize":   ["image-converter", "aspect-ratio", "image-compress", "heic-to-jpg"],
+  "aspect-ratio":   ["image-resize", "image-converter", "image-compress"],
+  "heic-to-jpg":    ["image-converter", "image-compress", "image-resize"],
   "id-photo":       ["image-compress", "image-resize"],
   "video-compress": ["image-compress", "image-resize"],
 

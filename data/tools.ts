@@ -56,6 +56,7 @@ export const TOOLS: ToolItem[] = [
   { id: "heic-to-jpg", title: "HEIC→JPG変換", description: "iPhoneの写真（HEIC）をJPGに変換。ブラウザ完結でアップロード不要、プライバシー安全。", href: "/tools/heic-to-jpg", emoji: "🖼️", category: "画像・PDF" },
   { id: "image-compress", title: "画像圧縮ツール", description: "JPG・PNG・WebPを高品質のまま圧縮。サイト表示速度改善・SNS投稿に最適。", href: "/tools/image-compress", emoji: "🗜️", category: "画像・PDF" },
   { id: "video-compress", title: "動画圧縮ツール", description: "MP4・MOV・AVI・MKVなどの動画をブラウザで圧縮。品質・解像度を自由に設定。", href: "/tools/video-compress", emoji: "🎬", category: "画像・PDF", isNew: true },
+  { id: "image-converter", title: "画像一括変換ラボ", seoTitle: "画像一括変換ラボ｜JPG・PNG・WebP・AVIFをまとめて変換【無料】", description: "JPG・PNG・WebP・AVIFをブラウザ内で一括変換。20枚以上対応・用途別プリセット・変換前後比較・ZIP一括DL。ファイルは外部に送信されません。", href: "/tools/image-converter", emoji: "🖼️", category: "画像・PDF", isNew: true, isPopular: true, updatedAt: "2026-08-19" },
   { id: "image-resize", title: "画像リサイズ・アスペクト比変換", description: "画像のサイズ変更・比率変換をブラウザで完結。16:9・1:1など主要比率とSNSサイズプリセット対応。", href: "/tools/image-resize", emoji: "✂️", category: "画像・PDF", isNew: true },
   { id: "aspect-ratio", title: "アスペクト比計算機", seoTitle: "アスペクト比計算機｜16:9・4:3の幅と高さを自動計算【無料】", description: "16:9・4:3などの比率から幅・高さを自動計算。幅と高さから比率も算出。解像度プリセット付き・ブラウザ完結。", href: "/tools/aspect-ratio", emoji: "📐", category: "画像・PDF", isNew: true, updatedAt: "2026-08-12" },
   { id: "id-photo", title: "証明写真作成", seoTitle: "証明写真作成ツール｜履歴書・コンビニ印刷対応", description: "履歴書・マイナンバー・パスポート対応。写真をアップロードするだけで証明写真を自動作成。L判4枚配置のコンビニ印刷モード搭載。", href: "/tools/id-photo", emoji: "📸", category: "画像・PDF", isNew: true },
