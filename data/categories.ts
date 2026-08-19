@@ -51,7 +51,7 @@ const PDF_CATEGORY: CategoryConfig = {
   accentColor: "text-rose-600 dark:text-rose-400",
   accentBg: "bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300",
   title: "無料PDFツール集｜結合・分割・圧縮・変換【登録不要】",
-  keywords: ["PDF 結合 無料", "PDF 分割 無料", "PDF 圧縮 無料", "PDF 変換 無料", "PDF ブラウザ 無料", "PDF スマホ"],
+  keywords: ["PDF 結合 無料", "PDF 分割 無料", "PDF 圧縮 無料", "PDF Word 変換", "PDF Excel 変換", "Word PDF 変換", "PDF 変換 無料", "PDF ブラウザ 無料", "PDF スマホ"],
   popularToolIds: ["pdf-merge", "pdf-compress", "pdf-split", "jpg-to-pdf", "pdf-to-jpg"],
   allToolIds: [
     "pdf-merge", "pdf-split", "pdf-compress", "pdf-to-jpg", "jpg-to-pdf",
@@ -83,7 +83,7 @@ const IMAGE_CATEGORY: CategoryConfig = {
   nameEn: "Image Tools",
   tagline: "無料画像ツール集｜圧縮・変換・リサイズ・証明写真",
   description:
-    "画像圧縮・HEIC変換・リサイズ・証明写真作成・動画圧縮などを無料で使えるWebツール集。登録不要・スマホ対応・ブラウザ完結。",
+    "画像の一括変換（JPG・PNG・WebP・AVIF）・画像圧縮・HEIC変換・リサイズ・証明写真作成・動画圧縮などを無料で使えるWebツール集。20枚以上の一括変換にも対応。登録不要・スマホ対応・ブラウザ完結でファイルは外部に送信されません。",
   longDescription:
     "iPhoneのHEIC変換、画像圧縮、証明写真作成、動画圧縮など画像・動画に関するツールをすべて無料でブラウザから利用できます。ファイルはデバイス上で処理されるためプライバシーも安心。",
   icon: "🖼️",
@@ -93,7 +93,7 @@ const IMAGE_CATEGORY: CategoryConfig = {
   accentColor: "text-violet-600 dark:text-violet-400",
   accentBg: "bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300",
   title: "無料画像ツール集｜圧縮・HEIC変換・リサイズ・証明写真【登録不要】",
-  keywords: ["画像圧縮 無料", "HEIC JPG 変換 無料", "画像リサイズ 無料", "証明写真 無料 スマホ", "動画圧縮 無料"],
+  keywords: ["画像 一括変換", "画像変換 無料", "webp 変換", "jpg png 変換", "画像圧縮 無料", "HEIC JPG 変換 無料", "画像リサイズ 無料", "証明写真 無料 スマホ", "動画圧縮 無料"],
   popularToolIds: ["image-converter", "image-compress", "heic-to-jpg", "image-resize", "id-photo"],
   allToolIds: [
     "image-converter", "image-compress", "heic-to-jpg", "id-photo", "image-resize", "aspect-ratio", "video-compress",
@@ -444,6 +444,88 @@ const DEV_CATEGORY: CategoryConfig = {
   ],
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// 計算ツール カテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const CALC_CATEGORY: CategoryConfig = {
+  slug: "calc",
+  name: "計算ツール",
+  nameEn: "Calculators",
+  tagline: "無料の計算ツール集｜割り勘・年齢・消費税・パーセント・BMI",
+  description:
+    "割り勘・パーセント・年齢・日数・消費税・BMI・西暦和暦変換など、毎日の「ちょっと計算したい」に応える無料ツール集。登録不要・スマホ対応・すべてブラウザ内で計算し、入力データは外部に送信されません。",
+  longDescription:
+    "飲み会の割り勘、割引や増減率の計算、生年月日からの年齢、2つの日付の差、税込・税抜、BMI、元号の変換まで。日常で必要になる計算をまとめて、無料・登録不要でブラウザからすぐに使えます。",
+  icon: "🧮",
+  gradientFrom: "from-amber-500",
+  gradientTo: "to-yellow-500",
+  gradientLight: "from-amber-50 to-yellow-50 dark:from-amber-950/30 dark:to-yellow-950/20",
+  accentColor: "text-amber-600 dark:text-amber-400",
+  accentBg: "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300",
+  title: "無料の計算ツール集｜割り勘・年齢・消費税・パーセント・BMI【登録不要】",
+  keywords: ["割り勘 計算", "パーセント 計算", "年齢計算", "消費税 計算", "bmi 計算", "日数 計算", "西暦 和暦 変換", "計算ツール 無料"],
+  popularToolIds: ["warikan-calculator", "percentage-calculator", "age-calculator", "tax-calculator", "bmi-calculator"],
+  allToolIds: [
+    "warikan-calculator", "percentage-calculator", "bmi-calculator", "age-calculator",
+    "date-calculator", "tax-calculator", "wareki-converter", "gas-calculator",
+    "mercari-profit", "shift-salary", "point-simulator",
+  ],
+  stats: [
+    { label: "計算ツール数", value: "11種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "入力データ送信", value: "なし（ブラウザ完結）" },
+  ],
+  faqs: [
+    { q: "計算ツールは無料で使えますか？", a: "はい、すべて完全無料です。登録・ログイン・インストールは不要で、ブラウザを開けばすぐに使えます。" },
+    { q: "入力した数字は外部に送信されますか？", a: "いいえ。計算はすべてお使いのブラウザ内で行われ、入力した金額や生年月日などのデータが外部サーバーに送信されることはありません。" },
+    { q: "スマホでも使えますか？", a: "はい。iPhone・Androidのブラウザからすべての計算ツールをご利用いただけます。" },
+    { q: "割り勘で端数はどう処理できますか？", a: "割り勘計算機では、10円・100円・500円単位での切り上げに対応し、幹事の集金の過不足も表示します。上司が多めに払う傾斜配分も設定できます。" },
+    { q: "BMIや税金の計算結果はそのまま使えますか？", a: "目安としてご利用ください。BMIは日本肥満学会の基準による概算、税金は一般的な計算に基づく概算です。正確な判断は専門家や公式情報でご確認ください。" },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 生活・便利（診断）カテゴリ
+// ─────────────────────────────────────────────────────────────────────────────
+const LIFE_CATEGORY: CategoryConfig = {
+  slug: "life",
+  name: "生活・便利ツール",
+  nameEn: "Life Tools",
+  tagline: "無料の生活・診断ツール集｜速度テスト・キーボード/マイク/カメラ確認",
+  description:
+    "インターネット速度テスト、キーボード・マウス・マイク・Webカメラ・スピーカーの動作確認、ドット抜け・画面解像度・リフレッシュレートの診断など、パソコン・スマホの「困った」をブラウザだけで確認できる無料ツール集。登録不要・カメラや音声は録画/送信されません。",
+  longDescription:
+    "回線速度の測定、キーボードやマウス・マイク・カメラ・スピーカーが正しく動くかの確認、モニターのドット抜けや解像度・リフレッシュレートの診断まで、日常の「ちゃんと動いてる？」をまとめてチェック。すべてブラウザ内で完結します。",
+  icon: "🖥️",
+  gradientFrom: "from-teal-500",
+  gradientTo: "to-cyan-500",
+  gradientLight: "from-teal-50 to-cyan-50 dark:from-teal-950/30 dark:to-cyan-950/20",
+  accentColor: "text-teal-600 dark:text-teal-400",
+  accentBg: "bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300",
+  title: "無料の生活・診断ツール集｜速度テスト・キーボード/マイク/カメラ確認【登録不要】",
+  keywords: ["インターネット 速度テスト", "キーボードテスト", "マイクテスト", "webカメラ テスト", "スピーカーテスト", "ドット抜け チェック", "画面解像度 確認", "リフレッシュレート 確認"],
+  popularToolIds: ["speed-test", "keyboard-test", "mic-test", "webcam-test", "dead-pixel-test"],
+  allToolIds: [
+    "speed-test", "keyboard-test", "mouse-test", "mic-test", "webcam-test",
+    "speaker-test", "dead-pixel-test", "screen-resolution", "refresh-rate",
+    "side-job-profit", "youtube-tools", "sns-links",
+  ],
+  stats: [
+    { label: "診断・便利ツール数", value: "12種類" },
+    { label: "利用料金", value: "完全無料" },
+    { label: "登録・インストール", value: "不要" },
+    { label: "カメラ・音声", value: "録画/送信なし" },
+  ],
+  faqs: [
+    { q: "デバイスの診断ツールは無料ですか？", a: "はい、すべて完全無料・登録不要です。ブラウザを開くだけで、回線速度やキーボード・マウス・マイク・カメラの動作を確認できます。" },
+    { q: "カメラやマイクの映像・音声は保存されますか？", a: "いいえ。Webカメラテスト・マイクテストは、映像や音声をブラウザ内で表示・解析するだけで、録画・保存・外部送信は一切行いません。ページを閉じると使用も解除されます。" },
+    { q: "キーボードの反応しないキーを調べられますか？", a: "はい。キーボードテストでは押したキーが光り、一度押したキーは確認済みとして残るため、反応しないキーがひと目でわかります。同時押し（Nキーロールオーバー）の確認もできます。" },
+    { q: "スマホでも使えますか？", a: "はい。回線速度テストやマイク・スピーカーの確認など、多くのツールがスマホのブラウザでも利用できます。" },
+    { q: "モニターのドット抜けは確認できますか？", a: "できます。ドット抜けチェッカーで赤・緑・青・白・黒などの単色を全画面表示し、常時点灯（輝点）や画素欠けを確認できます。" },
+  ],
+};
+
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   pdf: PDF_CATEGORY,
   image: IMAGE_CATEGORY,
@@ -455,6 +537,8 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   dev: DEV_CATEGORY,
   construction: CONSTRUCTION_CATEGORY,
   restaurant: RESTAURANT_CATEGORY,
+  calc: CALC_CATEGORY,
+  life: LIFE_CATEGORY,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {
