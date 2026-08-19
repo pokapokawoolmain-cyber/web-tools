@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { ImageConverter } from "./ImageConverter";
 
 export const metadata: Metadata = generateMeta({
-  title: "画像一括変換ラボ｜JPG・PNG・WebP・AVIFをまとめて変換【無料・ブラウザ完結】",
+  title: "画像一括変換｜JPG・PNG・WebP・AVIFをまとめて変換【無料・ブラウザ完結】",
   description:
     "JPG・PNG・WebP・AVIFなどの画像をブラウザ内で安全に一括変換。20枚以上にも対応し、変換前後のサイズ比較、用途別プリセット、ZIP一括ダウンロードまで無料で使えます。ファイルはサーバーに送信されません。スマホ対応・登録不要。",
   path: "/tools/image-converter",
@@ -16,7 +16,7 @@ export const metadata: Metadata = generateMeta({
     "画像 軽量化", "登録不要 画像変換", "無料 画像変換", "スマホ 画像変換",
     "ブラウザ 画像変換", "サーバーにアップロードしない 画像変換",
   ],
-  ogImage: `/api/og?${new URLSearchParams({ title: "画像一括変換ラボ", icon: "🖼️", desc: "JPG・PNG・WebP・AVIFをまとめて変換" }).toString()}`,
+  ogImage: `/api/og?${new URLSearchParams({ title: "画像一括変換", icon: "🖼️", desc: "JPG・PNG・WebP・AVIFをまとめて変換" }).toString()}`,
 });
 
 const faqSchema = {
@@ -42,7 +42,7 @@ const faqSchema = {
 const seoContent = (
   <div className="space-y-8 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
     <section>
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">画像一括変換ラボとは</h2>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">画像一括変換ツールとは</h2>
       <p>
         JPG・PNG・WebP・AVIFなどの画像を、<strong>ブラウザ内だけで安全に一括変換</strong>できる無料ツールです。
         ファイルはサーバーに送信されず、すべてお使いの端末上で処理されます。20枚以上の写真もキュー方式で快適に変換でき、
@@ -173,7 +173,7 @@ export default function Page() {
     <>
       <JsonLd data={faqSchema} />
       <ToolLayout
-        title="画像一括変換ラボ"
+        title="画像一括変換"
         description="JPG・PNG・WebP・AVIFをブラウザ内で一括変換。20枚以上対応・用途別プリセット・変換前後比較・ZIP一括DL。ファイルは外部に送信されません。"
         icon="🖼️"
         slug="image-converter"

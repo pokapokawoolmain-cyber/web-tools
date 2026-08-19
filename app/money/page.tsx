@@ -8,6 +8,7 @@ import { getSiteUrl } from "@/lib/utils";
 import { CategoryHero } from "@/components/category/CategoryHero";
 import { CategoryToolGrid } from "@/components/category/CategoryToolGrid";
 import { CategoryFAQ } from "@/components/category/CategoryFAQ";
+import { CategorySeoContent } from "@/components/category/CategorySeoContent";
 import { CategoryBlogSection } from "@/components/category/CategoryBlogSection";
 import { BottomAd } from "@/components/ads/presets";
 
@@ -110,6 +111,9 @@ export default function MoneyCategoryPage() {
             </Link>
           </div>
         </section>
+
+        <CategorySeoContent slug="money" />
+
 
         {/* FAQ */}
         <CategoryFAQ faqs={config.faqs} accentColor={config.accentColor} />

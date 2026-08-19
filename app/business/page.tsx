@@ -7,6 +7,7 @@ import { getSiteUrl } from "@/lib/utils";
 import { CategoryHero } from "@/components/category/CategoryHero";
 import { CategoryToolGrid } from "@/components/category/CategoryToolGrid";
 import { CategoryFAQ } from "@/components/category/CategoryFAQ";
+import { CategorySeoContent } from "@/components/category/CategorySeoContent";
 import { CategoryBlogSection } from "@/components/category/CategoryBlogSection";
 import { BottomAd } from "@/components/ads/presets";
 
@@ -82,6 +83,9 @@ export default function BusinessCategoryPage() {
           sectionTitle="ビジネス書類ガイド"
           accentColor={config.accentColor}
         />
+
+        <CategorySeoContent slug="business" />
+
 
         <CategoryFAQ faqs={config.faqs} accentColor={config.accentColor} />
 

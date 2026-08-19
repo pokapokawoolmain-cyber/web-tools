@@ -7,6 +7,7 @@ import { getSiteUrl } from "@/lib/utils";
 import { CategoryHero } from "@/components/category/CategoryHero";
 import { CategoryToolGrid } from "@/components/category/CategoryToolGrid";
 import { CategoryFAQ } from "@/components/category/CategoryFAQ";
+import { CategorySeoContent } from "@/components/category/CategorySeoContent";
 import { BottomAd } from "@/components/ads/presets";
 
 const config = CATEGORY_CONFIGS["dev"]!;
@@ -75,6 +76,9 @@ export default function DevCategoryPage() {
           accentColor={config.accentColor}
           categoryName="開発者"
         />
+
+        <CategorySeoContent slug="dev" />
+
 
         <CategoryFAQ faqs={config.faqs} accentColor={config.accentColor} />
 

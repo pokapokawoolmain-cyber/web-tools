@@ -7,6 +7,7 @@ import { getSiteUrl } from "@/lib/utils";
 import { CategoryHero } from "@/components/category/CategoryHero";
 import { CategoryToolGrid } from "@/components/category/CategoryToolGrid";
 import { CategoryFAQ } from "@/components/category/CategoryFAQ";
+import { CategorySeoContent } from "@/components/category/CategorySeoContent";
 import { CategoryBlogSection } from "@/components/category/CategoryBlogSection";
 import { BottomAd } from "@/components/ads/presets";
 import { NandemoPdfBanner } from "@/components/pdf/NandemoPdfBanner";
@@ -90,6 +91,9 @@ export default function PdfCategoryPage() {
 
         {/* iOSアプリ 導線 */}
         <NandemoPdfBanner />
+
+        <CategorySeoContent slug="pdf" />
+
 
         {/* FAQ */}
         <CategoryFAQ faqs={config.faqs} accentColor={config.accentColor} />
