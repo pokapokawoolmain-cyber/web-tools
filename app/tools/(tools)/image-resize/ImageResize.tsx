@@ -97,6 +97,8 @@ export function ImageResize() {
     canvas.height = targetH;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high"; // 縮小・拡大時の画質を最大化
 
     const img = new Image();
     img.onload = () => {

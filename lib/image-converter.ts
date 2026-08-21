@@ -104,6 +104,7 @@ export interface Preset {
 }
 
 export const PRESETS: Preset[] = [
+  { id: "lossless", name: "画質そのまま（無劣化）", hint: "PNG・寸法変更なし。1ピクセルも画質を落とさず形式だけ変換", options: { format: "png", maxWidth: 0, maxHeight: 0, allowUpscale: false, keepTransparency: true } },
   { id: "web", name: "Web掲載用", hint: "WebPで軽量化。サイト表示を速くしたいとき", options: { format: "webp", quality: 80, maxWidth: 1600, maxHeight: 0 } },
   { id: "blog", name: "ブログ用", hint: "横幅1200px・WebP。記事の表示速度とSEO向け", options: { format: "webp", quality: 80, maxWidth: 1200, maxHeight: 0 } },
   { id: "sns", name: "SNS投稿用", hint: "長辺1440px・JPG。スマホ写真の投稿に", options: { format: "jpeg", quality: 82, maxWidth: 1440, maxHeight: 1440 } },
@@ -222,6 +223,8 @@ self.onmessage = async function (e) {
     var canvas = new OffscreenCanvas(t.w, t.h);
     var ctx = canvas.getContext("2d");
     if (!d.opts.alpha) { ctx.fillStyle = d.opts.background; ctx.fillRect(0, 0, t.w, t.h); }
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
     ctx.drawImage(bmp, 0, 0, t.w, t.h);
     bmp.close();
     var out = await canvas.convertToBlob({ type: d.outMime, quality: d.quality });
@@ -257,6 +260,9 @@ export async function convertOnMainThread(file: File, opts: ConvertOptions): Pro
     ctx.fillStyle = opts.background;
     ctx.fillRect(0, 0, t.w, t.h);
   }
+  // 縮小・拡大時の画質を最大化（既定の "low" では劣化するため）
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
   ctx.drawImage(bmp, 0, 0, t.w, t.h);
   const srcW = bmp.width, srcH = bmp.height;
   bmp.close?.();

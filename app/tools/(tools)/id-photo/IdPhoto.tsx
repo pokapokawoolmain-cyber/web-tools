@@ -227,6 +227,8 @@ export function IdPhoto() {
       const canvas = document.createElement("canvas");
       canvas.width = pw; canvas.height = ph;
       const ctx = canvas.getContext("2d")!;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high"; // 縮小・拡大時の画質を最大化
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, pw, ph);
 
@@ -276,6 +278,8 @@ export function IdPhoto() {
       const canvas = document.createElement("canvas");
       canvas.width = LW; canvas.height = LH;
       const ctx = canvas.getContext("2d")!;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high"; // 縮小・拡大時の画質を最大化
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, LW, LH);
 

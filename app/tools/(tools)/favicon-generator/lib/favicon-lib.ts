@@ -144,6 +144,8 @@ export function renderFavicon(
   const ctxOrNull = canvas.getContext("2d");
   if (!ctxOrNull) return;
   const ctx: CanvasRenderingContext2D = ctxOrNull;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high"; // 縮小・拡大時の画質を最大化
   ctx.clearRect(0, 0, size, size);
 
   const shape = settings.bgShape;
@@ -343,6 +345,8 @@ export function analyzeImage(
   canvas.width = Math.round(w * scale);
   canvas.height = Math.round(h * scale);
   const ctx = canvas.getContext("2d")!;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
   ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
