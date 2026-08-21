@@ -16,6 +16,8 @@ import {
   HardHat,
   UtensilsCrossed,
   LayoutGrid,
+  Calculator,
+  MonitorSmartphone,
 } from "lucide-react";
 
 type CategoryIconDef = { icon: LucideIcon; color: string };
@@ -32,6 +34,8 @@ const CATEGORY_ICONS: Record<string, CategoryIconDef> = {
   dev: { icon: Code2, color: "#38bdf8" },
   "industry/construction": { icon: HardHat, color: "#fb923c" },
   "industry/restaurant": { icon: UtensilsCrossed, color: "#f87171" },
+  calc: { icon: Calculator, color: "#fbbf24" },
+  life: { icon: MonitorSmartphone, color: "#2dd4bf" },
 };
 
 type Size = "xs" | "sm" | "md" | "lg";

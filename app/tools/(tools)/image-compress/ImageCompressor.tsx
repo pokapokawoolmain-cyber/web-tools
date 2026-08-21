@@ -2,6 +2,8 @@
 import { useState, useRef, useCallback } from "react";
 import { Upload, Download, X, AlertCircle } from "lucide-react";
 import { SliderInput } from "@/components/ui/SliderInput";
+import { trackToolStarted, trackToolCompleted, trackToolFailed } from "@/lib/analytics/track";
+import { InternalToolBanner } from "@/components/revenue/InternalToolBanner";
 
 type CompressedImage = {
   originalFile: File;
@@ -58,6 +60,7 @@ export function ImageCompressor() {
     if (imageFiles.length === 0) return;
 
     setIsProcessing(true);
+    const startedAt = trackToolStarted({ toolId: "image-compress", toolCategory: "image", toolName: "画像圧縮" });
     const newResults: CompressedImage[] = [];
 
     for (const file of imageFiles) {
@@ -81,6 +84,19 @@ export function ImageCompressor() {
 
     setResults((prev) => [...prev, ...newResults]);
     setIsProcessing(false);
+
+    if (newResults.length > 0) {
+      trackToolCompleted({
+        toolId: "image-compress",
+        toolCategory: "image",
+        toolName: "画像圧縮",
+        completionType: "processed",
+        durationMs: Date.now() - startedAt,
+        itemCount: newResults.length,
+      });
+    } else {
+      trackToolFailed({ toolId: "image-compress", toolCategory: "image", toolName: "画像圧縮", errorStage: "compress" });
+    }
   }, [quality]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
@@ -226,6 +242,8 @@ export function ImageCompressor() {
           ))}
         </div>
       )}
+
+      {results.length >= 2 && <InternalToolBanner toolId="image-compress" />}
 
       <p className="text-xs text-slate-400 dark:text-slate-600 text-center">
         ✅ 画像はサーバーに送信されません。すべてブラウザ上で処理されます。

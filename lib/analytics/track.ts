@@ -1,5 +1,14 @@
 import { sendGAEvent } from "@next/third-parties/google";
-import type { AnalyticsToolCategory, CompletionType, DeviceType, ToolBoxEventName } from "./events";
+import type {
+  AnalyticsToolCategory,
+  CompletionType,
+  DeviceType,
+  RevenueCtaPlacement,
+  RevenueEntryPoint,
+  RevenueEventName,
+  RevenueProduct,
+  ToolBoxEventName,
+} from "./events";
 
 // ============================================================
 // Analytics 共通送信レイヤー。
@@ -21,7 +30,7 @@ function getDeviceType(): DeviceType {
   return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? "mobile" : "desktop";
 }
 
-function sendAnalyticsEvent(eventName: ToolBoxEventName, params: Record<string, unknown>): void {
+function sendAnalyticsEvent(eventName: ToolBoxEventName | RevenueEventName, params: Record<string, unknown>): void {
   try {
     if (typeof window === "undefined") return;
     sendGAEvent("event", eventName, {
@@ -80,7 +89,7 @@ export interface ToolFailedParams extends ToolContext {
   errorStage?: string;
 }
 
-/** ツールの処理失敗を記録する。Error オブジェクトやメッセージ本文は受け取らない設計（PII/内部情報の混入を型で防ぐ）。 */
+/** ツールの処理失敗を記録する。Error オブジェクトやメッセージ本文は受け取らない設計(PII/内部情報の混入を型で防ぐ)。 */
 export function trackToolFailed(params: ToolFailedParams): void {
   sendAnalyticsEvent("tool_failed", {
     tool_id: params.toolId,
@@ -88,4 +97,64 @@ export function trackToolFailed(params: ToolFailedParams): void {
     tool_name: params.toolName,
     error_stage: params.errorStage ?? null,
   });
+}
+
+// ============================================================
+// Revenue Experiment（Image Pro / Seller 共通）
+//
+// Phase Revenue 0: 「どちらの商品仮説に本当にお金を払う可能性の高い
+// ユーザーがいるか」を同一の計測基盤で比較するためのイベント群。
+// ============================================================
+
+export interface RevenueAttributionParams {
+  entryPoint: RevenueEntryPoint;
+  sourceDetail?: string | null;
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmCampaign?: string | null;
+  referrerHost?: string | null;
+}
+
+/** LP表示時に1回呼ぶ。 */
+export function trackRevenueLpView(product: RevenueProduct, attribution: RevenueAttributionParams): void {
+  sendAnalyticsEvent("revenue_lp_view", {
+    product,
+    entry_point: attribution.entryPoint,
+    source_detail: attribution.sourceDetail ?? null,
+    utm_source: attribution.utmSource ?? null,
+    utm_medium: attribution.utmMedium ?? null,
+    utm_campaign: attribution.utmCampaign ?? null,
+    referrer_host: attribution.referrerHost ?? null,
+  });
+}
+
+interface RevenueCtaParams {
+  product: RevenueProduct;
+  placement: RevenueCtaPlacement;
+  /** tool_banner の場合に発生元ツールID。lp_hero では省略。 */
+  toolId?: string;
+}
+
+/** CTAがviewportに実際に入った瞬間に1回だけ呼ぶ（IntersectionObserver側で重複防止すること）。 */
+export function trackRevenueCtaImpression(params: RevenueCtaParams): void {
+  sendAnalyticsEvent("revenue_cta_impression", {
+    product: params.product,
+    placement: params.placement,
+    tool_id: params.toolId ?? null,
+  });
+}
+
+/** CTA押下時に呼ぶ。priceShownは実際に画面に表示していた金額（円）。 */
+export function trackRevenueCtaClick(params: RevenueCtaParams & { priceShown: number | null }): void {
+  sendAnalyticsEvent("revenue_cta_click", {
+    product: params.product,
+    placement: params.placement,
+    tool_id: params.toolId ?? null,
+    price_shown: params.priceShown,
+  });
+}
+
+/** Waitlist（任意メール登録）送信時に呼ぶ。メールアドレス自体は絶対に渡さないこと。 */
+export function trackRevenueWaitlistSubmit(product: RevenueProduct): void {
+  sendAnalyticsEvent("revenue_waitlist_submit", { product });
 }

@@ -125,6 +125,8 @@ import {
   BookOpen,
   Star,
   Megaphone,
+  // Revenue Experiment
+  Package,
 } from "lucide-react";
 
 export type ToolIconDef = {
@@ -294,4 +296,8 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "restaurant-menu-maker": { icon: BookOpen, color: RESTAURANT },
   "review-reply-generator": { icon: Star, color: RESTAURANT },
   "restaurant-pop-generator": { icon: Megaphone, color: RESTAURANT },
+
+  // Revenue Experiment（ツール本体ではないが、同じアイコンデザインシステムで統一する）
+  "image_pro": { icon: Images, color: IMAGE },
+  "seller": { icon: Package, color: BUSINESS },
 };

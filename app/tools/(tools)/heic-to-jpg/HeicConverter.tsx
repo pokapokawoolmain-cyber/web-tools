@@ -6,6 +6,7 @@
 import { useState, useCallback, useRef } from "react";
 import { Upload, Download, AlertCircle } from "lucide-react";
 import { trackToolStarted, trackToolCompleted, trackToolFailed } from "@/lib/analytics/track";
+import { InternalToolBanner } from "@/components/revenue/InternalToolBanner";
 
 type ConvertedFile = {
   name: string;
@@ -165,6 +166,8 @@ export function HeicConverter() {
           ))}
         </div>
       )}
+
+      {convertedFiles.length >= 2 && <InternalToolBanner toolId="heic-to-jpg" />}
 
       <p className="text-xs text-slate-400 dark:text-slate-600 text-center">
         ✅ ファイルはサーバーに送信されません。すべてブラウザ上で処理されます。
