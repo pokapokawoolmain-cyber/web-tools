@@ -6,9 +6,9 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { AiTextTool, type AiField } from "@/components/tools/AiTextTool";
 
 export const metadata: Metadata = generateMeta({
-  title: "敬語変換ツール【無料】「了解です」をビジネス敬語にワンクリック言い換え｜敬語メーカー",
+  title: "敬語メーカー｜「了解です」をビジネス敬語に自動変換【無料】",
   description:
-    "「了解です」「確認してください」などのくだけた表現を、ビジネスで使える丁寧な敬語にワンクリックで自動変換。社外向けのしっかり敬語から社内向けのやわらかい敬語まで選べます。メール・チャットの言い換え・敬語メーカーとして。登録不要・ブラウザ完結・無料。",
+    "敬語メーカー・敬語変換ツール。「了解です」「確認してください」などのくだけた表現を、ビジネスで使える丁寧な敬語にワンクリックで自動変換。社外向けのしっかり敬語から社内向けのやわらかい敬語まで選べます。メール・チャットの言い換えに。登録不要・ブラウザ完結・無料。",
   path: "/tools/ai-keigo",
   keywords: [
     "敬語 変換",

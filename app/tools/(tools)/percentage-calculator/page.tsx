@@ -6,9 +6,9 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { PercentageCalculator } from "./PercentageCalculator";
 
 export const metadata: Metadata = generateMeta({
-  title: "パーセント計算機【無料】割引・割合・増減率をすぐ計算",
+  title: "パーセント計算機｜○円の△%はいくつ？を一瞬で計算【無料】",
   description:
-    "「◯の△%はいくつ」「◯は△の何%」「◯を△%増減」「◯→△の増減率」の4つのモードに対応したパーセント計算機。割引後の値段、達成率、前年比、割合の計算が一瞬で。登録不要・スマホ対応・無料。",
+    "「2000円の15%はいくつ」「30点は40点満点の何%」など、パーセント（割合）の計算を一瞬で。割引後の値段・達成率・前年比・増減率にも対応した4モードのパーセント計算機。登録不要・スマホ対応・無料。",
   path: "/tools/percentage-calculator",
   keywords: [
     "パーセント 計算",
@@ -19,6 +19,7 @@ export const metadata: Metadata = generateMeta({
     "増減率 計算",
     "パーセント 出し方",
     "％ 計算 やり方",
+    "何パーセントか計算",
   ],
   ogImage: `/api/og?${new URLSearchParams({ title: "パーセント計算機", icon: "％", desc: "割引・割合・増減率をすぐ計算" }).toString()}`,
 });
