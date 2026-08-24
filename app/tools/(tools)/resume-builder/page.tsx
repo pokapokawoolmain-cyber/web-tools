@@ -8,7 +8,7 @@ export const metadata: Metadata = generateMeta({
   title: "履歴書・職務経歴書 作成ツール【無料】ブラウザで入力してPDF保存｜登録不要",
   description: "履歴書と職務経歴書をブラウザだけで作成できる無料ツール。JIS規格に準じたレイアウトで、入力内容はサーバーに送信されません。PDF保存してそのまま応募に使えます。スマホ対応。",
   path: "/tools/resume-builder",
-  keywords: ["履歴書 作成 無料","職務経歴書 テンプレート","履歴書 PDF 作成","履歴書 ブラウザ 作成","履歴書 スマホ 作成 無料"],
+  keywords: ["履歴書 作成 無料","職務経歴書 テンプレート","履歴書 PDF 作成","履歴書 ブラウザ 作成","履歴書 スマホ 作成 無料","職務経歴書 作成ツール","職務経歴書 ツール","職務経歴書 作成 無料"],
   ogImage: `/api/og?${new URLSearchParams({ title: "履歴書・職務経歴書 作成ツール", icon: "📋", desc: "履歴書・職務経歴書をPDFで作成" }).toString()}`,
 });
 
@@ -47,11 +47,12 @@ const faqSchema = {
 const seoContent = (
   <div className="prose prose-sm prose-slate dark:prose-invert max-w-none space-y-6">
     <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-      職務経歴書の書き方とこのツールの使い方
+      職務経歴書作成ツールの使い方
     </h2>
     <p>
-      各フォームに職歴・スキル・自己PRを入力すると、そのまま提出できる文章が自動で生成されます。
-      完成した文章はコピーしてWordやGoogleドキュメントに貼り付けて仕上げに使ってください。
+      各フォームに職歴・スキル・自己PRを入力すると、そのまま提出できる職務経歴書が自動で組み上がります。
+      画面右上の「印刷 / PDF保存」ボタンを押すと入力フォームが消え、書類だけが印刷レイアウトで表示されるので、
+      そのまま<strong className="text-slate-800 dark:text-zinc-200">PDFとして保存</strong>して応募に使えます。文章だけ他の書類に流用したい場合は「テキストコピー」ボタンでコピーし、WordやGoogleドキュメントに貼り付けることもできます。
     </p>
 
     <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">

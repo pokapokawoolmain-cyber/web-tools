@@ -19,6 +19,10 @@ export const metadata: Metadata = generateMeta({
     "リフォーム 近隣 挨拶",
     "外壁塗装 近隣 挨拶",
     "近隣 挨拶 工事 無料",
+    "工事 着工 挨拶文",
+    "工事 着工 近隣 挨拶",
+    "工事 近所 挨拶文",
+    "近隣挨拶文 テンプレート",
   ],
 });
 
@@ -83,6 +87,26 @@ const seoContent = (
     </section>
 
     <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">着工前の近隣挨拶はいつ・どこまで回る？</h2>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+        「工事着工挨拶」は、実際に重機やトラックが入る<strong className="text-slate-800 dark:text-zinc-200">着工日の3〜7日前</strong>までに済ませるのが基本です。着工当日にいきなり工事音が聞こえて驚かせてしまうと、その後の関係が悪化しやすいため、余裕を持った日程で回りましょう。
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 p-4">
+          <p className="text-sm font-semibold text-slate-800 dark:text-zinc-200 mb-1.5">戸建てが多い近所の場合</p>
+          <p className="text-[13px] text-slate-500 dark:text-zinc-400 leading-relaxed">向こう三軒両隣に加え、道を挟んだ向かいの家、工事車両が通る経路沿いの家も対象に含めます。裏の家（背面）も騒音の影響を受けやすいため忘れずに。</p>
+        </div>
+        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 p-4">
+          <p className="text-sm font-semibold text-slate-800 dark:text-zinc-200 mb-1.5">マンション・アパートが近い場合</p>
+          <p className="text-[13px] text-slate-500 dark:text-zinc-400 leading-relaxed">全戸訪問が難しい場合は、管理会社・管理組合を通じて掲示板への掲示を依頼し、あわせて工事現場に最も近い低層階・隣接する棟には個別に挨拶するのが丁寧です。</p>
+        </div>
+      </div>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+        なお「着工挨拶」と「近隣挨拶」はほぼ同じ意味で使われますが、工期が3ヶ月を超える大規模な新築・改修工事では、<strong className="text-slate-800 dark:text-zinc-200">着工時の挨拶</strong>に加えて、大きな騒音を伴う工程（基礎工事・解体・足場架設など）に入る前に<strong className="text-slate-800 dark:text-zinc-200">中間の再挨拶</strong>を行うと、近所からの印象がより良くなります。
+      </p>
+    </section>
+
+    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">近隣挨拶文に必ず記載する項目</h2>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-sm">
@@ -136,6 +160,7 @@ const seoContent = (
       </div>
       <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mt-4">
         そのままコピペで使える例文集は<Link href="/blog/construction-greeting-templates" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">工事の近隣挨拶文 例文テンプレート集</Link>へ。解体・新築・リフォーム・外壁塗装の完成例文を掲載しています。
+        訪問の順番や話す内容で迷ったら<Link href="/blog/construction-kicko-aisatsu-guide" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">着工前の挨拶回り、失敗しない手順ガイド</Link>もあわせてご覧ください。
       </p>
     </section>
   </div>
@@ -154,6 +179,11 @@ const faqSchema = {
       "@type": "Question",
       name: "工事前の近隣挨拶はいつまでに行えばいいですか？",
       acceptedAnswer: { "@type": "Answer", text: "工事開始の3〜7日前が目安です。遅くとも前日までに済ませてください。対象範囲は工事現場から半径50〜100m（通常10〜20軒）です。" },
+    },
+    {
+      "@type": "Question",
+      name: "着工挨拶と近隣挨拶は同じものですか？",
+      acceptedAnswer: { "@type": "Answer", text: "同じ意味で使われることがほとんどです。実際に工事車両や重機が入る着工日の3〜7日前までに近所へ挨拶を済ませておくのが基本です。工期が3ヶ月を超える大規模工事では、着工時の挨拶に加えて騒音の大きい工程（解体・基礎工事など）の前に中間の再挨拶を行うと印象が良くなります。" },
     },
     {
       "@type": "Question",

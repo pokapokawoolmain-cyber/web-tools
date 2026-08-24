@@ -154,6 +154,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/word-count-guide`, lastModified: blogDate("word-count-guide"), changeFrequency: "monthly", priority: 0.8 },
     // 工事・建設
     { url: `${siteUrl}/blog/construction-greeting-templates`, lastModified: blogDate("construction-greeting-templates"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/blog/construction-kicko-aisatsu-guide`, lastModified: blogDate("construction-kicko-aisatsu-guide"), changeFrequency: "monthly", priority: 0.85 },
     // 税金・社会保険 3記事
     { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/shakai-hoken-guide`, lastModified: blogDate("shakai-hoken-guide"), changeFrequency: "monthly", priority: 0.85 },

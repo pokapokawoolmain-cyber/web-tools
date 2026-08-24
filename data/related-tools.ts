@@ -22,6 +22,8 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "pdf-to-jpg":        ["jpg-to-pdf", "pdf-to-word", "pdf-to-excel", "pdf-compress"],
   "pdf-to-excel":      ["pdf-to-word", "excel-to-pdf", "pdf-to-jpg", "pdf-compress"],
   "pdf-to-word":       ["pdf-to-excel", "word-to-pdf", "pdf-to-jpg", "pdf-merge"],
+  "excel-to-pdf":      ["pdf-to-excel", "word-to-pdf", "pdf-merge", "pdf-compress"],
+  "word-to-pdf":       ["pdf-to-word", "excel-to-pdf", "pdf-merge", "pdf-compress"],
   "jpg-to-pdf":        ["pdf-to-jpg", "image-compress", "pdf-merge", "pdf-compress"],
   "pdf-rotate":        ["pdf-merge", "pdf-reorder", "pdf-delete-pages"],
   "pdf-watermark":     ["pdf-merge", "pdf-password", "pdf-metadata-remover", "pdf-signature"],
@@ -37,6 +39,7 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "aspect-ratio":   ["image-resize", "image-converter", "image-compress"],
   "heic-to-jpg":    ["image-converter", "image-compress", "image-resize"],
   "id-photo":       ["image-compress", "image-resize"],
+  "favicon-generator": ["image-compress", "image-resize", "aspect-ratio"],
   "video-compress": ["image-compress", "image-resize"],
 
   // ── お金・投資 ────────────────────────────────────────────────
@@ -93,7 +96,7 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "tax-calculator":  ["invoice-generator", "estimate-generator", "gross-profit-calculator"],
   "wareki-converter":["age-calculator", "date-calculator", "id-photo"],
   "gpa":             ["word-counter"],
-  "resume-builder":  ["word-counter", "resignation-letter-generator"],
+  "resume-builder":  ["id-photo", "word-to-pdf", "word-counter", "resignation-letter-generator"],
   "youtube-tools":   ["word-counter", "sns-links"],
   "sns-links":       ["qr-generator", "youtube-tools"],
 
@@ -115,6 +118,15 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "palette-accessibility": ["contrast-checker", "brand-color-text", "color-blind-simulator", "color-palette"],
   "color-blind-simulator": ["contrast-checker", "palette-accessibility", "brand-color-text", "color-palette"],
   "color-codes":           ["brand-color-text", "hex-rgb-converter", "color-palette", "palette-accessibility"],
+
+  // ── 建設・リフォーム ──────────────────────────────────────────
+  "neighbor-greeting":         ["construction-estimate", "exterior-paint-calculator", "construction-photo-pdf", "construction-report"],
+  "construction-estimate":     ["neighbor-greeting", "gross-profit-calculator", "construction-contract", "exterior-paint-calculator"],
+  "exterior-paint-calculator": ["construction-estimate", "neighbor-greeting", "gross-profit-calculator", "construction-photo-pdf"],
+  "gross-profit-calculator":   ["construction-estimate", "exterior-paint-calculator", "construction-contract", "neighbor-greeting"],
+  "construction-photo-pdf":    ["construction-report", "neighbor-greeting", "construction-estimate", "pdf-merge"],
+  "construction-report":       ["construction-photo-pdf", "neighbor-greeting", "construction-estimate", "pdf-merge"],
+  "construction-contract":     ["construction-estimate", "gross-profit-calculator", "nda-generator", "neighbor-greeting"],
 
   // ── 開発者ツール ──────────────────────────────────────────────
   "json-formatter": ["base64", "url-encode", "unix-time", "hash"],

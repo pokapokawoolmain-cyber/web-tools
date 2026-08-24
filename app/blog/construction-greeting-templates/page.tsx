@@ -218,6 +218,7 @@ export default function Page() {
       <h2>関連ツール・記事</h2>
       <ul className="space-y-2">
         <li><Link href="/tools/neighbor-greeting">工事近隣挨拶文メーカー｜入力するだけで挨拶文を自動作成</Link></li>
+        <li><Link href="/blog/construction-kicko-aisatsu-guide">着工前の挨拶回り、失敗しない手順ガイド｜訪問の順番・話す内容・不在時の対応</Link></li>
         <li><Link href="/tools/exterior-paint-calculator">外壁塗装 費用計算ツール｜坪数から工事費を自動算出</Link></li>
         <li><Link href="/tools/construction-estimate">建設工事 見積書作成ツール</Link></li>
       </ul>

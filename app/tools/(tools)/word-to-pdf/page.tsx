@@ -9,7 +9,7 @@ export const metadata: Metadata = generateMeta({
   title: "WordをPDFに変換｜.docxを無料でPDF化【登録不要・ブラウザ完結】",
   description: "WordファイルをPDFに変換。.docxをアップロードするだけで即変換。用紙サイズ・フォントサイズを選んでブラウザから直接PDFとして保存できます。登録不要・無料・ファイルはサーバーに送信されません。",
   path: "/tools/word-to-pdf",
-  keywords: ["word pdf 変換", "docx pdf 変換", "word pdf 無料", "ワード pdf 変換", "docx pdf オンライン"],
+  keywords: ["word pdf 変換", "docx pdf 変換", "word pdf 無料", "ワード pdf 変換", "docx pdf オンライン", "word pdf変換 無料 登録不要", "doc pdf 変換 無料", "word pdf 変換 ツール"],
   ogImage: `/api/og?${new URLSearchParams({ title: "Word→PDF変換", icon: "📄", desc: ".docxをPDFに変換。無料・登録不要・ブラウザ完結。" }).toString()}`,
 });
 
@@ -104,6 +104,25 @@ const seoContent = (
         <Link href="/tools/pdf-merge" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">PDF結合ツール</Link>
         で複数ファイルをまとめることも可能です。
       </p>
+    </section>
+
+    <section>
+      <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">こんな場面で使われています</h2>
+      <ul className="space-y-1.5 list-disc list-inside">
+        <li>契約書・案内文などのWord文書を、編集されない形式（PDF）で送りたい</li>
+        <li>履歴書・職務経歴書をWordで作成し、応募先にPDFで提出したい</li>
+        <li>役所・学校などへの提出書類をPDF形式に指定されている</li>
+        <li>Wordを持っていない相手にも、レイアウト崩れなく文書を見せたい</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">関連ツール</h2>
+      <ul className="space-y-1.5 list-disc list-inside">
+        <li>逆にPDFの文章をWordに戻したい場合は<Link href="/tools/pdf-to-word" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">PDF→Word変換</Link></li>
+        <li>Excelファイルも変換したい場合は<Link href="/tools/excel-to-pdf" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">Excel→PDF変換</Link></li>
+        <li>履歴書・職務経歴書をそのまま作りたい場合は<Link href="/tools/resume-builder" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">履歴書・職務経歴書作成</Link></li>
+      </ul>
     </section>
   </div>
 );

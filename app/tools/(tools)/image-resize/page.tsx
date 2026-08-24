@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { generateMeta } from "@/lib/seo";
 import { ImageResize } from "./ImageResize";
 import { ToolLayout } from "@/components/layout/ToolLayout";
@@ -139,6 +140,15 @@ const seoContent = (
           <p>ブログ記事のアイキャッチ画像は<strong>16:9または4:3</strong>が一般的です。スマホで縦撮りした写真（9:16）を横長に変換するときに使います。画像の左右が切り取られるため、被写体が中央にある写真がきれいに仕上がります。</p>
         </div>
       </div>
+    </section>
+
+    <section className="p-4 rounded-xl border border-violet-200 dark:border-violet-800/50 bg-violet-50 dark:bg-violet-950/20">
+      <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">画像ファイルは無いけれど、寸法だけ知りたい場合</p>
+      <p>
+        「16:9で幅1920pxのとき高さは？」のように、<strong>画像を変換せず数値だけ計算したい</strong>ときは
+        <Link href="/tools/aspect-ratio" className="text-violet-600 dark:text-violet-400 hover:underline font-semibold mx-1">アスペクト比計算機</Link>
+        が便利です。比率⇔寸法の相互計算に特化しており、動画・スライド・Web制作のサイズ決めに使えます。
+      </p>
     </section>
 
     <section>

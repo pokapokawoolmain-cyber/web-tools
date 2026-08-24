@@ -3,12 +3,13 @@ import { generateMeta } from "@/lib/seo";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ExcelToPdf } from "./ExcelToPdf";
+import Link from "next/link";
 
 export const metadata: Metadata = generateMeta({
   title: "ExcelをPDFに変換｜.xlsx/.csvを無料でPDF化【登録不要・ブラウザ完結】",
   description: "ExcelファイルをPDFに変換。.xlsx・.xls・.csvをアップロードするだけで即変換。シート選択・用紙向き・フォントサイズを選んでブラウザから直接PDFとして保存。登録不要・無料・ファイルはサーバーに送信されません。",
   path: "/tools/excel-to-pdf",
-  keywords: ["excel pdf 変換", "xlsx pdf 変換", "エクセル pdf 変換", "csv pdf 変換", "excel pdf 無料", "スプレッドシート pdf"],
+  keywords: ["excel pdf 変換", "xlsx pdf 変換", "エクセル pdf 変換", "csv pdf 変換", "excel pdf 無料", "スプレッドシート pdf", "xlsx pdf変換ツール", "csv pdf変換ツール", "エクセル pdf 変換 無料 登録不要"],
   ogImage: `/api/og?${new URLSearchParams({ title: "Excel→PDF変換", icon: "📊", desc: ".xlsx/.csvをPDFに変換。無料・登録不要・ブラウザ完結。" }).toString()}`,
 });
 
@@ -102,6 +103,26 @@ const seoContent = (
       <p className="mt-3">
         完全な再現が必要な場合は、Microsoft Excel本体で「ファイル → エクスポート → PDFの作成」を使用することをお勧めします。
       </p>
+    </section>
+
+    <section>
+      <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">こんな場面で使われています</h2>
+      <ul className="space-y-1.5 list-disc list-inside">
+        <li>経費精算・請求書などのExcelシートを、提出用にPDF化したい</li>
+        <li>見積書・請求書をメールに添付する前に、編集されない形式（PDF）に変換したい</li>
+        <li>会計ソフトからCSVで書き出したデータを、そのままPDFで保存・共有したい</li>
+        <li>Excelを持っていない相手にも、レイアウト崩れなく表を見せたい</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">関連ツール</h2>
+      <ul className="space-y-1.5 list-disc list-inside">
+        <li>逆にPDFの表をExcelに戻したい場合は<Link href="/tools/pdf-to-excel" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">PDF→Excel変換</Link></li>
+        <li>Wordファイルも変換したい場合は<Link href="/tools/word-to-pdf" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">Word→PDF変換</Link></li>
+        <li>複数のPDFを1つにまとめたい場合は<Link href="/tools/pdf-merge" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">PDF結合</Link></li>
+        <li>請求書・見積書をそのまま作りたい場合は<Link href="/tools/invoice-generator" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">請求書作成ツール</Link></li>
+      </ul>
     </section>
   </div>
 );
