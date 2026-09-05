@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { generateMeta } from "@/lib/seo";
 import { GrossProfitCalculator } from "./GrossProfitCalculator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = generateMeta({
-  title: "粗利率・原価率計算ツール｜業種別目安と逆算対応【無料】",
-  description: "売上・原価を入力して粗利率・原価率・粗利額を即計算。目標粗利率から必要見積金額を逆算。建設業・飲食業・小売業など業種別の目安も掲載。登録不要・ブラウザ完結。",
+  title: "粗利計算・粗利率計算ツール｜計算式・業種別目安・逆算に対応【無料】",
+  description: "売上・原価を入力して粗利率・原価率・粗利額を即計算。粗利率の計算式や、目標粗利率から必要見積金額を逆算する機能も。建設業・飲食業・小売業など業種別の目安も掲載。登録不要・ブラウザ完結。",
   path: "/tools/gross-profit-calculator",
-  ogImage: `/api/og?${new URLSearchParams({ title: "原価率・粗利率計算", icon: "📊", desc: "売上・原価を入力するだけで原価率・粗利率・粗利額を即計算" }).toString()}`,
-  keywords: ["粗利率 計算", "原価率 計算", "粗利 計算 無料", "業種別 粗利率 目安", "粗利 逆算", "建設 粗利率", "飲食店 原価率"],
+  ogImage: `/api/og?${new URLSearchParams({ title: "粗利計算・粗利率計算", icon: "📊", desc: "売上・原価を入力するだけで粗利率・原価率・粗利額を即計算" }).toString()}`,
+  keywords: ["粗利率 計算", "粗利計算", "原価率 計算", "粗利 計算 無料", "粗利率 計算式", "業種別 粗利率 目安", "粗利 逆算", "建設 粗利率", "飲食店 原価率"],
 });
 
 const faqSchema = {
@@ -61,6 +62,13 @@ const faqSchema = {
 
 const seoContent = (
   <div className="space-y-10">
+
+    {/* 計算式に即答（「粗利率 計算式」クエリ対応） */}
+    <section className="rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 p-4">
+      <p className="text-sm font-semibold text-blue-800 dark:text-blue-300 mb-1">粗利計算の計算式（結論）</p>
+      <p className="text-sm font-mono text-blue-700 dark:text-blue-400">粗利率（％）＝（売上 − 原価）÷ 売上 × 100</p>
+      <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">例：売上100万円・原価60万円 →（100−60）÷100×100＝<strong>粗利率40%</strong>（粗利額40万円）。下のツールに数字を入れるだけで自動計算できます。</p>
+    </section>
 
     {/* 使い方 */}
     <section>
@@ -221,6 +229,17 @@ const seoContent = (
       <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-1">⚠️ ご注意</p>
       <p className="text-sm text-amber-700 dark:text-amber-400">本ツールの計算結果はあくまで参考値です。実際の受注判断・経営判断には、自社の固定費・間接費・資金繰りを含めた総合的な検討をしてください。</p>
     </div>
+
+    {/* 関連ツール */}
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">関連ツール</h2>
+      <ul className="space-y-1.5 text-sm">
+        <li>・飲食店の原価率を計算するなら<Link href="/tools/food-cost-calculator" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">食材原価計算</Link></li>
+        <li>・メニュー価格の設定に迷ったら<Link href="/tools/menu-price-calculator" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">メニュー価格シミュレーター</Link></li>
+        <li>・工事の見積書をそのまま作りたい場合は<Link href="/tools/construction-estimate" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">建設工事 見積書作成ツール</Link></li>
+        <li>・割引・割合の計算全般は<Link href="/tools/percentage-calculator" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">パーセント計算機</Link></li>
+      </ul>
+    </section>
   </div>
 );
 

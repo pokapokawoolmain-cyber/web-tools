@@ -123,7 +123,14 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "neighbor-greeting":         ["construction-estimate", "exterior-paint-calculator", "construction-photo-pdf", "construction-report"],
   "construction-estimate":     ["neighbor-greeting", "gross-profit-calculator", "construction-contract", "exterior-paint-calculator"],
   "exterior-paint-calculator": ["construction-estimate", "neighbor-greeting", "gross-profit-calculator", "construction-photo-pdf"],
-  "gross-profit-calculator":   ["construction-estimate", "exterior-paint-calculator", "construction-contract", "neighbor-greeting"],
+  "gross-profit-calculator":   ["food-cost-calculator", "construction-estimate", "menu-price-calculator", "exterior-paint-calculator"],
+
+  // ── 飲食店 ────────────────────────────────────────────────────
+  "food-cost-calculator":      ["gross-profit-calculator", "menu-price-calculator", "restaurant-menu-maker", "restaurant-pop-generator"],
+  "menu-price-calculator":     ["food-cost-calculator", "gross-profit-calculator", "restaurant-menu-maker", "restaurant-pop-generator"],
+  "restaurant-menu-maker":     ["menu-price-calculator", "food-cost-calculator", "restaurant-pop-generator", "review-reply-generator"],
+  "restaurant-pop-generator":  ["restaurant-menu-maker", "menu-price-calculator", "food-cost-calculator", "review-reply-generator"],
+  "review-reply-generator":    ["restaurant-menu-maker", "restaurant-pop-generator", "food-cost-calculator", "menu-price-calculator"],
   "construction-photo-pdf":    ["construction-report", "neighbor-greeting", "construction-estimate", "pdf-merge"],
   "construction-report":       ["construction-photo-pdf", "neighbor-greeting", "construction-estimate", "pdf-merge"],
   "construction-contract":     ["construction-estimate", "gross-profit-calculator", "nda-generator", "neighbor-greeting"],
