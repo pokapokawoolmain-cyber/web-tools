@@ -60,6 +60,49 @@ const seoContent = (
     </section>
 
     <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">用途別・のし紙の早見表</h2>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+        贈る場面ごとの水引・表書きの組み合わせをまとめました。迷ったときはこの表を確認してください。
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left text-slate-700 dark:text-zinc-200 font-semibold">場面</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left text-slate-700 dark:text-zinc-200 font-semibold">水引</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left text-slate-700 dark:text-zinc-200 font-semibold">表書き</th>
+            </tr>
+          </thead>
+          <tbody className="text-slate-600 dark:text-slate-400">
+            {[
+              ["出産祝い", "紅白蝶結び", "御祝・御出産御祝"],
+              ["出産内祝い（お返し）", "紅白蝶結び", "内祝"],
+              ["入学・卒業・就職祝い", "紅白蝶結び", "御祝"],
+              ["お中元・お歳暮", "紅白蝶結び", "御中元・御歳暮"],
+              ["結婚祝い", "紅白結び切り（10本）", "御結婚御祝"],
+              ["結婚内祝い（お返し）", "紅白結び切り（10本）", "内祝"],
+              ["快気祝い（お見舞い返し）", "紅白結び切り", "快気祝・快気内祝"],
+              ["新築・開店祝い", "紅白蝶結び", "御祝・新築御祝"],
+              ["香典返し（弔事）", "黒白結び切り", "志・粗供養"],
+              ["法要のお返し", "黄白結び切り（関西）", "志・満中陰志"],
+            ].map((row) => (
+              <tr key={row[0]}>
+                {row.map((cell, i) => (
+                  <td key={i} className={`border border-slate-200 dark:border-zinc-700 px-3 py-2 ${i === 0 ? "font-semibold text-slate-700 dark:text-zinc-200" : ""}`}>
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-xs text-slate-500 dark:text-zinc-500 mt-2">
+        ※ 結婚祝いの水引は「二度と結び直せない」結び切りを使い、本数は10本（5本を2つ合わせた形）が正式とされます。地域や家庭の慣習で異なる場合は、そちらを優先してください。
+      </p>
+    </section>
+
+    <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">水引の選び方（蝶結びvs結び切り）</h2>
       <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         水引の選び方は贈り物のシーンで決まります。
