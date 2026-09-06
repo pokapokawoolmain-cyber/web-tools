@@ -95,6 +95,8 @@ import {
   Flower,
   ScrollText,
   Printer,
+  MailX,
+  Baby,
   // カラーツール
   Palette,
   Paintbrush,
@@ -239,6 +241,7 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "estimate-generator": { icon: ClipboardList, color: BUSINESS },
   "resignation-letter-generator": { icon: Mail, color: BUSINESS },
   "certified-letter-generator": { icon: MailCheck, color: BUSINESS },
+  "invoice-tax-simulator": { icon: Receipt, color: BUSINESS },
   "hanko-generator": { icon: Stamp, color: BUSINESS },
   "pdf-signature": { icon: Signature, color: BUSINESS },
   "receipt-generator": { icon: Receipt, color: BUSINESS },
@@ -260,6 +263,8 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "koden-maker": { icon: PenLine, color: CEREMONY },
   "shugi-maker": { icon: PartyPopper, color: CEREMONY },
   "houyou-calculator": { icon: Flower, color: CEREMONY },
+  "nenga-jimai-maker": { icon: MailX, color: CEREMONY },
+  "meimeisho-maker": { icon: Baby, color: CEREMONY },
   "resignation-letter": { icon: ScrollText, color: CEREMONY },
   "fax-cover": { icon: Printer, color: CEREMONY },
 

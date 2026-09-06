@@ -5,9 +5,10 @@
 
 export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   // ── ビジネス・契約書 ──────────────────────────────────────────
-  "invoice-generator":            ["receipt-generator", "estimate-generator", "hanko-generator", "pdf-signature", "business-contract-generator"],
+  "invoice-generator":            ["receipt-generator", "estimate-generator", "invoice-tax-simulator", "hanko-generator", "pdf-signature", "business-contract-generator"],
   "receipt-generator":            ["invoice-generator", "estimate-generator", "hanko-generator", "pdf-signature"],
   "estimate-generator":           ["invoice-generator", "receipt-generator", "business-contract-generator", "pdf-signature"],
+  "invoice-tax-simulator":        ["invoice-generator", "gross-profit-calculator", "resident-tax", "tax-calculator"],
   "business-contract-generator":  ["nda-generator", "pdf-signature", "hanko-generator", "invoice-generator"],
   "nda-generator":                ["business-contract-generator", "pdf-signature", "hanko-generator", "certified-letter-generator"],
   "resignation-letter-generator": ["certified-letter-generator", "pdf-signature", "hanko-generator"],
@@ -105,9 +106,13 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
 
   // ── 冠婚葬祭・文書 ────────────────────────────────────────────
   "koden-maker":       ["houyou-calculator", "noshi-maker", "shugi-maker"],
-  "shugi-maker":       ["noshi-maker", "koden-maker"],
-  "houyou-calculator": ["koden-maker", "noshi-maker"],
-  "noshi-maker":       ["shugi-maker", "koden-maker"],
+  "shugi-maker":       ["noshi-maker", "koden-maker", "meimeisho-maker"],
+  "houyou-calculator": ["koden-maker", "noshi-maker", "nenga-jimai-maker"],
+  "noshi-maker":       ["shugi-maker", "koden-maker", "meimeisho-maker"],
+  "nenga-jimai-maker": ["houyou-calculator", "koden-maker", "resignation-letter"],
+  "meimeisho-maker":   ["shugi-maker", "noshi-maker", "resume-builder"],
+  "resignation-letter": ["fax-cover", "resignation-letter-generator", "nenga-jimai-maker"],
+  "fax-cover":          ["resignation-letter", "resume-builder"],
 
   // ── カラー・デザイン ──────────────────────────────────────────
   "hex-rgb-converter":     ["color-palette", "color-codes", "brand-color-text", "gradient-generator"],

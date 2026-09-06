@@ -19,6 +19,10 @@ const SITE_LAUNCH = new Date("2026-05-10");
 // 直近で新設・大幅更新したツール。lastmod を更新日にしてGoogleに変更を伝える
 // （全ツールを一律「最新」にするとlastmodの信頼性を損なうため、実際に更新したものだけ）
 const TOOL_UPDATED = new Date("2026-07-05");
+const LATEST_TOOL_UPDATED = new Date("2026-09-06");
+const LATEST_UPDATED_TOOL_IDS = new Set<string>([
+  "nenga-jimai-maker", "meimeisho-maker", "invoice-tax-simulator",
+]);
 const RECENTLY_UPDATED_TOOL_IDS = new Set<string>([
   // 新設ツール
   "takehome-reverse", "bonus-takehome", "nenshu-kabe", "houyou-calculator", "shugi-maker",
@@ -200,7 +204,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 各ツールページ
   const toolRoutes: MetadataRoute.Sitemap = tools.map((tool) => ({
     url: `${siteUrl}${tool.href}`,
-    lastModified: RECENTLY_UPDATED_TOOL_IDS.has(tool.id) ? TOOL_UPDATED : TOOL_LAUNCH,
+    lastModified: LATEST_UPDATED_TOOL_IDS.has(tool.id) ? LATEST_TOOL_UPDATED : RECENTLY_UPDATED_TOOL_IDS.has(tool.id) ? TOOL_UPDATED : TOOL_LAUNCH,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
