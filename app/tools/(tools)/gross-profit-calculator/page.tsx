@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "売上・原価を入力して粗利率・原価率・粗利額を即計算。粗利率の計算式や、目標粗利率から必要見積金額を逆算する機能も。建設業・飲食業・小売業など業種別の目安も掲載。登録不要・ブラウザ完結。",
   path: "/tools/gross-profit-calculator",
   ogImage: `/api/og?${new URLSearchParams({ title: "粗利計算・粗利率計算", icon: "📊", desc: "売上・原価を入力するだけで粗利率・原価率・粗利額を即計算" }).toString()}`,
-  keywords: ["粗利率 計算", "粗利計算", "原価率 計算", "粗利 計算 無料", "粗利率 計算式", "業種別 粗利率 目安", "粗利 逆算", "建設 粗利率", "飲食店 原価率"],
+  keywords: ["粗利率 計算", "粗利計算", "原価率 計算", "粗利 計算 無料", "粗利率 計算式", "業種別 粗利率 目安", "粗利 逆算", "建設 粗利率", "飲食店 原価率", "工務店 粗利率", "建設業 粗利率", "建設業 粗利", "メーカー 粗利率", "原価率 粗利率"],
 });
 
 const faqSchema = {
@@ -153,6 +153,25 @@ const seoContent = (
         </table>
       </div>
       <p className="text-xs text-slate-400 dark:text-zinc-500 mt-2">※粗利率は業態・受注規模・地域・経営効率により大きく異なります。上記はあくまで一般的な参考値です。</p>
+    </section>
+
+    {/* 業種別ロングテール（工務店・建設業・メーカーなど） */}
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">工務店・建設業・メーカーの粗利率はどのくらい？</h2>
+      <div className="space-y-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+        <div>
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">工務店の粗利率は、一般的に25〜35%が目安です。</p>
+          <p>注文住宅・新築工事を請け負う工務店の場合、材料費・労務費・外注費（大工・基礎・電気・設備などの各職人への支払い）を差し引いた粗利率は25〜35%程度が相場とされます。リフォーム主体の工務店はこれより高く、30〜50%になることもあります。下請けへの発注比率が高いほど粗利率は下がる傾向にあります。</p>
+        </div>
+        <div>
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">建設業全体の粗利率は、工事の種類によって25〜50%と幅があります。</p>
+          <p>新築工事は25〜35%、リフォーム・外壁塗装工事は30〜50%が目安です。同じ「建設業」でも、元請けか下請けか、材料支給か施工のみか、といった請負条件によって大きく変動するため、自社の過去の実績値と比較するのが最も確実です。</p>
+        </div>
+        <div>
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">メーカー（製造業）の粗利率は、原材料費の比率が大きい業種ほど低くなります。</p>
+          <p>機械・金属加工などの一般的な製造業は20〜35%が目安ですが、原材料費への依存度が低い高付加価値製品（精密機器・化学製品の一部など）はこれより高くなる傾向があります。逆に大量生産・薄利多売型の製造業では10〜20%台になることもあります。</p>
+        </div>
+      </div>
     </section>
 
     {/* 粗利率 vs 営業利益率 */}

@@ -23,6 +23,30 @@ export type ReleaseNote = {
 // 新しい順に並べる
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    date: "2026-09-21",
+    type: "NEW",
+    target: "忌み言葉チェッカー",
+    href: "/tools/imikotoba-checker",
+    title: "忌み言葉チェッカーを公開",
+    body: "結婚式のスピーチや葬儀・法事の挨拶文を貼り付けるだけで、忌み言葉・重ね言葉・忌み数字を自動検出するツールを公開しました。該当箇所をハイライト表示し、言い換え例もあわせて提示します。",
+  },
+  {
+    date: "2026-09-21",
+    type: "UPDATE",
+    target: "パーセント計算機",
+    href: "/tools/percentage-calculator",
+    title: "パーセント計算機に「連続割引＋税込み」モードを追加",
+    body: "「30%オフのあとさらに10%オフ」のような連続割引や、割引後の税込み価格をまとめて計算できる新モードを追加しました。単純な電卓では計算しにくい複合パーセント計算に対応します。",
+  },
+  {
+    date: "2026-09-21",
+    type: "UPDATE",
+    target: "粗利計算・粗利率計算ツール",
+    href: "/tools/gross-profit-calculator",
+    title: "粗利計算ツールに業種別ロングテール解説を追加",
+    body: "工務店・建設業・メーカーそれぞれの粗利率の目安について、実際の検索クエリに合わせた解説セクションを追加しました。",
+  },
+  {
     date: "2026-09-06",
     type: "NEW",
     target: "インボイス税額シミュレーター",

@@ -97,6 +97,7 @@ import {
   Printer,
   MailX,
   Baby,
+  TriangleAlert,
   // カラーツール
   Palette,
   Paintbrush,
@@ -265,6 +266,7 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "houyou-calculator": { icon: Flower, color: CEREMONY },
   "nenga-jimai-maker": { icon: MailX, color: CEREMONY },
   "meimeisho-maker": { icon: Baby, color: CEREMONY },
+  "imikotoba-checker": { icon: TriangleAlert, color: CEREMONY },
   "resignation-letter": { icon: ScrollText, color: CEREMONY },
   "fax-cover": { icon: Printer, color: CEREMONY },
 

@@ -105,14 +105,15 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   "speed-test":  ["keyboard-test", "mouse-test", "mic-test", "wifi-qr"],
 
   // ── 冠婚葬祭・文書 ────────────────────────────────────────────
-  "koden-maker":       ["houyou-calculator", "noshi-maker", "shugi-maker"],
-  "shugi-maker":       ["noshi-maker", "koden-maker", "meimeisho-maker"],
+  "koden-maker":       ["houyou-calculator", "noshi-maker", "shugi-maker", "imikotoba-checker"],
+  "shugi-maker":       ["noshi-maker", "koden-maker", "meimeisho-maker", "imikotoba-checker"],
   "houyou-calculator": ["koden-maker", "noshi-maker", "nenga-jimai-maker"],
   "noshi-maker":       ["shugi-maker", "koden-maker", "meimeisho-maker"],
   "nenga-jimai-maker": ["houyou-calculator", "koden-maker", "resignation-letter"],
   "meimeisho-maker":   ["shugi-maker", "noshi-maker", "resume-builder"],
   "resignation-letter": ["fax-cover", "resignation-letter-generator", "nenga-jimai-maker"],
   "fax-cover":          ["resignation-letter", "resume-builder"],
+  "imikotoba-checker": ["shugi-maker", "koden-maker", "noshi-maker"],
 
   // ── カラー・デザイン ──────────────────────────────────────────
   "hex-rgb-converter":     ["color-palette", "color-codes", "brand-color-text", "gradient-generator"],

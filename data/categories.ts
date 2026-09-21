@@ -251,9 +251,9 @@ const CEREMONY_CATEGORY: CategoryConfig = {
   title: "のし紙・香典袋・退職届を無料作成｜冠婚葬祭・文書ツール集【登録不要】",
   keywords: ["のし紙 作成 無料", "香典袋 表書き 印刷", "退職届 テンプレ 無料", "送付状 作成 無料", "のし テンプレート 印刷"],
   popularToolIds: ["noshi-maker", "koden-maker", "shugi-maker", "houyou-calculator", "nenga-jimai-maker"],
-  allToolIds: ["noshi-maker", "koden-maker", "shugi-maker", "houyou-calculator", "nenga-jimai-maker", "meimeisho-maker", "resignation-letter", "fax-cover"],
+  allToolIds: ["noshi-maker", "koden-maker", "shugi-maker", "houyou-calculator", "nenga-jimai-maker", "meimeisho-maker", "imikotoba-checker", "resignation-letter", "fax-cover"],
   stats: [
-    { label: "冠婚葬祭ツール数", value: "6種類" },
+    { label: "冠婚葬祭ツール数", value: "7種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・インストール", value: "不要" },
     { label: "PDF保存・印刷", value: "対応" },
