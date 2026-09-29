@@ -27,7 +27,7 @@ export const COMMUNITY_DESCRIPTION_MAX = 300;
  * として予約行に保存する。プライバシーポリシーや同意文言を変えたら必ず更新する。
  * "-draft" は CEO / Legal 承認前の版であることを示す。
  */
-export const RESERVATION_CONSENT_VERSION = "2026-09-30-draft";
+export const RESERVATION_CONSENT_VERSION = "2026-10-01-draft";
 export const EMAIL_MAX = 254;
 const UTM_MAX = 100;
 

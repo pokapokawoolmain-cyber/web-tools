@@ -1,7 +1,11 @@
 -- ============================================================
--- SNS Starter Kit 先行予約テーブル（Revision 2 / 2026-09-30）
--- ★未適用。どの Supabase プロジェクトに置くかは CEO の決定待ち。
---   yoru. のプロジェクトには絶対に適用しない（完全に別システム）。
+-- SNS Starter Kit 先行予約テーブル（Revision 3 / 2026-10-01）
+-- 適用先: ToolBoxJP production backend（ToolBoxJP専用 Supabase / Tokyo ap-northeast-1。
+--   Product #01 と同じプロジェクトを共用するが、テーブルは完全に分離し、互いに参照しない）。
+--   yoru. / mannzokuya など別事業のプロジェクトには絶対に適用しない。
+--
+-- Revision 3: 将来の案内メール（特定電子メール法）に備え、受信停止の記録列を追加。
+--   同意の記録 = consent_version + created_at、受信停止 = *_opted_out_at。
 --
 -- アクセス方針:
 --   - ブラウザから Supabase へ直接アクセスしない。書き込みは
@@ -43,6 +47,9 @@ CREATE TABLE IF NOT EXISTS public.sns_starter_kit_reservations (
   utm_source                    text CHECK (char_length(utm_source) <= 100),
   utm_medium                    text CHECK (char_length(utm_medium) <= 100),
   utm_campaign                  text CHECK (char_length(utm_campaign) <= 100),
+  -- 受信停止の記録（NULL = 停止していない）。販売開始案内とその他のお知らせで別々に持つ
+  notification_opted_out_at     timestamptz,
+  marketing_opted_out_at        timestamptz,
   created_at                    timestamptz NOT NULL DEFAULT now(),
   status                        text NOT NULL DEFAULT 'reserved'
                                 CHECK (status IN ('reserved', 'notified', 'purchased', 'declined'))

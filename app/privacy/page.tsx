@@ -7,8 +7,10 @@ export const metadata: Metadata = generateMeta({
   path: "/privacy",
 });
 
-// ★DRAFT（2026-09-30）: SNS Starter Kit 先行予約フォームの追加に合わせた改訂案。
-//   CEO / Legal の承認前。承認時に「最終更新日」と【要決定】の箇所を確定させること。
+// ★FINAL DRAFT（2026-10-01）: SNS Starter Kit 先行予約フォームの追加に合わせた改訂案。
+//   Chief Decision D1〜D5 を反映。CEO / Legal の承認前（法務承認済みとして扱わない）。
+//   承認時に「最終更新日」・【要決定】・【確認待ち】の箇所を確定させ、
+//   lib/sns-starter-kit/reservation.ts の RESERVATION_CONSENT_VERSION を更新すること。
 //   根拠: lib/sns-starter-kit/reservation.ts（取得項目）・lib/analytics/sns-starter-kit.ts（計測項目）
 const PENDING = "text-amber-700 dark:text-amber-400 font-semibold";
 
@@ -63,6 +65,7 @@ export default function PrivacyPage() {
             <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-2">利用目的：</p>
             <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400 mb-3">
               <li>SNS Starter Kit の販売開始時に、商品内容と購入方法をメールでご案内するため（先行予約の成立に必要な同意です）</li>
+              <li>先行予約の受付状況を管理するため（同じメールアドレスでの重複登録の防止を含みます）</li>
               <li>「その他のお知らせ」の受け取りに同意いただいた方にのみ、ToolBoxJP の他の商品やお知らせをメールでご案内するため（任意。同意しなくても先行予約はできます）</li>
               <li>商品の内容や案内の改善の参考とするため（個人を特定しない形で集計します）</li>
               <li>どの経路から先行予約があったかを把握するため</li>
@@ -71,16 +74,15 @@ export default function PrivacyPage() {
               先行予約は購入ではなく、予約金や購入の義務はありません。先行予約フォームに入力されたメールアドレスや自由記述の内容は、Google Analytics などのアクセス解析には送信しません。
             </p>
             <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
-              保存と管理：取得した情報は、当サイトが利用する外部のデータベースサービス
-              <span className={PENDING}>【要決定：サービス名（例：Supabase）とデータの保存地域】</span>
-              に保存し、閲覧できる者を運営者に限定します。保存期間は
-              <span className={PENDING}>【要決定：例「販売開始のご案内の完了後◯か月」】</span>
-              とし、期間の経過後またはご本人からの削除のご依頼があった場合は速やかに削除します。
+              保存と管理：取得した情報は、当サイトが利用するデータベースサービス Supabase（Supabase Inc.）に保存します。保存地域は日本（東京）です。閲覧できる者は運営者に限定します。
+            </p>
+            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+              保存期間：販売開始のご案内の完了後6か月を基本とし、期間の経過後、またはご本人から削除のご依頼があった場合は、速やかに削除します。なお、商品をご購入いただいた場合の購入・会計に関する記録は、先行予約の情報とは分けて取り扱います。
             </p>
             <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
               メールの受信停止・登録内容の削除：
-              <span className={PENDING}>【要決定：受付方法（例：お問い合わせフォーム、または案内メールに記載する連絡先）】</span>
-              からご連絡ください。
+              <span className={PENDING}>【確認待ち：受信可能な窓口メールアドレス（第一候補 privacy@toolboxjp.com。受信できることを確認した後に掲載）】</span>
+              までご連絡ください。
             </p>
 
             <h3 className="text-[15px] font-bold text-slate-900 dark:text-white mt-6 mb-2">（2）お問い合わせフォーム</h3>
@@ -161,10 +163,20 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">10. お問い合わせ</h2>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">10. 運営者（個人情報取扱事業者）</h2>
+            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400">
+              <li>名称：<span className={PENDING}>【要決定（CEO / Legal）】</span></li>
+              <li>住所：<span className={PENDING}>【要決定（CEO / Legal）】</span></li>
+              <li>代表者：<span className={PENDING}>【要決定（CEO / Legal）】</span></li>
+              <li>個人情報に関するお問い合わせ窓口：<span className={PENDING}>【確認待ち：privacy@toolboxjp.com（受信確認後に掲載）】</span></li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">11. お問い合わせ</h2>
             <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              本ポリシーに関するご質問、および保有する個人情報の開示・訂正・利用停止・削除のご請求は、サイト内のお問い合わせフォームよりご連絡ください。
-              <span className={PENDING}>【要決定（Legal）：個人情報取扱事業者としての名称・住所・代表者、開示等の請求手続の記載要否】</span>
+              本ポリシーに関するご質問、および保有する個人情報の開示・訂正・利用停止・削除のご請求は、第10項の窓口までご連絡ください。
+              <span className={PENDING}>【要決定（Legal）：開示等の請求の手続（本人確認の方法・手数料の有無）の記載内容】</span>
             </p>
           </section>
 

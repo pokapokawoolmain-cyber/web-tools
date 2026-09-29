@@ -68,7 +68,9 @@ function supabaseStore(url: string, serviceKey: string): ReservationStore {
         method: "POST",
         headers: {
           apikey: serviceKey,
-          Authorization: `Bearer ${serviceKey}`,
+          // 旧形式（JWT）の service_role key のときだけ Authorization に載せる。
+          // 新形式の secret key（sb_secret_...）は apikey ヘッダーだけで認証される。
+          ...(serviceKey.startsWith("eyJ") ? { Authorization: `Bearer ${serviceKey}` } : {}),
           "Content-Type": "application/json",
           Prefer: "return=minimal",
         },
