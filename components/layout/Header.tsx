@@ -1,16 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Menu, X, Sun, Moon, ChevronRight, Flame, Sparkles, Home, BookOpen, LayoutGrid, Landmark } from "lucide-react";
 import { TOOLS, CATEGORIES } from "@/data/tools";
 import { ALL_CATEGORIES } from "@/data/categories";
 import { ToolIcon } from "@/components/tools/ToolIcon";
 import { CategoryIcon } from "@/components/tools/CategoryIcon";
+import { isForcedLightRoute } from "@/lib/theme/forced-light-routes";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  // 白基調に固定した画面では、押しても変わらないテーマ切替ボタンを出さない
+  const hideThemeToggle = isForcedLightRoute(usePathname());
 
   // Close on escape key
   useEffect(() => {
@@ -39,12 +43,14 @@ export function Header() {
             </Link>
 
             <div className="flex items-center gap-1">
-              <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                aria-label="テーマ切替"
-                className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all">
-                <Sun className="h-[18px] w-[18px] hidden dark:block" />
-                <Moon className="h-[18px] w-[18px] dark:hidden" />
-              </button>
+              {!hideThemeToggle && (
+                <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  aria-label="テーマ切替"
+                  className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all">
+                  <Sun className="h-[18px] w-[18px] hidden dark:block" />
+                  <Moon className="h-[18px] w-[18px] dark:hidden" />
+                </button>
+              )}
               <button onClick={() => setIsOpen(true)}
                 aria-label="メニューを開く"
                 className="p-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all">
