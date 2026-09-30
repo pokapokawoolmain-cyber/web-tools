@@ -77,7 +77,16 @@ export async function POST(req: NextRequest) {
     await store.save(parsed.value);
     return reply({ result: "reserved" }, 200);
   } catch (e) {
-    console.error("[sns-starter-kit] reservation save failed:", e instanceof Error ? e.message : "unknown");
+    // 調査用の識別子だけを残す。入力値（email・自由記述）・リクエスト本文・ヘッダー・キーは出さない。
+    // e.message は保存先アダプタが「HTTP ステータスのみ」を入れる設計（reservation-store.ts）。
+    console.error(
+      JSON.stringify({
+        event: "sns_kit_reservation_save_failed",
+        requestId: req.headers.get("x-vercel-id") ?? null,
+        errorType: e instanceof Error ? e.name : "unknown",
+        detail: e instanceof Error ? e.message.slice(0, 120) : null,
+      }),
+    );
     return reply({ result: "error" }, 500);
   }
 }

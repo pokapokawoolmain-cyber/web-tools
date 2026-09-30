@@ -1,6 +1,6 @@
 # SNS Starter Kit × Product #01（Pro）統合手順
 
-`feature/sns-starter-kit-lp` と、`/Users/hiyu_mac/web-tools` にある Product #01 の未コミット作業は、次の4ファイルで重なる。
+`feature/sns-starter-kit-lp` と、`/Users/hiyu_mac/web-tools` にある Product #01 の未コミット作業は、次の5ファイルで重なる。
 どちらの意図も残す統合方法を、ここに固定しておく。
 
 | ファイル | Product #01 側 | SNS Starter Kit 側 | 統合後 |
@@ -9,6 +9,7 @@
 | `components/layout/Header.tsx` | Pro の顧客画面ではテーマ切替ボタンを出さない | LP ではテーマ切替ボタンを出さない | 同上。`hideThemeToggle = isForcedLightRoute(usePathname())` |
 | `.env.example` | Product #01 のブロックを末尾に追加 | SNS Kit のブロックを末尾に追加 | **両方のブロックを残す**（Pro → SNS Kit の順） |
 | `.gitignore` | `.pro-data/` | `.sns-kit-data/` | **両方の行を残す** |
+| `next.config.ts` | `redirects()` に Product #01 の旧URLのリダイレクトを追加 | `compiler.removeConsole` で本番でも error / warn を残す | **変更箇所が重ならない。両方を残す**（2026-10-01、統合状態でビルドと `/pro/csv-monthly` の 308 を確認） |
 
 ## 統合後の `lib/theme/forced-light-routes.ts`
 
