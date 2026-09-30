@@ -1,5 +1,7 @@
 # ToolBoxJP production backend — プロビジョニング手順
 
+実績（2026-10-01）: `toolboxjp-production`（ref `jxhvakzqtxocxwrdpyiw`、Tokyo）を、CEO の判断により課金済みの `yoru` 組織内に**別プロジェクト**として作成した。yoru の DB とは共用していない。
+
 対象: SNS Starter Kit の先行予約（`sns_starter_kit_reservations`）と Product #01（`pro_orders` / `pro_files`）の共用バックエンド。
 **Secrets（DBパスワード・service role / secret key）は、このファイル・コード・コミット・ログに書かない。**
 
@@ -33,7 +35,9 @@ supabase db query --linked -f docs/sns-starter-kit/reservations.sql
 supabase db query --linked -f docs/sns-starter-kit/reservations_verify.sql
 
 # 4) ローカル検証用に、キーを画面に出さずに .env.local（gitignore 済み）へ書き込む
-#    （具体的なコマンドは実行時に報告書へ記載する。値は出力しない）
+#    ★新形式の secret key は --reveal を付けないと伏せ字（…****）で返り、PostgREST で
+#      "Invalid API key" になる。値は変数経由でファイルへ直接書き、画面に出さない。
+#    例: S=$(supabase projects api-keys --project-ref <REF> --reveal -o json | jq -r '[.[]|select(.type=="secret")][0].api_key')
 ```
 
 - anon / publishable key で REST から `sns_starter_kit_reservations` を SELECT / INSERT できないこと（401 / 403 / 権限エラー）を確認する。
