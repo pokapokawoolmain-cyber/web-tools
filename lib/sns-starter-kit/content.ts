@@ -38,18 +38,6 @@ export const PRODUCT = {
   purchasable: false,
 } as const;
 
-// ── Section 03: ゼロから作る場合に必要になるもの ─────────────
-export const BLANK_PROJECT_ITEMS: string[] = [
-  "認証（ログイン）",
-  "データベース設計",
-  "プロフィール",
-  "投稿・返信",
-  "画像アップロード",
-  "アクセス権限",
-  "通報・ブロック",
-  "管理画面",
-];
-
 // ── Section 03: Starter Kit の土台（Developmentの検証結果で切り替える） ──
 export const FOUNDATION_FEATURES: StatusItem[] = [
   { id: "auth", label: "メール認証・パスワード再設定", status: "planned" },

@@ -12,9 +12,24 @@ import s from "./lp.module.css";
 export function PhoneFrame({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className={[s.phone, className].filter(Boolean).join(" ")} aria-hidden="true">
+      <span className={s.phoneBtnL} />
+      <span className={s.phoneBtnR} />
       <div className={s.phoneScreen}>
+        <div className={s.statusBar}>
+          <span className={s.sbTime}>9:41</span>
+          <span className={s.sbIcons}>
+            <span className={s.sbSignal}>
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className={s.sbBattery} />
+          </span>
+        </div>
         <div className={s.phoneNotch} />
         {children}
+        <span className={s.homeIndicator} />
       </div>
     </div>
   );

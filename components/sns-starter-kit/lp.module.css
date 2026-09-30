@@ -392,35 +392,150 @@
   position: relative;
   width: min(300px, 78vw);
   aspect-ratio: 300 / 610;
-  border-radius: 44px;
-  background: #0f1012;
-  padding: 10px;
-  box-shadow: var(--shadow-lg);
+  border-radius: 46px;
+  /* 細いベゼル＋金属調の縁（チタン風のごく淡いグラデーション） */
+  background: linear-gradient(145deg, #3a3b40 0%, #1b1c1f 45%, #2b2c30 100%);
+  padding: 7px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 0 0 3px #0b0c0e,
+    0 2px 4px rgba(17, 18, 20, 0.08),
+    0 40px 80px -30px rgba(17, 18, 20, 0.45),
+    0 18px 36px -18px rgba(17, 18, 20, 0.25);
   flex: none;
+}
+
+/* サイドボタン */
+.phoneBtnL,
+.phoneBtnR {
+  position: absolute;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #45464b, #232427);
+}
+
+.phoneBtnL {
+  left: -2px;
+  top: 22%;
+  height: 11%;
+  box-shadow: 0 -28px 0 -0.5px #2e2f33;
+}
+
+.phoneBtnR {
+  right: -2px;
+  top: 28%;
+  height: 16%;
 }
 
 .phoneScreen {
   position: relative;
   height: 100%;
-  border-radius: 35px;
+  border-radius: 39px;
   background: #fff;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   font-size: 12px;
   color: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+/* ステータスバー（時刻・電波・電池） */
+.statusBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 38px;
+  padding: 0 22px 0 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.sbTime {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.sbIcons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sbSignal {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 9px;
+}
+
+.sbSignal i {
+  display: block;
+  width: 2.5px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.sbSignal i:nth-child(1) { height: 3px; }
+.sbSignal i:nth-child(2) { height: 5px; }
+.sbSignal i:nth-child(3) { height: 7px; }
+.sbSignal i:nth-child(4) { height: 9px; }
+
+.sbBattery {
+  position: relative;
+  width: 20px;
+  height: 9.5px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(17, 18, 20, 0.45);
+}
+
+.sbBattery::before {
+  content: "";
+  position: absolute;
+  inset: 2px 5px 2px 2px;
+  border-radius: 1.5px;
+  background: currentColor;
+}
+
+.sbBattery::after {
+  content: "";
+  position: absolute;
+  right: -2.5px;
+  top: 3px;
+  width: 1.5px;
+  height: 3.5px;
+  border-radius: 0 1px 1px 0;
+  background: rgba(17, 18, 20, 0.45);
 }
 
 .phoneNotch {
   position: absolute;
-  top: 9px;
+  top: 10px;
   left: 50%;
-  width: 84px;
-  height: 22px;
+  width: 76px;
+  height: 21px;
   border-radius: 999px;
-  background: #0f1012;
+  background: #0b0c0e;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 4;
+}
+
+.homeIndicator {
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  width: 34%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(17, 18, 20, 0.85);
+  transform: translateX(-50%);
+  z-index: 4;
 }
 
 .feedRoot {
@@ -431,8 +546,8 @@
   flex-direction: column;
 }
 
-/* Hero（汎用の土台）: 色は投稿ボタンのアクセントだけ */
-.postBtn {
+/* Hero（汎用の土台）: 色は投稿ボタンのアクセントだけ（.chip より優先させる） */
+.appBar .postBtn {
   background: var(--accent-soft);
   color: var(--accent);
 }
@@ -461,7 +576,7 @@
 }
 
 .appBar {
-  padding: 40px 16px 10px;
+  padding: 42px 16px 10px;
   transition: background-color 500ms var(--ease), border-color 500ms var(--ease);
   display: flex;
   align-items: center;
@@ -548,7 +663,9 @@
   margin-top: 8px;
   height: 92px;
   border-radius: 10px;
-  background: linear-gradient(160deg, #d9dcd6 0%, #b9bdb5 55%, #8f958c 100%);
+  background:
+    radial-gradient(120% 70% at 80% 10%, rgba(255, 255, 255, 0.55), transparent 60%),
+    linear-gradient(180deg, #dfe3e6 0%, #c9cfd2 55%, #9aa19d 56%, #858c88 100%);
   position: relative;
   overflow: hidden;
 }
@@ -742,122 +859,141 @@
 }
 
 /* ============================================================
-   FOUNDATION
+   FOUNDATION — ゼロから / Starter Kit の比較表
+   Starter Kit 側の列だけに青の地を敷き、違いを一目で分かるようにする
    ============================================================ */
-.compare {
-  margin-top: 48px;
-  display: grid;
-  gap: 16px;
+.compareTable {
+  width: 100%;
+  margin-top: 40px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
 }
 
-@media (min-width: 900px) {
-  .compare {
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-}
-
-.comparePanel {
-  border-radius: var(--radius);
-  padding: 26px 22px;
+.compareTable th,
+.compareTable td {
+  padding: 13px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+  text-align: left;
 }
 
 @media (min-width: 768px) {
-  .comparePanel {
-    padding: 36px;
+  .compareTable {
+    font-size: 16px;
+  }
+
+  .compareTable th,
+  .compareTable td {
+    padding: 18px 20px;
   }
 }
 
-.blankPanel {
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--line-strong);
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent 0 10px,
-    rgba(17, 18, 20, 0.018) 10px 11px
-  );
-}
-
-.kitPanel {
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.panelTitle {
-  font-size: 20px;
+.ctItemHead,
+.ctBlankHead,
+.ctKitHead {
+  font-size: 12px;
   font-weight: 700;
-}
-
-.panelSub {
-  font-size: 14px;
+  letter-spacing: 0.04em;
   color: var(--ink-3);
-  margin-top: 4px;
+  border-bottom: 1.5px solid var(--line-strong) !important;
 }
 
-.checkList {
-  list-style: none;
-  padding: 0;
-  margin: 22px 0 0;
-  display: grid;
-  gap: 2px;
+.ctBlankHead,
+.ctBlank {
+  width: 26%;
 }
 
-.checkList li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 15px;
+.ctKitHead,
+.ctKit {
+  width: 28%;
+  background: var(--accent-soft);
 }
 
-.checkList li:last-child {
+@media (min-width: 768px) {
+  .ctBlankHead,
+  .ctBlank,
+  .ctKitHead,
+  .ctKit {
+    width: 22%;
+  }
+}
+
+.ctKitHead {
+  color: var(--accent);
+  border-radius: 14px 14px 0 0;
+  border-bottom-color: color-mix(in srgb, var(--accent) 35%, var(--line)) !important;
+}
+
+.compareTable tbody tr:last-child .ctKit {
+  border-radius: 0 0 14px 14px;
   border-bottom: 0;
 }
 
-.blankItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--ink-2);
+.compareTable tbody tr:last-child th,
+.compareTable tbody tr:last-child .ctBlank {
+  border-bottom: 0;
 }
 
-.blankItem::before {
-  content: "";
-  width: 16px;
-  height: 16px;
-  border-radius: 5px;
-  border: 1.5px dashed var(--line-strong);
-  flex: none;
+.ctItem {
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.55;
 }
 
-.kitItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.ctBlank,
+.ctKit {
+  white-space: nowrap;
 }
 
-.kitItem::before {
-  content: "";
-  width: 16px;
-  height: 16px;
-  border-radius: 5px;
-  background: var(--ink);
-  flex: none;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='5'/%3E%3C/svg%3E");
-}
-
-.kitItem[data-status="planned"]::before {
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--ink);
-}
-
-.panelFoot {
-  margin-top: 18px;
-  font-size: 13px;
+.ctBlank {
   color: var(--ink-3);
-  line-height: 1.8;
+  font-size: 12.5px;
+}
+
+.ctBlank > *,
+.ctKit > * {
+  vertical-align: middle;
+}
+
+.ctBlankMark,
+.ctKitMark {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 6px;
+  flex: none;
+}
+
+.ctBlankMark {
+  border: 1.5px dashed var(--line-strong);
+}
+
+.ctKitMark {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.ctKitMark[data-status="verified"] {
+  background: var(--ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 18%, transparent);
+}
+
+.ctKit .badge_planned {
+  background: #fff;
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+@media (max-width: 479px) {
+  .ctBlank span:last-child {
+    display: none; /* 狭い画面では印だけにする（凡例は見出し「ゼロから」が担う） */
+  }
+
+  .ctBlankMark {
+    margin-right: 0;
+  }
 }
 
 /* ============================================================
@@ -1366,10 +1502,60 @@
   transition: opacity 400ms var(--ease);
 }
 
-.formBody {
-  padding: 14px 16px;
-  display: grid;
+.profileHead {
+  display: flex;
+  align-items: center;
   gap: 10px;
+  padding: 10px 16px 0;
+  font-size: 12px;
+}
+
+.profileHead strong {
+  display: block;
+  font-size: 13px;
+}
+
+.profileAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(135deg, #b8bcc4, #7d828b);
+  transition: background 500ms var(--ease);
+  flex: none;
+}
+
+.saveBtn {
+  margin-top: 4px;
+  height: 32px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: #9a9ea6;
+  transition: background-color 500ms var(--ease);
+}
+
+.sigStage[data-scene="3"] .saveBtn {
+  background: var(--tone);
+  transition-delay: 700ms;
+}
+
+.profileSub {
+  display: block;
+  font-size: 10.5px;
+  color: var(--ink-3);
+}
+
+.formBody {
+  padding: 10px 16px 28px;
+  display: grid;
+  gap: 7px;
 }
 
 .formRow {
@@ -1387,7 +1573,7 @@
 }
 
 .formInput {
-  height: 30px;
+  height: 27px;
   border-radius: 8px;
   background: var(--surface-2);
   display: flex;
@@ -1685,6 +1871,16 @@
   color: var(--tone-ink);
 }
 
+/* アバターも After でコミュニティの色へ */
+.sigStage[data-scene="3"] .profileAvatar,
+.sigStage[data-scene="4"] .profileAvatar {
+  background: linear-gradient(135deg, var(--tone), var(--tone-ink));
+}
+
+.sigStage[data-scene="3"] .profileAvatar {
+  transition-delay: 700ms;
+}
+
 /* 進行バー: 黒 → AIのアクセント → コミュニティの色 */
 .progressBar {
   transition: background-color 500ms var(--ease);
@@ -1751,21 +1947,22 @@
    SAFETY BOUNDARY
    ============================================================ */
 .zones {
-  margin-top: 48px;
+  margin-top: 40px;
   display: grid;
-  gap: 16px;
+  grid-template-columns: 1fr 1fr; /* モバイルでも横に並べて見比べられるようにする */
+  gap: 10px;
 }
 
 @media (min-width: 900px) {
   .zones {
-    grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
 }
 
 .zone {
   border-radius: var(--radius);
-  padding: 28px 24px;
+  padding: 20px 14px;
+  min-width: 0;
 }
 
 @media (min-width: 768px) {
@@ -1787,14 +1984,22 @@
 .zoneHead {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 19px;
+  gap: 8px;
+  font-size: 15px;
   font-weight: 700;
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .zoneHead {
+    gap: 10px;
+    font-size: 19px;
+  }
 }
 
 .zoneSub {
   margin-top: 6px;
-  font-size: 14px;
+  font-size: 12.5px;
   line-height: 1.8;
   color: var(--ink-3);
 }
@@ -1818,6 +2023,30 @@
   padding: 8px 14px;
   border-radius: 999px;
   background: var(--surface-2);
+}
+
+/* モバイル: チップではなく縦の一覧にして、左右の列を行ごとに見比べられるようにする */
+@media (max-width: 767px) {
+  .zoneList {
+    display: grid;
+    gap: 0;
+    margin-top: 14px;
+  }
+
+  .zones .zoneList li,
+  .zones .zoneSensitive .zoneList li {
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 9px 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .zones .zoneSensitive .zoneList li {
+    border-top-color: rgba(255, 255, 255, 0.12);
+  }
 }
 
 .zoneSensitive .zoneList li {
@@ -2449,7 +2678,7 @@
   gap: 12px;
   padding: 8px 8px 8px 20px;
   border-radius: 999px;
-  background: rgba(17, 18, 20, 0.94);
+  background: #111214;
   color: #fff;
   box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.45);
   transform: translate3d(0, calc(100% + 24px), 0);

@@ -241,6 +241,13 @@ export function SignatureScroll({ onReached }: { onReached?: () => void }) {
                   <span className={s.baTag} data-ba="before">Before</span>
                   <span className={s.baTag} data-ba="after">After</span>
                 </div>
+                <div className={s.profileHead}>
+                  <span className={s.profileAvatar}>T</span>
+                  <span>
+                    <strong>たくみ</strong>
+                    <span className={s.profileSub}>@takumi</span>
+                  </span>
+                </div>
                 <div className={s.formBody}>
                   <div className={s.formRow}>
                     <span className={s.formRowLabel}>{PROFILE_BEFORE[0]}</span>
@@ -256,6 +263,7 @@ export function SignatureScroll({ onReached }: { onReached?: () => void }) {
                     <span className={s.formRowLabel}>{PROFILE_BEFORE[1]}</span>
                     <span className={s.formInput}>週末は洗車とドライブ。</span>
                   </div>
+                  <span className={s.saveBtn}>保存する</span>
                 </div>
               </div>
 

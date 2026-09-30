@@ -1,6 +1,5 @@
 import { ArrowDown, Check, Lock, PenLine, X } from "lucide-react";
 import {
-  BLANK_PROJECT_ITEMS,
   COMMUNITY_EXAMPLES,
   CONFIRMED_ENVIRONMENT,
   FOUNDATION_FEATURES,
@@ -18,6 +17,7 @@ import {
 } from "@/lib/sns-starter-kit/content";
 import { HeroPhone } from "./PhoneMock";
 import { Phrase } from "./Phrase";
+import { Ja } from "./Ja";
 import { toneVars } from "./tone";
 import s from "./lp.module.css";
 
@@ -37,7 +37,11 @@ function SectionHead({ eyebrow, title, lead, id }: { eyebrow: string; title: str
       <h2 id={id} className={s.h2}>
         <Phrase text={title} />
       </h2>
-      {lead && <p className={s.lead}>{lead}</p>}
+      {lead && (
+        <p className={s.lead}>
+          <Ja text={lead} />
+        </p>
+      )}
     </header>
   );
 }
@@ -53,9 +57,7 @@ export function Hero() {
             <Phrase text={"自分の|コミュニティに|合う|SNSを、\n自分の|環境で。"} />
           </h1>
           <p className={s.heroSub}>
-            SNSの土台から始めて、AIと一緒に育てる。
-            <br />
-            AIでWebアプリ開発を試したことがある方向けの、買い切りSNS Starter Kit。
+            <Ja text={"SNSの土台から始めて、AIと一緒に育てる。\nAIでWebアプリ開発を試したことがある方向けの、買い切りSNS Starter Kit。"} />
           </p>
           <div className={s.heroPriceRow}>
             <p className={s.heroPrice}>
@@ -156,6 +158,8 @@ export function Problem() {
 }
 
 // ── 03 FOUNDATION ───────────────────────────────────────────
+// 「ゼロから作る」と「Starter Kit」を同じ行で横に比べる表（モバイルでも横並びのまま）。
+// Starter Kit 側の状態は content.ts の status（予定 / 確認済み）をそのまま表示する。
 export function Foundation() {
   const verifiedCount = FOUNDATION_FEATURES.filter((f) => f.status === "verified").length;
   return (
@@ -167,38 +171,42 @@ export function Foundation() {
           title={"ゼロから|作らない。\n土台から|始める。"}
           lead="SNSには、コミュニティの個性とは関係なく必要になる部品がたくさんあります。そこを毎回ゼロから作るのではなく、土台として受け取ってから始めます。"
         />
-        <div className={s.compare}>
-          <div className={`${s.comparePanel} ${s.blankPanel}`} data-reveal="">
-            <h3 className={s.panelTitle}>何もない状態から</h3>
-            <p className={s.panelSub}>すべてを自分で設計・実装する</p>
-            <ul className={s.checkList}>
-              {BLANK_PROJECT_ITEMS.map((item) => (
-                <li key={item}>
-                  <span className={s.blankItem}>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={`${s.comparePanel} ${s.kitPanel}`} data-reveal="">
-            <h3 className={s.panelTitle}>Starter Kitから</h3>
-            <p className={s.panelSub}>土台を受け取り、コミュニティに合わせて変える</p>
-            <ul className={s.checkList}>
-              {FOUNDATION_FEATURES.map((f) => (
-                <li key={f.id}>
-                  <span className={s.kitItem} data-status={f.status}>
-                    {f.label}
-                  </span>
+        <table className={s.compareTable} data-reveal="">
+          <caption className={s.srOnly}>ゼロから作る場合と Starter Kit の比較</caption>
+          <thead>
+            <tr>
+              <th scope="col" className={s.ctItemHead}>必要になる部品</th>
+              <th scope="col" className={s.ctBlankHead}>ゼロから</th>
+              <th scope="col" className={s.ctKitHead}>Starter Kit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {FOUNDATION_FEATURES.map((f) => (
+              <tr key={f.id}>
+                <th scope="row" className={s.ctItem}>
+                  <Ja text={f.label} />
+                </th>
+                <td className={s.ctBlank}>
+                  <span className={s.ctBlankMark} aria-hidden="true" />
+                  <span>自分で実装</span>
+                </td>
+                <td className={s.ctKit}>
+                  <span className={s.ctKitMark} data-status={f.status} aria-hidden="true" />
                   <StatusBadge status={f.status} />
-                </li>
-              ))}
-            </ul>
-            <p className={s.panelFoot}>
-              {verifiedCount === 0
-                ? "現在はすべて開発予定の項目です。開発・検証が完了したものから「確認済み」として掲載します。"
-                : "「確認済み」は開発・検証が完了した項目です。「予定」は検証が完了してから確定します。"}
-            </p>
-          </div>
-        </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className={s.note}>
+          <Ja
+            text={
+              verifiedCount === 0
+                ? "Starter Kit 側は、現在すべて開発予定の項目です。開発・検証が完了したものから「確認済み」として掲載します。"
+                : "「確認済み」は開発・検証が完了した項目です。「予定」は検証が完了してから確定します。"
+            }
+          />
+        </p>
       </div>
     </section>
   );
@@ -218,9 +226,13 @@ export function SafetyBoundary() {
           <div className={`${s.zone} ${s.zoneSafe}`} data-reveal="">
             <p className={s.zoneHead}>
               <PenLine size={20} aria-hidden="true" />
-              変更しやすい場所
+              <span>
+                <Ja text="変更しやすい場所" />
+              </span>
             </p>
-            <p className={s.zoneSub}>コミュニティの個性に関わる部分。ここから始めます。</p>
+            <p className={s.zoneSub}>
+              <Ja text="コミュニティの個性に関わる部分。ここから始めます。" />
+            </p>
             <ul className={s.zoneList}>
               {SAFE_CHANGES.map((x) => (
                 <li key={x}>{x}</li>
@@ -230,9 +242,13 @@ export function SafetyBoundary() {
           <div className={`${s.zone} ${s.zoneSensitive}`} data-reveal="">
             <p className={s.zoneHead}>
               <Lock size={20} aria-hidden="true" />
-              慎重に扱う場所
+              <span>
+                <Ja text="慎重に扱う場所" />
+              </span>
             </p>
-            <p className={s.zoneSub}>利用者のデータと安全に関わる部分。変更前に確認が必要です。</p>
+            <p className={s.zoneSub}>
+              <Ja text="利用者のデータと安全に関わる部分。変更前に確認が必要です。" />
+            </p>
             <ul className={s.zoneList}>
               {SENSITIVE_AREAS.map((x) => (
                 <li key={x}>{x}</li>
@@ -267,7 +283,7 @@ export function PackageSection() {
           ))}
         </ul>
         <p className={s.note}>
-          内容は販売開始までに確定します。「予定」の項目は、開発・検証が完了したものだけを販売時の内容として掲載します。
+          <Ja text="内容は販売開始までに確定します。「予定」の項目は、開発・検証が完了したものだけを販売時の内容として掲載します。" />
         </p>
       </div>
     </section>
@@ -308,8 +324,12 @@ export function HowItWorks() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
-                <p className={s.stepTitle}>{step.title}</p>
-                <p className={s.stepBody}>{step.body}</p>
+                <p className={s.stepTitle}>
+                  <Ja text={step.title} />
+                </p>
+                <p className={s.stepBody}>
+                  <Ja text={step.body} />
+                </p>
               </div>
             </li>
           ))}
@@ -331,15 +351,21 @@ export function Prerequisites() {
           lead="ご自身の環境で動かし、公開後も運用していくための商品です。次のどちらかに当てはまる方を想定しています。"
         />
         <div className={s.targetGrid} data-reveal="">
-          <p className={s.targetCard}>AIを使ったWeb開発を、実際に試したことがある方</p>
+          <p className={s.targetCard}>
+            <Ja text="AIを使ったWeb開発を、実際に試したことがある方" />
+          </p>
           <p className={s.targetOr}>または</p>
-          <p className={s.targetCard}>導入を担当できる技術協力者がいる方</p>
+          <p className={s.targetCard}>
+            <Ja text="導入を担当できる技術協力者がいる方" />
+          </p>
         </div>
         <dl className={s.reqGrid} data-reveal="">
           {REQUIREMENTS.map((r) => (
             <div key={r.label} className={s.req}>
               <dt>{r.label}</dt>
-              <dd>{r.body}</dd>
+              <dd>
+                <Ja text={r.body} />
+              </dd>
             </div>
           ))}
         </dl>
@@ -351,7 +377,7 @@ export function Prerequisites() {
           </p>
           {CONFIRMED_ENVIRONMENT.length === 0 ? (
             <p style={{ marginTop: 6 }}>
-              対応するOS・ブラウザ・AI開発環境・バージョンと利用上の制限は、製品の検証が完了してから掲載します。
+              <Ja text="対応するOS・ブラウザ・AI開発環境・バージョンと利用上の制限は、製品の検証が完了してから掲載します。" />
             </p>
           ) : (
             <dl style={{ marginTop: 6 }}>
@@ -411,7 +437,9 @@ export function Price() {
               先行予約する
             </a>
           </div>
-          <p className={s.priceNotice}>現在は販売準備中です。先行予約は購入ではありません。</p>
+          <p className={s.priceNotice}>
+            <Ja text="現在は販売準備中です。先行予約は購入ではありません。" />
+          </p>
         </div>
       </div>
     </section>
