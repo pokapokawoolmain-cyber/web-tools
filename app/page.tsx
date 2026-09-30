@@ -88,12 +88,18 @@ export default function HomePage() {
           1. HERO
       ══════════════════════════════════════════════ */}
       <section className="relative bg-gradient-to-b from-zinc-950 to-zinc-900 pt-14 pb-24 sm:pt-20 sm:pb-32 overflow-hidden">
-        {/* 環境光（奥行き演出・スクロール視差つき） */}
+        {/* 環境光（奥行き演出・スクロール視差つき・複数色） */}
         <Parallax speed={0.18} className="absolute -top-32 -left-32 pointer-events-none">
           <div aria-hidden="true" className="w-[480px] h-[480px] rounded-full bg-blue-600/15 blur-[120px]" />
         </Parallax>
         <Parallax speed={-0.12} className="absolute top-1/3 -right-40 pointer-events-none">
-          <div aria-hidden="true" className="w-[520px] h-[520px] rounded-full bg-indigo-500/10 blur-[140px]" />
+          <div aria-hidden="true" className="w-[520px] h-[520px] rounded-full bg-violet-500/12 blur-[140px]" />
+        </Parallax>
+        <Parallax speed={0.1} className="absolute bottom-0 left-1/3 pointer-events-none">
+          <div aria-hidden="true" className="w-[420px] h-[420px] rounded-full bg-emerald-500/8 blur-[130px]" />
+        </Parallax>
+        <Parallax speed={-0.08} className="absolute top-0 right-1/4 pointer-events-none">
+          <div aria-hidden="true" className="w-[360px] h-[360px] rounded-full bg-pink-500/8 blur-[120px]" />
         </Parallax>
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
         <div className="container-base relative">
@@ -120,8 +126,20 @@ export default function HomePage() {
               </h1>
 
               <ScrollReveal delay={500}>
+                <div className="flex flex-wrap items-center gap-1.5 mb-4">
+                  {[
+                    { label: "PDF", cls: "bg-sky-500/15 text-sky-300 border-sky-400/20" },
+                    { label: "画像", cls: "bg-violet-500/15 text-violet-300 border-violet-400/20" },
+                    { label: "お金", cls: "bg-emerald-500/15 text-emerald-300 border-emerald-400/20" },
+                    { label: "書類", cls: "bg-indigo-500/15 text-indigo-300 border-indigo-400/20" },
+                    { label: "生活", cls: "bg-pink-500/15 text-pink-300 border-pink-400/20" },
+                  ].map((c) => (
+                    <span key={c.label} className={`px-2.5 py-1 rounded-full text-[11px] font-bold border ${c.cls}`}>
+                      {c.label}
+                    </span>
+                  ))}
+                </div>
                 <p className="text-[16px] sm:text-[17px] text-zinc-300 leading-relaxed mb-10 max-w-md">
-                  PDF・画像・書類・お金・生活。<br />
                   {TOOLS.length}種類のツールが、ブラウザだけで使える。
                 </p>
               </ScrollReveal>
@@ -470,14 +488,14 @@ export default function HomePage() {
               <ScrollReveal key={cat.slug} delay={i * 40}>
                 <Link
                   href={`/${cat.slug}`}
-                  className="group flex flex-col items-center gap-3 py-6 px-4 rounded-2xl bg-white/70 dark:bg-zinc-800/70 backdrop-blur-md border border-slate-200/80 dark:border-zinc-700/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_rgba(15,23,42,0.04)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.2)] hover:border-slate-300 dark:hover:border-zinc-600 hover:shadow-lg hover:-translate-y-1 transition-all text-center"
+                  className={`group flex flex-col items-center gap-3 py-6 px-4 rounded-2xl bg-gradient-to-br ${cat.gradientLight} backdrop-blur-md border border-white/60 dark:border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_2px_8px_rgba(15,23,42,0.04)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-lg hover:-translate-y-1 transition-all text-center`}
                 >
                   <CategoryIcon slug={cat.slug} size="lg" fallbackEmoji={cat.icon} className="group-hover:scale-105 transition-transform" />
                   <div>
-                    <p className="text-[13px] font-semibold text-slate-800 dark:text-zinc-200 leading-tight mb-0.5">
+                    <p className={`text-[13px] font-bold leading-tight mb-0.5 ${cat.accentColor}`}>
                       {cat.name}
                     </p>
-                    <p className="text-[11px] text-slate-400 dark:text-zinc-500">
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400">
                       {cat.allToolIds.length}ツール
                     </p>
                   </div>
