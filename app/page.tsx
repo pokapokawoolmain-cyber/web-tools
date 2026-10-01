@@ -30,7 +30,25 @@ export const metadata: Metadata = {
     title: "ToolBoxJP | 無料Webツール集",
     description: "PDF・画像・お金・仕事の作業をブラウザだけでかんたんに。登録不要・無料。",
     url: siteUrl,
+    siteName: "ToolBox",
+    locale: "ja_JP",
     type: "website",
+    images: [
+      {
+        url: `${siteUrl}/api/og?${new URLSearchParams({ title: "ToolBoxJP | 無料Webツール集", icon: "🧰", desc: "PDF・画像・お金・仕事の作業をブラウザだけでかんたんに。登録不要・無料。" }).toString()}`,
+        width: 1200,
+        height: 630,
+        alt: "ToolBoxJP | 無料Webツール集",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ToolBoxJP | 無料Webツール集",
+    description: "PDF・画像・お金・仕事の作業をブラウザだけでかんたんに。登録不要・無料。",
+    images: [
+      `${siteUrl}/api/og?${new URLSearchParams({ title: "ToolBoxJP | 無料Webツール集", icon: "🧰", desc: "PDF・画像・お金・仕事の作業をブラウザだけでかんたんに。登録不要・無料。" }).toString()}`,
+    ],
   },
 };
 
