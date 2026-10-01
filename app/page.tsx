@@ -106,19 +106,22 @@ export default function HomePage() {
           1. HERO
       ══════════════════════════════════════════════ */}
       <section className="relative bg-gradient-to-b from-zinc-950 to-zinc-900 pt-14 pb-24 sm:pt-20 sm:pb-32 overflow-hidden">
-        {/* 環境光（奥行き演出・スクロール視差つき・複数色） */}
-        <Parallax speed={0.18} className="absolute -top-32 -left-32 pointer-events-none">
-          <div aria-hidden="true" className="w-[480px] h-[480px] rounded-full bg-blue-600/15 blur-[120px]" />
-        </Parallax>
-        <Parallax speed={-0.12} className="absolute top-1/3 -right-40 pointer-events-none">
-          <div aria-hidden="true" className="w-[520px] h-[520px] rounded-full bg-violet-500/12 blur-[140px]" />
-        </Parallax>
-        <Parallax speed={0.1} className="absolute bottom-0 left-1/3 pointer-events-none">
-          <div aria-hidden="true" className="w-[420px] h-[420px] rounded-full bg-emerald-500/8 blur-[130px]" />
-        </Parallax>
-        <Parallax speed={-0.08} className="absolute top-0 right-1/4 pointer-events-none">
-          <div aria-hidden="true" className="w-[360px] h-[360px] rounded-full bg-pink-500/8 blur-[120px]" />
-        </Parallax>
+        {/* 環境光（奥行き演出・スクロール視差つき・複数色）
+            はみ出す光彩を専用レイヤーで切り抜く。section自体がはみ出しを持つと、タブのフォーカス時に横スクロールして中身がずれるため */}
+        <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+          <Parallax speed={0.18} className="absolute -top-32 -left-32">
+            <div className="w-[480px] h-[480px] rounded-full bg-blue-600/15 blur-[120px]" />
+          </Parallax>
+          <Parallax speed={-0.12} className="absolute top-1/3 -right-40">
+            <div className="w-[520px] h-[520px] rounded-full bg-violet-500/12 blur-[140px]" />
+          </Parallax>
+          <Parallax speed={0.1} className="absolute bottom-0 left-1/3">
+            <div className="w-[420px] h-[420px] rounded-full bg-emerald-500/8 blur-[130px]" />
+          </Parallax>
+          <Parallax speed={-0.08} className="absolute top-0 right-1/4">
+            <div className="w-[360px] h-[360px] rounded-full bg-pink-500/8 blur-[120px]" />
+          </Parallax>
+        </div>
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
         <div className="container-base relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
