@@ -62,6 +62,7 @@ export function SignatureScroll({ onReached }: { onReached?: () => void }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const captionsRef = useRef<HTMLOListElement>(null);
+  const visualRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -130,7 +131,26 @@ export function SignatureScroll({ onReached }: { onReached?: () => void }) {
     io.observe(section);
     update();
 
+    // 端末プレビューの倍率: 設計サイズ（300×610）を表示領域に収める。
+    // 大きさが変わったときだけ計算する（スクロール中は計算しない）。
+    const visual = visualRef.current;
+    const PHONE_W = 300;
+    const PHONE_H = 610;
+    const fitPhone = () => {
+      if (!visual) return;
+      const { width, height } = visual.getBoundingClientRect();
+      if (!width || !height) return;
+      // PC では作業画面と並ぶため、以前と同じ大きさ（約540px）を上限にする
+      const cap = window.innerWidth >= 1024 ? 0.88 : 1;
+      const scale = Math.min(cap, (height - 12) / PHONE_H, (width * 0.92) / PHONE_W);
+      stage.style.setProperty("--phone-scale", Math.max(0.4, scale).toFixed(3));
+    };
+    const ro = visual ? new ResizeObserver(fitPhone) : null;
+    if (visual && ro) ro.observe(visual);
+    fitPhone();
+
     return () => {
+      ro?.disconnect();
       io.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
@@ -151,7 +171,7 @@ export function SignatureScroll({ onReached }: { onReached?: () => void }) {
           ))}
         </ol>
 
-        <div className={s.visual} aria-hidden="true">
+        <div ref={visualRef} className={s.visual} aria-hidden="true">
           {/* Workspace window */}
           <div className={s.win}>
             <div className={s.winBar}>
