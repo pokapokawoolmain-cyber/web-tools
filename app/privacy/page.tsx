@@ -1,185 +1,297 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { generateMeta } from "@/lib/seo";
 
 export const metadata: Metadata = generateMeta({
   title: "プライバシーポリシー",
-  description: "ToolBoxのプライバシーポリシー。個人情報の取り扱い、Cookie・Google Analytics・Google AdSenseの利用について説明します。",
+  description:
+    "ToolBoxJPのプライバシーポリシー。運営者、先行予約フォームで取得する情報と利用目的、保存期間、アクセス解析、開示等の請求窓口について説明します。",
   path: "/privacy",
 });
 
-// ★FINAL DRAFT（2026-10-01）: SNS Starter Kit 先行予約フォームの追加に合わせた改訂案。
-//   Chief Decision D1〜D5 を反映。CEO / Legal の承認前（法務承認済みとして扱わない）。
-//   承認時に「最終更新日」・【要決定】・【確認待ち】の箇所を確定させ、
-//   lib/sns-starter-kit/reservation.ts の RESERVATION_CONSENT_VERSION を更新すること。
-//   根拠: lib/sns-starter-kit/reservation.ts（取得項目）・lib/analytics/sns-starter-kit.ts（計測項目）
-const PENDING = "text-amber-700 dark:text-amber-400 font-semibold";
+// ============================================================
+// プライバシーポリシー（CEO 確定文面 2026-10-02）
+//
+// ★本番公開時に必ず行うこと
+//   1. LAST_UPDATED を本番公開日に置き換える（現在はプレースホルダー）
+//   2. 下の「追加提案（AdSense / Cookie）」ブロックの扱いを CEO が決定し、
+//      採用する場合は番号を振り直して正式な条文にする（PENDING 表示を外す）
+//   3. 文面を変えた場合は lib/sns-starter-kit/reservation.ts の RESERVATION_CONSENT_VERSION を更新する
+// ============================================================
+const LAST_UPDATED = "［本番公開日］";
+const CONTACT_EMAIL = "privacy@toolboxjp.com";
+const PENDING =
+  "rounded-xl border border-amber-300 bg-amber-50 dark:border-amber-500/40 dark:bg-amber-500/10 p-4 sm:p-5";
+
+const P = ({ children }: { children: ReactNode }) => (
+  <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">{children}</p>
+);
+
+const UL = ({ items }: { items: ReactNode[] }) => (
+  <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400">
+    {items.map((x, i) => (
+      <li key={i}>{x}</li>
+    ))}
+  </ul>
+);
+
+const Mail = () => (
+  <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+    {CONTACT_EMAIL}
+  </a>
+);
+
+const ExtLink = ({ href, children }: { href: string; children: ReactNode }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">
+    {children}
+  </a>
+);
+
+function Section({ n, title, children }: { n: number; title: string; children: ReactNode }) {
+  return (
+    <section>
+      <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">
+        {n}. {title}
+      </h2>
+      <div className="space-y-3">{children}</div>
+    </section>
+  );
+}
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <div className="max-w-3xl mx-auto px-4 py-12 sm:py-16">
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">
-          プライバシーポリシー
-        </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-10">最終更新日：2026年6月14日</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">プライバシーポリシー</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">最終更新日：{LAST_UPDATED}</p>
 
         <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
+          <P>
+            ToolBoxJP（以下「当サイト」といいます。）は、当サイトをご利用いただく方の個人情報その他の情報を適切に取り扱うため、以下のとおりプライバシーポリシーを定めます。
+          </P>
 
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">1. 基本方針</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              ToolBox（以下「当サイト」）は、ユーザーのプライバシーを尊重し、個人情報の保護に努めます。当サイトの無料ツールはすべてブラウザ内で処理が完結しており、ツールにアップロードしたファイルや入力データはサーバーに送信されません。ただし、お問い合わせフォームや商品の先行予約フォームなど、ご本人が入力して送信するフォームの内容は、第3項に定めるとおり取得します。
+          <Section n={1} title="運営者">
+            <UL items={["運営者：𠮷田 貴由", "屋号：akamaru Corp."]} />
+            <P>当サイトは個人事業として運営しています。</P>
+            <P>
+              所在地については、個人情報保護法その他の法令に基づき、ご本人から開示の求めがあった場合、必要な本人確認を行ったうえで遅滞なく回答します。
+            </P>
+            <P>
+              個人情報に関するお問い合わせ先：
+              <Mail />
+            </P>
+          </Section>
+
+          <Section n={2} title="無料ツールの利用について">
+            <P>
+              ToolBoxJPで提供する無料ツールのうち、ブラウザ内で処理が完結するものについては、入力したファイルや入力内容を当サイトのサーバーへ送信しない設計を基本としています。
+            </P>
+            <P>ただし、各ツールの機能上、外部サーバーとの通信が必要となる場合は、そのツール上で必要な情報を表示します。</P>
+            <P>
+              また、お問い合わせフォーム、先行予約フォームその他、ご本人が情報を送信するフォームについては、本ポリシーに記載する目的のため、送信された情報を取得します。
+            </P>
+          </Section>
+
+          <Section n={3} title="先行予約フォームで取得する情報">
+            <P>SNS Starter Kitの先行予約では、次の情報を取得します。</P>
+            <UL
+              items={[
+                "メールアドレス",
+                "AIを利用したWeb開発経験等の選択内容",
+                "作成したいコミュニティに関する記述",
+                "利用予定時期に関する回答",
+                "販売開始案内への同意",
+                "その他のお知らせへの同意",
+                "同意時に表示した文言の版",
+                "流入元に関する情報（source、UTMパラメータ等）",
+                "登録日時",
+                "予約状態",
+                "受信停止に関する記録",
+              ]}
+            />
+          </Section>
+
+          <Section n={4} title="取得した情報の利用目的">
+            <P>取得した情報は、次の目的で利用します。</P>
+            <UL
+              items={[
+                "SNS Starter Kitの先行予約を管理するため",
+                "重複登録を防止するため",
+                "SNS Starter Kitの販売開始、提供内容および購入方法をご案内するため",
+                "商品の内容、導入方法および提供方法を改善するため",
+                "流入経路や利用状況を個人を特定しない形で分析するため",
+                "ご本人からのお問い合わせ、開示、訂正、削除、利用停止等へ対応するため",
+                "任意の同意をいただいた場合に限り、ToolBoxJPの商品、サービスその他のお知らせをご案内するため",
+              ]}
+            />
+            <P>販売開始案内への同意と、その他のマーケティング目的のお知らせへの同意は分けて取得します。</P>
+            <P>その他のお知らせへの同意は任意であり、同意しなくてもSNS Starter Kitの先行予約を行うことができます。</P>
+          </Section>
+
+          <Section n={5} title="先行予約について">
+            <P>
+              SNS Starter Kitの先行予約は、商品の購入、売買契約の成立、予約金または前金の支払いを意味するものではありません。
+            </P>
+            <P>先行予約時点では代金を受領せず、販売条件が確定した後、販売開始の案内をお送りします。</P>
+            <P>
+              販売開始後に購入を希望される場合は、その時点で提示する販売条件をご確認いただいたうえで、別途購入手続を行っていただきます。
+            </P>
+          </Section>
+
+          <Section n={6} title="情報の保存および外部サービスの利用">
+            <P>SNS Starter Kitの先行予約情報は、当サイトが利用するデータベースサービスであるSupabaseに保存します。</P>
+            <P>現在、予約情報は日本国内の東京リージョンに保存する構成としています。</P>
+            <P>
+              また、当サイトはWebサイトの提供、フォームの処理、データの保存、アクセス解析等のため、Vercel、Supabase、Googleその他の外部サービスを利用する場合があります。
+            </P>
+            <P>
+              これらの外部サービスを利用する場合は、利用目的の達成に必要な範囲で情報を取り扱い、各サービスの契約、設定および適用法令に基づき適切な管理に努めます。
+            </P>
+          </Section>
+
+          <Section n={7} title="保存期間">
+            <P>SNS Starter Kitの先行予約情報は、販売開始の案内が完了した後6か月を基本的な保存期間とします。</P>
+            <P>保存する必要がなくなった情報については、法令上保存が必要な場合を除き、削除または適切な方法で処理します。</P>
+            <P>
+              ご本人から削除または利用停止の依頼があった場合は、法令その他の正当な理由により保存が必要な場合を除き、内容を確認のうえ対応します。
+            </P>
+            <P>
+              商品購入後に必要となる注文、決済、会計その他の記録については、先行予約情報とは分けて管理し、それぞれ適用される法令および保存目的に従って取り扱います。
+            </P>
+          </Section>
+
+          <Section n={8} title="アクセス解析">
+            <P>当サイトでは、Google Analytics、Vercel Analyticsその他のアクセス解析サービスを利用する場合があります。</P>
+            <P>アクセス解析では、ページの閲覧、操作、利用端末、流入元等に関する情報を取得する場合があります。</P>
+            <P>
+              SNS Starter Kitの予約フォームへ入力したメールアドレスやコミュニティに関する自由記述内容を、アクセス解析サービスのイベント情報として送信しません。
+            </P>
+            <P>アクセス解析サービスによる情報の取扱いについては、それぞれのサービス提供者の定めるポリシーが適用される場合があります。</P>
+          </Section>
+
+          {/* ★追加提案（CEO承認待ち）: 現行ポリシーにあった広告配信・Cookie の記載。
+                本番では Google AdSense が有効なため、AdSense のプログラムポリシー上、
+                第三者 Cookie の利用とオプトアウト方法の開示が必要。採用時は番号を振り直す。 */}
+          <section className={PENDING}>
+            <p className="text-xs font-bold text-amber-700 dark:text-amber-400 mb-3">
+              【追加提案（CEO承認待ち）】現行ポリシーの広告配信・Cookieに関する記載
             </p>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">広告配信（Google AdSense）</h2>
+            <div className="space-y-3">
+              <P>当サイトは、第三者配信の広告サービスとしてGoogle AdSense（Google LLC）を利用しています。</P>
+              <UL
+                items={[
+                  "Googleなどの第三者配信事業者は、Cookieを使用して、ユーザーの過去のアクセス情報に基づいて広告を配信します。",
+                  "これにより、ユーザーの興味・関心に応じた広告（パーソナライズ広告）が表示される場合があります。",
+                ]}
+              />
+              <P>パーソナライズ広告は、次の方法で無効化（オプトアウト）できます。</P>
+              <UL
+                items={[
+                  <>
+                    Googleの<ExtLink href="https://myadcenter.google.com/">広告設定（My Ad Center）</ExtLink>
+                    でパーソナライズを管理する
+                  </>,
+                  <>
+                    <ExtLink href="https://www.aboutads.info/choices/">aboutads.info</ExtLink>
+                    で参加事業者の広告をまとめてオプトアウトする
+                  </>,
+                  <>
+                    第三者配信事業者によるCookie利用の詳細は
+                    <ExtLink href="https://policies.google.com/technologies/partner-sites">
+                      Googleの「ユーザーがGoogleパートナーのサイトやアプリを使用する際のデータ処理」
+                    </ExtLink>
+                    を確認する
+                  </>,
+                ]}
+              />
+            </div>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mt-6 mb-3">Cookieと同意管理</h2>
+            <div className="space-y-3">
+              <P>当サイトでは目的別に次のCookieを使用します。</P>
+              <UL
+                items={[
+                  "必須Cookie：テーマ（ダークモード）設定など、サイトの基本動作に必要なもの。",
+                  "アクセス解析Cookie：Google Analyticsによる利用状況の把握。",
+                  "広告Cookie：Google AdSenseによる広告配信・効果測定。",
+                ]}
+              />
+              <P>
+                欧州経済領域（EEA）・英国・スイスなどからのアクセスについては、Google認定の同意管理ツール（CMP）を通じて、広告・解析Cookieの利用可否を選択いただけるよう対応します。いずれの地域でも、ブラウザの設定からCookieを無効化できますが、その場合は一部機能が正常に動作しないことがあります。
+              </P>
+            </div>
           </section>
 
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">2. 収集する情報</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
-              当サイトでは、以下の情報を自動的に収集することがあります。
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400">
-              <li>アクセスログ（IPアドレス、ブラウザの種類、参照元URL、アクセス日時）</li>
-              <li>Cookie情報（アクセス解析・広告配信のため）</li>
-              <li>ページ閲覧履歴・操作ログ（Google Analytics経由）</li>
-            </ul>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mt-3">
-              無料ツールのご利用にあたって、氏名・メールアドレス・住所などの個人を特定できる情報を取得することはありません。
-            </p>
-          </section>
+          <Section n={9} title="第三者への提供">
+            <P>当サイトは、法令に基づく場合その他法令上認められる場合を除き、ご本人の同意なく個人データを第三者へ提供しません。</P>
+            <P>
+              ただし、サイト運営、データ保存、メール送信その他の業務を行うため、必要な範囲で外部サービス事業者へ個人情報の取扱いを委託する場合があります。
+            </P>
+          </Section>
 
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">3. フォームから送信いただく情報</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
-              ご本人が次のフォームに入力して送信した場合に限り、その内容を取得します。
-            </p>
+          <Section n={10} title="安全管理">
+            <P>
+              当サイトは、取得した情報について、不正アクセス、漏えい、滅失または毀損等を防止するため、必要かつ適切な安全管理措置を講じるよう努めます。
+            </P>
+            <P>SNS Starter Kitの先行予約データについては、ブラウザからデータベースへ直接アクセスさせず、サーバー側の処理を通じて保存します。</P>
+            <P>また、データベースへの一般利用者からの直接的な読み取り、追加、変更および削除を制限する構成としています。</P>
+          </Section>
 
-            <h3 className="text-[15px] font-bold text-slate-900 dark:text-white mt-4 mb-2">（1）SNS Starter Kit の先行予約</h3>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-2">取得する情報：</p>
-            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400 mb-3">
-              <li>メールアドレス</li>
-              <li>AIを使ったWeb開発の経験（選択式）、作りたいコミュニティの説明（自由記述）、30日以内に使い始める予定（選択式）</li>
-              <li>販売開始のご案内の受け取りへの同意、その他のお知らせの受け取りへの同意（任意）と、同意時の文言の版</li>
-              <li>流入元（参照元の分類と、URLに含まれる utm_source / utm_medium / utm_campaign の値）</li>
-              <li>登録日時と、ご案内の状況（予約済み・案内済みなど）</li>
-            </ul>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-2">利用目的：</p>
-            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400 mb-3">
-              <li>SNS Starter Kit の販売開始時に、商品内容と購入方法をメールでご案内するため（先行予約の成立に必要な同意です）</li>
-              <li>先行予約の受付状況を管理するため（同じメールアドレスでの重複登録の防止を含みます）</li>
-              <li>「その他のお知らせ」の受け取りに同意いただいた方にのみ、ToolBoxJP の他の商品やお知らせをメールでご案内するため（任意。同意しなくても先行予約はできます）</li>
-              <li>商品の内容や案内の改善の参考とするため（個人を特定しない形で集計します）</li>
-              <li>どの経路から先行予約があったかを把握するため</li>
-            </ul>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
-              先行予約は購入ではなく、予約金や購入の義務はありません。先行予約フォームに入力されたメールアドレスや自由記述の内容は、Google Analytics などのアクセス解析には送信しません。
-            </p>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
-              保存と管理：取得した情報は、当サイトが利用するデータベースサービス Supabase（Supabase Inc.）に保存します。保存地域は日本（東京）です。閲覧できる者は運営者に限定します。
-            </p>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
-              保存期間：販売開始のご案内の完了後6か月を基本とし、期間の経過後、またはご本人から削除のご依頼があった場合は、速やかに削除します。なお、商品をご購入いただいた場合の購入・会計に関する記録は、先行予約の情報とは分けて取り扱います。
-            </p>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              メールの受信停止・登録内容の削除：
-              <span className={PENDING}>【確認待ち：受信可能な窓口メールアドレス（第一候補 privacy@toolboxjp.com。受信できることを確認した後に掲載）】</span>
-              までご連絡ください。
-            </p>
+          <Section n={11} title="販売開始案内およびその他のメール">
+            <P>販売開始案内は、先行予約時に明示的に同意いただいたメールアドレスへ送信します。</P>
+            <P>その他の商品・サービス等に関するお知らせは、別途任意の同意をいただいた場合に限り送信します。</P>
+            <P>メールの受信停止を希望される場合は、メール本文に記載する方法または以下の窓口からお申し出いただけます。</P>
+            <P>
+              <Mail />
+            </P>
+            <P>受信停止の意思を確認した後は、法令上認められる場合を除き、その意思に反して対象となる案内を送信しません。</P>
+          </Section>
 
-            <h3 className="text-[15px] font-bold text-slate-900 dark:text-white mt-6 mb-2">（2）お問い合わせフォーム</h3>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              お名前、メールアドレス、お問い合わせの種類と内容を取得し、お問い合わせへの回答のためにのみ利用します。送信内容は Google フォーム（Google LLC）を通じて受け付けます。
-            </p>
-          </section>
+          <Section n={12} title="開示、訂正、削除、利用停止等の請求">
+            <P>
+              当サイトが保有するご本人の個人データについて、利用目的の通知、開示、訂正、追加、削除、利用停止、消去その他法令に基づく請求を希望される場合は、以下の窓口までご連絡ください。
+            </P>
+            <P>
+              <Mail />
+            </P>
+            <P>ご連絡の際は、次の事項をお知らせください。</P>
+            <UL items={["ご希望の手続内容", "先行予約等で使用したメールアドレス", "本人確認に必要な情報"]} />
+            <P>原則として、登録に使用したメールアドレスからのご連絡等により本人確認を行います。</P>
+            <P>必要以上の本人確認資料を求めることはせず、請求内容に応じて合理的な方法で本人確認を行います。</P>
+            <P>本人確認後、法令に従い遅滞なく対応します。</P>
+            <P>これらの手続に関する手数料は原則としていただきません。</P>
+          </Section>
 
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">4. Google Analytics</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              当サイトはアクセス解析にGoogle Analytics（Google LLC）を使用しています。Google AnalyticsはCookieを使用してアクセス情報を収集しますが、個人を特定する情報は含まれません。フォームに入力されたメールアドレスや自由記述の内容を Google Analytics に送信することはありません（先行予約ページでは、ページの閲覧・ボタンの操作・フォームの送信完了といった操作の記録と、流入元の分類だけを送信します）。収集されたデータはGoogleのプライバシーポリシーに基づいて管理されます。Googleのデータ収集・利用を無効にしたい場合は、Google Analytics オプトアウトアドオンをご利用ください。
-            </p>
-          </section>
+          <Section n={13} title="住所に関するお問い合わせ">
+            <P>
+              当サイト運営者の住所について、個人情報保護法その他の法令に基づきご本人から開示の求めがあった場合は、以下の窓口へご連絡ください。
+            </P>
+            <P>
+              <Mail />
+            </P>
+            <P>必要な本人確認を行ったうえで、法令に従い遅滞なく回答します。</P>
+          </Section>
 
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">5. Google AdSenseと第三者配信事業者</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
-              当サイトは、第三者配信の広告サービスとしてGoogle AdSense（Google LLC）を利用しています。
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400 mb-3">
-              <li>Googleなどの第三者配信事業者は、Cookieを使用して、ユーザーの過去のアクセス情報に基づいて広告を配信します。</li>
-              <li>これにより、ユーザーの興味・関心に応じた広告（パーソナライズ広告）が表示される場合があります。</li>
-              <li>当サイトが取得するのは匿名のアクセス情報であり、氏名・住所などの個人を特定する情報は取得しません。</li>
-            </ul>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-2">
-              パーソナライズ広告は、次の方法で無効化（オプトアウト）できます。
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400">
-              <li>
-                Googleの
-                <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">広告設定（My Ad Center）でパーソナライズを管理する</a>
-              </li>
-              <li>
-                <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">aboutads.info で参加事業者の広告をまとめてオプトアウトする</a>
-              </li>
-              <li>
-                第三者配信事業者によるCookie利用の詳細は
-                <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline mx-1">Googleの「ユーザーがGoogleパートナーのサイトやアプリを使用する際のデータ処理」を確認する</a>
-              </li>
-            </ul>
-          </section>
+          <Section n={14} title="プライバシーポリシーの変更">
+            <P>当サイトは、法令の改正、サービス内容の変更その他必要に応じて、本ポリシーを変更することがあります。</P>
+            <P>重要な変更を行う場合は、当サイト上での掲載その他適切な方法によりお知らせします。</P>
+            <P>変更後のプライバシーポリシーは、当サイト上に掲載した時点から適用します。</P>
+          </Section>
 
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">6. Cookieと同意管理</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
-              Cookieとは、ウェブサイトがブラウザに保存する小さなデータファイルです。当サイトでは目的別に次のCookieを使用します。
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400 mb-3">
-              <li><strong>必須Cookie</strong>：テーマ（ダークモード）設定など、サイトの基本動作に必要なもの。</li>
-              <li><strong>アクセス解析Cookie</strong>：Google Analyticsによる利用状況の把握。</li>
-              <li><strong>広告Cookie</strong>：Google AdSenseによる広告配信・効果測定。</li>
-            </ul>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              欧州経済領域（EEA）・英国・スイスなどからのアクセスについては、Google認定の同意管理ツール（CMP）を通じて、広告・解析Cookieの利用可否を選択いただけるよう対応します。いずれの地域でも、ブラウザの設定からCookieを無効化できますが、その場合は一部機能が正常に動作しないことがあります。
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">7. ファイルのプライバシー</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              当サイトの画像変換・PDF処理などのツールはすべてブラウザ内で処理が完結します。アップロードされたファイルは外部サーバーに送信されることなく、処理後はブラウザのメモリから削除されます。
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">8. 第三者への情報提供</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              当サイトは、法令に基づく場合を除き、収集した情報を第三者に提供することはありません。なお、サイトの運営やフォーム内容の保存のために、ホスティング（Vercel Inc.）やデータベースなどの外部サービスを利用しており、これらのサービス上で情報が保管・処理されます。
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">9. プライバシーポリシーの変更</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              本ポリシーは必要に応じて変更することがあります。変更後のポリシーはこのページに掲載し、掲載をもって効力が生じるものとします。
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">10. 運営者（個人情報取扱事業者）</h2>
-            <ul className="list-disc list-inside space-y-2 text-[15px] text-slate-600 dark:text-slate-400">
-              <li>名称：<span className={PENDING}>【要決定（CEO / Legal）】</span></li>
-              <li>住所：<span className={PENDING}>【要決定（CEO / Legal）】</span></li>
-              <li>代表者：<span className={PENDING}>【要決定（CEO / Legal）】</span></li>
-              <li>個人情報に関するお問い合わせ窓口：<span className={PENDING}>【確認待ち：privacy@toolboxjp.com（受信確認後に掲載）】</span></li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">11. お問い合わせ</h2>
-            <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">
-              本ポリシーに関するご質問、および保有する個人情報の開示・訂正・利用停止・削除のご請求は、第10項の窓口までご連絡ください。
-              <span className={PENDING}>【要決定（Legal）：開示等の請求の手続（本人確認の方法・手数料の有無）の記載内容】</span>
-            </p>
-          </section>
-
+          <Section n={15} title="お問い合わせ">
+            <P>本ポリシーおよび当サイトにおける個人情報の取扱いに関するお問い合わせは、以下までご連絡ください。</P>
+            <UL
+              items={[
+                "ToolBoxJP",
+                "運営者：𠮷田 貴由",
+                "屋号：akamaru Corp.",
+                <>
+                  メール：
+                  <Mail />
+                </>,
+              ]}
+            />
+          </Section>
         </div>
       </div>
     </div>
