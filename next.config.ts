@@ -8,9 +8,12 @@ const nextConfig: NextConfig = {
   },
   // 圧縮有効化（Core Web Vitals改善）
   compress: true,
-  // 本番ビルドでconsole.logを削除
+  // 本番ビルドでは console.log / info / debug を削除する。
+  // console.error / warn は残す（予約保存・Product #01 などのAPI障害をサーバーログで調査できるように）。
+  // ※ログには HTTP ステータス・エラー種別・リクエストIDだけを出し、入力値・PII・秘密情報は出さないこと。
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    removeConsole:
+      process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
   },
   // 旧URLから新URLへの301リダイレクト
   async redirects() {

@@ -35,3 +35,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# SNS Starter Kit 先行予約のローカル保存（開発・QA用。個人情報を含むため絶対にコミットしない）
+.sns-kit-data/

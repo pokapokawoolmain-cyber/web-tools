@@ -48,6 +48,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/about/reprint`, lastModified: new Date("2026-06-04"), changeFrequency: "yearly", priority: 0.4 },
     { url: `${siteUrl}/contact`, lastModified: new Date("2026-06-04"), changeFrequency: "yearly", priority: 0.6 },
     { url: `${siteUrl}/release-notes`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+    // 商品ページ（販売準備中・先行予約）
+    { url: `${siteUrl}/sns-starter-kit`, lastModified: new Date("2026-09-29"), changeFrequency: "weekly", priority: 0.8 },
     // 業界特化ページ
     { url: `${siteUrl}/industry/construction`, lastModified: new Date("2026-06-20"), changeFrequency: "monthly", priority: 0.88 },
     { url: `${siteUrl}/industry/restaurant`, lastModified: new Date("2026-06-25"), changeFrequency: "monthly", priority: 0.88 },
