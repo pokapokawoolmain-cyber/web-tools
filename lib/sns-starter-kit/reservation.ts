@@ -1,3 +1,5 @@
+import { PRIVACY_EFFECTIVE_DATE } from "./legal";
+
 // ============================================================
 // SNS Starter Kit 先行予約 — 入力の型と検証（クライアント/サーバー共通）
 //
@@ -25,9 +27,9 @@ export const COMMUNITY_DESCRIPTION_MAX = 300;
 /**
  * 同意取得時に表示していた文言・ポリシーの版。同意の記録（特定電子メール法上の記録保存を想定）
  * として予約行に保存する。プライバシーポリシーや同意文言を変えたら必ず更新する。
- * "-draft" は CEO / Legal 承認前の版であることを示す。
+ * 値はプライバシーポリシーの施行日（lib/sns-starter-kit/legal.ts）と同じにする。
  */
-export const RESERVATION_CONSENT_VERSION = "2026-10-01-draft";
+export const RESERVATION_CONSENT_VERSION = PRIVACY_EFFECTIVE_DATE;
 export const EMAIL_MAX = 254;
 const UTM_MAX = 100;
 

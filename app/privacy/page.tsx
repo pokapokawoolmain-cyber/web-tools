@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { generateMeta } from "@/lib/seo";
+import { privacyEffectiveDateLabel } from "@/lib/sns-starter-kit/legal";
 
 export const metadata: Metadata = generateMeta({
   title: "プライバシーポリシー",
@@ -10,18 +11,16 @@ export const metadata: Metadata = generateMeta({
 });
 
 // ============================================================
-// プライバシーポリシー（CEO 確定文面 2026-10-02）
+// プライバシーポリシー（CEO / Chief 確定文面）
 //
-// ★本番公開時に必ず行うこと
-//   1. LAST_UPDATED を本番公開日に置き換える（現在はプレースホルダー）
-//   2. 下の「追加提案（AdSense / Cookie）」ブロックの扱いを CEO が決定し、
-//      採用する場合は番号を振り直して正式な条文にする（PENDING 表示を外す）
-//   3. 文面を変えた場合は lib/sns-starter-kit/reservation.ts の RESERVATION_CONSENT_VERSION を更新する
+// ・最終更新日は lib/sns-starter-kit/legal.ts の施行日（= Production 公開日）から作る。
+//   先行予約の同意の版（DB の consent_version）も同じ値を使うため、両者は常に一致する。
+// ・第9項（広告配信および Cookie）は CEO 文面に無かったが、旧ポリシーにのみ存在した必要事項
+//   （本番で Google AdSense が有効なため、第三者 Cookie とオプトアウト方法の開示が必要）として、
+//   内容を変えずに正式な条文として残し、以降の番号を繰り下げた。
 // ============================================================
-const LAST_UPDATED = "［本番公開日］";
+const LAST_UPDATED = privacyEffectiveDateLabel();
 const CONTACT_EMAIL = "privacy@toolboxjp.com";
-const PENDING =
-  "rounded-xl border border-amber-300 bg-amber-50 dark:border-amber-500/40 dark:bg-amber-500/10 p-4 sm:p-5";
 
 const P = ({ children }: { children: ReactNode }) => (
   <p className="text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed">{children}</p>
@@ -169,67 +168,55 @@ export default function PrivacyPage() {
             <P>アクセス解析サービスによる情報の取扱いについては、それぞれのサービス提供者の定めるポリシーが適用される場合があります。</P>
           </Section>
 
-          {/* ★追加提案（CEO承認待ち）: 現行ポリシーにあった広告配信・Cookie の記載。
-                本番では Google AdSense が有効なため、AdSense のプログラムポリシー上、
-                第三者 Cookie の利用とオプトアウト方法の開示が必要。採用時は番号を振り直す。 */}
-          <section className={PENDING}>
-            <p className="text-xs font-bold text-amber-700 dark:text-amber-400 mb-3">
-              【追加提案（CEO承認待ち）】現行ポリシーの広告配信・Cookieに関する記載
-            </p>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3">広告配信（Google AdSense）</h2>
-            <div className="space-y-3">
-              <P>当サイトは、第三者配信の広告サービスとしてGoogle AdSense（Google LLC）を利用しています。</P>
-              <UL
-                items={[
-                  "Googleなどの第三者配信事業者は、Cookieを使用して、ユーザーの過去のアクセス情報に基づいて広告を配信します。",
-                  "これにより、ユーザーの興味・関心に応じた広告（パーソナライズ広告）が表示される場合があります。",
-                ]}
-              />
-              <P>パーソナライズ広告は、次の方法で無効化（オプトアウト）できます。</P>
-              <UL
-                items={[
-                  <>
-                    Googleの<ExtLink href="https://myadcenter.google.com/">広告設定（My Ad Center）</ExtLink>
-                    でパーソナライズを管理する
-                  </>,
-                  <>
-                    <ExtLink href="https://www.aboutads.info/choices/">aboutads.info</ExtLink>
-                    で参加事業者の広告をまとめてオプトアウトする
-                  </>,
-                  <>
-                    第三者配信事業者によるCookie利用の詳細は
-                    <ExtLink href="https://policies.google.com/technologies/partner-sites">
-                      Googleの「ユーザーがGoogleパートナーのサイトやアプリを使用する際のデータ処理」
-                    </ExtLink>
-                    を確認する
-                  </>,
-                ]}
-              />
-            </div>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mt-6 mb-3">Cookieと同意管理</h2>
-            <div className="space-y-3">
-              <P>当サイトでは目的別に次のCookieを使用します。</P>
-              <UL
-                items={[
-                  "必須Cookie：テーマ（ダークモード）設定など、サイトの基本動作に必要なもの。",
-                  "アクセス解析Cookie：Google Analyticsによる利用状況の把握。",
-                  "広告Cookie：Google AdSenseによる広告配信・効果測定。",
-                ]}
-              />
-              <P>
-                欧州経済領域（EEA）・英国・スイスなどからのアクセスについては、Google認定の同意管理ツール（CMP）を通じて、広告・解析Cookieの利用可否を選択いただけるよう対応します。いずれの地域でも、ブラウザの設定からCookieを無効化できますが、その場合は一部機能が正常に動作しないことがあります。
-              </P>
-            </div>
-          </section>
+          <Section n={9} title="広告配信およびCookie">
+            <P>当サイトは、第三者配信の広告サービスとしてGoogle AdSense（Google LLC）を利用しています。</P>
+            <UL
+              items={[
+                "Googleなどの第三者配信事業者は、Cookieを使用して、ユーザーの過去のアクセス情報に基づいて広告を配信します。",
+                "これにより、ユーザーの興味・関心に応じた広告（パーソナライズ広告）が表示される場合があります。",
+              ]}
+            />
+            <P>パーソナライズ広告は、次の方法で無効化（オプトアウト）できます。</P>
+            <UL
+              items={[
+                <>
+                  Googleの<ExtLink href="https://myadcenter.google.com/">広告設定（My Ad Center）</ExtLink>
+                  でパーソナライズを管理する
+                </>,
+                <>
+                  <ExtLink href="https://www.aboutads.info/choices/">aboutads.info</ExtLink>
+                  で参加事業者の広告をまとめてオプトアウトする
+                </>,
+                <>
+                  第三者配信事業者によるCookie利用の詳細は
+                  <ExtLink href="https://policies.google.com/technologies/partner-sites">
+                    Googleの「ユーザーがGoogleパートナーのサイトやアプリを使用する際のデータ処理」
+                  </ExtLink>
+                  を確認する
+                </>,
+              ]}
+            />
+            <P>当サイトでは目的別に次のCookieを使用します。</P>
+            <UL
+              items={[
+                "必須Cookie：テーマ（ダークモード）設定など、サイトの基本動作に必要なもの。",
+                "アクセス解析Cookie：Google Analyticsによる利用状況の把握。",
+                "広告Cookie：Google AdSenseによる広告配信・効果測定。",
+              ]}
+            />
+            <P>
+              欧州経済領域（EEA）・英国・スイスなどからのアクセスについては、Google認定の同意管理ツール（CMP）を通じて、広告・解析Cookieの利用可否を選択いただけるよう対応します。いずれの地域でも、ブラウザの設定からCookieを無効化できますが、その場合は一部機能が正常に動作しないことがあります。
+            </P>
+          </Section>
 
-          <Section n={9} title="第三者への提供">
+          <Section n={10} title="第三者への提供">
             <P>当サイトは、法令に基づく場合その他法令上認められる場合を除き、ご本人の同意なく個人データを第三者へ提供しません。</P>
             <P>
               ただし、サイト運営、データ保存、メール送信その他の業務を行うため、必要な範囲で外部サービス事業者へ個人情報の取扱いを委託する場合があります。
             </P>
           </Section>
 
-          <Section n={10} title="安全管理">
+          <Section n={11} title="安全管理">
             <P>
               当サイトは、取得した情報について、不正アクセス、漏えい、滅失または毀損等を防止するため、必要かつ適切な安全管理措置を講じるよう努めます。
             </P>
@@ -237,7 +224,7 @@ export default function PrivacyPage() {
             <P>また、データベースへの一般利用者からの直接的な読み取り、追加、変更および削除を制限する構成としています。</P>
           </Section>
 
-          <Section n={11} title="販売開始案内およびその他のメール">
+          <Section n={12} title="販売開始案内およびその他のメール">
             <P>販売開始案内は、先行予約時に明示的に同意いただいたメールアドレスへ送信します。</P>
             <P>その他の商品・サービス等に関するお知らせは、別途任意の同意をいただいた場合に限り送信します。</P>
             <P>メールの受信停止を希望される場合は、メール本文に記載する方法または以下の窓口からお申し出いただけます。</P>
@@ -247,7 +234,7 @@ export default function PrivacyPage() {
             <P>受信停止の意思を確認した後は、法令上認められる場合を除き、その意思に反して対象となる案内を送信しません。</P>
           </Section>
 
-          <Section n={12} title="開示、訂正、削除、利用停止等の請求">
+          <Section n={13} title="開示、訂正、削除、利用停止等の請求">
             <P>
               当サイトが保有するご本人の個人データについて、利用目的の通知、開示、訂正、追加、削除、利用停止、消去その他法令に基づく請求を希望される場合は、以下の窓口までご連絡ください。
             </P>
@@ -262,7 +249,7 @@ export default function PrivacyPage() {
             <P>これらの手続に関する手数料は原則としていただきません。</P>
           </Section>
 
-          <Section n={13} title="住所に関するお問い合わせ">
+          <Section n={14} title="住所に関するお問い合わせ">
             <P>
               当サイト運営者の住所について、個人情報保護法その他の法令に基づきご本人から開示の求めがあった場合は、以下の窓口へご連絡ください。
             </P>
@@ -272,13 +259,13 @@ export default function PrivacyPage() {
             <P>必要な本人確認を行ったうえで、法令に従い遅滞なく回答します。</P>
           </Section>
 
-          <Section n={14} title="プライバシーポリシーの変更">
+          <Section n={15} title="プライバシーポリシーの変更">
             <P>当サイトは、法令の改正、サービス内容の変更その他必要に応じて、本ポリシーを変更することがあります。</P>
             <P>重要な変更を行う場合は、当サイト上での掲載その他適切な方法によりお知らせします。</P>
             <P>変更後のプライバシーポリシーは、当サイト上に掲載した時点から適用します。</P>
           </Section>
 
-          <Section n={15} title="お問い合わせ">
+          <Section n={16} title="お問い合わせ">
             <P>本ポリシーおよび当サイトにおける個人情報の取扱いに関するお問い合わせは、以下までご連絡ください。</P>
             <UL
               items={[
