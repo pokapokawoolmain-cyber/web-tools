@@ -14,7 +14,7 @@ const TABS = [
     heading: "PDFをまとめる・軽くする・変換する",
     desc: "PDF結合・分割・圧縮・回転・画像変換まで、よく使うPDF作業をブラウザで完結。アプリ不要、ファイルは外部送信なし。",
     img: "/previews/home/pdf-merge.jpg",
-    imgAlt: "PDF結合ツールの操作画面",
+    imgAlt: "3つのPDFを結合する操作画面",
     tools: [
       { name: "PDF結合", href: "/tools/pdf-merge" },
       { name: "PDF分割", href: "/tools/pdf-split" },
@@ -31,8 +31,8 @@ const TABS = [
     gradient: "from-emerald-500 to-teal-600",
     heading: "画像を圧縮・変換・証明写真に",
     desc: "JPG・PNG・HEIC・WebPの圧縮・変換・リサイズ・証明写真作成。写真はすべてブラウザ内で処理し、サーバーに送信されません。",
-    img: "/previews/home/image-compress.jpg",
-    imgAlt: "画像圧縮ツールの操作画面",
+    img: "/previews/home/image-converter.jpg",
+    imgAlt: "画像をまとめて変換・軽量化した結果画面",
     tools: [
       { name: "画像圧縮", href: "/tools/image-compress" },
       { name: "HEIC→JPG変換", href: "/tools/heic-to-jpg" },
@@ -49,8 +49,8 @@ const TABS = [
     gradient: "from-amber-500 to-orange-500",
     heading: "FIRE・NISA・手取り・税金を計算する",
     desc: "FIREシミュレーター・新NISA積立・住宅ローン・ふるさと納税・手取り計算まで、お金の計算を一か所にまとめました。",
-    img: "/previews/home/fire-simulator.jpg",
-    imgAlt: "FIREシミュレーターの操作画面",
+    img: "/previews/home/fire-result.jpg",
+    imgAlt: "FIREシミュレーターの計算結果画面",
     tools: [
       { name: "FIREシミュレーター", href: "/tools/fire-simulator" },
       { name: "新NISA積立計算", href: "/tools/nisa-calculator" },
@@ -68,7 +68,7 @@ const TABS = [
     heading: "請求書・見積書・契約書をその場で作成",
     desc: "請求書・見積書・業務委託契約書・履歴書・退職届。フォームを埋めるだけでPDF出力まで完結。Wordや専用ソフト不要。",
     img: "/previews/home/invoice.jpg",
-    imgAlt: "請求書作成ツールの操作画面",
+    imgAlt: "作成した請求書のプレビュー画面",
     tools: [
       { name: "請求書作成", href: "/tools/invoice-generator" },
       { name: "見積書作成", href: "/tools/estimate-generator" },
@@ -86,7 +86,7 @@ const TABS = [
     heading: "Wi-Fi QR・シフト計算・生活の作業を楽に",
     desc: "来客用Wi-FiのQRコード・副業税金計算・シフト給与計算・ガソリン代計算。日常のちょっとした作業をすぐ片付けます。",
     img: "/previews/home/wifi-qr.jpg",
-    imgAlt: "Wi-Fi QRコード生成ツールの操作画面",
+    imgAlt: "Wi-Fi情報から作成したQRコードの画面",
     tools: [
       { name: "Wi-Fi QRコード生成", href: "/tools/wifi-qr" },
       { name: "副業利益・税金計算", href: "/tools/side-job-profit" },
@@ -233,8 +233,7 @@ export function CategoryTabSection() {
                   alt={active.imgAlt}
                   width={1280}
                   height={760}
-                  className="w-full object-cover object-top"
-                  style={{ height: "320px" }}
+                  className="w-full h-auto aspect-[9/5] object-cover object-top"
                   unoptimized
                 />
               </div>

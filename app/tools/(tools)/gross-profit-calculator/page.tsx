@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMeta({
   description: "売上・原価を入力して粗利率・原価率・粗利額を即計算。粗利率の計算式や、目標粗利率から必要見積金額を逆算する機能も。建設業・飲食業・小売業など業種別の目安も掲載。登録不要・ブラウザ完結。",
   path: "/tools/gross-profit-calculator",
   ogImage: `/api/og?${new URLSearchParams({ title: "粗利計算・粗利率計算", icon: "📊", desc: "売上・原価を入力するだけで粗利率・原価率・粗利額を即計算" }).toString()}`,
-  keywords: ["粗利率 計算", "粗利計算", "原価率 計算", "粗利 計算 無料", "粗利率 計算式", "業種別 粗利率 目安", "粗利 逆算", "建設 粗利率", "飲食店 原価率", "工務店 粗利率", "建設業 粗利率", "建設業 粗利", "メーカー 粗利率", "原価率 粗利率"],
+  keywords: ["粗利率 計算", "粗利計算", "原価率 計算", "粗利 計算 無料", "粗利率 計算式", "業種別 粗利率 目安", "粗利 逆算", "建設 粗利率", "飲食店 原価率", "工務店 粗利率", "建設業 粗利率", "建設業 粗利", "メーカー 粗利率", "原価率 粗利率", "飲食店 粗利率", "小売業 粗利率", "美容室 粗利率", "卸売業 粗利率"],
 });
 
 const faqSchema = {
@@ -55,6 +55,22 @@ const faqSchema = {
       acceptedAnswer: {
         "@type": "Answer",
         text: "「目標粗利率から逆算」モードでは、原価が確定していて目標粗利率を決めたときに必要な売上（見積金額）を計算できます。計算式は「必要売上 = 原価 ÷ (1 - 目標粗利率)」です。例えば原価70万円で粗利率35%を目指すなら、70万 ÷ 0.65 ≒ 107.7万円が必要見積金額です。",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "飲食店の粗利率はどのくらいが目安ですか？",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "飲食店は原価率（食材費）を30〜35%程度に抑えるのが黒字化ラインとされ、その裏返しで粗利率は60〜70%が目安です。ただし人件費を原価に含めない会計慣行が一般的なため、実際の収益性は営業利益率もあわせて確認する必要があります。",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "小売業・卸売業の粗利率はどのくらいですか？",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "小売業は商品の単価やブランド性によって20〜50%と幅があり、食品スーパーは20〜30%、アパレルは30〜50%が目安です。卸売業は企業間の転売が中心で薄利多売のビジネスモデルのため、10〜25%と全業種の中でも低めになります。",
       },
     },
   ],
@@ -161,7 +177,7 @@ const seoContent = (
       <div className="space-y-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         <div>
           <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">工務店の粗利率は、一般的に25〜35%が目安です。</p>
-          <p>注文住宅・新築工事を請け負う工務店の場合、材料費・労務費・外注費（大工・基礎・電気・設備などの各職人への支払い）を差し引いた粗利率は25〜35%程度が相場とされます。リフォーム主体の工務店はこれより高く、30〜50%になることもあります。下請けへの発注比率が高いほど粗利率は下がる傾向にあります。</p>
+          <p>注文住宅・新築工事を請け負う工務店の場合、材料費・労務費・外注費（大工・基礎・電気・設備などの各職人への支払い）を差し引いた粗利率は25〜35%程度が相場とされます。リフォーム主体の工務店はこれより高く、30〜50%になることもあります。下請けへの発注比率が高いほど粗利率は下がる傾向にあります。例えば請負金額2,000万円・原価1,400万円の新築工事なら、粗利率は30%（粗利600万円）です。</p>
         </div>
         <div>
           <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">建設業全体の粗利率は、工事の種類によって25〜50%と幅があります。</p>
@@ -172,6 +188,66 @@ const seoContent = (
           <p>機械・金属加工などの一般的な製造業は20〜35%が目安ですが、原材料費への依存度が低い高付加価値製品（精密機器・化学製品の一部など）はこれより高くなる傾向があります。逆に大量生産・薄利多売型の製造業では10〜20%台になることもあります。</p>
         </div>
       </div>
+    </section>
+
+    {/* 業種別ロングテール2（飲食店・小売業・美容室・卸売業） */}
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">飲食店・小売業・美容室・卸売業の粗利率はどのくらい？</h2>
+      <div className="space-y-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+        <div>
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">飲食店の粗利率（＝FLコストを除いた原価率の裏返し）は、60〜70%が目安です。</p>
+          <p>飲食業は原価率（食材費）を30〜35%程度に抑えるのが黒字化の目安とされ、その裏返しとして粗利率は65〜70%前後になります。例えば客単価1,000円・原価率30%の店なら、1杯あたりの粗利は700円です。ただし飲食店は人件費（労務費）を原価に含めない会計慣行が一般的なので、実質的な収益性は営業利益率も合わせて確認する必要があります。</p>
+        </div>
+        <div>
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">小売業の粗利率は業態によって20〜50%と幅が大きく、扱う商品の性質で決まります。</p>
+          <p>食品スーパーのように回転率が高く単価の安い商品は20〜30%、アパレル・雑貨のように単価が高くブランド性のある商品は30〜50%が目安です。同じ「小売業」でも仕入方式（直接仕入か商社経由か）によって10ポイント以上変わることも珍しくありません。</p>
+        </div>
+        <div>
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">美容室・エステサロンの粗利率は、技術中心のサービス業のため50〜70%と高めです。</p>
+          <p>原価が薬剤・消耗品費に限られ、技術者の人件費を原価に含めるかどうかで大きく変わります。人件費を原価に含めない考え方（売上総利益ベース）では70%以上になることもあります。自社の会計方針でどちらの考え方を採用しているか確認してください。</p>
+        </div>
+        <div>
+          <p className="font-semibold text-slate-800 dark:text-zinc-200 mb-1">卸売業の粗利率は、10〜25%と全業種の中でも低めです。</p>
+          <p>仕入れた商品をそのまま企業間で転売するビジネスモデルのため、薄利多売が基本になります。物流費・在庫リスクをどこまで負担するか（メーカー直送か自社倉庫経由か）によっても変動します。</p>
+        </div>
+      </div>
+    </section>
+
+    {/* 業種別シミュレーション表 */}
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">業種別｜売上1,000万円のときの粗利額シミュレーション</h2>
+      <p className="text-sm text-slate-500 dark:text-zinc-400 mb-4">上記の目安粗利率を使って、売上1,000万円の場合に残る粗利額を試算した早見表です。実際の粗利額は下のツールに自社の数字を入れて確認してください。</p>
+      <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-zinc-700">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-slate-50 dark:bg-zinc-900 text-slate-500 dark:text-zinc-400 text-xs">
+              <th className="text-left px-4 py-2.5 font-medium">業種</th>
+              <th className="text-left px-4 py-2.5 font-medium">想定粗利率</th>
+              <th className="text-left px-4 py-2.5 font-medium">売上1,000万円時の粗利額</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100 dark:divide-zinc-800">
+            {[
+              ["飲食業（カフェ・レストラン）", "65%", "650万円"],
+              ["美容室・エステサロン", "60%", "600万円"],
+              ["IT・ソフトウェア開発", "70%", "700万円"],
+              ["リフォーム・外壁塗装", "40%", "400万円"],
+              ["工務店（新築工事）", "30%", "300万円"],
+              ["小売業（アパレル）", "40%", "400万円"],
+              ["小売業（食品スーパー）", "25%", "250万円"],
+              ["製造業（機械・金属）", "27%", "270万円"],
+              ["卸売業", "17%", "170万円"],
+            ].map(([industry, rate, amount]) => (
+              <tr key={industry} className="hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors">
+                <td className="px-4 py-3 text-slate-800 dark:text-zinc-200 font-medium">{industry}</td>
+                <td className="px-4 py-3 font-mono text-slate-500 dark:text-zinc-400">{rate}</td>
+                <td className="px-4 py-3 font-mono font-semibold text-blue-600 dark:text-blue-400">{amount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-xs text-slate-400 dark:text-zinc-500 mt-2">※各業種の目安粗利率の中央値で試算した参考値です。同じ売上高でも業種によって手元に残る粗利額は2〜4倍程度差が出ることがわかります。</p>
     </section>
 
     {/* 粗利率 vs 営業利益率 */}

@@ -8,7 +8,7 @@ const ITEMS = [
   {
     id: "pdf",
     label: "PDF",
-    tag: "PDF結合・圧縮・変換",
+    tag: "3つのPDFを1つに結合",
     img: "/previews/home/pdf-merge.jpg",
     mobileImg: "/previews/home/mobile-pdf-merge.jpg",
     gradient: "from-blue-500 to-blue-600",
@@ -17,25 +17,25 @@ const ITEMS = [
   {
     id: "image",
     label: "画像",
-    tag: "画像圧縮・HEIC変換・証明写真",
-    img: "/previews/home/image-compress.jpg",
-    mobileImg: "/previews/home/mobile-image-compress.jpg",
+    tag: "4枚まとめて変換・78%軽量化",
+    img: "/previews/home/image-converter.jpg",
+    mobileImg: "/previews/home/mobile-image-converter.jpg",
     gradient: "from-emerald-500 to-teal-600",
     Icon: ImageIcon,
   },
   {
     id: "money",
     label: "お金・計算",
-    tag: "FIRE・NISA・手取り計算",
-    img: "/previews/home/fire-simulator.jpg",
-    mobileImg: "/previews/home/mobile-fire-simulator.jpg",
+    tag: "1,000円 → 税込1,100円をすぐ計算",
+    img: "/previews/home/tax-calculator.jpg",
+    mobileImg: "/previews/home/mobile-tax-calculator.jpg",
     gradient: "from-amber-500 to-orange-500",
     Icon: TrendingUp,
   },
   {
     id: "work",
     label: "仕事・書類",
-    tag: "請求書・見積書・履歴書作成",
+    tag: "入力するだけで請求書が完成",
     img: "/previews/home/invoice.jpg",
     mobileImg: "/previews/home/mobile-invoice.jpg",
     gradient: "from-violet-500 to-purple-600",
@@ -44,7 +44,7 @@ const ITEMS = [
   {
     id: "life",
     label: "生活便利",
-    tag: "Wi-Fi QR・シフト計算",
+    tag: "Wi-Fi情報からQRコードを作成",
     img: "/previews/home/wifi-qr.jpg",
     mobileImg: "/previews/home/mobile-wifi-qr.jpg",
     gradient: "from-pink-500 to-rose-500",
@@ -123,20 +123,24 @@ export function HeroPreviewDeck() {
               width={1280}
               height={760}
               className={[
-                "w-full object-cover object-top transition-all duration-200",
+                "w-full h-auto aspect-[9/5] object-cover object-top transition-all duration-200",
                 fading ? "opacity-0 scale-[0.985]" : "opacity-100 scale-100",
               ].join(" ")}
-              style={{ height: "300px" }}
               priority={activeIdx === 0}
               unoptimized
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-4 pt-10 pb-3 pointer-events-none">
-              <span className="text-[11px] font-semibold text-white/80 tracking-wide">
-                {item.tag}
-              </span>
-            </div>
           </div>
         </div>
+
+        {/* 何をするツールかを一言で（画像の上に重ねると結果部分が隠れるため枠の外に置く） */}
+        <p
+          className={[
+            "text-center text-[14px] font-bold text-white tracking-wide transition-opacity duration-200",
+            fading ? "opacity-0" : "opacity-100",
+          ].join(" ")}
+        >
+          {item.tag}
+        </p>
 
         {/* ドット */}
         <div className="flex justify-center gap-1.5" role="tablist" aria-label="スライドインジケーター">

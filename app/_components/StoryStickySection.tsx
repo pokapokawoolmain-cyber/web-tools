@@ -30,7 +30,7 @@ const STORIES = [
     category: "画像",
     heading: "画像を軽くする。\n変換する。証明写真にする。",
     desc: "JPG・PNG・HEICの圧縮と変換。証明写真を自動レイアウト。写真データはすべてブラウザ内で処理される。",
-    img: "/previews/home/image-compress.jpg",
+    img: "/previews/home/image-converter.jpg",
     href: "/image",
     ctaLabel: "画像ツールを見る",
     tools: [
@@ -64,7 +64,7 @@ const STORIES = [
     category: "仕事・書類",
     heading: "請求書を、\nその場で作れる。",
     desc: "請求書・見積書・業務委託契約書・NDA・履歴書。フォームを埋めてPDF出力まで一気に完結。Word不要。",
-    img: "/previews/home/invoice-result.jpg",
+    img: "/previews/home/invoice.jpg",
     href: "/business",
     ctaLabel: "書類ツールを見る",
     tools: [
@@ -81,7 +81,7 @@ const STORIES = [
     category: "生活便利",
     heading: "Wi-FiのQRコードを\n1秒で作る。",
     desc: "来客用Wi-FiのQRコード生成。シフト給与計算。ガソリン代計算。日常の小さな作業をさっと片付ける。",
-    img: "/previews/home/wifi-qr-result.jpg",
+    img: "/previews/home/wifi-qr.jpg",
     href: "/tools/lifestyle",
     ctaLabel: "生活ツールを見る",
     tools: [
@@ -155,7 +155,7 @@ export function StoryStickySection() {
       {/* Desktop: sticky right panel */}
       <div className="hidden lg:flex container-base gap-16 xl:gap-24 pb-24">
         {/* Left: scrolling text panels */}
-        <div className="w-1/2 flex-shrink-0">
+        <div className="flex-1 min-w-0">
           {STORIES.map((s, i) => (
             <div
               key={s.num}
@@ -196,7 +196,7 @@ export function StoryStickySection() {
         </div>
 
         {/* Right: sticky image */}
-        <div className="w-1/2 flex-shrink-0">
+        <div className="flex-1 min-w-0">
           <div className="sticky top-8 h-[calc(100vh-4rem)] flex items-center">
             <div className="w-full">
               {/* Browser frame */}
@@ -221,8 +221,7 @@ export function StoryStickySection() {
                   alt={`${story.category}ツールの操作画面`}
                   width={1280}
                   height={760}
-                  className="w-full object-cover object-top"
-                  style={{ height: "380px" }}
+                  className="w-full h-auto aspect-[9/5] object-cover object-top"
                   unoptimized
                   priority={activeIdx === 0}
                 />
@@ -277,8 +276,7 @@ export function StoryStickySection() {
                   alt={`${s.category}ツール`}
                   width={800}
                   height={480}
-                  className="w-full object-cover object-top"
-                  style={{ height: "180px" }}
+                  className="w-full h-auto aspect-[9/5] object-cover object-top"
                   unoptimized
                 />
               </ScrollScale>
