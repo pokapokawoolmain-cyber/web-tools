@@ -1,0 +1,7 @@
+<h2>Mochico</h2>
+<p>ログインコードは次のとおりです（1時間有効）。</p>
+<p style="font-size:28px;font-weight:bold;letter-spacing:6px">{{ .Token }}</p>
+<p>このコードをログイン画面に入力してください。<br>
+同じ端末・同じブラウザなら、こちらのリンクからもログインできます：<br>
+<a href="{{ .SiteURL }}/mochico/auth/callback?token_hash={{ .TokenHash }}&type=email">ログインする</a></p>
+<p>心当たりがない場合は、このメールを破棄してください。</p>
