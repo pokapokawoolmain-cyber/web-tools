@@ -1,0 +1,132 @@
+/* ============================================================
+   Mochico マスコットのアニメーション（transform / opacity のみ）
+   - 画面外・タブ非表示では data-paused で停止（JS 側が付与）
+   - prefers-reduced-motion では一切動かさない
+   ============================================================ */
+.root {
+  display: inline-block;
+  line-height: 0;
+  image-rendering: pixelated;
+}
+.root svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  shape-rendering: crispEdges;
+}
+.body {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.float .body {
+  animation: m-float 3.4s ease-in-out infinite;
+}
+.eyesOpen {
+  animation: m-blink 5.6s steps(1, end) infinite, m-look 11s ease-in-out infinite;
+}
+.eyesClosed {
+  opacity: 0;
+  animation: m-blink-inv 5.6s steps(1, end) infinite;
+}
+.eyesHappy,
+.zzz {
+  opacity: 0;
+}
+
+/* にっこり：少し跳ねる */
+.root[data-state="happy"] .eyesOpen,
+.root[data-state="happy"] .eyesClosed {
+  opacity: 0;
+  animation: none;
+}
+.root[data-state="happy"] .eyesHappy {
+  opacity: 1;
+}
+.root[data-state="happy"] .body {
+  animation: m-hop 0.9s cubic-bezier(0.3, 0.7, 0.4, 1) 2;
+}
+
+/* ねむり：目を閉じて Z が浮かぶ・ゆっくり上下 */
+.root[data-state="sleep"] .eyesOpen,
+.root[data-state="sleep"] .eyesHappy {
+  opacity: 0;
+  animation: none;
+}
+.root[data-state="sleep"] .eyesClosed {
+  opacity: 1;
+  animation: none;
+}
+.root[data-state="sleep"] .zzz {
+  animation: m-zzz 3s ease-in-out infinite;
+}
+.root[data-state="sleep"] .body {
+  animation: m-breathe 3.6s ease-in-out infinite;
+}
+
+/* のぞく：少し傾く */
+.root[data-state="peek"] .body {
+  animation: m-peek 6s ease-in-out infinite;
+}
+
+.root[data-paused="true"] *,
+.root[data-paused="true"] {
+  animation-play-state: paused !important;
+}
+
+@keyframes m-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.2px); }
+}
+@keyframes m-breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.03, 0.97); }
+}
+@keyframes m-blink {
+  0%, 95% { opacity: 1; }
+  96%, 98% { opacity: 0; }
+  99%, 100% { opacity: 1; }
+}
+@keyframes m-blink-inv {
+  0%, 95% { opacity: 0; }
+  96%, 98% { opacity: 1; }
+  99%, 100% { opacity: 0; }
+}
+@keyframes m-look {
+  0%, 52% { transform: translateX(0); }
+  56%, 66% { transform: translateX(-1px); }
+  72%, 82% { transform: translateX(1px); }
+  88%, 100% { transform: translateX(0); }
+}
+@keyframes m-hop {
+  0% { transform: translateY(0) scale(1, 1); }
+  20% { transform: translateY(0) scale(1.08, 0.9); }
+  45% { transform: translateY(-3px) scale(0.96, 1.05); }
+  70% { transform: translateY(0) scale(1.04, 0.96); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@keyframes m-zzz {
+  0% { opacity: 0; transform: translate(0, 1px); }
+  30%, 70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(1px, -2px); }
+}
+@keyframes m-peek {
+  0%, 40% { transform: rotate(0deg); }
+  50%, 80% { transform: rotate(-8deg); }
+  90%, 100% { transform: rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root *,
+  .root {
+    animation: none !important;
+    transition: none !important;
+  }
+  .root[data-state="happy"] .eyesHappy { opacity: 1; }
+  .root[data-state="sleep"] .eyesClosed { opacity: 1; }
+}
+
+/* ダーク背景では濃い色（ブラック・ネイビー等）の輪郭が沈むため、ごく薄い外光で視認性をそろえる */
+:global(.dark) .root svg {
+  filter: drop-shadow(0 0 0.6px rgba(255, 255, 255, 0.55));
+}

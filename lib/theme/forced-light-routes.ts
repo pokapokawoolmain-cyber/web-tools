@@ -7,8 +7,11 @@
 // ============================================================
 
 const FORCED_LIGHT_PREFIXES = ["/sns-starter-kit"];
+/** 配下のページには適用しない（完全一致のみ）。Mochico は公開 LP だけを白基調に固定する */
+const FORCED_LIGHT_EXACT = ["/mochico"];
 
 export function isForcedLightRoute(pathname: string | null | undefined): boolean {
   if (!pathname) return false;
+  if (FORCED_LIGHT_EXACT.includes(pathname)) return true;
   return FORCED_LIGHT_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 }
