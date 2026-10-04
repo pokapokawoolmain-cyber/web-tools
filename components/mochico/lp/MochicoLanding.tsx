@@ -9,18 +9,27 @@ import { PhoneMock } from "./PhoneMock";
 import { OwnedDemo } from "./OwnedDemo";
 import { ShareDemo } from "./ShareDemo";
 import { LpEnhancer } from "./LpEnhancer";
+import { CtaLink } from "./CtaLink";
 import s from "./lp.module.css";
 
 const ROOT_ID = "mochico-lp";
 
 /** アプリ本体が公開されている環境だけ「はじめる」を有効にする（未公開の本番で壊れた入口へ誘導しない） */
-function PrimaryCta({ appEnabled, compact = false }: { appEnabled: boolean; compact?: boolean }) {
+function PrimaryCta({
+  appEnabled,
+  placement,
+  compact = false,
+}: {
+  appEnabled: boolean;
+  placement: "hero" | "final";
+  compact?: boolean;
+}) {
   if (appEnabled) {
     // 通常のページ遷移にする（アプリ側で計測・広告を止める処理を確実に効かせるため）
     return (
-      <a href="/mochico/app" className={s.cta}>
+      <CtaLink placement={placement} className={s.cta}>
         Mochicoをはじめる
-      </a>
+      </CtaLink>
     );
   }
   return (
@@ -55,7 +64,7 @@ export function MochicoLanding({ appEnabled }: { appEnabled: boolean }) {
               <strong>リストはみんなで共有。「持ってる」は、あなただけ。</strong>
             </p>
             <div className={s.heroCtas}>
-              <PrimaryCta appEnabled={appEnabled} />
+              <PrimaryCta appEnabled={appEnabled} placement="hero" />
               <a href="#how" className={s.ghost}>
                 使い方を見る
               </a>
@@ -275,7 +284,7 @@ export function MochicoLanding({ appEnabled }: { appEnabled: boolean }) {
           </h2>
           <p className={s.lead}>{BRAND.catch}</p>
           <div style={{ marginTop: 28, display: "flex", justifyContent: "center" }}>
-            <PrimaryCta appEnabled={appEnabled} />
+            <PrimaryCta appEnabled={appEnabled} placement="final" />
           </div>
           {!appEnabled && <p className={s.ctaNote}>公開の準備ができしだい、このページからご利用いただけます。</p>}
           <p className={s.legal}>
