@@ -132,7 +132,8 @@ function ShareSheet({ open, onClose, eventId, eventTitle }: { open: boolean; onC
   async function revoke() {
     if (!link) return;
     setBusy(true);
-    const { error } = await goodsBrowserClient().from("share_links").update({ status: "revoked" }).eq("token", link.token);
+    // token を URL（クエリ）に載せない: 有効なリンクはイベントごとに1件だけなので event_id で指定する
+    const { error } = await goodsBrowserClient().from("share_links").update({ status: "revoked" }).eq("event_id", eventId).eq("status", "active");
     setBusy(false);
     setConfirmRevoke(false);
     if (error) {
