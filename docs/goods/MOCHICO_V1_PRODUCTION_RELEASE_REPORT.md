@@ -1,8 +1,8 @@
 # MOCHICO V1 PRODUCTION RELEASE REPORT
 
 - 作成日: 2026-10-04
-- 最終ステータス: **PRODUCTION ACCEPTANCE READY**（main `73ea29f` / toolbox-jp `dpl_EJhRYv9Qh4u9vUowbJCk7hU4wZVM`）。LP の CTA は準備中のまま・`NEXT_PUBLIC_MOCHICO_APP_ENABLED` 未設定。一般公開は CEO の iPhone 確認後
-- 公開LP（https://www.toolboxjp.com/mochico）は従来どおり公開中。CTA は「近日公開」のまま（変更していない）
+- 最終ステータス: **MOCHICO PUBLIC RELEASE COMPLETE**（2026-10-05 00:13 JST 公開。main `1909002` / toolbox-jp `dpl_Feyh8VkSJ1sMmFKHyftyLqzcsopf`）
+- 公開LP（https://www.toolboxjp.com/mochico）の CTA「Mochicoをはじめる」→ `/mochico/app` を開放済み
 
 ## 1. 判定の要約（Deploy 直前 Gate）
 | Gate | 状態 |
@@ -232,3 +232,24 @@ CEO iPhone: LP → 開始、ログイン、メールコード、マイイベン�
 - Supabase API ログの直接閲覧: Management API の権限がないため未実施。代わりに、ブラウザから Supabase への全リクエスト URL の検査と、サーバー側コードの監査（token は RPC の POST 本文のみ。API ログには本文は記録されない）で確認
 - 修正前のテスト実行で発生した `share_links?token=eq.` リクエストは Supabase のログに残っているが、対象はすべて当時のテスト用リンクで、失効済み・行も削除済み（実ユーザーの token ではない）
 - テストデータ: users 0・profiles 0・events 0・goods 0・ownerships 0・memberships 0・share_links 0・storage objects 0
+
+## 21. 一般公開（2026-10-05）
+- 前提: CEO の iPhone 実機 Production 受入テスト PASS（実メールでのコード受信・6桁ログイン・Safari・主要操作・PWA）、Chief Gate PRODUCTION GO
+- `NEXT_PUBLIC_MOCHICO_APP_ENABLED=true` を toolbox-jp の Production のみに設定（公開値のため encrypted 型）
+- 最新レポート（`6c65a69`、ドキュメントのみ・秘密値なしを確認）を main へマージ → `1909002` → Production `dpl_Feyh8VkSJ1sMmFKHyftyLqzcsopf` READY **2026-10-05 00:13:06 JST**（www.toolboxjp.com / toolboxjp.com）
+- アプリのコード変更・新機能・UI 変更・リファクタリングはなし
+
+| 確認 | 結果 |
+|---|---|
+| LP | ✅ 200・「準備中」表示なし・CTA「Mochicoをはじめる」2箇所とも `/mochico/app`・index/follow・canonical 維持 |
+| CTA 導線 | ✅ 未ログイン → ログイン画面、ログイン済み → マイイベント（CTA 経由でも GA 無効・広告停止） |
+| ルート | ✅ /mochico/app・/mochico/settings → 未ログイン時ログインへ、/mochico/login 200、/mochico/events 未ログイン時ログインへ、/mochico/s/<token> → 303 /mochico/s/view、/goods → 308 |
+| noindex | ✅ アプリ・共有は X-Robots-Tag noindex（+ private no-store）、sitemap は /mochico のみ |
+| 最終 Smoke（Production・実 UI） | ✅ **54/54**（作成・画像・所持・リロード・共有・匿名閲覧・参加・所持の分離・停止・再共有・退会と保全・PWA・広告/解析停止・token/秘密値の漏洩検査） |
+| token 漏洩 | ✅ リクエスト URL・Supabase へのリクエスト（30件）・Referer・コンソール・解析/広告・サイト応答 885件（JS 584）すべて 0 |
+| cleanup | ✅ 認証なし/誤り 404・正しい secret 200（削除 0） |
+| 既存 ToolBoxJP | ✅ / /tools /blog /sns-starter-kit /privacy /terms /tools/pdf-merge /robots.txt /sitemap.xml /manifest.json すべて 200 |
+
+- テストデータ: Smoke で作成したものはすべて削除（テスト用ユーザー 0）
+- Production に残るアカウント: 1件（テストスクリプト作成ではない・CEO の登録メールとも不一致・2026-10-05 00:06 JST 作成＝公開前、イベント1件・画像4枚）。CEO の iPhone 受入テストで別メールにより作成された可能性が高い。実在アカウントのため削除していない（CEO 判断待ち）
+- Rollback: CTA だけ閉じる → toolbox-jp で `NEXT_PUBLIC_MOCHICO_APP_ENABLED` を削除して再 deploy。アプリごと戻す → `dpl_EJhRYv9Qh4u9vUowbJCk7hU4wZVM`（CTA 閉・アプリ有効）または `dpl_Dx12DdrZJCnyriEj4AoQrW5qkJza`（LP のみ）へ Instant Rollback
