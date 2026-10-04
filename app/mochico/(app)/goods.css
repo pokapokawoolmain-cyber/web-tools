@@ -1,0 +1,43 @@
+/* /goods 専用のアニメーション（グローバルCSSには手を入れない） */
+@keyframes goods-slide-up {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes goods-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+@keyframes goods-check {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.goods-slide-up { animation: goods-slide-up 0.22s ease-out; }
+.goods-pop { animation: goods-pop 0.22s ease-out; }
+.goods-check { animation: goods-check 0.18s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .goods-slide-up, .goods-pop, .goods-check { animation: none; }
+}
+/* 下部シート用 */
+dialog.goods-sheet::backdrop { background: rgb(15 23 42 / 0.55); }
+
+/* ------------------------------------------------------------
+   上部固定バーの位置。通常は ToolBox ヘッダー（57px）の下。
+   ホーム画面から起動（standalone）したときは ToolBox のヘッダー・フッターを隠し、
+   グッズ管理専用アプリとして見せる。/goods のページでだけ読み込まれる CSS。
+   ------------------------------------------------------------ */
+:root {
+  --goods-top: 57px;
+  --goods-safe-top: 0px;
+}
+@media (display-mode: standalone) {
+  :root {
+    --goods-top: 0px;
+    --goods-safe-top: env(safe-area-inset-top, 0px);
+  }
+  body > header,
+  body header.sticky.top-0,
+  body footer {
+    display: none !important;
+  }
+}

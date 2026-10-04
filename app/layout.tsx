@@ -4,7 +4,8 @@
 // ========================================
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
+import { VercelAnalytics } from "@/components/analytics/VercelAnalytics";
+import { PrivateAppGuard } from "@/components/analytics/PrivateAppGuard";
 import { AnalyticsScript } from "@/components/analytics/AnalyticsScript";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Header } from "@/components/layout/Header";
@@ -87,6 +88,8 @@ export default function RootLayout({
       className={`${inter.variable} ${notoSansJP.variable}`}
     >
       <head>
+        {/* Mochico アプリ内部では GA4・AdSense を止める（ローダー・計測タグより前に置くこと） */}
+        <PrivateAppGuard />
         {/* AdSenseローダー: 本番かつPublisher ID設定時のみ1回読み込む（lib/ads/config） */}
         <AdScript />
       </head>
@@ -124,7 +127,7 @@ export default function RootLayout({
 
           <Footer />
         </ThemeProvider>
-        <Analytics />
+        <VercelAnalytics />
       </body>
       <AnalyticsScript />
     </html>

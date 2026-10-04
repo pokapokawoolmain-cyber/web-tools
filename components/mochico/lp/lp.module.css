@@ -740,7 +740,13 @@
 .legal {
   margin-top: 36px;
   font-size: 12px;
+  line-height: 2;
   color: var(--muted);
+}
+.legal a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* ---------- companion（スクロールに少し遅れてついてくる個体） ---------- */

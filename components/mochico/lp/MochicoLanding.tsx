@@ -2,7 +2,6 @@
 // Mochico 公開 LP（サーバーコンポーネント。主要な内容は JS なしで読める）
 //   クライアント側で動くのは「デモ2つ」と「演出（LpEnhancer）」だけ。
 // ============================================================
-import Link from "next/link";
 import { CalendarDays, Images, Share2 } from "lucide-react";
 import { BRAND, FAQ } from "@/lib/mochico/content";
 import { Mascot } from "../Mascot";
@@ -17,10 +16,11 @@ const ROOT_ID = "mochico-lp";
 /** アプリ本体が公開されている環境だけ「はじめる」を有効にする（未公開の本番で壊れた入口へ誘導しない） */
 function PrimaryCta({ appEnabled, compact = false }: { appEnabled: boolean; compact?: boolean }) {
   if (appEnabled) {
+    // 通常のページ遷移にする（アプリ側で計測・広告を止める処理を確実に効かせるため）
     return (
-      <Link href="/mochico/app" className={s.cta}>
+      <a href="/mochico/app" className={s.cta}>
         Mochicoをはじめる
-      </Link>
+      </a>
     );
   }
   return (
@@ -278,7 +278,11 @@ export function MochicoLanding({ appEnabled }: { appEnabled: boolean }) {
             <PrimaryCta appEnabled={appEnabled} />
           </div>
           {!appEnabled && <p className={s.ctaNote}>公開の準備ができしだい、このページからご利用いただけます。</p>}
-          <p className={s.legal}>Mochicoは ToolBoxJP が提供するサービスです。</p>
+          <p className={s.legal}>
+            Mochicoは ToolBoxJP が提供するサービスです。
+            <br />
+            <a href="/mochico/terms">利用規約</a>　<a href="/mochico/privacy">プライバシーポリシー</a>
+          </p>
         </div>
       </section>
 
