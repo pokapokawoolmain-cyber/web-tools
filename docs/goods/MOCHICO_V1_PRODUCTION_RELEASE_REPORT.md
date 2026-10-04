@@ -1,7 +1,7 @@
 # MOCHICO V1 PRODUCTION RELEASE REPORT
 
 - 作成日: 2026-10-04
-- 最終ステータス: **Production deploy 済み（efa92b0 / `dpl_HoZxR9NTZFnm7yGzxo7wRqpUh2uw`）・Acceptance 1件 STOP**（共有停止時に token が Supabase へのリクエスト URL に載る。修正は release ブランチ `2f4bf12` に用意・未 deploy）。LP の CTA は準備中のまま
+- 最終ステータス: **PRODUCTION ACCEPTANCE READY**（main `73ea29f` / toolbox-jp `dpl_EJhRYv9Qh4u9vUowbJCk7hU4wZVM`）。LP の CTA は準備中のまま・`NEXT_PUBLIC_MOCHICO_APP_ENABLED` 未設定。一般公開は CEO の iPhone 確認後
 - 公開LP（https://www.toolboxjp.com/mochico）は従来どおり公開中。CTA は「近日公開」のまま（変更していない）
 
 ## 1. 判定の要約（Deploy 直前 Gate）
@@ -202,3 +202,33 @@ CEO iPhone: LP → 開始、ログイン、メールコード、マイイベン�
 - 22 の影響: 送信先は自前の Supabase（第三者ではない）、ログを見られるのはプロジェクト管理者のみ、しかもその token は同じリクエストで失効する。重大度は低いが要件（ログへ漏らさない）に反するため STOP
 - 修正: 停止を `event_id` + `status=active` で指定（有効リンクはイベントごとに1件のみの DB 制約あり）。release ブランチ `2f4bf12`、ローカルで tsc/lint/build・共有/退会 E2E 12/12 合格。**本番 deploy は CEO 承認待ち**
 - テストデータ: すべて削除済み（users 0・events 0・画像 0・share_links 0）。途中でテストスクリプトが自身の不具合で停止した1回分も検出・削除済み
+
+## 20. 共有停止の修正の本番反映・再 Acceptance（2026-10-05）
+- 修正 `2f4bf12`: 共有停止を `.eq("token", …)` から `.eq("event_id", eventId).eq("status", "active")` に変更
+  - 対象はそのイベントの有効リンクだけ（過去リンクは `revoked` のため一致しない。revoked → active はトリガーで不可）
+  - 他イベントは `event_id` 条件と RLS（`share_links_update_owner` = `goods_is_owner(event_id)`）の両方で保護
+  - Production で一意部分インデックス `share_links_one_active_per_event (event_id) WHERE status='active'` の存在を確認
+  - コード監査: token を使うサーバー処理はすべて RPC の POST 本文（`goods_join_via_share` / `goods_share_relation` / `goods_get_shared_catalog`）。URL に token を組み立てるのは所有者の共有ダイアログに表示する共有 URL のみ
+- ローカル: tsc・lint・build、共有 / 退会 E2E 12/12、共有 RLS 90/90
+- main `73ea29f` → toolbox-jp Production `dpl_EJhRYv9Qh4u9vUowbJCk7hU4wZVM` READY（www.toolboxjp.com / toolboxjp.com）
+- Production Acceptance: **53/53 合格**（前回の全項目＋共有の追加確認）
+
+| 追加確認 | 結果 |
+|---|---|
+| 16d 停止リクエストの条件 | ✅ `?event_id=eq.<event_id>&status=eq.active`（token なし） |
+| 16e DB 状態 | ✅ 1件・revoked・revoked_at 記録 |
+| 16f 停止後の旧リンク（ログイン済み別ユーザー C） | ✅ 「この共有リンクは共有が終了しています」表示、参加ボタンなし、membership 0、ページ・URL に token なし |
+| 16g 再共有 | ✅ 新しい token、旧 token は revoked のまま、active は1件 |
+| 16h 再共有後 | ✅ 新リンクは閲覧可、旧リンクは不可 |
+| 16i 2回目の停止 | ✅ 新リンクだけ失効、過去リンクの revoked_at は不変 |
+| 16j 既存メンバー | ✅ B のコレクション維持（2/3） |
+| 16k 他イベント | ✅ A は C のイベントのリンクを失効できない（RLS）・C のリンクは active のまま |
+| 22 token 漏洩（旧・新 token の両方） | ✅ リクエスト URL（最初の `/mochico/s/<token>` 以外）0、Supabase へのリクエスト URL 0（30件検査）、Referer 0、コンソール 0、解析・広告への送信 0、サイトの HTML/RSC/JS/JSON 839 応答（JS 532）に 0、エラー表示に 0 |
+| 22 秘密値 | ✅ service role・cleanup/cron secret・DB パスワードはリクエスト・コンソールに 0（前回: 本番 HTML/JS 114 応答に 0、陽性対照あり） |
+| 13 匿名共有閲覧の設計 | ✅ token → HttpOnly・Secure Cookie（path /mochico/s）→ token なし URL |
+| 15 所持のプライバシー | ✅ UI（A 1/3・B 2/3）と DB |
+| 9b/9d 画像 | ✅ Storage 画像応答 11件すべて 200。前回の「未読み込み」失敗は lazy 画像の読み込み完了を待たずに判定したテスト側のタイミング問題（待機後はすべて表示） |
+
+- Supabase API ログの直接閲覧: Management API の権限がないため未実施。代わりに、ブラウザから Supabase への全リクエスト URL の検査と、サーバー側コードの監査（token は RPC の POST 本文のみ。API ログには本文は記録されない）で確認
+- 修正前のテスト実行で発生した `share_links?token=eq.` リクエストは Supabase のログに残っているが、対象はすべて当時のテスト用リンクで、失効済み・行も削除済み（実ユーザーの token ではない）
+- テストデータ: users 0・profiles 0・events 0・goods 0・ownerships 0・memberships 0・share_links 0・storage objects 0
