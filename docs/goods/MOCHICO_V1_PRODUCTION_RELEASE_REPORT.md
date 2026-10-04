@@ -1,7 +1,7 @@
 # MOCHICO V1 PRODUCTION RELEASE REPORT
 
 - 作成日: 2026-10-04
-- 最終ステータス: **DEPLOY READY**（2026-10-04 23:30。Production deploy・main マージ・LP CTA 切替は未実施 — CEO の指示待ち）
+- 最終ステータス: **Production deploy 済み（efa92b0 / `dpl_HoZxR9NTZFnm7yGzxo7wRqpUh2uw`）・Acceptance 1件 STOP**（共有停止時に token が Supabase へのリクエスト URL に載る。修正は release ブランチ `2f4bf12` に用意・未 deploy）。LP の CTA は準備中のまま
 - 公開LP（https://www.toolboxjp.com/mochico）は従来どおり公開中。CTA は「近日公開」のまま（変更していない）
 
 ## 1. 判定の要約（Deploy 直前 Gate）
@@ -168,3 +168,37 @@ CEO iPhone: LP → 開始、ログイン、メールコード、マイイベン�
 - cleanup / cron secret: Vercel の値は流出した旧値のまま（更新 22:46/22:48 → ローカルのローテーションは約 22:52）だったため、新しい値へ更新。旧値は Vercel・`prod.env` のどちらにも残っていない。旧値で呼べる endpoint は本番に存在したことがない（アプリ未 deploy）
 - sensitive の値は仕様上読み戻せないため、cleanup secret の一致は deploy 直後に endpoint を正しい値・誤った値で呼んで確認する
 - service role key は短時間 `encrypted` 型だったが、閲覧できるのはチームメンバー（OWNER のみ）で、外部流出の兆候はない。ローテーションは不要と判断（必要なら Supabase で JWT secret 更新が必要で anon key も変わる）
+
+## 19. Production deploy・Acceptance（2026-10-04）
+- main へマージ: `efa92b0`（release/mochico-v1 `71b63fb` を no-ff マージ）→ `toolbox-jp` Production `dpl_HoZxR9NTZFnm7yGzxo7wRqpUh2uw` READY
+- 確認方法: 本番 URL への HTTP 確認、ヘッドレス Chrome での実 UI 操作（テストアカウントは管理 API で作成しセッション Cookie を設定。フォームに資格情報は入力していない）、本番 DB の読み取り確認
+
+| # | 項目 | 結果 |
+|---|---|---|
+| 1 | build / deploy | ✅ READY |
+| 2 | LP | ✅ 200・CTA「近日公開」・アプリへのリンクなし・index/follow・規約リンク |
+| 3 | アプリ直接アクセス | ✅ ログイン済み → マイイベント、未ログイン → ログイン画面 |
+| 4 | CEO のメールでの 6桁ログイン | ⏸ CEO 操作待ち（受信箱を見られないため） |
+| 5 | 日本語メールの件名・本文・表示 | ⏸ CEO 操作待ち |
+| 6 | 新規ユーザー登録 | ✅ テストアカウントで確認（Resend 送信・6桁検証・profile 作成）。CEO の実メールは 4 と同時に |
+| 7 | 既存ユーザー再ログイン | ✅ 同上（同一アカウント・重複なし） |
+| 8 | イベント作成 | ✅ |
+| 9 | グッズ登録・画像 | ✅ 3件、画像は WebP（full 46KB / thumb 10KB）で保存・署名URLで表示 |
+| 10 | 所持/未所持 | ✅ |
+| 11 | リロード後保持 | ✅ |
+| 12 | 共有リンク生成 | ✅ 本番ドメイン・43文字 |
+| 13 | 未ログイン共有閲覧 | ✅ token なし URL へ移動、取得状況非表示、Cookie は HttpOnly・Secure・path /mochico/s、HTML に token なし |
+| 14 | 別ユーザーで追加 | ✅ |
+| 15 | 所持の分離 | ✅ UI（A 1/3・B 2/3）と DB の両方 |
+| 16 | 共有停止 | ✅ 新規閲覧不可・既存 B は継続。**⚠ 停止リクエストの URL に token が載る（22 参照）** |
+| 17 | 退会と保全 | ✅ UI 削除、DB（auth/profile/所持/参加削除、イベント保全・owner_id NULL、R6）、B は閲覧継続・編集/共有なし・A の情報なし（1回目は表示待ちのタイミングで失敗、再実行で全項目合格） |
+| 18 | cleanup endpoint | ✅ 認証なし/誤り/長さ違い → 404、正しい secret → 200（削除 0 件） |
+| 19 | PWA | ✅ manifest（short_name・iOS タイトル「Mochico」、start_url、scope、standalone、アイコン200）、SW 登録、設定の案内 |
+| 20 | AdSense | ✅ アプリ画面の広告リクエスト 0（ローダーのみ取得） |
+| 21 | noindex | ✅ アプリ・共有は X-Robots-Tag noindex + private no-store、sitemap は /mochico のみ |
+| 22 | 漏洩 | ⚠ 秘密値（service role・cleanup/cron・DB パスワード）は本番 HTML/JS 114 応答・リクエスト・コンソールに無し（陽性対照あり）。GA/Vercel Analytics 送信 0、Referer・外部への token 送信なし。**ただし共有停止時に owner のブラウザから Supabase への `PATCH /rest/v1/share_links?token=eq.<token>` が発生 → Supabase の API ログに token が残る** |
+| 23 | 既存 ToolBoxJP | ✅ / /tools /blog /sns-starter-kit /privacy /terms /tools/pdf-merge /robots.txt /sitemap.xml /manifest.json すべて 200 |
+
+- 22 の影響: 送信先は自前の Supabase（第三者ではない）、ログを見られるのはプロジェクト管理者のみ、しかもその token は同じリクエストで失効する。重大度は低いが要件（ログへ漏らさない）に反するため STOP
+- 修正: 停止を `event_id` + `status=active` で指定（有効リンクはイベントごとに1件のみの DB 制約あり）。release ブランチ `2f4bf12`、ローカルで tsc/lint/build・共有/退会 E2E 12/12 合格。**本番 deploy は CEO 承認待ち**
+- テストデータ: すべて削除済み（users 0・events 0・画像 0・share_links 0）。途中でテストスクリプトが自身の不具合で停止した1回分も検出・削除済み
