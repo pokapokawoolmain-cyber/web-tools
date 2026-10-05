@@ -167,6 +167,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 工事・建設
     { url: `${siteUrl}/blog/construction-greeting-templates`, lastModified: blogDate("construction-greeting-templates"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/construction-kicko-aisatsu-guide`, lastModified: blogDate("construction-kicko-aisatsu-guide"), changeFrequency: "monthly", priority: 0.85 },
+    // Mochico 関連記事（Content Hub の第1弾）
+    { url: `${siteUrl}/blog/oshi-goods-management`, lastModified: blogDate("oshi-goods-management"), changeFrequency: "monthly", priority: 0.8 },
     // 税金・社会保険 3記事
     { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/shakai-hoken-guide`, lastModified: blogDate("shakai-hoken-guide"), changeFrequency: "monthly", priority: 0.85 },

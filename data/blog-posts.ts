@@ -1538,6 +1538,16 @@ export const BLOG_POSTS: BlogPost[] = [
       { q: "不在の家が多い場合、着工日をずらすべきですか？", a: "ずらす必要はありません。2回訪問しても不在なら挨拶文をポストに投函し、着工後に工事車両や音で気づいた際にすぐ声をかけられるよう、現場に掲示物を出しておくと安心です。" },
     ],
   },
+  // Mochico 関連記事（白基調の MochicoArticleLayout を使う。forced-light-routes の MOCHICO_ARTICLE_PATHS にも登録）
+  {
+    slug: "oshi-goods-management",
+    title: "推しグッズの管理方法｜持っているものを把握して重複買いを防ぐコツ",
+    description:
+      "アクスタや缶バッジが増えて、何を持っているか分からなくなっていませんか。紙・メモ・写真・スプレッドシート・アプリの向き不向き、重複買いを防ぐ記録項目、イベント単位の整理と友達との共有のコツをまとめました。",
+    publishedAt: "2026-10-06",
+    category: "推し活・グッズ管理",
+    readingMinutes: 9,
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {

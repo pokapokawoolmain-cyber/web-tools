@@ -1,0 +1,655 @@
+/* ============================================================
+   Mochico 関連記事（ToolBoxJP ブログ内）のライトテーマ
+   - 色は Mochico LP（components/mochico/lp/lp.module.css）と同じ値を使う。新しいブランド色は作らない
+   - 文字色は白・淡色背景で WCAG AA 以上（--ink 15:1 / --ink2 9:1 / --muted 5.3:1 / --accentInk 6.4:1）
+   - 本文 16px 以上・行間 1.9・1行の長さは約 36〜40 字に制限
+   - アニメーションなし（JS も使わない）
+   ============================================================ */
+.page {
+  --ink: #1b1430;
+  --ink2: #3e3756;
+  --muted: #625b7c;
+  --line: #ebe6f6;
+  --soft: #f8f6fd;
+  --lav: #efe9ff;
+  --lavDeep: #ddd2ff;
+  --pink: #ffeaf3;
+  --mint: #e5f7ef;
+  --peach: #fff0e3;
+  --accent: #7c4dff;
+  --accentInk: #5a2fd2;
+  --owned: #db2777;
+  --ownedInk: #be185d;
+
+  background: var(--soft);
+  color: var(--ink);
+  font-feature-settings: "palt";
+  overflow-x: clip;
+}
+.page :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── パンくず ───────────────────────────────── */
+.crumbs {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 14px 20px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.crumbs li + li::before {
+  content: "›";
+  margin-right: 6px;
+  color: var(--lavDeep);
+}
+.crumbs a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.crumbs a:hover {
+  color: var(--accentInk);
+  text-decoration: underline;
+}
+
+/* ── Hero（本文への到達を遅らせない高さ） ───────── */
+.hero {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px 20px 24px;
+}
+.kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 13px;
+}
+.category {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--accentInk);
+  background: var(--lav);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+}
+.h1 {
+  margin: 14px 0 0;
+  font-size: clamp(1.5rem, 6vw, 2.125rem);
+  line-height: 1.4;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.lead {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--ink2);
+}
+.meta {
+  margin: 14px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── 本文の紙面 ─────────────────────────────── */
+.paper {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 800px) {
+  .paper {
+    max-width: 760px;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+  }
+}
+.body {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 20px 40px;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ink2);
+}
+@media (min-width: 640px) {
+  .body {
+    padding: 44px 40px 56px;
+    font-size: 17px;
+  }
+}
+.body p {
+  margin: 0 0 1.15em;
+}
+.body strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.body a {
+  color: var(--accentInk);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.body a:hover {
+  text-decoration-thickness: 2px;
+}
+.body h2 {
+  margin: 2.6em 0 0.8em;
+  padding-top: 0.2em;
+  font-size: clamp(1.25rem, 5vw, 1.5rem);
+  line-height: 1.5;
+  font-weight: 800;
+  color: var(--ink);
+  scroll-margin-top: 84px;
+}
+.body h2::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 14px;
+  background: var(--accent);
+}
+.body h3 {
+  margin: 1.9em 0 0.6em;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-weight: 700;
+  color: var(--ink);
+  scroll-margin-top: 84px;
+}
+.body ul,
+.body ol {
+  margin: 0 0 1.2em;
+  padding-left: 1.4em;
+}
+/* サイト共通のリセット（list-style: none）を本文の箇条書きでだけ戻す */
+.body ul {
+  list-style: disc;
+}
+.body ol {
+  list-style: decimal;
+}
+.body .checklist,
+.body .steps {
+  list-style: none;
+  padding-left: 0;
+}
+.body li {
+  margin: 0.35em 0;
+}
+.body li::marker {
+  color: var(--accent);
+}
+
+/* ── 結論ボックス ─────────────────────────── */
+.answer {
+  margin: 4px 0 28px;
+  border-radius: 18px;
+  background: var(--lav);
+  padding: 18px 18px 6px;
+}
+.answerTitle {
+  margin: 0 0 8px !important;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accentInk);
+  letter-spacing: 0.02em;
+}
+.answer ol {
+  padding-left: 1.3em;
+}
+.answer li {
+  color: var(--ink);
+}
+
+/* ── 目次 ─────────────────────────────────── */
+.toc {
+  margin: 8px 0 32px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+}
+.toc summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.toc summary::-webkit-details-marker {
+  display: none;
+}
+.toc summary::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg) translate(-2px, -2px);
+}
+.toc[open] summary::after {
+  transform: rotate(-135deg) translate(-2px, -2px);
+}
+.toc ol {
+  margin: 0;
+  padding: 0 18px 14px 2.4em;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.toc li {
+  margin: 0;
+}
+.toc a {
+  display: block;
+  padding: 7px 0;
+  color: var(--ink2);
+  text-decoration: none;
+}
+.toc a:hover {
+  color: var(--accentInk);
+  text-decoration: underline;
+}
+
+/* ── 表（横スクロールで崩さない） ───────────── */
+.tableWrap {
+  margin: 0 0 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.table caption {
+  text-align: left;
+  padding: 12px 14px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.table th,
+.table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.table thead th {
+  background: var(--soft);
+  color: var(--ink);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.table tbody th {
+  color: var(--ink);
+  font-weight: 700;
+  width: 7.5em;
+  min-width: 7.5em;
+  background: #fff;
+  position: sticky;
+  left: 0;
+  box-shadow: 1px 0 0 var(--line);
+}
+.table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  box-shadow: 1px 0 0 var(--line);
+}
+.table td {
+  min-width: 9.5em;
+}
+.table tr:last-child th,
+.table tr:last-child td {
+  border-bottom: 0;
+}
+.tableNote {
+  margin: 0 0 1.4em !important;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── カード類 ─────────────────────────────── */
+.point,
+.caution {
+  margin: 0 0 1.5em;
+  padding: 16px 18px 4px;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.85;
+}
+.point {
+  background: var(--soft);
+  border: 1px solid var(--line);
+}
+.caution {
+  background: #fff7fb;
+  border: 1px solid #f6d3e4;
+}
+.cardLabel {
+  margin: 0 0 6px !important;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.point .cardLabel {
+  color: var(--accentInk);
+}
+.caution .cardLabel {
+  color: var(--ownedInk);
+}
+
+/* 方法ごとの短い解説 */
+.methods {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 1.6em;
+}
+.method {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 16px 2px;
+}
+.method h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+.method p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 0.7em;
+}
+.tag {
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accentInk);
+}
+
+/* チェックリスト */
+.checklist {
+  list-style: none;
+  padding: 0 !important;
+  margin: 0 0 1.4em;
+  display: grid;
+  gap: 8px;
+}
+.checklist li {
+  position: relative;
+  margin: 0;
+  padding: 12px 14px 12px 46px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  line-height: 1.7;
+}
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--lav);
+  border: 2px solid var(--accent);
+}
+.checklist li::after {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 17px;
+  width: 6px;
+  height: 11px;
+  border-right: 2.5px solid var(--accentInk);
+  border-bottom: 2.5px solid var(--accentInk);
+  transform: rotate(45deg);
+}
+.checklist.optional li::before {
+  background: #fff;
+  border-color: var(--lavDeep);
+}
+.checklist.optional li::after {
+  display: none;
+}
+.checklist b {
+  color: var(--ink);
+}
+
+/* ステップ */
+.steps {
+  list-style: none;
+  padding: 0 !important;
+  margin: 0 0 1.4em;
+  counter-reset: step;
+}
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  margin: 0;
+  padding: 0 0 18px 48px;
+}
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--accent);
+}
+.steps > li::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 38px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--line);
+}
+.steps > li:last-child::after {
+  display: none;
+}
+.stepTitle {
+  display: block;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.6;
+  padding-top: 5px;
+}
+
+/* 共有の考え方（2列の対比） */
+.compare {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 1.6em;
+}
+@media (min-width: 560px) {
+  .compare {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.compareItem {
+  border-radius: 16px;
+  padding: 14px 16px 4px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.compareItem:first-child {
+  background: var(--lav);
+}
+.compareItem:last-child {
+  background: var(--pink);
+}
+.compareItem h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+/* ── Mochico 紹介 ───────────────────────────── */
+.disclosure {
+  font-size: 14px;
+  color: var(--muted);
+  border-left: 3px solid var(--lavDeep);
+  padding-left: 12px;
+}
+.shots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 4px 0 1.6em;
+}
+.shot {
+  margin: 0;
+}
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 28px -16px rgba(60, 30, 140, 0.35);
+  background: var(--soft);
+}
+.shot figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ── CTA ─────────────────────────────────── */
+.cta {
+  margin: 8px 0 1.6em;
+  border-radius: 20px;
+  padding: 20px;
+  background: linear-gradient(140deg, #f6f1ff 0%, #fdf0f7 100%);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 560px) {
+  .cta {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.ctaMascot {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: #fff;
+  display: grid;
+  place-items: center;
+}
+.ctaText {
+  flex: 1 1 auto;
+}
+.ctaTitle {
+  margin: 0 !important;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.ctaSub {
+  margin: 2px 0 0 !important;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.ctaButton {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--accentInk);
+  color: #fff !important;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+.ctaButton:hover {
+  background: #4a22b8;
+}
+
+/* ── まとめ・記事末 ─────────────────────────── */
+.summary {
+  padding: 16px 18px 4px;
+  border-radius: 16px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+}
+.footerNote {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--muted);
+}
+.footerNote p {
+  margin-bottom: 0.6em;
+}
+.back {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+.adArea {
+  margin: 8px 0 1.6em;
+}
+.bottomArea {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 8px 20px 48px;
+}
