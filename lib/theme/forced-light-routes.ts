@@ -8,7 +8,15 @@
 
 const FORCED_LIGHT_PREFIXES = ["/sns-starter-kit"];
 /** Mochico 関連記事（ToolBoxJP ブログ内だが Mochico の白基調で表示する）。記事を増やしたらここに足す */
-export const MOCHICO_ARTICLE_PATHS = ["/blog/oshi-goods-management"];
+export const MOCHICO_ARTICLE_PATHS = [
+  "/blog/oshi-goods-management",
+  "/blog/live-goods-shopping-list",
+  "/blog/share-goods-list-with-friends",
+  "/blog/random-goods-management",
+  "/blog/prevent-duplicate-goods",
+  "/blog/goods-list-spreadsheet",
+  "/blog/mochico-how-to-use",
+];
 /** 配下のページには適用しない（完全一致のみ）。Mochico は公開 LP と関連記事だけを白基調に固定する */
 const FORCED_LIGHT_EXACT = ["/mochico", ...MOCHICO_ARTICLE_PATHS];
 

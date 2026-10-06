@@ -16,6 +16,7 @@ import { ScrollReveal } from "./_components/ScrollReveal";
 import { Parallax, ScrollScale } from "./_components/ScrollFX";
 import { getSiteUrl } from "@/lib/utils";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { MascotSvg } from "@/lib/mochico/icon-render";
 
 const siteUrl = getSiteUrl();
 
@@ -363,6 +364,44 @@ export default function HomePage() {
               </ScrollReveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════
+          6.9 ToolBoxJP のアプリ（Mochico）
+      ══════════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 bg-white dark:bg-zinc-950 border-t border-slate-100 dark:border-zinc-800">
+        <div className="container-base">
+          <ScrollReveal className="mb-8">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-1.5">APP</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">ToolBoxJPのアプリ</h2>
+          </ScrollReveal>
+          <ScrollReveal>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8 rounded-3xl border border-violet-100 dark:border-violet-900/40 bg-gradient-to-br from-violet-50 to-white dark:from-violet-950/30 dark:to-zinc-950 p-6 sm:p-8">
+              <div className="shrink-0 w-20 h-20 rounded-3xl bg-violet-100 dark:bg-violet-900/40 flex items-center justify-center" aria-hidden="true">
+                <MascotSvg size={56} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] font-bold text-violet-700 dark:text-violet-300">推しグッズ管理アプリ</p>
+                <h3 className="mt-1 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Mochico（モチコ）</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-slate-600 dark:text-zinc-400">
+                  ライブやイベントのグッズを写真つきで一覧にして、持っているものをタップで記録。リストは友達と共有でき、「持ってる」は自分だけの情報です。
+                </p>
+                <p className="mt-3 text-[13px] text-slate-500 dark:text-zinc-400">
+                  ガイド：
+                  <Link href="/blog/oshi-goods-management" className="underline underline-offset-2 hover:text-slate-900 dark:hover:text-white">推しグッズの管理方法</Link>
+                  {" ／ "}
+                  <Link href="/blog/live-goods-shopping-list" className="underline underline-offset-2 hover:text-slate-900 dark:hover:text-white">ライブ物販の買い物リスト</Link>
+                </p>
+              </div>
+              <Link
+                href="/mochico"
+                className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-5 rounded-full bg-violet-600 hover:bg-violet-700 text-white text-[14px] font-bold transition-colors shrink-0"
+              >
+                Mochicoを見る <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

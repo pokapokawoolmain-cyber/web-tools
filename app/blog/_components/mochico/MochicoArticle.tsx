@@ -11,10 +11,13 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { BottomAd, InArticleAd } from "@/components/ads/presets";
 import { MascotSvg } from "@/lib/mochico/icon-render";
 import { getSiteUrl } from "@/lib/utils";
-import type { BlogPost } from "@/data/blog-posts";
+import { BLOG_POSTS, type BlogPost } from "@/data/blog-posts";
 import s from "./article.module.css";
 
 export type TocItem = { id: string; label: string };
+
+/** Mochico ガイド記事のカテゴリ（関連記事・LP のガイド一覧はこのカテゴリで集める） */
+export const MOCHICO_GUIDE_CATEGORY = "推し活・グッズ管理";
 
 const formatDate = (iso: string) =>
   new Date(`${iso}T00:00:00+09:00`).toLocaleDateString("ja-JP", {
@@ -118,6 +121,8 @@ export function MochicoArticleLayout({
         </div>
       </article>
 
+      <RelatedGuides currentSlug={post.slug} />
+
       <div className={s.bottomArea}>
         <BottomAd />
         <p className={s.footerNote}>
@@ -127,6 +132,32 @@ export function MochicoArticleLayout({
         </p>
       </div>
     </div>
+  );
+}
+
+/** 同じカテゴリのガイド記事と Mochico 紹介ページへのリンク（記事どうしを相互につなぐ） */
+function RelatedGuides({ currentSlug }: { currentSlug: string }) {
+  const others = BLOG_POSTS.filter((p) => p.category === MOCHICO_GUIDE_CATEGORY && p.slug !== currentSlug);
+  if (others.length === 0) return null;
+  return (
+    <aside className={s.related} aria-labelledby="related-guides-title">
+      <h2 id="related-guides-title" className={s.relatedTitle}>
+        推しグッズ管理のガイド
+      </h2>
+      <ul className={s.relatedList}>
+        {others.map((p) => (
+          <li key={p.slug}>
+            <Link href={`/blog/${p.slug}`} className={s.relatedLink}>
+              <span className={s.relatedName}>{p.title}</span>
+              <span className={s.relatedDesc}>{p.description}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <p className={s.relatedLp}>
+        <Link href="/mochico">推しグッズ管理アプリ「Mochico（モチコ）」の紹介ページ →</Link>
+      </p>
+    </aside>
   );
 }
 

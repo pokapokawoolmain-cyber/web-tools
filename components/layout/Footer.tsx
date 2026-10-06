@@ -73,6 +73,9 @@ export function Footer() {
             <Link href="/subsidy" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-[13px] text-indigo-600 dark:text-indigo-400 hover:opacity-80 transition-opacity border border-indigo-100 dark:border-indigo-900/40">
               🏛️ 補助金・助成金診断
             </Link>
+            <Link href="/mochico" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-violet-50 dark:bg-violet-950/30 text-[13px] text-violet-700 dark:text-violet-300 hover:opacity-80 transition-opacity border border-violet-100 dark:border-violet-900/40">
+              💜 推しグッズ管理アプリ Mochico
+            </Link>
           </div>
         </div>
 

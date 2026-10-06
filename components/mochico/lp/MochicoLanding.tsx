@@ -2,8 +2,10 @@
 // Mochico 公開 LP（サーバーコンポーネント。主要な内容は JS なしで読める）
 //   クライアント側で動くのは「デモ2つ」と「演出（LpEnhancer）」だけ。
 // ============================================================
+import Link from "next/link";
 import { CalendarDays, Images, Share2 } from "lucide-react";
 import { BRAND, FAQ } from "@/lib/mochico/content";
+import { BLOG_POSTS } from "@/data/blog-posts";
 import { Mascot } from "../Mascot";
 import { PhoneMock } from "./PhoneMock";
 import { OwnedDemo } from "./OwnedDemo";
@@ -13,6 +15,8 @@ import { CtaLink } from "./CtaLink";
 import s from "./lp.module.css";
 
 const ROOT_ID = "mochico-lp";
+/** ToolBoxJP ブログの Mochico ガイド記事（app/blog/_components/mochico と同じカテゴリ） */
+const GUIDES = BLOG_POSTS.filter((p) => p.category === "推し活・グッズ管理");
 
 /** アプリ本体が公開されている環境だけ「はじめる」を有効にする（未公開の本番で壊れた入口へ誘導しない） */
 function PrimaryCta({
@@ -57,7 +61,7 @@ export function MochicoLanding({ appEnabled }: { appEnabled: boolean }) {
               <br />
               <em>ぜんぶここに。</em>
             </h1>
-            <p className={s.heroTag}>推しグッズを見やすく管理・共有できるアプリ</p>
+            <p className={s.heroTag}>推しグッズを見やすく管理・共有できる、グッズ管理アプリ</p>
             <p className={s.heroLead}>
               ライブやイベントのグッズを見やすくまとめて、持っているものをタップするだけ。
               <br />
@@ -252,6 +256,33 @@ export function MochicoLanding({ appEnabled }: { appEnabled: boolean }) {
           </ol>
         </div>
       </section>
+
+      {/* ---------- 07.5 ガイド記事（ToolBoxJP ブログ） ---------- */}
+      {GUIDES.length > 0 && (
+        <section className={s.section} style={{ paddingTop: 0 }} aria-labelledby="guides-title" data-companion="idle">
+          <div className={s.container}>
+            <header className={s.center} data-reveal="">
+              <p className={s.eyebrow}>推しグッズ管理のガイド</p>
+              <h2 id="guides-title" className={s.h2}>
+                グッズ管理のコツも、
+                <br />
+                まとめました。
+              </h2>
+              <p className={s.lead}>物販前の買い物リスト、重複買いの防ぎ方、友達との共有まで。ToolBoxJPのブログで紹介しています。</p>
+            </header>
+            <ul className={s.guides} data-reveal="">
+              {GUIDES.map((g) => (
+                <li key={g.slug}>
+                  <Link href={`/blog/${g.slug}`} className={s.guide}>
+                    <span className={s.guideTitle}>{g.title}</span>
+                    <span className={s.guideDesc}>{g.description}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* ---------- 08 FAQ ---------- */}
       <section className={`${s.section} ${s.shareBg}`} aria-labelledby="faq-title" data-companion="idle">
