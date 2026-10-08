@@ -14,6 +14,9 @@ export const field = {
   label: "block text-sm font-bold text-slate-800 dark:text-slate-100",
   input:
     "mt-1.5 block w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-base text-slate-900 placeholder:text-slate-400 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 aria-[invalid=true]:border-red-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-slate-100 dark:placeholder:text-zinc-500",
+  /** 日付欄。iPhone Safari の日付欄は既定の最小幅で縮まず横にはみ出すため、見た目の既定を外して縮められるようにする */
+  dateInput:
+    "mt-1.5 block w-full min-w-0 min-h-12 appearance-none rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-left text-base text-slate-900 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 aria-[invalid=true]:border-red-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-slate-100",
   hint: "mt-1 text-xs text-slate-500 dark:text-slate-400",
   error: "mt-1 text-sm font-medium text-red-600 dark:text-red-400",
 };
