@@ -126,15 +126,16 @@ export function EventForm({ event }: { event?: GoodsEvent }) {
         {errors.title && <p id="ev-title-err" className={field.error}>{errors.title}</p>}
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
+      {/* iPhone の日付欄は既定で縮まないため、列と入力欄の両方を縮められるようにする（横はみ出し防止） */}
+      <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3">
+        <div className="min-w-0">
           <label htmlFor="ev-startDate" className={field.label}>開始日</label>
           <input id="ev-startDate" type="date" value={startDate} onChange={(e) => {
               setStartDate(e.target.value);
               clearError("endDate");
-            }} className={field.input} />
+            }} className={field.dateInput} />
         </div>
-        <div>
+        <div className="min-w-0">
           <label htmlFor="ev-endDate" className={field.label}>終了日</label>
           <input
             id="ev-endDate"
@@ -147,7 +148,7 @@ export function EventForm({ event }: { event?: GoodsEvent }) {
             }}
             aria-invalid={!!errors.endDate}
             aria-describedby={errors.endDate ? "ev-endDate-err" : undefined}
-            className={field.input}
+            className={field.dateInput}
           />
         </div>
         {errors.endDate && <p id="ev-endDate-err" className={`${field.error} col-span-2`}>{errors.endDate}</p>}

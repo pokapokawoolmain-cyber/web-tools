@@ -66,7 +66,9 @@ export default async function GoodsLayout({ children }: { children: React.ReactN
   return (
     <MascotColorProvider initial={mascotColor}>
       <ToastProvider>
-        <div className="min-h-[70vh] bg-slate-50 pb-16 dark:bg-zinc-950">
+        {/* overflow-x-clip: 横のはみ出しでページ全体が横に広がるのを防ぐ（clip はスクロール領域を作らないので縦スクロール・sticky に影響しない）。
+            下の余白は iPhone のホームバー分も確保する */}
+        <div className="min-h-[70vh] overflow-x-clip bg-slate-50 pb-[calc(6rem+env(safe-area-inset-bottom))] dark:bg-zinc-950">
           <PwaBootstrap />
           <GoodsSubNav />
           <OfflineBanner />
