@@ -1,5 +1,7 @@
 # MOCHICO PHASE 3 REPORT — 検索・カテゴリ・所持数量・複数画像・ランダム商品
 
+> **2026-10-09 更新**: DB 構造（§2・§7）、本番反映手順（§11）、Storage 容量（§12）は [MOCHICO_PHASE3_READINESS.md](MOCHICO_PHASE3_READINESS.md) が最新です（絵柄ごとの数量は `ownership_variants` へ分離、絵柄は論理削除、migration を guard / expand / contract の 3 本に分割、「最大 600MB」の記載は誤り）。
+
 - 作成日: 2026-10-09
 - ブランチ: `feature/mochico-phase3`（origin/main `4d5e0ac` から。SEO ブランチとは別）
 - ステータス: **ローカル実装・検証完了。本番 Migration・main マージ・Production デプロイは承認待ち**

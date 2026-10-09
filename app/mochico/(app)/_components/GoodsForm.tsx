@@ -25,6 +25,8 @@ interface Props {
   item?: GoodsItem;
   categories: GoodsCategory[];
   nextSortOrder: number;
+  /** 作成者以外の参加者がいるか（ランダム → 通常の変換を止めるため） */
+  hasMembers?: boolean;
 }
 
 const initialGallery = (item?: GoodsItem): GalleryEntry[] => (item?.images ?? []).map((image) => ({ key: image.id, kind: "existing", image }));
@@ -33,7 +35,7 @@ const initialVariants = (item?: GoodsItem): VariantEntry[] =>
 
 type Pending = { mode: "save" | "continue"; lines: string[] };
 
-export function GoodsForm({ eventId, item, categories, nextSortOrder }: Props) {
+export function GoodsForm({ eventId, item, categories, nextSortOrder, hasMembers = false }: Props) {
   const router = useRouter();
   const toast = useToast();
   const online = useOnline();
@@ -47,6 +49,10 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder }: Props) {
   const [knownCategories, setKnownCategories] = useState(categories);
   const [gallery, setGallery] = useState<GalleryEntry[]>(() => initialGallery(item));
   const [variants, setVariants] = useState<VariantEntry[]>(() => initialVariants(item));
+  // 削除（論理削除）済みの絵柄。戻すと参加者の数量も戻る
+  const [archived, setArchived] = useState(item?.archivedVariants ?? []);
+  // 共有中のランダム商品は通常商品へ変えられない（参加者の絵柄ごとの数量をまとめてしまうため）
+  const lockRandom = item?.kind === "random" && hasMembers;
   const [errors, setErrors] = useState<FieldErrors>({});
   const clearError = (k: string) => setErrors((e) => (e[k] ? { ...e, [k]: "" } : e));
   const [saving, setSaving] = useState<false | "save" | "continue">(false);
@@ -97,12 +103,14 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder }: Props) {
     if (item && item.kind !== kind) {
       lines.push(
         kind === "random"
-          ? "ランダム商品に変更します。今までの所持数は、1つ目の絵柄の所持数として引き継がれます（共有している全員分）。"
-          : `通常商品に変更します。絵柄（${item.variants.length}種）は削除され、所持数は絵柄の合計にまとめられます（共有している全員分）。`
+          ? "ランダム商品に変更します。今までの所持数は、1つ目の絵柄の所持数として引き継がれます（共有している全員分。合計は変わりません）。"
+          : `通常商品に変更します。絵柄（${item.variants.length}種）と絵柄ごとの数は削除され、所持数は合計だけが残ります。`
       );
     }
     if (removedVariants.length) {
-      lines.push(`絵柄 ${removedVariants.map((v) => `「${v.name}」`).join("")} を削除します。共有している全員の、その絵柄の所持数も消えます。`);
+      lines.push(
+        `絵柄 ${removedVariants.map((v) => `「${v.name}」`).join("")} を一覧から削除します。参加者の所持数は保存されていて、この画面の「削除した絵柄」からいつでも戻せます。`
+      );
     }
     if (lines.length) {
       setPending({ mode, lines });
@@ -300,16 +308,17 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder }: Props) {
             <label
               key={v}
               className={cn(
-                "flex min-h-12 cursor-pointer flex-col items-center justify-center rounded-lg px-2 text-center transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-violet-500",
+                "flex min-h-12 cursor-pointer flex-col items-center justify-center rounded-lg px-2 text-center transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-violet-500 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50",
                 kind === v ? "bg-white text-slate-900 shadow-sm dark:bg-zinc-950 dark:text-white" : "text-slate-600 dark:text-slate-400"
               )}
             >
-              <input type="radio" name="kind" value={v} checked={kind === v} onChange={() => setKind(v)} className="sr-only" disabled={busy} />
+              <input type="radio" name="kind" value={v} checked={kind === v} onChange={() => setKind(v)} className="sr-only" disabled={busy || (lockRandom && v === "normal")} />
               <span className="text-sm font-bold">{label}</span>
               <span className="text-[11px]">{sub}</span>
             </label>
           ))}
         </div>
+        {lockRandom && <p className={field.hint}>リストを共有しているため、参加者の絵柄ごとの数を守るために通常商品へは変更できません。必要なら新しいグッズとして登録してください。</p>}
       </fieldset>
 
       {kind === "random" && (
@@ -323,6 +332,30 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder }: Props) {
             disabled={busy}
           />
           {errors.variants && <p className={field.error}>{errors.variants}</p>}
+          {archived.length > 0 && (
+            <details className="mt-3 rounded-xl border border-slate-200 bg-white p-3 dark:border-zinc-700 dark:bg-zinc-900">
+              <summary className="cursor-pointer text-sm font-bold text-slate-700 dark:text-slate-200">削除した絵柄（{archived.length}）</summary>
+              <p className={field.hint}>戻すと、参加者の所持数もそのまま戻ります。</p>
+              <ul className="mt-2 space-y-1.5">
+                {archived.map((v) => (
+                  <li key={v.id} className="flex items-center justify-between gap-2">
+                    <span className="min-w-0 truncate text-sm">{v.name}</span>
+                    <button
+                      type="button"
+                      className={btn.ghost}
+                      disabled={busy}
+                      onClick={() => {
+                        setVariants((cur) => [...cur, { key: v.id, id: v.id, name: v.name, image: { kind: "keep" }, thumbUrl: v.thumbUrl }]);
+                        setArchived((cur) => cur.filter((x) => x.id !== v.id));
+                      }}
+                    >
+                      戻す
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
         </div>
       )}
 

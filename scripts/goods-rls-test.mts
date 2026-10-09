@@ -113,7 +113,7 @@ async function main() {
   if (!goods) throw new Error("goods not created");
 
   const owned3 = goods.slice(0, 3).map((g) => ({ goods_id: g.id, status: "owned" }));
-  const { error: oErr } = await a.from("ownerships").upsert(owned3, { onConflict: "user_id,goods_id,variant_id" });
+  const { error: oErr } = await a.from("ownerships").upsert(owned3, { onConflict: "user_id,goods_id" });
   check("A が3商品を取得済みにできる", !oErr, oErr);
 
   const { data: oA1 } = await a.from("ownerships").select("goods_id,status,acquired_at,user_id").eq("status", "owned");
@@ -202,10 +202,10 @@ async function main() {
   check("オーナーはグッズを soft delete できる", !softDel, softDel);
   const { error: ownDeleted } = await a.from("ownerships").insert({ goods_id: goods[9].id, status: "owned" });
   check("削除済みグッズには所持状態を記録できない", !!ownDeleted, ownDeleted);
-  const { error: badStatus } = await a.from("ownerships").upsert({ goods_id: goods[4].id, status: "stolen" }, { onConflict: "user_id,goods_id,variant_id" });
+  const { error: badStatus } = await a.from("ownerships").upsert({ goods_id: goods[4].id, status: "stolen" }, { onConflict: "user_id,goods_id" });
   check("未定義の status は CHECK で拒否", !!badStatus, badStatus);
   const { error: dupOwn } = await a.from("ownerships").insert({ goods_id: goods[0].id, status: "owned" });
-  check("UNIQUE(user_id, goods_id, variant_id) で重複行は作れない", !!dupOwn, dupOwn);
+  check("UNIQUE(user_id, goods_id) で重複行は作れない", !!dupOwn, dupOwn);
 
   console.log("\n[5] anon（未ログイン）");
   for (const t of ["events", "goods", "ownerships", "event_memberships", "share_links", "profiles"]) {

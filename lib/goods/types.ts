@@ -67,8 +67,10 @@ export interface GoodsItem {
   imageUrl: string | null;
   /** 商品紹介用の画像（代表画像を含む）。一覧の読み込みでは件数の少ない情報だけ */
   images: GoodsImage[];
-  /** ランダム商品の絵柄（通常商品は空） */
+  /** ランダム商品の絵柄（通常商品は空）。削除（論理削除）した絵柄は含まない */
   variants: GoodsVariant[];
+  /** 編集画面だけ: 削除（論理削除）した絵柄。戻すと参加者の数量も戻る */
+  archivedVariants?: GoodsVariant[];
 }
 
 /**

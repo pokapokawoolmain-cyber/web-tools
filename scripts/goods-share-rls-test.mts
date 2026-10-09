@@ -250,7 +250,7 @@ async function main() {
   const { data: jAfter } = await C.c.rpc("goods_join_via_share", { p_token: token2 });
   check("失効後は新規参加できない", jAfter?.status === "revoked");
   check("B の membership は残る", (await count("event_memberships", { event_id: ev!.id, user_id: B.id })) === 1);
-  const { error: bToggle } = await B.c.from("ownerships").upsert({ goods_id: goods[2].id, user_id: B.id, status: "owned" }, { onConflict: "user_id,goods_id,variant_id" });
+  const { error: bToggle } = await B.c.from("ownerships").upsert({ goods_id: goods[2].id, user_id: B.id, status: "owned" }, { onConflict: "user_id,goods_id" });
   check("B は失効後も取得状態を更新できる", !bToggle, bToggle);
 
   console.log("\n[10] イベント削除（soft delete）");
@@ -269,7 +269,7 @@ async function main() {
   const { data: aMy2 } = await A.c.rpc("goods_my_events");
   check("A（オーナー）のマイイベントからは消える", !aMy2?.some((e: { id: string }) => e.id === ev!.id));
   check("B の ownership 行は残る", (await count("ownerships", { user_id: B.id })) >= 2);
-  const { error: bTog2 } = await B.c.from("ownerships").upsert({ goods_id: goods[0].id, user_id: B.id, status: "owned" }, { onConflict: "user_id,goods_id,variant_id" });
+  const { error: bTog2 } = await B.c.from("ownerships").upsert({ goods_id: goods[0].id, user_id: B.id, status: "owned" }, { onConflict: "user_id,goods_id" });
   check("削除済みイベントの取得状態は変更できない", !!bTog2);
   const { data: leave } = await B.c.from("event_memberships").delete().eq("event_id", ev!.id).eq("user_id", B.id).select();
   check("B は自分の membership を外せる", leave?.length === 1);

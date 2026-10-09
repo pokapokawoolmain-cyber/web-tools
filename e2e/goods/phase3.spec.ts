@@ -26,8 +26,10 @@ async function newMobileContext(browser: Browser) {
 const progress = (p: Page) => p.getByRole("progressbar");
 const qtyInDb = async (userId: string, goodsId: string, variantId: string | null = null) => {
   const admin = await adminClient();
-  let q = admin.from("ownerships").select("quantity").eq("user_id", userId).eq("goods_id", goodsId);
-  q = variantId ? q.eq("variant_id", variantId) : q.is("variant_id", null);
+  // 絵柄ごとの数量は ownership_variants、グッズ単位（ランダム商品は合計の写し）は ownerships
+  const q = variantId
+    ? admin.from("ownership_variants").select("quantity").eq("user_id", userId).eq("variant_id", variantId)
+    : admin.from("ownerships").select("quantity").eq("user_id", userId).eq("goods_id", goodsId);
   return (await q.maybeSingle()).data?.quantity ?? 0;
 };
 async function openDetail(p: Page, name: string) {
@@ -219,14 +221,14 @@ test("FEATURE 4: ランダム商品の絵柄ごとの数量・合計・種類数
 });
 
 test("所持フィルター × カテゴリ", async () => {
-  await pageA.getByRole("tab", { name: /^取得済み/ }).click();
+  await pageA.getByRole("tablist", { name: "表示の絞り込み" }).getByRole("tab", { name: /^取得済み/ }).click();
   await expect(goodsCard(pageA, "パンフレット")).toBeVisible();
   await expect(goodsCard(pageA, "ランダム缶バッジ")).toBeVisible();
   await pageA.getByRole("tablist", { name: "カテゴリ" }).getByRole("tab", { name: /^缶バッジ/ }).click();
   await expect(goodsCard(pageA, "ランダム缶バッジ")).toBeVisible();
   await expect(goodsCard(pageA, "パンフレット")).toHaveCount(0);
   await pageA.getByRole("tablist", { name: "カテゴリ" }).getByRole("tab", { name: /^すべて/ }).click();
-  await pageA.getByRole("tab", { name: /^すべて/ }).first().click();
+  await pageA.getByRole("tablist", { name: "表示の絞り込み" }).getByRole("tab", { name: /^すべて/ }).click();
 });
 
 test("共有メンバー B: 同じカテゴリ・絵柄が見え、数量は A と分離、カテゴリは編集できない", async () => {
@@ -314,7 +316,56 @@ test("FEATURE 4: 通常 → ランダムへの変換は確認してから行い�
   const { data: v } = await admin.from("goods_variants").select("id, name").eq("goods_id", ids["パンフレット"]).single();
   expect(v?.name).toBe("通常版");
   expect(await qtyInDb(userA, ids["パンフレット"], v!.id)).toBe(12);
-  expect(await qtyInDb(userA, ids["パンフレット"])).toBe(0);
+  expect(await qtyInDb(userA, ids["パンフレット"])).toBe(12); // グッズ単位の合計（旧アプリはこれを表示）も変わらない
+});
+
+test("所持データ保護: 絵柄を削除しても参加者の数量は残り、「削除した絵柄」から戻せる", async () => {
+  await pageA.goto(`${eventPath}/items/${ids["ランダム缶バッジ"]}/edit`);
+  await pageA.getByRole("button", { name: "No.5を削除" }).click();
+  await pageA.getByRole("button", { name: "保存する" }).click();
+  const confirm = pageA.getByRole("dialog", { name: "この内容で保存しますか？" });
+  await expect(confirm).toContainText("参加者の所持数は保存されていて");
+  await confirm.getByRole("button", { name: "保存する" }).click();
+  await pageA.waitForURL(new RegExp(`${eventPath}$`), { timeout: 30_000 });
+  await expect(goodsCard(pageA, "ランダム缶バッジ")).toHaveAttribute("aria-label", /全7種/);
+  expect(await qtyInDb(userB, ids["ランダム缶バッジ"], ids["No.5"])).toBe(1);
+  await pageB.reload();
+  await expect(goodsCard(pageB, "ランダム缶バッジ")).toHaveAttribute("aria-label", /全7種のうち0種取得/);
+
+  await pageA.goto(`${eventPath}/items/${ids["ランダム缶バッジ"]}/edit`);
+  await pageA.getByText("削除した絵柄（1）").click();
+  await pageA.getByRole("button", { name: "戻す" }).click();
+  await expect(pageA.getByRole("textbox", { name: /の名前$/ }).last()).toHaveValue("No.5");
+  await pageA.getByRole("button", { name: "保存する" }).click();
+  await pageA.waitForURL(new RegExp(`${eventPath}$`), { timeout: 30_000 });
+  await expect(goodsCard(pageA, "ランダム缶バッジ")).toHaveAttribute("aria-label", /全8種/);
+  await pageB.reload();
+  await expect(goodsCard(pageB, "ランダム缶バッジ")).toHaveAttribute("aria-label", /全8種のうち1種取得・合計1個/);
+});
+
+test("所持データ保護: 共有中のランダム商品は通常商品へ変更できない", async () => {
+  await pageA.goto(`${eventPath}/items/${ids["ランダム缶バッジ"]}/edit`);
+  await expect(pageA.getByRole("radio", { name: /通常商品/ })).toBeDisabled();
+  await expect(pageA.getByText("通常商品へは変更できません", { exact: false })).toBeVisible();
+});
+
+test("iPhone 幅: スクロール中に固定されるのは所持タブの1行だけ。🔍で検索へ戻れる", async () => {
+  await pageA.setViewportSize({ width: 390, height: 844 });
+  await pageA.goto(eventPath);
+  await pageA.evaluate(() => window.scrollTo({ top: 1200, behavior: "instant" as ScrollBehavior }));
+  const bar = pageA.getByRole("tablist", { name: "表示の絞り込み" }).locator("..");
+  const box = await bar.boundingBox();
+  expect(box!.height).toBeLessThanOrEqual(72);
+  await expect(pageA.getByRole("searchbox", { name: "商品名で検索" })).not.toBeInViewport();
+  await pageA.getByRole("button", { name: "検索・カテゴリへ" }).click();
+  const search = pageA.getByRole("searchbox", { name: "商品名で検索" });
+  await expect(search).toBeFocused();
+  await expect(search).toBeInViewport();
+  await expect(pageA.getByRole("tablist", { name: "カテゴリ" })).toBeInViewport();
+  await search.fill("タオル");
+  await pageA.evaluate(() => window.scrollTo({ top: 600, behavior: "instant" as ScrollBehavior }));
+  await expect(pageA.getByRole("button", { name: "検索・カテゴリへ（絞り込み中）" })).toBeVisible();
+  await search.fill("");
 });
 
 test("iPhone 幅: イベント画面・登録フォームで横はみ出しなし", async () => {

@@ -74,6 +74,8 @@ export function friendlyDbError(err: { code?: string; message?: string; hint?: s
   if (err.hint === "goods_category_limit") return "1イベントあたりのカテゴリ数の上限（50件）に達しています。";
   if (err.hint === "goods_image_limit") return "1つのグッズに登録できる画像は10枚までです。";
   if (err.hint === "goods_variant_limit") return "1つのグッズに登録できる絵柄は100種類までです。";
+  if (err.hint === "goods_event_image_limit") return "1イベントに登録できる画像（写真と絵柄の画像の合計）は2000枚までです。";
+  if (err.hint === "goods_convert_shared") return "共有中のリストでは、ランダム商品を通常商品に変更できません。";
   if (err.code === "23505") return "同じ名前のものがすでにあります。";
   if (err.code === "42501") return "この操作を行う権限がありません。";
   if (err.code === "23514") return "入力内容に誤りがあります。文字数や日付を確認してください。";

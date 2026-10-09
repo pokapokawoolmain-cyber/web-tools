@@ -78,6 +78,8 @@ export interface CleanupResult {
   deletedEventIds: string[];
   orphanStorageEventIds: string[];
   removedImages: number;
+  /** イベントは残っているが、どこからも参照されていない画像（アップロード途中で閉じた等）の削除数 */
+  removedUnreferenced: number;
 }
 
 /**
@@ -95,5 +97,16 @@ export async function runOrphanCleanup(graceSeconds = 7 * 24 * 60 * 60): Promise
   const orphanIds = ((orphans as string[] | null) ?? []).filter((id) => !deletedEventIds.includes(id));
 
   const removedImages = await purgeEventStorage([...deletedEventIds, ...orphanIds]);
-  return { deletedEventIds, orphanStorageEventIds: orphanIds, removedImages };
+
+  // 参照されていない画像（作成から1日以上たったものだけ。保存中のアップロードは消さない）
+  const { data: unref, error: uErr } = await admin.rpc("goods_unreferenced_storage_paths", { p_older_than: "1 day" });
+  if (uErr) throw new Error("unreferenced scan failed");
+  const paths = ((unref as string[] | null) ?? []).filter((p) => typeof p === "string");
+  let removedUnreferenced = 0;
+  for (let i = 0; i < paths.length; i += 500) {
+    const { error: rErr } = await admin.storage.from(GOODS_BUCKET).remove(paths.slice(i, i + 500));
+    if (rErr) throw new Error("storage remove failed");
+    removedUnreferenced += Math.min(500, paths.length - i);
+  }
+  return { deletedEventIds, orphanStorageEventIds: orphanIds, removedImages, removedUnreferenced };
 }

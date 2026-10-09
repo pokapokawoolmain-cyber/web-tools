@@ -106,7 +106,7 @@ async function makeEvent(owner: U, title: string) {
     await owner.c.storage.from("goods-images").upload(p, new Blob([png], { type: "image/jpeg" }), { contentType: "image/jpeg" });
     const t = p.replace("-full", "-thumb");
     await owner.c.storage.from("goods-images").upload(t, new Blob([png], { type: "image/jpeg" }), { contentType: "image/jpeg" });
-    // Phase 3: 代表画像は goods_images の先頭（goods.image_path はトリガーが写す）
+    // Phase 3（contract 後）: goods.image_path は直接書けない。代表画像は goods_images の先頭（goods.image_path はトリガーが写す）
     await owner.c.from("goods").insert({ id, event_id: ev!.id, name: `商品${i}`, price: i * 100, sort_order: i });
     await owner.c.rpc("goods_save_media", { p_goods_id: id, p_images: [{ image_path: p, thumb_path: t }], p_variants: null });
     goods.push({ id });
@@ -164,9 +164,9 @@ async function main() {
   check("C の ownership 残存（商品3=owned）", cOwn?.length === 1);
   const { data: bGoods } = await B.c.from("goods").select("id").eq("event_id", ev.id).is("deleted_at", null);
   check("B はカタログを閲覧できる", bGoods?.length === 3);
-  const { error: bTog } = await B.c.from("ownerships").upsert({ goods_id: ev.goods[0].id, user_id: B.id, status: "owned" }, { onConflict: "user_id,goods_id,variant_id" });
+  const { error: bTog } = await B.c.from("ownerships").upsert({ goods_id: ev.goods[0].id, user_id: B.id, status: "owned" }, { onConflict: "user_id,goods_id" });
   check("B は自分の ownership を更新できる", !bTog, bTog);
-  const { error: cTog } = await C.c.from("ownerships").upsert({ goods_id: ev.goods[0].id, user_id: C.id, status: "owned" }, { onConflict: "user_id,goods_id,variant_id" });
+  const { error: cTog } = await C.c.from("ownerships").upsert({ goods_id: ev.goods[0].id, user_id: C.id, status: "owned" }, { onConflict: "user_id,goods_id" });
   check("C も独立して更新できる", !cTog, cTog);
   const { data: bSeeC } = await B.c.from("ownerships").select("id").eq("user_id", C.id);
   check("B は C の ownership を読めない（独立）", (bSeeC?.length ?? 0) === 0);

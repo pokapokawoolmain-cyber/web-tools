@@ -152,12 +152,14 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
           const current = () => confirmed.current[key] ?? 0;
           while ((desired.current[key] ?? 0) !== current()) {
             const v = desired.current[key] ?? 0;
-            const { error } = await goodsBrowserClient()
-              .from("ownerships")
-              .upsert(
-                { goods_id: item.id, variant_id: variantId, user_id: userId, quantity: v, status: v > 0 ? "owned" : "unowned" },
-                { onConflict: "user_id,goods_id,variant_id" }
-              );
+            // 通常商品 = ownerships（グッズ単位）、ランダム商品の絵柄 = ownership_variants（合計は DB が ownerships へ反映）
+            const { error } = variantId
+              ? await goodsBrowserClient()
+                  .from("ownership_variants")
+                  .upsert({ goods_id: item.id, variant_id: variantId, user_id: userId, quantity: v }, { onConflict: "user_id,variant_id" })
+              : await goodsBrowserClient()
+                  .from("ownerships")
+                  .upsert({ goods_id: item.id, user_id: userId, quantity: v, status: v > 0 ? "owned" : "unowned" }, { onConflict: "user_id,goods_id" });
             if (error) {
               desired.current[key] = current();
               setQuantities((s) => ({ ...s, [key]: current() }));
@@ -226,6 +228,14 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
   const showSearch = total >= SEARCH_MIN_GOODS || text !== "";
   const showCategories = total > 0 && (categories.length > 0 || (isOwner && !fromCache));
   const narrowed = deferredText.trim() !== "" || category !== "all";
+  const filtersRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  // 固定バーの🔍: 検索・カテゴリの位置まで戻り、検索欄があればフォーカスする
+  const jumpToFilters = () => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    filtersRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    searchRef.current?.focus({ preventScroll: true });
+  };
 
   return (
     <>
@@ -255,36 +265,15 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
         )}
       </section>
 
-      {/* 絞り込み（上部に固定。スクロールしても切り替えられる）: 所持タブ → 検索・並び替え → カテゴリ */}
-      {total > 0 && (
-        <div className="sticky top-[calc(var(--goods-top)+var(--goods-safe-top)+48px)] z-20 -mx-4 mt-4 space-y-2 bg-slate-50/95 px-4 py-2 backdrop-blur dark:bg-zinc-950/95">
-          <div role="tablist" aria-label="表示の絞り込み" className="grid grid-cols-3 gap-1 rounded-xl bg-slate-200/70 p-1 dark:bg-zinc-800/80">
-            {tabs.map((t) => {
-              const active = own === t.key;
-              return (
-                <button
-                  key={t.key}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => changeOwn(t.key)}
-                  className={cn(
-                    "flex min-h-10 items-center justify-center gap-1.5 rounded-lg text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-                    active ? "bg-white text-slate-900 shadow-sm dark:bg-zinc-950 dark:text-white" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                  )}
-                >
-                  {t.label}
-                  <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "bg-slate-100 dark:bg-zinc-800" : "")}>{t.count}</span>
-                </button>
-              );
-            })}
-          </div>
-
+      {/* 検索・並び替え・カテゴリ（固定しない。スクロールで画面外へ流し、商品画像の表示領域を確保する） */}
+      {total > 0 && (showSearch || showCategories) && (
+        <div ref={filtersRef} id="board-filters" className="mt-4 scroll-mt-[calc(var(--goods-top)+var(--goods-safe-top)+112px)] space-y-2">
           {showSearch && (
             <div className="flex items-center gap-2">
               <div className="relative min-w-0 flex-1">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
                 <input
+                  ref={searchRef}
                   type="search"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
@@ -340,6 +329,44 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
                 </button>
               )}
             </div>
+          )}
+        </div>
+      )}
+
+      {/* 所持タブ（上部に固定。1行だけ）。検索・カテゴリへは右端のボタンで1タップで戻れる */}
+      {total > 0 && (
+        <div className="sticky top-[calc(var(--goods-top)+var(--goods-safe-top)+48px)] z-20 -mx-4 mt-2 flex items-center gap-2 bg-slate-50/95 px-4 py-2 backdrop-blur dark:bg-zinc-950/95">
+          <div role="tablist" aria-label="表示の絞り込み" className="grid min-w-0 flex-1 grid-cols-3 gap-1 rounded-xl bg-slate-200/70 p-1 dark:bg-zinc-800/80">
+            {tabs.map((t) => {
+              const active = own === t.key;
+              return (
+                <button
+                  key={t.key}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => changeOwn(t.key)}
+                  className={cn(
+                    "flex min-h-10 items-center justify-center gap-1.5 rounded-lg text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                    active ? "bg-white text-slate-900 shadow-sm dark:bg-zinc-950 dark:text-white" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                  )}
+                >
+                  {t.label}
+                  <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "bg-slate-100 dark:bg-zinc-800" : "")}>{t.count}</span>
+                </button>
+              );
+            })}
+          </div>
+          {(showSearch || showCategories) && (
+            <button
+              type="button"
+              onClick={jumpToFilters}
+              aria-label={narrowed ? "検索・カテゴリへ（絞り込み中）" : "検索・カテゴリへ"}
+              className="relative flex h-12 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-200/70 text-slate-700 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-zinc-800/80 dark:text-slate-300 dark:hover:text-white"
+            >
+              <Search className="h-5 w-5" aria-hidden="true" />
+              {narrowed && <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full bg-violet-600 ring-2 ring-slate-50 dark:ring-zinc-950" aria-hidden="true" />}
+            </button>
           )}
         </div>
       )}
