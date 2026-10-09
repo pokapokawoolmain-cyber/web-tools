@@ -19,7 +19,7 @@ import { AppMascot } from "@/components/mochico/MascotColorContext";
 import { goodsBrowserClient } from "@/lib/goods/supabase/browser";
 import { loadUiState, saveSnapshot, saveUiState } from "@/lib/goods/cache/idb";
 import { formatPrice, progressPercent } from "@/lib/goods/format";
-import { itemOwned, itemTotal, ownedVariantCount } from "@/lib/goods/quantity";
+import { itemOwned, itemTotal, ownedVariantCount, variantProgress } from "@/lib/goods/quantity";
 import { SORT_LABELS, queryGoods, type CategoryFilter, type OwnFilter, type SortKey } from "@/lib/goods/search";
 import { qtyKey, type GoodsCategory, type GoodsEvent, type GoodsItem, type Quantities } from "@/lib/goods/types";
 import { btn } from "@/lib/goods/ui";
@@ -28,6 +28,7 @@ import { ProgressBar } from "./ProgressBar";
 import { ImageFallback } from "./ImageFallback";
 import { GoodsDetailSheet } from "./GoodsDetailSheet";
 import { CategoryEditor } from "./CategoryEditor";
+import { ProgressBorder } from "./ProgressBorder";
 import { useToast } from "./Toast";
 import { useOnline } from "./useOnline";
 
@@ -267,7 +268,7 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
 
       {/* 検索・並び替え・カテゴリ（固定しない。スクロールで画面外へ流し、商品画像の表示領域を確保する） */}
       {total > 0 && (showSearch || showCategories) && (
-        <div ref={filtersRef} id="board-filters" className="mt-4 scroll-mt-[calc(var(--goods-top)+var(--goods-safe-top)+112px)] space-y-2">
+        <div ref={filtersRef} id="board-filters" className="mt-4 scroll-mt-[calc(var(--goods-top)+var(--goods-safe-top)+var(--goods-subnav-h)+4.5rem)] space-y-2">
           {showSearch && (
             <div className="flex items-center gap-2">
               <div className="relative min-w-0 flex-1">
@@ -308,7 +309,8 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
           )}
 
           {showCategories && (
-            <div role="tablist" aria-label="カテゴリ" className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            // カテゴリは横スクロールの独立した行（縦スクロールや所持タブとは干渉しない。端までスクロールしても戻る操作にならない）
+            <div role="tablist" aria-label="カテゴリ" className="-mx-4 flex scroll-px-4 gap-1.5 overflow-x-auto overscroll-x-contain px-4 py-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {categories.length > 0 && (
                 <>
                   <CategoryChip active={category === "all"} onClick={() => changeView({ category: "all" })} label="すべて" />
@@ -333,9 +335,10 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
         </div>
       )}
 
-      {/* 所持タブ（上部に固定。1行だけ）。検索・カテゴリへは右端のボタンで1タップで戻れる */}
+      {/* 所持タブ（サブヘッダーの真下に固定。1行だけ）。検索・カテゴリへは右端のボタンで1タップで戻れる。
+          背景は不透明にして、下を流れるカテゴリや商品が透けて重なって見えないようにする（ぼかしも使わない） */}
       {total > 0 && (
-        <div className="sticky top-[calc(var(--goods-top)+var(--goods-safe-top)+48px)] z-20 -mx-4 mt-2 flex items-center gap-2 bg-slate-50/95 px-4 py-2 backdrop-blur dark:bg-zinc-950/95">
+        <div className="sticky top-[calc(var(--goods-top)+var(--goods-safe-top)+var(--goods-subnav-h))] z-20 -mx-4 mt-3 flex items-center gap-1.5 bg-slate-50 px-4 py-2 min-[360px]:gap-2 dark:bg-zinc-950">
           <div role="tablist" aria-label="表示の絞り込み" className="grid min-w-0 flex-1 grid-cols-3 gap-1 rounded-xl bg-slate-200/70 p-1 dark:bg-zinc-800/80">
             {tabs.map((t) => {
               const active = own === t.key;
@@ -347,12 +350,13 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
                   aria-selected={active}
                   onClick={() => changeOwn(t.key)}
                   className={cn(
-                    "flex min-h-10 items-center justify-center gap-1.5 rounded-lg text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                    // 320px 幅でも「取得済み 999」が折り返さないよう、狭い画面では文字と間隔を少し詰める
+                    "flex min-h-10 min-w-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-0.5 text-[13px] font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 min-[360px]:gap-1.5 min-[360px]:text-sm",
                     active ? "bg-white text-slate-900 shadow-sm dark:bg-zinc-950 dark:text-white" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                   )}
                 >
                   {t.label}
-                  <span className={cn("rounded-full px-1.5 text-xs tabular-nums", active ? "bg-slate-100 dark:bg-zinc-800" : "")}>{t.count}</span>
+                  <span className={cn("rounded-full px-1 text-xs tabular-nums min-[360px]:px-1.5", active ? "bg-slate-100 dark:bg-zinc-800" : "")}>{t.count}</span>
                 </button>
               );
             })}
@@ -362,7 +366,7 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
               type="button"
               onClick={jumpToFilters}
               aria-label={narrowed ? "検索・カテゴリへ（絞り込み中）" : "検索・カテゴリへ"}
-              className="relative flex h-12 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-200/70 text-slate-700 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-zinc-800/80 dark:text-slate-300 dark:hover:text-white"
+              className="relative flex h-12 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-200/70 min-[360px]:w-11 text-slate-700 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-zinc-800/80 dark:text-slate-300 dark:hover:text-white"
             >
               <Search className="h-5 w-5" aria-hidden="true" />
               {narrowed && <span className="absolute right-1.5 top-1.5 h-2.5 w-2.5 rounded-full bg-violet-600 ring-2 ring-slate-50 dark:ring-zinc-950" aria-hidden="true" />}
@@ -424,8 +428,9 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
       {isOwner && total > 0 && !fromCache && (
         <Link
           href={`/mochico/events/${event.id}/items/new`}
-          className="fixed right-4 z-30 flex h-14 items-center gap-2 rounded-full bg-blue-600 px-5 font-bold text-white shadow-lg transition hover:bg-blue-700 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/40"
-          style={{ bottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
+          className="goods-fab fixed z-30 flex h-14 items-center gap-2 rounded-full bg-blue-600 px-5 font-bold text-white shadow-lg transition hover:bg-blue-700 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/40"
+          // ホームバー・横向き時のノッチを避ける（goods.css: モーダル表示中は隠す）
+          style={{ bottom: "calc(1rem + env(safe-area-inset-bottom))", right: "calc(1rem + env(safe-area-inset-right))" }}
         >
           <Plus className="h-5 w-5" aria-hidden="true" />
           <span className="text-sm">グッズ追加</span>
@@ -479,6 +484,9 @@ function GoodsCard({
   const random = item.kind === "random";
   const kinds = item.variants.length;
   const ownedKinds = random ? ownedVariantCount(item, quantities) : 0;
+  // 枠線: 通常商品は取得済みでピンク全周。ランダム商品は全種類そろってピンク全周、一部だけなら取得率の分だけピンク
+  const progress = random ? variantProgress(item, quantities) : 0;
+  const complete = random ? progress === 1 : owned;
 
   const label = random
     ? `${item.name}、${formatPrice(item.price)}、ランダム全${kinds}種のうち${ownedKinds}種取得${qty > 0 ? `・合計${qty}個` : ""}。タップで絵柄ごとの所持数を表示`
@@ -495,13 +503,15 @@ function GoodsCard({
         aria-haspopup={random || qty >= 2 ? "dialog" : undefined}
         aria-label={label}
         aria-disabled={(disabled && !random && qty < 2) || undefined}
+        // overflow-hidden は付けない（取得率の線は枠の上に重ねるため）。角丸の切り抜きは画像の領域で行う
         className={cn(
-          "group flex h-full w-full flex-col overflow-hidden rounded-2xl border-2 bg-white text-left transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/40 active:scale-[0.97] dark:bg-zinc-900",
-          owned ? "border-pink-500 shadow-[0_0_0_1px_rgba(236,72,153,0.15)] dark:border-pink-500" : "border-transparent shadow-sm ring-1 ring-slate-200 dark:ring-zinc-800",
+          "group relative flex h-full w-full flex-col rounded-2xl border-2 bg-white text-left transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/40 active:scale-[0.97] dark:bg-zinc-900",
+          complete ? "border-pink-500 shadow-[0_0_0_1px_rgba(236,72,153,0.15)] dark:border-pink-500" : "border-transparent shadow-sm ring-1 ring-slate-200 dark:ring-zinc-800",
           pop && "goods-pop"
         )}
       >
-        <div className="relative aspect-square w-full overflow-hidden bg-slate-100 dark:bg-zinc-800">
+        {random && progress > 0 && progress < 1 && <ProgressBorder progress={progress} />}
+        <div className="relative aspect-square w-full overflow-hidden rounded-t-[14px] bg-slate-100 dark:bg-zinc-800">
           {item.thumbUrl && !imgFailed ? (
             // eslint-disable-next-line @next/next/no-img-element -- 署名付きURLのサムネ（480px・圧縮済み）
             <img

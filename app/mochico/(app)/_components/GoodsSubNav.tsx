@@ -14,7 +14,7 @@ export function GoodsSubNav() {
   const pathname = usePathname() ?? "";
   const hideNav = pathname.startsWith("/mochico/login") || pathname.startsWith("/mochico/s/") || pathname === "/mochico/app";
   return (
-    <div className="sticky top-[var(--goods-top)] z-30 border-b pt-[var(--goods-safe-top)] border-slate-200 bg-white/90 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
+    <div className="goods-sticky-blur sticky top-[var(--goods-top)] z-30 border-b pt-[var(--goods-safe-top)] border-slate-200 bg-white/90 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-4">
         <Link
           href="/mochico/app"

@@ -29,6 +29,14 @@ dialog.goods-sheet::backdrop { background: rgb(15 23 42 / 0.55); }
 :root {
   --goods-top: 57px;
   --goods-safe-top: 0px;
+  /* Mochico のサブヘッダー（高さ 3rem ＋ 下線 1px）。その下に所持タブを固定する */
+  --goods-subnav-h: calc(3rem + 1px);
+}
+/* viewport-fit=cover（layout.tsx）にしたため、横向き時に ToolBox のヘッダー・フッターがノッチに隠れないようにする */
+body header.sticky.top-0,
+body footer {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 @media (display-mode: standalone) {
   :root {
@@ -40,6 +48,25 @@ dialog.goods-sheet::backdrop { background: rgb(15 23 42 / 0.55); }
   body footer {
     display: none !important;
   }
+}
+
+/* ------------------------------------------------------------
+   モーダル（<dialog>）表示中
+   - 背景のスクロールを止める（iPhone では背景をなぞるとページが動いてしまう）
+   - 右下の「グッズ追加」を隠す（モーダルより前に見えたり、誤って押せたりしないように）
+   - 固定ヘッダーのぼかし（backdrop-filter）を外す。iPhone Safari ではぼかしのある固定要素が
+     モーダルの上に描かれることがあるため。モーダルの背景は暗くなるので見た目は変わらない
+   ------------------------------------------------------------ */
+html:has(dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+html:has(dialog[open]) .goods-fab {
+  visibility: hidden;
+}
+html:has(dialog[open]) .goods-sticky-blur {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 /* ------------------------------------------------------------
