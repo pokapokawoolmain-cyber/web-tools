@@ -121,6 +121,11 @@ function ShareCard({ item, onOpen }: { item: SharedGoods; onOpen: () => void }) 
           <span className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-slate-600 shadow-sm dark:bg-zinc-900/90 dark:text-slate-300" aria-hidden="true">
             <Info className="h-4 w-4" />
           </span>
+          {item.kind === "random" && (
+            <span className="absolute left-1.5 top-1.5 rounded-full border border-slate-300 bg-white/90 px-2 py-0.5 text-xs font-bold text-slate-600 dark:border-zinc-600 dark:bg-zinc-900/90 dark:text-slate-300">
+              全{item.variants.length}種
+            </span>
+          )}
         </div>
         <div className="flex flex-1 flex-col gap-0.5 px-2.5 pb-2.5 pt-2">
           {item.category && <span className="line-clamp-1 text-[11px] font-medium text-slate-500 dark:text-slate-400">{item.category}</span>}
@@ -232,6 +237,28 @@ function ShareDetailSheet({ item, onClose }: { item: SharedGoods | null; onClose
             </h2>
             <p className="mt-1 text-xl font-bold tabular-nums">{formatPrice(item.price)}</p>
             {item.description && <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-300">{item.description}</p>}
+            {item.kind === "random" && item.variants.length > 0 && (
+              <section className="mt-5" aria-labelledby="share-variants-title">
+                <h3 id="share-variants-title" className="text-sm font-bold">
+                  絵柄（全{item.variants.length}種）
+                </h3>
+                <ul className="mt-2 grid grid-cols-3 gap-2">
+                  {item.variants.map((v, i) => (
+                    <li key={`${v.name}-${i}`} className="flex flex-col gap-1">
+                      <div className="aspect-square overflow-hidden rounded-xl bg-slate-100 dark:bg-zinc-800">
+                        {v.thumbUrl ? (
+                          // eslint-disable-next-line @next/next/no-img-element -- 署名付きURLのサムネ
+                          <img src={v.thumbUrl} alt="" loading="lazy" referrerPolicy="no-referrer" className="h-full w-full object-contain" />
+                        ) : (
+                          <span className="flex h-full items-center justify-center text-[10px] text-slate-400">画像なし</span>
+                        )}
+                      </div>
+                      <span className="line-clamp-2 text-xs font-medium">{v.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </div>
         </div>
       )}

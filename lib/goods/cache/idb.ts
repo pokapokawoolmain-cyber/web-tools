@@ -10,7 +10,7 @@
 // ユーザーのコレクションは失われない。書き込みは必ずクラウドへ直接行う。
 // IndexedDB が使えない環境（プライベートブラウズ等）では何もせず黙って諦める。
 // ============================================================
-import type { GoodsEvent, GoodsItem, OwnershipStatus } from "../types";
+import type { GoodsCategory, GoodsEvent, GoodsItem, Quantities } from "../types";
 
 const DB_NAME = "toolbox-goods";
 const DB_VERSION = 1;
@@ -22,9 +22,23 @@ export interface EventSnapshot {
   eventId: string;
   event: GoodsEvent;
   goods: GoodsItem[];
-  statuses: Record<string, OwnershipStatus>;
+  categories: GoodsCategory[];
+  quantities: Quantities;
   isOwner: boolean;
   savedAt: number;
+}
+
+/** Phase 3 より前に保存したスナップショット（statuses のみ）を新しい形に読み替える */
+function upgrade(s: EventSnapshot & { statuses?: Record<string, string> }): EventSnapshot {
+  if (s.quantities) return { ...s, categories: s.categories ?? [] };
+  const quantities: Quantities = {};
+  for (const [id, st] of Object.entries(s.statuses ?? {})) if (st === "owned") quantities[id] = 1;
+  return {
+    ...s,
+    quantities,
+    categories: [],
+    goods: s.goods.map((g) => ({ ...g, kind: g.kind ?? "normal", categoryId: g.categoryId ?? null, images: g.images ?? [], variants: g.variants ?? [] })),
+  };
 }
 
 let dbPromise: Promise<IDBDatabase | null> | null = null;
@@ -74,7 +88,7 @@ export async function saveSnapshot(s: EventSnapshot) {
 /** 別ユーザーのキャッシュは返さない（共有端末での取り違え防止） */
 export async function loadSnapshot(userId: string, eventId: string): Promise<EventSnapshot | undefined> {
   const s = await run<EventSnapshot>(SNAPSHOTS, "readonly", (st) => st.get(snapKey(userId, eventId)));
-  return s && s.userId === userId ? s : undefined;
+  return s && s.userId === userId ? upgrade(s) : undefined;
 }
 
 export async function saveUiState(key: string, value: unknown) {

@@ -49,7 +49,8 @@ export default async function EventDetailPage({
         userId={user.id}
         event={detail.event}
         goods={detail.goods}
-        initialStatuses={detail.statuses}
+        categories={detail.categories}
+        initialQuantities={detail.quantities}
         isOwner={detail.isOwner}
       />
       {!detail.isOwner && (

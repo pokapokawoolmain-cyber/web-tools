@@ -18,7 +18,7 @@ async function handle(request: NextRequest) {
   if (given.length !== want.length || !timingSafeEqual(given, want)) return new NextResponse(null, { status: 404 });
   try {
     const r = await runOrphanCleanup();
-    return NextResponse.json({ ok: true, deletedEvents: r.deletedEventIds.length, orphanFolders: r.orphanStorageEventIds.length, removedImages: r.removedImages });
+    return NextResponse.json({ ok: true, deletedEvents: r.deletedEventIds.length, orphanFolders: r.orphanStorageEventIds.length, removedImages: r.removedImages, removedUnreferenced: r.removedUnreferenced });
   } catch {
     return NextResponse.json({ ok: false }, { status: 500 });
   }

@@ -106,7 +106,9 @@ async function makeEvent(owner: U, title: string) {
     await owner.c.storage.from("goods-images").upload(p, new Blob([png], { type: "image/jpeg" }), { contentType: "image/jpeg" });
     const t = p.replace("-full", "-thumb");
     await owner.c.storage.from("goods-images").upload(t, new Blob([png], { type: "image/jpeg" }), { contentType: "image/jpeg" });
-    await owner.c.from("goods").insert({ id, event_id: ev!.id, name: `商品${i}`, price: i * 100, sort_order: i, image_path: p, thumb_path: t });
+    // Phase 3（contract 後）: goods.image_path は直接書けない。代表画像は goods_images の先頭（goods.image_path はトリガーが写す）
+    await owner.c.from("goods").insert({ id, event_id: ev!.id, name: `商品${i}`, price: i * 100, sort_order: i });
+    await owner.c.rpc("goods_save_media", { p_goods_id: id, p_images: [{ image_path: p, thumb_path: t }], p_variants: null });
     goods.push({ id });
   }
   const { data: link } = await owner.c.rpc("goods_create_share_link", { p_event_id: ev!.id, p_expires_days: null });
