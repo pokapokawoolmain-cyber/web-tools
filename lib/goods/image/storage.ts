@@ -51,3 +51,13 @@ export async function signImage(supabase: SupabaseClient, path: string, ttlSec =
   const { data } = await supabase.storage.from(GOODS_BUCKET).createSignedUrl(path, ttlSec);
   return data?.signedUrl ?? null;
 }
+
+/** 複数のパスをまとめて署名する（往復1回）。失敗したパスは含めない */
+export async function signImages(supabase: SupabaseClient, paths: (string | null | undefined)[], ttlSec = 3600): Promise<Map<string, string>> {
+  const unique = [...new Set(paths.filter((p): p is string => !!p))];
+  const map = new Map<string, string>();
+  if (unique.length === 0) return map;
+  const { data } = await supabase.storage.from(GOODS_BUCKET).createSignedUrls(unique, ttlSec);
+  for (const row of data ?? []) if (row.path && row.signedUrl && !row.error) map.set(row.path, row.signedUrl);
+  return map;
+}

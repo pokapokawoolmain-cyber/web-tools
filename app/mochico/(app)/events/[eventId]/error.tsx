@@ -50,7 +50,7 @@ export default function EventError({ reset }: { error: Error; reset: () => void 
           </button>
         </div>
         <EventHeader event={snap.event} isOwner={snap.isOwner} fromCache />
-        <GoodsBoard userId={snap.userId} event={snap.event} goods={snap.goods} initialStatuses={snap.statuses} isOwner={snap.isOwner} fromCache />
+        <GoodsBoard userId={snap.userId} event={snap.event} goods={snap.goods} categories={snap.categories} initialQuantities={snap.quantities} isOwner={snap.isOwner} fromCache />
       </div>
     );
   }

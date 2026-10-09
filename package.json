@@ -15,7 +15,8 @@
     "goods:seed-acceptance": "tsx scripts/goods-seed-acceptance.mts",
     "goods:acceptance": "bash scripts/goods-acceptance-preview.sh",
     "goods:share-test": "tsx scripts/goods-share-rls-test.mts",
-    "goods:account-test": "NODE_OPTIONS=--conditions=react-server tsx scripts/goods-account-deletion-test.mts"
+    "goods:account-test": "NODE_OPTIONS=--conditions=react-server tsx scripts/goods-account-deletion-test.mts",
+    "goods:phase3-test": "tsx scripts/goods-phase3-test.mts"
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.15",

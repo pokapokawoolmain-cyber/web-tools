@@ -71,6 +71,10 @@ export function friendlyDbError(err: { code?: string; message?: string; hint?: s
   if (!err) return "処理に失敗しました。";
   if (err.hint === "goods_event_limit") return "イベント数の上限（300件）に達しています。";
   if (err.hint === "goods_goods_limit") return "1イベントあたりのグッズ数の上限（1000件）に達しています。";
+  if (err.hint === "goods_category_limit") return "1イベントあたりのカテゴリ数の上限（50件）に達しています。";
+  if (err.hint === "goods_image_limit") return "1つのグッズに登録できる画像は10枚までです。";
+  if (err.hint === "goods_variant_limit") return "1つのグッズに登録できる絵柄は100種類までです。";
+  if (err.code === "23505") return "同じ名前のものがすでにあります。";
   if (err.code === "42501") return "この操作を行う権限がありません。";
   if (err.code === "23514") return "入力内容に誤りがあります。文字数や日付を確認してください。";
   if (err.message && /fetch|network|Failed to fetch/i.test(err.message)) return "通信できませんでした。電波の良い場所でもう一度お試しください。";

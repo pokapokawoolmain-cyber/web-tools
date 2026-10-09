@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getEventCategories, getGoodsForEdit, getOwnedEvent, requireUser } from "@/lib/goods/data";
+import { getEventCategoryList, getGoodsForEdit, getOwnedEvent, requireUser } from "@/lib/goods/data";
 import { GoodsForm } from "../../../../../_components/GoodsForm";
 import { PageHeader } from "../../../../../_components/PageHeader";
 import { Forbidden } from "../../../../../_components/Forbidden";
@@ -13,7 +13,7 @@ export default async function EditGoodsPage({ params }: { params: Promise<{ even
   const { event, forbidden } = await getOwnedEvent(supabase, user.id, eventId);
   if (forbidden) return <Forbidden backHref={`/mochico/events/${eventId}`} />;
   if (!event) notFound();
-  const [item, categories] = await Promise.all([getGoodsForEdit(supabase, eventId, goodsId), getEventCategories(supabase, eventId)]);
+  const [item, categories] = await Promise.all([getGoodsForEdit(supabase, eventId, goodsId), getEventCategoryList(supabase, eventId)]);
   if (!item) notFound();
 
   return (

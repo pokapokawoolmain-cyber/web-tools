@@ -28,6 +28,9 @@ export interface SharedGoods {
   category: string | null;
   thumbUrl: string | null;
   imageUrl: string | null;
+  kind: "normal" | "random";
+  /** ランダム商品の絵柄（名前とサムネ）。所持情報は含まない */
+  variants: { name: string; thumbUrl: string | null }[];
   hasImage: boolean;
 }
 
@@ -48,13 +51,23 @@ export async function getSharedCatalog(token: string): Promise<SharedCatalog | {
   const res = data as {
     status: ShareStatus;
     event?: { title: string; description: string | null; start_date: string | null; end_date: string | null; cover_path: string | null };
-    goods?: { key: string; name: string; price: number | null; description: string | null; category: string | null; image_path: string | null; thumb_path: string | null }[];
+    goods?: {
+      key: string;
+      name: string;
+      price: number | null;
+      description: string | null;
+      category: string | null;
+      kind?: string;
+      image_path: string | null;
+      thumb_path: string | null;
+      variants?: { name: string; thumb_path: string | null }[];
+    }[];
   };
   if (res.status !== "ok" || !res.event) return { status: (res.status === "ok" ? "error" : res.status) as Exclude<ShareStatus, "ok"> };
 
   const goods = res.goods ?? [];
   // 画像は1回の呼び出しでまとめて署名する（150商品でも往復1回 = N+1 にしない）
-  const paths = [res.event.cover_path, ...goods.flatMap((g) => [g.thumb_path, g.image_path])].filter((p): p is string => !!p);
+  const paths = [res.event.cover_path, ...goods.flatMap((g) => [g.thumb_path, g.image_path, ...(g.variants ?? []).map((v) => v.thumb_path)])].filter((p): p is string => !!p);
   const signed = new Map<string, string>();
   if (paths.length) {
     const { data: urls } = await admin.storage.from(GOODS_BUCKET).createSignedUrls([...new Set(paths)], SIGNED_TTL);
@@ -80,6 +93,8 @@ export async function getSharedCatalog(token: string): Promise<SharedCatalog | {
       thumbUrl: url(g.thumb_path),
       imageUrl: url(g.image_path),
       hasImage: !!g.image_path,
+      kind: g.kind === "random" ? "random" : "normal",
+      variants: (g.variants ?? []).map((v) => ({ name: v.name, thumbUrl: url(v.thumb_path) })),
     })),
   };
 }

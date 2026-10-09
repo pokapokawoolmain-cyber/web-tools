@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getEventCategories, getOwnedEvent, requireUser } from "@/lib/goods/data";
+import { getEventCategoryList, getOwnedEvent, requireUser } from "@/lib/goods/data";
 import { GoodsForm } from "../../../../_components/GoodsForm";
 import { PageHeader } from "../../../../_components/PageHeader";
 import { Forbidden } from "../../../../_components/Forbidden";
@@ -22,7 +22,7 @@ export default async function NewGoodsPage({
   if (!event) notFound();
 
   const [categories, { data: last }] = await Promise.all([
-    getEventCategories(supabase, eventId),
+    getEventCategoryList(supabase, eventId),
     supabase.from("goods").select("sort_order").eq("event_id", eventId).order("sort_order", { ascending: false }).limit(1).maybeSingle(),
   ]);
 

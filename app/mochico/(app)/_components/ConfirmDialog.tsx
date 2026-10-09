@@ -1,6 +1,6 @@
 "use client";
 // 削除など取り消せない操作だけに使う確認ダイアログ（<dialog> でフォーカス管理・Esc を標準対応）
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useId, useRef, type ReactNode } from "react";
 import { Loader2 } from "lucide-react";
 import { btn } from "@/lib/goods/ui";
 
@@ -16,6 +16,8 @@ interface Props {
 
 export function ConfirmDialog({ open, title, children, confirmLabel, busy, onConfirm, onCancel }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
+  // 1画面に複数の確認ダイアログがあっても読み上げ名が混ざらないよう、見出しの id はダイアログごとに分ける
+  const titleId = useId();
 
   useEffect(() => {
     const d = ref.current;
@@ -31,11 +33,11 @@ export function ConfirmDialog({ open, title, children, confirmLabel, busy, onCon
         e.preventDefault();
         if (!busy) onCancel();
       }}
-      aria-labelledby="confirm-title"
+      aria-labelledby={titleId}
       className="goods-sheet m-auto w-[calc(100%-2rem)] max-w-sm rounded-2xl bg-white p-0 text-slate-900 shadow-2xl dark:bg-zinc-900 dark:text-slate-100"
     >
       <div className="p-6">
-        <h2 id="confirm-title" className="text-base font-bold">
+        <h2 id={titleId} className="text-base font-bold">
           {title}
         </h2>
         {children && <div className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{children}</div>}

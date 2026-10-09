@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { goodsServerClient } from "./supabase/server";
 import { GOODS_BUCKET } from "./env";
-import type { GoodsEvent, GoodsItem, MyEventSummary, OwnershipStatus } from "./types";
+import { qtyKey, type GoodsCategory, type GoodsEvent, type GoodsItem, type GoodsKind, type MyEventSummary, type Quantities } from "./types";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export const isUuid = (v: string) => UUID_RE.test(v);
@@ -110,8 +110,79 @@ export function thumbOf(path: string | null): string | null {
 export interface EventDetail {
   event: GoodsEvent;
   goods: GoodsItem[];
-  statuses: Record<string, OwnershipStatus>;
+  categories: GoodsCategory[];
+  quantities: Quantities;
   isOwner: boolean;
+}
+
+const GOODS_COLUMNS = "id, event_id, name, price, description, image_path, thumb_path, category, category_id, kind, sort_order";
+
+interface GoodsRow {
+  id: string;
+  event_id: string;
+  name: string;
+  price: number | null;
+  description: string | null;
+  image_path: string | null;
+  thumb_path: string | null;
+  category: string | null;
+  category_id: string | null;
+  kind: string;
+  sort_order: number;
+}
+interface ImageRow { id: string; goods_id: string; image_path: string; thumb_path: string; sort_order: number }
+interface VariantRow { id: string; goods_id: string; name: string; image_path: string | null; thumb_path: string | null; sort_order: number }
+
+/** 画像・絵柄の行をグッズに組み立てる。署名URLは渡された分だけ（一覧ではサムネのみ） */
+function toItems(rows: GoodsRow[], images: ImageRow[], variants: VariantRow[], urls: Map<string, string>): GoodsItem[] {
+  const imgBy = new Map<string, ImageRow[]>();
+  for (const i of images) imgBy.set(i.goods_id, [...(imgBy.get(i.goods_id) ?? []), i]);
+  const varBy = new Map<string, VariantRow[]>();
+  for (const v of variants) varBy.set(v.goods_id, [...(varBy.get(v.goods_id) ?? []), v]);
+  return rows.map((g) => ({
+    id: g.id,
+    eventId: g.event_id,
+    name: g.name,
+    price: g.price,
+    description: g.description,
+    imagePath: g.image_path,
+    thumbPath: g.thumb_path,
+    category: g.category,
+    categoryId: g.category_id,
+    kind: (g.kind === "random" ? "random" : "normal") as GoodsKind,
+    sortOrder: g.sort_order,
+    thumbUrl: g.thumb_path ? urls.get(g.thumb_path) ?? null : null,
+    imageUrl: null, // 詳細画像は開いたときにクライアントで署名する（一覧で原寸を読まない）
+    images: (imgBy.get(g.id) ?? [])
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((i) => ({ id: i.id, imagePath: i.image_path, thumbPath: i.thumb_path, sortOrder: i.sort_order, thumbUrl: urls.get(i.thumb_path) ?? null })),
+    variants: (g.kind === "random" ? varBy.get(g.id) ?? [] : [])
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((v) => ({
+        id: v.id,
+        name: v.name,
+        imagePath: v.image_path,
+        thumbPath: v.thumb_path,
+        sortOrder: v.sort_order,
+        thumbUrl: v.thumb_path ? urls.get(v.thumb_path) ?? null : null,
+      })),
+  }));
+}
+
+async function loadCatalogParts(supabase: SupabaseClient, eventId: string, goodsIds: string[]) {
+  if (goodsIds.length === 0) return { images: [] as ImageRow[], variants: [] as VariantRow[] };
+  const [{ data: images, error: iErr }, { data: variants, error: vErr }] = await Promise.all([
+    supabase.from("goods_images").select("id, goods_id, image_path, thumb_path, sort_order").eq("event_id", eventId).order("sort_order"),
+    supabase.from("goods_variants").select("id, goods_id, name, image_path, thumb_path, sort_order").eq("event_id", eventId).order("sort_order"),
+  ]);
+  if (iErr || vErr) throw new Error("failed to load goods details");
+  return { images: (images ?? []) as ImageRow[], variants: (variants ?? []) as VariantRow[] };
+}
+
+export async function getEventCategoryList(supabase: SupabaseClient, eventId: string): Promise<GoodsCategory[]> {
+  const { data, error } = await supabase.from("goods_categories").select("id, name, sort_order").eq("event_id", eventId).order("sort_order").order("name");
+  if (error) throw new Error("failed to load categories");
+  return (data ?? []).map((c) => ({ id: c.id, name: c.name, sortOrder: c.sort_order }));
 }
 
 /** 見えないイベントは null（404 と同じ扱い） */
@@ -126,7 +197,7 @@ export async function getEventDetail(supabase: SupabaseClient, userId: string, e
       .maybeSingle(),
     supabase
       .from("goods")
-      .select("id, event_id, name, price, description, image_path, thumb_path, category, sort_order")
+      .select(GOODS_COLUMNS)
       .eq("event_id", eventId)
       .is("deleted_at", null)
       .order("sort_order", { ascending: true })
@@ -137,38 +208,29 @@ export async function getEventDetail(supabase: SupabaseClient, userId: string, e
   if (!ev) return null;
   if (gErr) throw new Error("failed to load goods");
 
-  const goodsIds = (goodsRows ?? []).map((g) => g.id);
-  // 自分の所持状態だけ（RLS でも他人の行は返らないが、明示的に絞る）
-  const { data: owns, error: oErr } = goodsIds.length
-    ? await supabase.from("ownerships").select("goods_id, status").eq("user_id", userId).in("goods_id", goodsIds)
-    : { data: [], error: null };
+  const rows = (goodsRows ?? []) as GoodsRow[];
+  const goodsIds = rows.map((g) => g.id);
+  const [parts, categories, { data: owns, error: oErr }] = await Promise.all([
+    loadCatalogParts(supabase, eventId, goodsIds),
+    getEventCategoryList(supabase, eventId),
+    // 自分の所持数量だけ（RLS でも他人の行は返らないが、明示的に絞る）
+    goodsIds.length
+      ? supabase.from("ownerships").select("goods_id, variant_id, quantity").eq("user_id", userId).in("goods_id", goodsIds)
+      : Promise.resolve({ data: [] as { goods_id: string; variant_id: string | null; quantity: number }[], error: null }),
+  ]);
   if (oErr) throw new Error("failed to load ownerships");
 
-  const urls = await signPaths(supabase, [
-    thumbOf(ev.cover_image_path),
-    ev.cover_image_path,
-    ...(goodsRows ?? []).map((g) => g.thumb_path),
-  ]);
+  // 一覧で使うのはカバーと各グッズの代表サムネだけ。ギャラリー・絵柄の画像は開いたときに署名する
+  const urls = await signPaths(supabase, [thumbOf(ev.cover_image_path), ev.cover_image_path, ...rows.map((g) => g.thumb_path)]);
 
-  const statuses: Record<string, OwnershipStatus> = {};
-  for (const o of owns ?? []) statuses[o.goods_id] = o.status === "owned" ? "owned" : "unowned";
+  const quantities: Quantities = {};
+  for (const o of owns ?? []) if (o.quantity > 0) quantities[qtyKey(o.goods_id, o.variant_id)] = o.quantity;
 
   return {
     event: toEvent(ev as EventRow, ev.cover_image_path ? urls.get(ev.cover_image_path) ?? null : null),
-    goods: (goodsRows ?? []).map((g) => ({
-      id: g.id,
-      eventId: g.event_id,
-      name: g.name,
-      price: g.price,
-      description: g.description,
-      imagePath: g.image_path,
-      thumbPath: g.thumb_path,
-      category: g.category,
-      sortOrder: g.sort_order,
-      thumbUrl: g.thumb_path ? urls.get(g.thumb_path) ?? null : null,
-      imageUrl: null, // 詳細画像は開いたときにクライアントで署名する（一覧で原寸を読まない）
-    })),
-    statuses,
+    goods: toItems(rows, parts.images, parts.variants, urls),
+    categories,
+    quantities,
     isOwner: ev.owner_id === userId,
   };
 }
@@ -193,32 +255,28 @@ export async function getGoodsForEdit(supabase: SupabaseClient, eventId: string,
   if (!isUuid(goodsId)) return null;
   const { data: g, error: gErr } = await supabase
     .from("goods")
-    .select("id, event_id, name, price, description, image_path, thumb_path, category, sort_order")
+    .select(GOODS_COLUMNS)
     .eq("id", goodsId)
     .eq("event_id", eventId)
     .is("deleted_at", null)
     .maybeSingle();
   if (gErr) throw new Error("failed to load goods");
   if (!g) return null;
-  const urls = await signPaths(supabase, [g.thumb_path]);
-  const item: GoodsItem = {
-    id: g.id,
-    eventId: g.event_id,
-    name: g.name,
-    price: g.price,
-    description: g.description,
-    imagePath: g.image_path,
-    thumbPath: g.thumb_path,
-    category: g.category,
-    sortOrder: g.sort_order,
-    thumbUrl: g.thumb_path ? urls.get(g.thumb_path) ?? null : null,
-    imageUrl: null,
-  };
-  return item;
+  const [{ data: images, error: iErr }, { data: variants, error: vErr }] = await Promise.all([
+    supabase.from("goods_images").select("id, goods_id, image_path, thumb_path, sort_order").eq("goods_id", goodsId).order("sort_order"),
+    supabase.from("goods_variants").select("id, goods_id, name, image_path, thumb_path, sort_order").eq("goods_id", goodsId).order("sort_order"),
+  ]);
+  if (iErr || vErr) throw new Error("failed to load goods details");
+  // 編集画面では、このグッズの画像・絵柄のサムネをすべて署名する
+  const urls = await signPaths(supabase, [
+    (g as GoodsRow).thumb_path,
+    ...(images ?? []).map((i) => i.thumb_path),
+    ...(variants ?? []).map((v) => v.thumb_path),
+  ]);
+  return toItems([g as GoodsRow], (images ?? []) as ImageRow[], (variants ?? []) as VariantRow[], urls)[0];
 }
 
-/** イベント内の既存カテゴリ（入力補完用） */
+/** イベント内のカテゴリ名（入力補完用・後方互換） */
 export async function getEventCategories(supabase: SupabaseClient, eventId: string): Promise<string[]> {
-  const { data } = await supabase.from("goods").select("category").eq("event_id", eventId).is("deleted_at", null).not("category", "is", null);
-  return [...new Set((data ?? []).map((r) => r.category as string))].slice(0, 30);
+  return (await getEventCategoryList(supabase, eventId)).map((c) => c.name);
 }
