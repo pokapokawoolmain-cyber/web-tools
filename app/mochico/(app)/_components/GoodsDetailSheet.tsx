@@ -15,8 +15,12 @@ import { btn } from "@/lib/goods/ui";
 import { cn } from "@/lib/utils";
 import { ImageFallback } from "./ImageFallback";
 import { QuantityStepper } from "./QuantityStepper";
+import { ScheduleDetail } from "./ScheduleInfo";
+import { effectiveSchedule, EMPTY_SCHEDULE, type Schedule } from "@/lib/goods/schedule";
 
 interface Props {
+  /** イベントの予約・販売スケジュール（グッズが「イベントと同じ」のときに使う） */
+  eventSchedule?: Schedule;
   item: GoodsItem | null;
   quantities: Quantities;
   isOwner: boolean;
@@ -26,7 +30,7 @@ interface Props {
   onClose: () => void;
 }
 
-export function GoodsDetailSheet({ item, quantities, isOwner, disabled, onQuantity, onClose }: Props) {
+export function GoodsDetailSheet({ item, eventSchedule = EMPTY_SCHEDULE, quantities, isOwner, disabled, onQuantity, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
   const [urls, setUrls] = useState<Map<string, string>>(new Map());
   const [loadingImg, setLoadingImg] = useState(false);
@@ -137,6 +141,10 @@ export function GoodsDetailSheet({ item, quantities, isOwner, disabled, onQuanti
               {item.name}
             </h2>
             <p className="mt-1 text-xl font-bold tabular-nums">{formatPrice(item.price)}</p>
+            {(() => {
+              const eff = effectiveSchedule(eventSchedule, { scheduleOverride: item.scheduleOverride, ownSchedule: item.ownSchedule ?? EMPTY_SCHEDULE });
+              return <ScheduleDetail schedule={eff.schedule} source={eff.own ? "own" : "event"} className="mt-2" />;
+            })()}
             {item.description && <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-300">{item.description}</p>}
 
             {item.kind === "normal" ? (

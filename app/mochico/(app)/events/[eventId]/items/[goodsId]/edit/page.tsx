@@ -23,7 +23,7 @@ export default async function EditGoodsPage({ params }: { params: Promise<{ even
   return (
     <div className="mx-auto max-w-xl px-4 py-6">
       <PageHeader title="グッズを編集" sub={event.title} backHref={`/mochico/events/${eventId}`} backLabel="イベントに戻る" />
-      <GoodsForm eventId={eventId} item={item} categories={categories} nextSortOrder={item.sortOrder} hasMembers={hasMembers} />
+      <GoodsForm eventId={eventId} eventSchedule={event.schedule} item={item} categories={categories} nextSortOrder={item.sortOrder} hasMembers={hasMembers} />
     </div>
   );
 }

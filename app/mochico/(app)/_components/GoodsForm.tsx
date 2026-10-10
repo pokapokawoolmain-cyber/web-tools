@@ -19,6 +19,9 @@ import { GalleryEditor, VariantEditor, type GalleryEntry, type VariantEntry } fr
 import { useToast } from "./Toast";
 import { useOnline } from "./useOnline";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { ScheduleFields } from "./ScheduleFields";
+import { ScheduleLine } from "./ScheduleInfo";
+import { EMPTY_SCHEDULE, isReservationOrderValid, isScheduleEmpty, scheduleToRow, type Schedule } from "@/lib/goods/schedule";
 
 interface Props {
   eventId: string;
@@ -27,6 +30,8 @@ interface Props {
   nextSortOrder: number;
   /** 作成者以外の参加者がいるか（ランダム → 通常の変換を止めるため） */
   hasMembers?: boolean;
+  /** イベントの予約・販売スケジュール（「イベントと同じ」の表示用） */
+  eventSchedule?: Schedule;
 }
 
 const initialGallery = (item?: GoodsItem): GalleryEntry[] => (item?.images ?? []).map((image) => ({ key: image.id, kind: "existing", image }));
@@ -35,7 +40,7 @@ const initialVariants = (item?: GoodsItem): VariantEntry[] =>
 
 type Pending = { mode: "save" | "continue"; lines: string[] };
 
-export function GoodsForm({ eventId, item, categories, nextSortOrder, hasMembers = false }: Props) {
+export function GoodsForm({ eventId, item, categories, nextSortOrder, hasMembers = false, eventSchedule = EMPTY_SCHEDULE }: Props) {
   const router = useRouter();
   const toast = useToast();
   const online = useOnline();
@@ -44,6 +49,10 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder, hasMembers
   const [price, setPrice] = useState(item?.price != null ? String(item.price) : "");
   const [description, setDescription] = useState(item?.description ?? "");
   const [kind, setKind] = useState<GoodsKind>(item?.kind ?? "normal");
+  // 予約・販売スケジュール: 「イベントと同じ」（false）か「このグッズだけ別に設定」（true）の2択。
+  // 「イベントと同じ」に戻してもグッズ側の値は消さない（もう一度「別に設定」にすると戻る）
+  const [scheduleOverride, setScheduleOverride] = useState(item?.scheduleOverride ?? false);
+  const [ownSchedule, setOwnSchedule] = useState<Schedule>(item?.ownSchedule ?? EMPTY_SCHEDULE);
   const [categoryChoice, setCategoryChoice] = useState<string>(item?.categoryId ?? "");
   const [newCategory, setNewCategory] = useState("");
   const [knownCategories, setKnownCategories] = useState(categories);
@@ -87,6 +96,7 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder, hasMembers
     const errs = validateGoods({ name, price, category, description });
     if (categoryChoice === "new" && !newCategory.trim()) errs.category = "新しいカテゴリ名を入力してください";
     if (kind === "random" && variants.some((v) => !v.name.trim())) errs.variants = "絵柄の名前を入力してください";
+    if (scheduleOverride && !isReservationOrderValid(ownSchedule)) errs.schedule = "予約締切は予約開始より後の日時にしてください";
     return errs;
   }
 
@@ -95,7 +105,7 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder, hasMembers
     setErrors(errs);
     const first = Object.keys(errs).find((k) => errs[k]);
     if (first) {
-      document.getElementById(first === "variants" ? "variants-section" : `g-${first}`)?.focus();
+      document.getElementById(first === "variants" ? "variants-section" : first === "schedule" ? "g-schedule-reserveEndDate" : `g-${first}`)?.focus();
       return;
     }
     // 失われる操作は確認してから
@@ -199,6 +209,8 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder, hasMembers
         price: parsePrice(price),
         description: description.trim() || null,
         category_id: categoryId,
+        schedule_override: scheduleOverride,
+        ...scheduleToRow(ownSchedule),
       };
       if (item || createdId.current) {
         const { error } = await supabase.from("goods").update(base).eq("id", goodsId);
@@ -451,6 +463,51 @@ export function GoodsForm({ eventId, item, categories, nextSortOrder, hasMembers
         />
         {errors.description && <p className={field.error}>{errors.description}</p>}
       </div>
+
+      {/* 予約・販売スケジュール（D1: 2択） */}
+      <fieldset className="min-w-0">
+        <legend className={field.label}>予約・販売スケジュール</legend>
+        <div className="mt-1.5 space-y-2">
+          {(
+            [
+              [false, "イベントと同じ"],
+              [true, "このグッズだけ別に設定"],
+            ] as const
+          ).map(([v, label]) => (
+            <label
+              key={label}
+              className={cn(
+                "flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border px-3.5 py-3 transition has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-violet-500",
+                scheduleOverride === v ? "border-violet-500 bg-violet-50/60 dark:border-violet-400 dark:bg-violet-950/30" : "border-slate-300 dark:border-zinc-700"
+              )}
+            >
+              <input type="radio" name="schedule-mode" checked={scheduleOverride === v} onChange={() => { setScheduleOverride(v); clearError("schedule"); }} disabled={busy} className="mt-1 h-4 w-4 accent-violet-600" />
+              <span className="min-w-0">
+                <span className="block text-sm font-bold">{label}</span>
+                {!v && (
+                  <span className="mt-0.5 block text-xs text-slate-600 dark:text-slate-300">
+                    {isScheduleEmpty(eventSchedule) ? "イベントには予約・販売の日時が設定されていません" : <ScheduleLine schedule={eventSchedule} compact />}
+                  </span>
+                )}
+              </span>
+            </label>
+          ))}
+        </div>
+        {scheduleOverride && (
+          <div className="mt-3 rounded-2xl border border-slate-200 p-3 sm:p-4 dark:border-zinc-800">
+            <ScheduleFields
+              idPrefix="g-schedule"
+              value={ownSchedule}
+              disabled={busy}
+              error={errors.schedule}
+              onChange={(next) => {
+                setOwnSchedule(next);
+                clearError("schedule");
+              }}
+            />
+          </div>
+        )}
+      </fieldset>
 
       <div className="flex flex-col gap-3 pt-2 sm:flex-row-reverse sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row-reverse">

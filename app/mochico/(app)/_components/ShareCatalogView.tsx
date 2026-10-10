@@ -8,6 +8,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CalendarDays, Check, Info, Loader2, Lock, Plus, X } from "lucide-react";
 import { formatEventDate, formatPrice } from "@/lib/goods/format";
+import { isScheduleEmpty } from "@/lib/goods/schedule";
+import { ScheduleDetail, ScheduleLine } from "./ScheduleInfo";
 import { btn } from "@/lib/goods/ui";
 import { cn } from "@/lib/utils";
 import { ImageFallback } from "./ImageFallback";
@@ -74,9 +76,11 @@ export function ShareCatalogView({ catalog, relation, autoJoin }: { catalog: Sha
       {date && (
         <p className="mt-1 flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400">
           <CalendarDays className="h-4 w-4" aria-hidden="true" />
+          <span className="sr-only">開催日</span>
           {date}
         </p>
       )}
+      <ScheduleDetail schedule={event.schedule} className="mt-1.5" />
       {event.description && <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-300">{event.description}</p>}
 
       <p className="mt-5 text-sm font-bold text-slate-800 dark:text-slate-200">
@@ -133,6 +137,7 @@ function ShareCard({ item, onOpen }: { item: SharedGoods; onOpen: () => void }) 
           <span className={cn("mt-auto pt-1 text-sm font-bold tabular-nums", item.price === null ? "text-slate-500 dark:text-slate-400" : "text-slate-900 dark:text-slate-100")}>
             {formatPrice(item.price)}
           </span>
+          {item.scheduleOwn && !isScheduleEmpty(item.schedule) && <ScheduleLine schedule={item.schedule} compact className="pt-0.5 text-[11px]" />}
         </div>
       </button>
     </li>
@@ -236,6 +241,7 @@ function ShareDetailSheet({ item, onClose }: { item: SharedGoods | null; onClose
               {item.name}
             </h2>
             <p className="mt-1 text-xl font-bold tabular-nums">{formatPrice(item.price)}</p>
+            <ScheduleDetail schedule={item.schedule} source={item.scheduleOwn ? "own" : "event"} className="mt-2" />
             {item.description && <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-300">{item.description}</p>}
             {item.kind === "random" && item.variants.length > 0 && (
               <section className="mt-5" aria-labelledby="share-variants-title">

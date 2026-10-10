@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { goodsServerClient } from "./supabase/server";
 import { GOODS_BUCKET } from "./env";
+import { SCHEDULE_COLUMNS, scheduleFromRow } from "./schedule";
 import { qtyKey, type GoodsCategory, type GoodsEvent, type GoodsItem, type GoodsKind, type GoodsVariant, type MyEventSummary, type Quantities } from "./types";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -53,7 +54,15 @@ interface EventRow {
   cover_image_path: string | null;
   deleted_at: string | null;
   preserved_at: string | null;
+  reserve_start_date?: string | null;
+  reserve_start_time?: string | null;
+  reserve_end_date?: string | null;
+  reserve_end_time?: string | null;
+  sale_start_date?: string | null;
+  sale_start_time?: string | null;
 }
+
+const EVENT_COLUMNS = `id, owner_id, title, description, start_date, end_date, cover_image_path, deleted_at, preserved_at, ${SCHEDULE_COLUMNS}`;
 
 function toEvent(row: EventRow, coverUrl: string | null): GoodsEvent {
   return {
@@ -67,6 +76,7 @@ function toEvent(row: EventRow, coverUrl: string | null): GoodsEvent {
     coverUrl,
     deletedAt: row.deleted_at,
     preserved: !!row.preserved_at,
+    schedule: scheduleFromRow(row),
   };
 }
 
@@ -84,6 +94,13 @@ export async function getMyEvents(supabase: SupabaseClient): Promise<MyEventSumm
     owned_count: number;
     deleted: boolean;
     preserved: boolean;
+    reserve_start_date: string | null;
+    reserve_start_time: string | null;
+    reserve_end_date: string | null;
+    reserve_end_time: string | null;
+    sale_start_date: string | null;
+    sale_start_time: string | null;
+    goods_schedule_count: number | null;
   }[];
   // カバーは一覧ではサムネ版を使う
   const urls = await signPaths(supabase, rows.map((r) => thumbOf(r.cover_image_path)));
@@ -98,6 +115,8 @@ export async function getMyEvents(supabase: SupabaseClient): Promise<MyEventSumm
     owned: Number(r.owned_count),
     deleted: r.deleted,
     preserved: r.preserved,
+    schedule: scheduleFromRow(r),
+    goodsScheduleCount: Number(r.goods_schedule_count ?? 0),
   }));
 }
 
@@ -115,7 +134,7 @@ export interface EventDetail {
   isOwner: boolean;
 }
 
-const GOODS_COLUMNS = "id, event_id, name, price, description, image_path, thumb_path, category, category_id, kind, sort_order";
+const GOODS_COLUMNS = `id, event_id, name, price, description, image_path, thumb_path, category, category_id, kind, sort_order, schedule_override, ${SCHEDULE_COLUMNS}`;
 
 interface GoodsRow {
   id: string;
@@ -129,6 +148,13 @@ interface GoodsRow {
   category_id: string | null;
   kind: string;
   sort_order: number;
+  schedule_override?: boolean | null;
+  reserve_start_date?: string | null;
+  reserve_start_time?: string | null;
+  reserve_end_date?: string | null;
+  reserve_end_time?: string | null;
+  sale_start_date?: string | null;
+  sale_start_time?: string | null;
 }
 interface ImageRow { id: string; goods_id: string; image_path: string; thumb_path: string; sort_order: number }
 interface VariantRow { id: string; goods_id: string; name: string; image_path: string | null; thumb_path: string | null; sort_order: number; deleted_at?: string | null }
@@ -166,6 +192,8 @@ function toItems(rows: GoodsRow[], images: ImageRow[], variants: VariantRow[], u
         sortOrder: v.sort_order,
         thumbUrl: v.thumb_path ? urls.get(v.thumb_path) ?? null : null,
       })),
+    scheduleOverride: !!g.schedule_override,
+    ownSchedule: scheduleFromRow(g),
   }));
 }
 
@@ -209,7 +237,7 @@ export async function getEventDetail(supabase: SupabaseClient, userId: string, e
   const [{ data: ev, error: evErr }, { data: goodsRows, error: gErr }] = await Promise.all([
     supabase
       .from("events")
-      .select("id, owner_id, title, description, start_date, end_date, cover_image_path, deleted_at, preserved_at")
+      .select(EVENT_COLUMNS)
       .eq("id", eventId)
       .maybeSingle(),
     supabase
@@ -258,7 +286,7 @@ export async function getOwnedEvent(supabase: SupabaseClient, userId: string, ev
   if (!isUuid(eventId)) return { event: null, forbidden: false };
   const { data: ev, error: evErr } = await supabase
     .from("events")
-    .select("id, owner_id, title, description, start_date, end_date, cover_image_path, deleted_at, preserved_at")
+    .select(EVENT_COLUMNS)
     .eq("id", eventId)
     .maybeSingle();
   if (evErr) throw new Error("failed to load event");

@@ -1,4 +1,5 @@
 // /goods のドメイン型。DB列名はこのファイルと data.ts の中だけで扱う。
+import type { Schedule } from "./schedule";
 
 /** MVP の UI が扱う所持状態。DB は将来 wanted / reserved 等を追加できる。 */
 export type OwnershipStatus = "unowned" | "owned";
@@ -16,6 +17,8 @@ export interface GoodsEvent {
   deletedAt: string | null;
   /** 作成者が退会し、参加者のために読み取り専用で残っている */
   preserved: boolean;
+  /** 予約・販売スケジュール（開催日 startDate / endDate とは別）。未設定の項目は null */
+  schedule: Schedule;
 }
 
 /** 商品の種類。ランダム商品は絵柄（variant）ごとに数量を持つ */
@@ -71,6 +74,10 @@ export interface GoodsItem {
   variants: GoodsVariant[];
   /** 編集画面だけ: 削除（論理削除）した絵柄。戻すと参加者の数量も戻る */
   archivedVariants?: GoodsVariant[];
+  /** true =「このグッズだけ別に設定」、false =「イベントと同じ」 */
+  scheduleOverride: boolean;
+  /** グッズ自身のスケジュール（scheduleOverride が false のときは表示・判定に使わない） */
+  ownSchedule: Schedule;
 }
 
 /**
@@ -94,4 +101,8 @@ export interface MyEventSummary {
   deleted: boolean;
   /** 作成者が退会したイベント（読み取り専用で残る） */
   preserved: boolean;
+  /** イベント自身の予約・販売スケジュール（グッズの設定から作らない） */
+  schedule: Schedule;
+  /** 個別のスケジュールを持つグッズの数（「個別の予約期限あり」の補足用） */
+  goodsScheduleCount: number;
 }
