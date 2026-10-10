@@ -108,7 +108,7 @@ export function CategoryEditor({ open, eventId, categories, counts, onClose }: P
       className="goods-sheet mb-0 mt-auto w-full max-w-lg rounded-t-3xl bg-white p-0 text-slate-900 shadow-2xl sm:m-auto sm:rounded-3xl dark:bg-zinc-900 dark:text-slate-100"
     >
       {open && (
-        <div className="goods-slide-up max-h-[88vh] overflow-y-auto overscroll-contain p-5" style={{ paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))" }}>
+        <div className="goods-slide-up max-h-[88dvh] overflow-y-auto overscroll-contain p-5" style={{ paddingBottom: "calc(1.25rem + env(safe-area-inset-bottom))" }}>
           <div className="flex items-center justify-between gap-3">
             <h2 id="category-editor-title" className="text-lg font-bold">
               カテゴリを編集

@@ -213,8 +213,8 @@ function ShareDetailSheet({ item, onClose }: { item: SharedGoods | null; onClose
       className="goods-sheet mb-0 mt-auto w-full max-w-lg rounded-t-3xl bg-white p-0 text-slate-900 shadow-2xl sm:m-auto sm:rounded-3xl dark:bg-zinc-900 dark:text-slate-100"
     >
       {item && (
-        <div className="goods-slide-up max-h-[88vh] overflow-y-auto" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
-          <div className={cn("relative w-full bg-slate-100 dark:bg-zinc-800", item.hasImage ? "aspect-square max-h-[60vh]" : "h-36")}>
+        <div className="goods-slide-up max-h-[88dvh] overflow-y-auto" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+          <div className={cn("relative w-full bg-slate-100 dark:bg-zinc-800", item.hasImage ? "aspect-square max-h-[60dvh]" : "h-36")}>
             {src && !failed ? (
               // eslint-disable-next-line @next/next/no-img-element -- 署名付きURL
               <img src={src} alt={item.name} referrerPolicy="no-referrer" onError={() => setFailed(true)} className="h-full w-full object-contain" />
