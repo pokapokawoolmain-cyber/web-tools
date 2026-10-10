@@ -63,6 +63,22 @@ function logicTests() {
   check("時刻あり: 終了 5 時間前は「あと5時間」", remainingLabel(timed, at("2026-10-15T18:59:00+09:00")) === "あと5時間");
   check("時刻あり: 2 日以上前は「あと n 日」", remainingLabel(timed, at("2026-10-12T12:00:00+09:00")) === "あと3日");
   check("時刻あり: 30 秒前でも「あと1分」（0分と表示しない）", remainingLabel(timed, at("2026-10-15T23:58:30+09:00")) === "あと1分");
+  // 時刻ありの残り表示（24時間以上は日付基準・24時間未満は時間・1時間未満は分）
+  const tmr = S({ reserveEndDate: "2026-10-15", reserveEndTime: "18:00" });
+  check("時刻あり: 前日 1:00（残り41時間）は「明日18:00まで」", remainingLabel(tmr, at("2026-10-14T01:00:00+09:00")) === "明日18:00まで");
+  check("時刻あり: 残りちょうど24時間（前日 18:00）は「明日18:00まで」", remainingLabel(tmr, at("2026-10-14T18:00:00+09:00")) === "明日18:00まで");
+  check("時刻あり: 残り24時間を1ミリ秒切ると「あと23時間」", remainingLabel(tmr, at("2026-10-14T18:00:00.001+09:00")) === "あと23時間");
+  check("時刻あり: 残り23時間59分も「あと23時間」（切り捨て）", remainingLabel(tmr, at("2026-10-14T18:01:00+09:00")) === "あと23時間");
+  check("時刻あり: 残りちょうど1時間は「あと1時間」", remainingLabel(tmr, at("2026-10-15T17:00:00+09:00")) === "あと1時間");
+  check("時刻あり: 残り59分59秒は「あと59分」（60分と表示しない）", remainingLabel(tmr, at("2026-10-15T17:00:00.001+09:00")) === "あと59分");
+  check("時刻あり: 残り45分は「あと45分」", remainingLabel(tmr, at("2026-10-15T17:15:00+09:00")) === "あと45分");
+  check("時刻あり: 残り1秒は「あと1分」（0分と表示しない）", remainingLabel(tmr, at("2026-10-15T17:59:59+09:00")) === "あと1分");
+  check("時刻あり: 締切ちょうどで受付終了（残り表示なし）", remainingLabel(tmr, at("2026-10-15T18:00:00+09:00")) === null && reservationStatus(tmr, at("2026-10-15T18:00:00+09:00")).state === "closed");
+  check("時刻あり: 2日前以上（残り24時間以上・翌々日以降）は「あと n 日」", remainingLabel(tmr, at("2026-10-13T12:00:00+09:00")) === "あと2日");
+  check("時刻あり: 翌々日 0:30 の締切（残り25時間）は暦日で数えて「あと2日」", remainingLabel(S({ reserveEndDate: "2026-10-15", reserveEndTime: "00:30" }), at("2026-10-13T23:30:00+09:00")) === "あと2日");
+  check("時刻あり: 翌日 0:30 の締切（前日 0:00、残り24時間30分）は「明日00:30まで」", remainingLabel(S({ reserveEndDate: "2026-10-15", reserveEndTime: "00:30" }), at("2026-10-14T00:00:00+09:00")) === "明日00:30まで");
+  check("受付中の一行表示「予約受付中・明日18:00まで」", reservationSummary(tmr, at("2026-10-14T09:00:00+09:00"))?.label === "予約受付中・明日18:00まで");
+  check("日付のみは従来どおり（当日中は「今日まで」・翌日 0:00 で終了）", remainingLabel(dateOnlyEnd, at("2026-10-15T23:59:59+09:00")) === "今日まで" && reservationStatus(dateOnlyEnd, at("2026-10-16T00:00:00+09:00")).state === "closed");
   // 開始だけ・終了だけ・未設定
   check("開始だけ: 開始後はずっと受付中（終了なし）", reservationStatus(S({ reserveStartDate: "2026-10-10" }), at("2030-01-01T00:00:00+09:00")).state === "open");
   check("終了だけ: 終了前はすべて受付中", reservationStatus(S({ reserveEndDate: "2026-10-15" }), at("2020-01-01T00:00:00+09:00")).state === "open");

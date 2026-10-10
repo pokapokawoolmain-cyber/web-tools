@@ -82,7 +82,7 @@ test("表示: 見出しに予約と販売開始（別の行）、カードは個
   const header = pageA.getByTestId("schedule-detail").first();
   await expect(header).toContainText("予約受付中・あと3日");
   await expect(header).toContainText("販売開始");
-  await expect(goodsCard(pageA, "個別グッズ")).toContainText(/予約受付中・(明日まで|あと\d+時間|あと1日)/);
+  await expect(goodsCard(pageA, "個別グッズ")).toContainText(/予約受付中・(明日18:00まで|あと\d+時間|あと\d+分)/);
   await expect(goodsCard(pageA, "通常グッズ")).not.toContainText("予約");
   await pageA.getByRole("button", { name: "個別グッズの詳細" }).click();
   await expect(pageA.getByRole("dialog")).toContainText("このグッズだけの設定");

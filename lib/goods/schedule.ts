@@ -118,20 +118,23 @@ export function formatScheduleDate(date: string, time: string | null, now: numbe
 }
 
 /**
- * 予約終了までの残り。受付中のときだけ意味がある
- *   日付のみ: 当日 =「今日まで」、翌日 =「明日まで」、それ以降 =「あと n 日」
- *   時刻あり: 1時間未満 =「あと n 分」、24時間未満 =「あと n 時間」、それ以降 =「あと n 日」
+ * 予約終了までの残り。受付中のときだけ意味がある（表示の文言だけ。判定は reservationStatus）
+ *   日付のみ: 当日 =「今日まで」、翌日 =「明日まで」、それ以降 =「あと n 日」（日本時間の暦日）
+ *   時刻あり: 1時間未満 =「あと n 分」（切り捨て・最低1分）、24時間未満 =「あと n 時間」（切り捨て）、
+ *             24時間以上は日付を基準に: 翌日 =「明日18:00まで」、それ以降 =「あと n 日」（日本時間の暦日）
  */
 export function remainingLabel(s: Schedule, now: number): string | null {
   const st = reservationStatus(s, now);
   if (st.state !== "open" || st.endAt === null || !s.reserveEndDate) return null;
   const ms = st.endAt - now;
-  if (normalizeTime(s.reserveEndTime)) {
-    if (ms < HOUR) return `あと${Math.max(1, Math.ceil(ms / MIN))}分`;
-    if (ms < DAY) return `あと${Math.floor(ms / HOUR)}時間`;
-    return `あと${Math.max(1, daysBetween(jstToday(now), s.reserveEndDate))}日`;
-  }
   const days = daysBetween(jstToday(now), s.reserveEndDate);
+  const time = normalizeTime(s.reserveEndTime);
+  if (time) {
+    if (ms < HOUR) return `あと${Math.max(1, Math.floor(ms / MIN))}分`;
+    if (ms < DAY) return `あと${Math.floor(ms / HOUR)}時間`;
+    if (days === 1) return `明日${time}まで`;
+    return `あと${Math.max(1, days)}日`;
+  }
   if (days <= 0) return "今日まで";
   if (days === 1) return "明日まで";
   return `あと${days}日`;
