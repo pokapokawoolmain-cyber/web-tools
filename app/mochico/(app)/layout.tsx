@@ -9,6 +9,7 @@ import type { Metadata, Viewport } from "next";
 import { GoodsSubNav } from "./_components/GoodsSubNav";
 import { OfflineBanner } from "./_components/OfflineBanner";
 import { PwaBootstrap } from "./_components/PwaBootstrap";
+import { ModalScrollLock } from "./_components/ModalScrollLock";
 import { ToastProvider } from "./_components/Toast";
 import { StateMessage } from "./_components/StateMessage";
 import { Wrench } from "lucide-react";
@@ -38,6 +39,9 @@ export const viewport: Viewport = {
   // 入力欄フォーカス時の iOS 自動ズームは font-size 16px で防ぐ（拡大自体は禁止しない）
   width: "device-width",
   initialScale: 1,
+  // iPhone の画面の端（ノッチ・ホームバー）まで描画し、env(safe-area-inset-*) で余白を取る。
+  // これが無いと env() は常に 0 になり、右下のボタンがホームバーに重なることがある
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#09090b" },
@@ -67,9 +71,10 @@ export default async function GoodsLayout({ children }: { children: React.ReactN
     <MascotColorProvider initial={mascotColor}>
       <ToastProvider>
         {/* overflow-x-clip: 横のはみ出しでページ全体が横に広がるのを防ぐ（clip はスクロール領域を作らないので縦スクロール・sticky に影響しない）。
-            下の余白は iPhone のホームバー分も確保する */}
-        <div className="min-h-[70vh] overflow-x-clip bg-slate-50 pb-[calc(6rem+env(safe-area-inset-bottom))] dark:bg-zinc-950">
+            下の余白は iPhone のホームバー分、左右は横向き時のノッチ分も確保する */}
+        <div className="min-h-[70vh] overflow-x-clip bg-slate-50 pb-[calc(6rem+env(safe-area-inset-bottom))] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] dark:bg-zinc-950">
           <PwaBootstrap />
+          <ModalScrollLock />
           <GoodsSubNav />
           <OfflineBanner />
           {children}

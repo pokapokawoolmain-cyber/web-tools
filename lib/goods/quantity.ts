@@ -30,3 +30,13 @@ export const itemOwned = (item: GoodsItem, q: Quantities) => itemTotal(item, q) 
 export function ownedVariantCount(item: GoodsItem, q: Quantities): number {
   return item.variants.filter((v) => (q[qtyKey(item.id, v.id)] ?? 0) > 0).length;
 }
+
+/**
+ * ランダム商品の取得率（0〜1）= 1個以上持っている絵柄の数 / 絵柄の数。
+ * 同じ絵柄を複数持っていても 1 種として数える。削除（論理削除）した絵柄は item.variants に含まれないので、
+ * 分母・分子のどちらにも入らない（カードの「n/m種」表示と同じ）。絵柄が 0 なら 0（ゼロ除算しない）
+ */
+export function variantProgress(item: GoodsItem, q: Quantities): number {
+  const kinds = item.variants.length;
+  return kinds === 0 ? 0 : ownedVariantCount(item, q) / kinds;
+}

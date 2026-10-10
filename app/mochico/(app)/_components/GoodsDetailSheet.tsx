@@ -74,9 +74,11 @@ export function GoodsDetailSheet({ item, quantities, isOwner, disabled, onQuanti
       className="goods-sheet mb-0 mt-auto w-full max-w-lg rounded-t-3xl bg-white p-0 text-slate-900 shadow-2xl sm:m-auto sm:rounded-3xl dark:bg-zinc-900 dark:text-slate-100"
     >
       {item && (
-        <div className="goods-slide-up max-h-[88vh] overflow-y-auto overscroll-contain" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+        // 高さは dvh（画面に見えている高さ）で決める。vh だと iPhone Safari でツールバー表示中に
+        // シートの下がツールバーの裏に隠れ、最後までスクロールできない
+        <div className="goods-slide-up max-h-[88dvh] overflow-y-auto overscroll-contain" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
           {/* ギャラリー（商品紹介用） */}
-          <div className={cn("relative w-full bg-slate-100 dark:bg-zinc-800", images.length ? "aspect-square max-h-[52vh]" : "h-32")}>
+          <div className={cn("relative w-full bg-slate-100 dark:bg-zinc-800", images.length ? "aspect-square max-h-[52dvh]" : "h-32")}>
             {images.length ? (
               <div
                 ref={trackRef}

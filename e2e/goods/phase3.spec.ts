@@ -349,6 +349,61 @@ test("所持データ保護: 共有中のランダム商品は通常商品へ変
   await expect(pageA.getByText("通常商品へは変更できません", { exact: false })).toBeVisible();
 });
 
+test("ランダム商品の枠線: 取得した絵柄の割合（2/8 = 25%）だけ、外周の実際の長さに比例してピンクで描く", async () => {
+  await pageA.setViewportSize({ width: 390, height: 844 });
+  await pageA.goto(eventPath);
+  const card = goodsCard(pageA, "ランダム缶バッジ");
+  await expect(card).toHaveAttribute("aria-label", /全8種のうち2種取得/);
+  const rect = card.locator("svg rect");
+  await expect(rect).toHaveAttribute("data-progress", "0.2500");
+  const m = await card.evaluate((btn) => {
+    const svg = btn.querySelector("svg")!.getBoundingClientRect();
+    const r = btn.querySelector("svg rect")!;
+    const w = svg.width - 2, h = svg.height - 2, rr = 15;
+    return {
+      dash: parseFloat(r.getAttribute("stroke-dasharray")!.split(" ")[0]),
+      perimeter: 2 * (w - 2 * rr) + 2 * (h - 2 * rr) + 2 * Math.PI * rr,
+      border: getComputedStyle(btn).borderTopColor,
+      sameSize: Math.abs(svg.width - btn.getBoundingClientRect().width) < 0.5,
+    };
+  });
+  expect(Math.abs(m.dash - m.perimeter * 0.25)).toBeLessThan(0.5);
+  expect(m.sameSize).toBe(true);
+  expect(m.border).toBe("rgba(0, 0, 0, 0)"); // 一部取得では全周ピンクにしない
+  // 数量を変えた直後に更新され、全種類そろうとピンク全周（部分の線は消える）
+  await card.click();
+  for (let i = 3; i <= 8; i++) await pageA.getByRole("button", { name: `No.${i}の所持数を1増やす` }).click();
+  await closeDetail(pageA);
+  await expect(card).toHaveAttribute("aria-label", /全8種のうち8種取得/);
+  await expect(card.locator("svg rect")).toHaveCount(0);
+  expect(await card.evaluate((btn) => getComputedStyle(btn).borderTopColor)).not.toBe("rgba(0, 0, 0, 0)");
+  // 元に戻す（2/8）
+  await card.click();
+  for (let i = 3; i <= 8; i++) await pageA.getByRole("button", { name: `No.${i}の所持数を1減らす` }).click();
+  await closeDetail(pageA);
+  await expect(card.locator("svg rect")).toHaveAttribute("data-progress", "0.2500");
+});
+
+test("モーダル表示中: 追加ボタンは隠れ、背景をなぞってもページは動かない。閉じると元に戻る", async () => {
+  await pageA.setViewportSize({ width: 390, height: 844 });
+  await pageA.goto(eventPath);
+  await pageA.evaluate(() => window.scrollTo({ top: 300, behavior: "instant" as ScrollBehavior }));
+  await openDetail(pageA, "ペンライト");
+  const fab = pageA.getByRole("link", { name: "グッズ追加" });
+  await expect(fab).toBeHidden();
+  const y0 = await pageA.evaluate(() => window.scrollY);
+  // 実際のタッチ（暗い背景の部分）でなぞる
+  const cdp = await ctxA.newCDPSession(pageA);
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: 195, y: 40 }] });
+  for (let k = 1; k <= 10; k++) await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: 195, y: 40 + k * 30 }] });
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  await pageA.waitForTimeout(300);
+  expect(await pageA.evaluate(() => window.scrollY)).toBe(y0);
+  await closeDetail(pageA);
+  await expect(fab).toBeVisible();
+  expect(await pageA.evaluate(() => getComputedStyle(document.documentElement).overflow)).not.toBe("hidden");
+});
+
 test("iPhone 幅: スクロール中に固定されるのは所持タブの1行だけ。🔍で検索へ戻れる", async () => {
   await pageA.setViewportSize({ width: 390, height: 844 });
   await pageA.goto(eventPath);
