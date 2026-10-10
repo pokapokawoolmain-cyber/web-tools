@@ -225,6 +225,30 @@ async function dbTests() {
   check("「イベントと同じ」に戻したグッズは残した値ではなくイベントの期間", back.schedule_own === false && back.schedule.reserve_end_date === "2026-10-15");
   check("所持情報は含まれない", !/quantity|user_id|"owned"|"unowned"/.test(JSON.stringify(cat)));
 
+  console.log("\n■ 継承の切り替え（イベントの変更の反映・個別 → 継承 → 個別）");
+  {
+    const cat = async () => ((await admin.rpc("goods_get_shared_catalog", { p_token: token })).data as { goods: { name: string; schedule: Record<string, string | null>; schedule_own: boolean }[] }).goods;
+    const { data: gx } = await A.c.from("goods").insert({ event_id: eventId, name: "切替グッズ", sort_order: 9, schedule_override: true, ...scheduleToRow(S({ reserveEndDate: "2026-10-12", reserveEndTime: "18:00" })) }).select("id").single();
+    const find = async () => (await cat()).find((g) => g.name === "切替グッズ")!;
+    let x = await find();
+    check("個別設定: グッズ自身の期間（10/12 18:00）", x.schedule_own && x.schedule.reserve_end_date === "2026-10-12" && x.schedule.reserve_end_time === "18:00:00");
+    await A.c.from("goods").update({ schedule_override: false }).eq("id", gx!.id);
+    x = await find();
+    check("継承に戻す: イベントの期間（10/15・時刻なし）。古い個別の値（18:00）は混ざらない", !x.schedule_own && x.schedule.reserve_end_date === "2026-10-15" && x.schedule.reserve_end_time === null, x.schedule);
+    const stored = (await admin.from("goods").select("reserve_end_date, reserve_end_time").eq("id", gx!.id).single()).data;
+    check("継承中もグッズ側の値は保存されたまま（表示には使わない）", stored?.reserve_end_date === "2026-10-12" && stored?.reserve_end_time === "18:00:00");
+    await A.c.from("events").update({ reserve_end_date: "2026-10-20", reserve_end_time: "12:00" }).eq("id", eventId);
+    x = await find();
+    const same = (await cat()).find((g) => g.name === "同じグッズ")!;
+    check("イベントの期間を変更すると、継承中のグッズにそのまま反映（10/20 12:00）", x.schedule.reserve_end_date === "2026-10-20" && x.schedule.reserve_end_time === "12:00:00" && same.schedule.reserve_end_date === "2026-10-20", { x: x.schedule, same: same.schedule });
+    const { data: mineX } = await A.c.rpc("goods_my_events");
+    check("マイイベント一覧のイベントの期間も変更後の値", (mineX as Record<string, unknown>[]).some((r) => r.id === eventId && r.reserve_end_date === "2026-10-20" && r.reserve_end_time === "12:00:00"));
+    await A.c.from("goods").update({ schedule_override: true }).eq("id", gx!.id);
+    x = await find();
+    check("再び個別設定: 保存済みの値（10/12 18:00）が復元される（イベントの変更の影響を受けない）", x.schedule_own && x.schedule.reserve_end_date === "2026-10-12" && x.schedule.reserve_end_time === "18:00:00", x.schedule);
+    await A.c.from("events").update({ reserve_end_date: "2026-10-15", reserve_end_time: null }).eq("id", eventId);
+  }
+
   console.log("\n■ 列権限（contract 適用後もスケジュールの列は書ける・画像の列は書けない）");
   const { error: imgDirect } = await A.c.from("goods").update({ image_path: null }).eq("id", g2!.id);
   const contractApplied = !!imgDirect;

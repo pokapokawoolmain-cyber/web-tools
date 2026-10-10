@@ -185,3 +185,45 @@ test("iPhone 幅: 入力欄（日付・時刻・クリア）が 320〜430px で�
   }
   await pageA.setViewportSize({ width: 390, height: 844 });
 });
+
+test("継承: イベントの変更が継承中のグッズに反映され、個別 → 継承 → 個別で値が混ざらず復元される", async () => {
+  await pageA.setViewportSize({ width: 390, height: 844 });
+  // 1. イベントの締切を 5 日後 20:00 に変更 → 継承中の「通常グッズ」に反映
+  await pageA.goto(`${eventPath}/edit`);
+  await fillSchedule(pageA, "予約締切", jstDay(5), "20:00");
+  await pageA.getByRole("button", { name: "保存する" }).click();
+  await pageA.waitForURL(new RegExp(`${eventPath}$`));
+  await pageA.getByRole("button", { name: "通常グッズの詳細" }).click();
+  await expect(pageA.getByRole("dialog")).toContainText("予約受付中・あと5日");
+  await expect(pageA.getByRole("dialog")).toContainText("イベントの設定");
+  await pageA.getByRole("dialog").getByRole("button", { name: "閉じる" }).first().click();
+  // 2. 「個別グッズ」（明日 18:00 まで）を「イベントと同じ」に戻す → イベントの期間だけが表示される
+  const admin = await adminClient();
+  const gid = (await admin.from("goods").select("id").eq("event_id", eventId).eq("name", "個別グッズ").single()).data!.id;
+  await pageA.goto(`${eventPath}/items/${gid}/edit`);
+  await expect(pageA.getByLabel("予約締切の日付")).toHaveValue(jstDay(1));
+  await pageA.getByText("イベントと同じ").click();
+  await expect(pageA.getByLabel("予約締切の日付")).toHaveCount(0); // 個別の入力欄は隠れる
+  await pageA.getByRole("button", { name: "保存する" }).click();
+  await pageA.waitForURL(new RegExp(`${eventPath}$`));
+  await expect(goodsCard(pageA, "個別グッズ")).not.toContainText("予約"); // カードの個別表示は消える
+  await pageA.getByRole("button", { name: "個別グッズの詳細" }).click();
+  await expect(pageA.getByRole("dialog")).toContainText("予約受付中・あと5日");
+  await expect(pageA.getByRole("dialog")).toContainText("イベントの設定");
+  await expect(pageA.getByRole("dialog")).not.toContainText("18:00");
+  await pageA.getByRole("dialog").getByRole("button", { name: "閉じる" }).first().click();
+  const kept = (await admin.from("goods").select("schedule_override, reserve_end_date, reserve_end_time").eq("id", gid).single()).data;
+  expect(kept).toEqual({ schedule_override: false, reserve_end_date: jstDay(1), reserve_end_time: "18:00:00" });
+  // 3. 再び「このグッズだけ別に設定」→ 保存済みの値が入力欄に復元され、保存すると個別の期間に戻る
+  await pageA.goto(`${eventPath}/items/${gid}/edit`);
+  await pageA.getByText("このグッズだけ別に設定").click();
+  await expect(pageA.getByLabel("予約締切の日付")).toHaveValue(jstDay(1));
+  await expect(pageA.getByLabel("予約締切の時刻（任意）")).toHaveValue("18:00");
+  await pageA.getByRole("button", { name: "保存する" }).click();
+  await pageA.waitForURL(new RegExp(`${eventPath}$`));
+  await expect(goodsCard(pageA, "個別グッズ")).toContainText("予約受付中");
+  await pageA.getByRole("button", { name: "個別グッズの詳細" }).click();
+  await expect(pageA.getByRole("dialog")).toContainText("このグッズだけの設定");
+  await expect(pageA.getByRole("dialog")).toContainText("18:00");
+  await pageA.getByRole("dialog").getByRole("button", { name: "閉じる" }).first().click();
+});
