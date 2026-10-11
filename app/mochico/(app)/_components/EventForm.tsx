@@ -12,6 +12,8 @@ import { ImagePicker, type ImageChange } from "./ImagePicker";
 import { useToast } from "./Toast";
 import { useOnline } from "./useOnline";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { ScheduleFields } from "./ScheduleFields";
+import { EMPTY_SCHEDULE, isReservationOrderValid, isScheduleEmpty, scheduleToRow, type Schedule } from "@/lib/goods/schedule";
 
 export function EventForm({ event }: { event?: GoodsEvent }) {
   const router = useRouter();
@@ -22,6 +24,8 @@ export function EventForm({ event }: { event?: GoodsEvent }) {
   const [startDate, setStartDate] = useState(event?.startDate ?? "");
   const [endDate, setEndDate] = useState(event?.endDate ?? "");
   const [cover, setCover] = useState<ImageChange>({ kind: "keep" });
+  // 予約・販売スケジュール（開催日とは別）。古いキャッシュ等で無い場合は未設定として扱う
+  const [schedule, setSchedule] = useState<Schedule>(event?.schedule ?? EMPTY_SCHEDULE);
   const [errors, setErrors] = useState<FieldErrors>({});
   // 入力し直したらその欄のエラーは消す（直したのに赤いままにしない）
   const clearError = (k: string) => setErrors((e) => (e[k] ? { ...e, [k]: "" } : e));
@@ -31,9 +35,11 @@ export function EventForm({ event }: { event?: GoodsEvent }) {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     const errs = validateEvent({ title, description, startDate, endDate });
+    if (!isReservationOrderValid(schedule)) errs.schedule = "予約締切は予約開始より後の日時にしてください";
     setErrors(errs);
     if (Object.keys(errs).length > 0) {
-      document.getElementById(`ev-${Object.keys(errs)[0]}`)?.focus();
+      const first = Object.keys(errs)[0];
+      document.getElementById(first === "schedule" ? "ev-schedule-reserveEndDate" : `ev-${first}`)?.focus();
       return;
     }
     setSaving(true);
@@ -43,6 +49,7 @@ export function EventForm({ event }: { event?: GoodsEvent }) {
       description: description.trim() || null,
       start_date: startDate || null,
       end_date: endDate || null,
+      ...scheduleToRow(schedule),
     };
 
     try {
@@ -126,7 +133,9 @@ export function EventForm({ event }: { event?: GoodsEvent }) {
         {errors.title && <p id="ev-title-err" className={field.error}>{errors.title}</p>}
       </div>
 
-      {/* iPhone の日付欄は既定で縮まないため、列と入力欄の両方を縮められるようにする（横はみ出し防止） */}
+      {/* 開催日（予約・販売スケジュールとは別）。iPhone の日付欄は既定で縮まないため、列と入力欄の両方を縮められるようにする（横はみ出し防止） */}
+      <fieldset>
+      <legend className="mb-1 text-xs font-bold text-slate-500 dark:text-slate-400">開催日</legend>
       <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3">
         <div className="min-w-0">
           <label htmlFor="ev-startDate" className={field.label}>開始日</label>
@@ -154,6 +163,25 @@ export function EventForm({ event }: { event?: GoodsEvent }) {
         {errors.endDate && <p id="ev-endDate-err" className={`${field.error} col-span-2`}>{errors.endDate}</p>}
         <p className={`${field.hint} col-span-2`}>1日だけのイベントは開始日のみでOK</p>
       </div>
+      </fieldset>
+
+      {/* 予約・販売スケジュール（任意）。設定済みなら最初から開いておく */}
+      <details open={!isScheduleEmpty(schedule) || !!errors.schedule} className="rounded-2xl border border-slate-200 p-3 sm:p-4 dark:border-zinc-800">
+        <summary className="cursor-pointer text-sm font-bold text-slate-800 dark:text-slate-100">予約・販売スケジュール（任意）</summary>
+        <p className={field.hint}>グッズの予約期間や販売開始日。グッズごとに別の期間を設定することもできます。</p>
+        <div className="mt-3">
+          <ScheduleFields
+            idPrefix="ev-schedule"
+            value={schedule}
+            disabled={saving}
+            error={errors.schedule}
+            onChange={(v) => {
+              setSchedule(v);
+              clearError("schedule");
+            }}
+          />
+        </div>
+      </details>
 
       <div>
         <label htmlFor="ev-description" className={field.label}>概要</label>

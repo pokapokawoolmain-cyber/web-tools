@@ -34,7 +34,7 @@ export default async function NewGoodsPage({
         backHref={`/mochico/events/${eventId}`}
         backLabel={first ? "あとで登録する" : "イベントに戻る"}
       />
-      <GoodsForm eventId={eventId} categories={categories} nextSortOrder={(last?.sort_order ?? -1) + 1} />
+      <GoodsForm eventId={eventId} eventSchedule={event.schedule} categories={categories} nextSortOrder={(last?.sort_order ?? -1) + 1} />
     </div>
   );
 }

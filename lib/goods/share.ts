@@ -1,3 +1,4 @@
+import { scheduleFromRow, type Schedule } from "./schedule";
 import "server-only";
 // ============================================================
 // 共有リンク（サーバー側）
@@ -32,13 +33,18 @@ export interface SharedGoods {
   /** ランダム商品の絵柄（名前とサムネ）。所持情報は含まない */
   variants: { name: string; thumbUrl: string | null }[];
   hasImage: boolean;
+  /** 有効な予約・販売スケジュール（「イベントと同じ」ならイベントの設定）。own = このグッズだけの設定 */
+  schedule: Schedule;
+  scheduleOwn: boolean;
 }
 
 export interface SharedCatalog {
   status: "ok";
-  event: { title: string; description: string | null; startDate: string | null; endDate: string | null; coverUrl: string | null };
+  event: { title: string; description: string | null; startDate: string | null; endDate: string | null; coverUrl: string | null; schedule: Schedule };
   goods: SharedGoods[];
 }
+
+type ScheduleRow = Parameters<typeof scheduleFromRow>[0];
 
 const SIGNED_TTL = 60 * 60;
 
@@ -50,7 +56,7 @@ export async function getSharedCatalog(token: string): Promise<SharedCatalog | {
   if (error || !data) return { status: "error" };
   const res = data as {
     status: ShareStatus;
-    event?: { title: string; description: string | null; start_date: string | null; end_date: string | null; cover_path: string | null };
+    event?: { title: string; description: string | null; start_date: string | null; end_date: string | null; cover_path: string | null; schedule?: ScheduleRow };
     goods?: {
       key: string;
       name: string;
@@ -61,6 +67,8 @@ export async function getSharedCatalog(token: string): Promise<SharedCatalog | {
       image_path: string | null;
       thumb_path: string | null;
       variants?: { name: string; thumb_path: string | null }[];
+      schedule?: ScheduleRow;
+      schedule_own?: boolean;
     }[];
   };
   if (res.status !== "ok" || !res.event) return { status: (res.status === "ok" ? "error" : res.status) as Exclude<ShareStatus, "ok"> };
@@ -83,6 +91,7 @@ export async function getSharedCatalog(token: string): Promise<SharedCatalog | {
       startDate: res.event.start_date,
       endDate: res.event.end_date,
       coverUrl: url(res.event.cover_path),
+      schedule: scheduleFromRow(res.event.schedule ?? {}),
     },
     goods: goods.map((g) => ({
       key: g.key,
@@ -95,6 +104,8 @@ export async function getSharedCatalog(token: string): Promise<SharedCatalog | {
       hasImage: !!g.image_path,
       kind: g.kind === "random" ? "random" : "normal",
       variants: (g.variants ?? []).map((v) => ({ name: v.name, thumbUrl: url(v.thumb_path) })),
+      schedule: scheduleFromRow(g.schedule ?? {}),
+      scheduleOwn: !!g.schedule_own,
     })),
   };
 }

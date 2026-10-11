@@ -6,6 +6,7 @@ import { formatEventDate } from "@/lib/goods/format";
 import type { GoodsEvent } from "@/lib/goods/types";
 import { btn } from "@/lib/goods/ui";
 import { ShareButton } from "./ShareSheet";
+import { ScheduleDetail } from "./ScheduleInfo";
 
 export function EventHeader({ event, isOwner, fromCache = false }: { event: GoodsEvent; isOwner: boolean; fromCache?: boolean }) {
   const [expanded, setExpanded] = useState(false);
@@ -40,9 +41,12 @@ export function EventHeader({ event, isOwner, fromCache = false }: { event: Good
           {date && (
             <p className="mt-1 flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400">
               <CalendarDays className="h-4 w-4" aria-hidden="true" />
+              <span className="sr-only">開催日</span>
               {date}
             </p>
           )}
+          {/* 予約・販売（開催日とは別の行。未設定なら何も出さない） */}
+          <ScheduleDetail schedule={event.schedule} className="mt-1.5" />
         </div>
         {isOwner && !fromCache && (
           <div className="flex shrink-0 gap-2">

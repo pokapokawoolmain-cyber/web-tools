@@ -29,6 +29,8 @@ import { ImageFallback } from "./ImageFallback";
 import { GoodsDetailSheet } from "./GoodsDetailSheet";
 import { CategoryEditor } from "./CategoryEditor";
 import { ProgressBorder } from "./ProgressBorder";
+import { ScheduleLine, useNow } from "./ScheduleInfo";
+import { effectiveSchedule, EMPTY_SCHEDULE, hasReservation, isScheduleEmpty } from "@/lib/goods/schedule";
 import { useToast } from "./Toast";
 import { useOnline } from "./useOnline";
 
@@ -109,9 +111,17 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
   // 検索・カテゴリで絞った範囲（所持のタブの件数はこの範囲で数える）
   const scoped = useMemo(() => queryGoods(goods, quantities, { text: deferredText, own: "all", category, sort: "registered" }), [goods, quantities, deferredText, category]);
   const scopedOwned = useMemo(() => scoped.filter((g) => itemOwned(g, quantities)).length, [scoped, quantities]);
+  // 予約期限で並べられるのは、予約期間が設定されたグッズ（イベントからの継承を含む）があるときだけ
+  const now = useNow();
+  const eventSchedule = event.schedule ?? EMPTY_SCHEDULE;
+  const anyReservation = useMemo(
+    () => goods.some((g) => hasReservation(effectiveSchedule(eventSchedule, { scheduleOverride: g.scheduleOverride, ownSchedule: g.ownSchedule ?? EMPTY_SCHEDULE }).schedule)),
+    [goods, eventSchedule]
+  );
+  const activeSort: SortKey = sort === "deadline" && !anyReservation ? "registered" : sort;
   const visible = useMemo(
-    () => queryGoods(goods, quantities, { text: deferredText, own, category, sort, sticky }),
-    [goods, quantities, deferredText, own, category, sort, sticky]
+    () => queryGoods(goods, quantities, { text: deferredText, own, category, sort: activeSort, sticky, eventSchedule, now }),
+    [goods, quantities, deferredText, own, category, activeSort, sticky, eventSchedule, now]
   );
   const categoryCounts = useMemo(() => {
     const m: Record<string, number> = {};
@@ -293,12 +303,12 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
                 <ArrowDownUp className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span className="sr-only">並び替え</span>
                 <select
-                  value={sort}
+                  value={activeSort}
                   onChange={(e) => changeView({ sort: e.target.value as SortKey })}
                   className="h-full max-w-[7.5rem] appearance-none bg-transparent pr-1 text-sm font-bold focus:outline-none"
                   aria-label="並び替え"
                 >
-                  {(Object.keys(SORT_LABELS) as SortKey[]).map((k) => (
+                  {(Object.keys(SORT_LABELS) as SortKey[]).filter((k) => k !== "deadline" || anyReservation).map((k) => (
                     <option key={k} value={k}>
                       {SORT_LABELS[k]}
                     </option>
@@ -437,7 +447,7 @@ export function GoodsBoard({ userId, event, goods, categories, initialQuantities
         </Link>
       )}
 
-      <GoodsDetailSheet item={detail} quantities={quantities} isOwner={isOwner && !fromCache} disabled={readOnly} onQuantity={setQuantity} onClose={() => setDetailId(null)} />
+      <GoodsDetailSheet item={detail} eventSchedule={eventSchedule} quantities={quantities} isOwner={isOwner && !fromCache} disabled={readOnly} onQuantity={setQuantity} onClose={() => setDetailId(null)} />
       {isOwner && !fromCache && (
         <CategoryEditor open={editCategories} eventId={event.id} categories={categories} counts={categoryCounts} onClose={() => setEditCategories(false)} />
       )}
@@ -565,6 +575,8 @@ function GoodsCard({
           <span className={cn("mt-auto pt-1 text-sm font-bold tabular-nums", item.price === null ? "text-slate-500 dark:text-slate-400" : "text-slate-900 dark:text-slate-100")}>
             {formatPrice(item.price)}
           </span>
+          {/* イベントと違う個別の予約・販売があるグッズだけ表示（イベント全体の期間は見出しに1回だけ） */}
+          {item.scheduleOverride && !isScheduleEmpty(item.ownSchedule ?? EMPTY_SCHEDULE) && <ScheduleLine schedule={item.ownSchedule} compact className="pt-0.5 text-[11px]" />}
         </div>
       </button>
       <button
