@@ -49,6 +49,39 @@ export default function MochicoPage() {
             isPartOf: { "@type": "WebSite", name: "ToolBoxJP", url: "https://www.toolboxjp.com" },
           },
           {
+            // アプリそのもの（検索で「Mochico」「モチコ」という名前の実体として認識させる）。
+            // 価格・評価は掲載しない（料金表記が無く、架空の評価も載せない）
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: BRAND.name,
+            alternateName: [BRAND.kana, `${BRAND.name}（${BRAND.kana}）`],
+            description: BRAND.description,
+            url: CANONICAL,
+            image: `${CANONICAL}/opengraph-image`,
+            applicationCategory: "LifestyleApplication",
+            operatingSystem: "Web（iPhone・Android・パソコンのブラウザ）",
+            browserRequirements: "最新のブラウザ（Safari・Chrome など）",
+            inLanguage: "ja",
+            featureList: [
+              "ライブ・イベントごとのグッズ一覧（写真は1グッズ最大10枚・名前・価格・カテゴリ・概要）",
+              "タップで取得済み・未取得を記録、個数（0〜9999）の記録、取得数と割合の表示",
+              "ランダム商品（缶バッジ・トレカ等）の絵柄ごとの所持数と取得率",
+              "商品名の検索・カテゴリ・並び替え、すべて・未取得・取得済みの絞り込み",
+              "予約開始・予約締切・販売開始の登録と、締切までの残りの表示",
+              "グッズ一覧のリンク共有（取得状況は本人だけに表示）",
+              "ホーム画面への追加",
+            ],
+            publisher: { "@type": "Organization", name: "ToolBoxJP", url: "https://www.toolboxjp.com" },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "ToolBox", item: "https://www.toolboxjp.com" },
+              { "@type": "ListItem", position: 2, name: `${BRAND.name}（${BRAND.kana}）`, item: CANONICAL },
+            ],
+          },
+          {
             "@context": "https://schema.org",
             "@type": "FAQPage",
             mainEntity: FAQ.map((f) => ({

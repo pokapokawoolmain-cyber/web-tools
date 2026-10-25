@@ -51,7 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 商品ページ（販売準備中・先行予約）
     { url: `${siteUrl}/sns-starter-kit`, lastModified: new Date("2026-09-29"), changeFrequency: "weekly", priority: 0.8 },
     // Mochico 公開 LP（アプリ本体・共有URLは載せない）
-    { url: `${siteUrl}/mochico`, lastModified: new Date("2026-10-04"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/mochico`, lastModified: new Date("2026-10-26"), changeFrequency: "weekly", priority: 0.8 },
     // 業界特化ページ
     { url: `${siteUrl}/industry/construction`, lastModified: new Date("2026-06-20"), changeFrequency: "monthly", priority: 0.88 },
     { url: `${siteUrl}/industry/restaurant`, lastModified: new Date("2026-06-25"), changeFrequency: "monthly", priority: 0.88 },
@@ -167,6 +167,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 工事・建設
     { url: `${siteUrl}/blog/construction-greeting-templates`, lastModified: blogDate("construction-greeting-templates"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/construction-kicko-aisatsu-guide`, lastModified: blogDate("construction-kicko-aisatsu-guide"), changeFrequency: "monthly", priority: 0.85 },
+    // Mochico 関連記事（Content Hub の第1弾）
+    { url: `${siteUrl}/blog/oshi-goods-management`, lastModified: blogDate("oshi-goods-management"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/live-goods-shopping-list`, lastModified: blogDate("live-goods-shopping-list"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/share-goods-list-with-friends`, lastModified: blogDate("share-goods-list-with-friends"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/random-goods-management`, lastModified: blogDate("random-goods-management"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/prevent-duplicate-goods`, lastModified: blogDate("prevent-duplicate-goods"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/goods-list-spreadsheet`, lastModified: blogDate("goods-list-spreadsheet"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/mochico-how-to-use`, lastModified: blogDate("mochico-how-to-use"), changeFrequency: "monthly", priority: 0.8 },
     // 税金・社会保険 3記事
     { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/shakai-hoken-guide`, lastModified: blogDate("shakai-hoken-guide"), changeFrequency: "monthly", priority: 0.85 },

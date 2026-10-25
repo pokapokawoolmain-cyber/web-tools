@@ -794,3 +794,45 @@
     transform: none;
   }
 }
+
+/* ---------- ガイド記事への内部リンク ---------- */
+.guides {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+@media (min-width: 760px) {
+  .guides { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.guide {
+  display: block;
+  height: 100%;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+.guide:hover { border-color: var(--lavDeep); }
+.guide:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.guideTitle {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: var(--accentInk);
+}
+.guideDesc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--muted);
+}

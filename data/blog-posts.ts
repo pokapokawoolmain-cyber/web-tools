@@ -1538,6 +1538,70 @@ export const BLOG_POSTS: BlogPost[] = [
       { q: "不在の家が多い場合、着工日をずらすべきですか？", a: "ずらす必要はありません。2回訪問しても不在なら挨拶文をポストに投函し、着工後に工事車両や音で気づいた際にすぐ声をかけられるよう、現場に掲示物を出しておくと安心です。" },
     ],
   },
+  // Mochico 関連記事（白基調の MochicoArticleLayout を使う。forced-light-routes の MOCHICO_ARTICLE_PATHS にも登録）
+  {
+    slug: "oshi-goods-management",
+    title: "推しグッズの管理方法｜持っているものを把握して重複買いを防ぐコツ",
+    description:
+      "アクスタや缶バッジが増えて、何を持っているか分からなくなっていませんか。紙・メモ・写真・スプレッドシート・アプリの向き不向き、重複買いを防ぐ記録項目、イベント単位の整理と友達との共有のコツをまとめました。",
+    publishedAt: "2026-10-26",
+    category: "推し活・グッズ管理",
+    readingMinutes: 9,
+  },
+  {
+    slug: "live-goods-shopping-list",
+    title: "ライブ物販の買い物リストの作り方｜予算と購入制限を事前に整理するコツ",
+    description:
+      "ライブのグッズ物販で迷わないための買い物リストの作り方。公式発表で確認すること、リストに書く項目、優先順位と予算の決め方、当日の列での使い方、事後通販までの流れをまとめました。",
+    publishedAt: "2026-10-26",
+    category: "推し活・グッズ管理",
+    readingMinutes: 8,
+  },
+  {
+    slug: "share-goods-list-with-friends",
+    title: "友達とグッズ一覧を共有する方法と注意点｜同じライブに行く人と使いやすく",
+    description:
+      "同じライブやイベントに行く友達と、グッズの一覧を共有する方法を比較。LINEのメモ・共有スプレッドシート・共有リンクの向き不向きと、「誰が何を持っているか」を見せないための注意点を解説します。",
+    publishedAt: "2026-10-26",
+    category: "推し活・グッズ管理",
+    readingMinutes: 7,
+  },
+  {
+    slug: "random-goods-management",
+    title: "ランダムグッズ（缶バッジ・トレカ）の管理方法｜どの絵柄を持っているか一目で分かる記録のコツ",
+    description:
+      "缶バッジやトレーディングカード、アクリルスタンドなどのランダムグッズは「種類ごとに1件」で記録するのがコツ。コンプまでの残りが分かる一覧の作り方、交換や事後通販での使い方を紹介します。",
+    publishedAt: "2026-10-26",
+    category: "推し活・グッズ管理",
+    readingMinutes: 7,
+  },
+  {
+    slug: "prevent-duplicate-goods",
+    title: "推しグッズの重複買いを防ぐ方法｜通販の二重注文もなくす記録のコツ",
+    description:
+      "「持っていたのにまた買ってしまった」を防ぐには、買う前に確認できる一覧と、記録するタイミングが大切です。会場・通販・くじ・交換など入手経路別の注意点と、重複に気づける記録の仕方をまとめました。",
+    publishedAt: "2026-10-26",
+    category: "推し活・グッズ管理",
+    readingMinutes: 7,
+  },
+  {
+    slug: "goods-list-spreadsheet",
+    title: "推しグッズのリストをスプレッドシートで作る方法｜項目例とアプリとの使い分け",
+    description:
+      "Googleスプレッドシートで推しグッズのリストを作る手順を、列の項目例・プルダウン・チェックボックス・条件付き書式つきで解説。写真や外出先での確認が苦手な点と、アプリとの使い分けも紹介します。",
+    publishedAt: "2026-10-26",
+    category: "推し活・グッズ管理",
+    readingMinutes: 8,
+  },
+  {
+    slug: "mochico-how-to-use",
+    title: "Mochico（モチコ）の使い方｜推しグッズ管理アプリのはじめ方・共有・ホーム画面への追加",
+    description:
+      "推しグッズ管理アプリ「Mochico（モチコ）」の使い方ガイド。ログイン、イベントとグッズの登録、「取得済み」の記録、リストの共有と停止、ホーム画面への追加、設定と退会までを画面に沿って説明します。",
+    publishedAt: "2026-10-26",
+    category: "推し活・グッズ管理",
+    readingMinutes: 7,
+  },
 ];
 
 export function getBlogPost(slug: string): BlogPost | undefined {
