@@ -5,6 +5,7 @@
 // すべて AdSlot 経由なので、未設定/審査中は本番で何も出さない。
 // ============================================================
 import { AdSlot } from "./AdSlot";
+import { HouseBanner } from "./HouseBanner";
 
 /** 記事内（本文の自然な区切り）。format=fluid 推奨 */
 export function InArticleAd({ className = "" }: { className?: string }) {
@@ -18,14 +19,17 @@ export function InArticleAd({ className = "" }: { className?: string }) {
   );
 }
 
-/** ツール操作の「十分下」に置く後置き広告 */
+/** ツール操作の「十分下」に置く後置き広告（上に自社サービスのバナーを同じ幅で表示） */
 export function AfterToolAd({ className = "" }: { className?: string }) {
   return (
-    <AdSlot
-      placement="content"
-      reservedMinHeight={120}
-      className={`mx-auto max-w-3xl ${className}`}
-    />
+    <>
+      <HouseBanner className={`mx-auto max-w-3xl ${className}`} />
+      <AdSlot
+        placement="content"
+        reservedMinHeight={120}
+        className={`mx-auto max-w-3xl ${className}`}
+      />
+    </>
   );
 }
 
@@ -46,7 +50,12 @@ export function DesktopSidebarAd({ className = "" }: { className?: string }) {
   );
 }
 
-/** ページ下部のレスポンシブ広告 */
+/** ページ下部のレスポンシブ広告（上に自社サービスのバナーを同じ幅で表示） */
 export function BottomAd({ className = "" }: { className?: string }) {
-  return <AdSlot placement="bottom" reservedMinHeight={120} className={className} />;
+  return (
+    <>
+      <HouseBanner className={className} />
+      <AdSlot placement="bottom" reservedMinHeight={120} className={className} />
+    </>
+  );
 }
