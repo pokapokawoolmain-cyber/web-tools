@@ -353,30 +353,30 @@ export default function Page() {
           </thead>
           <tbody>
             <tr>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">103万円の壁</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者の所得税が発生、主たる生計者の配偶者控除（38万円）が縮小または消滅</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">136万円の壁</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者控除（38万円）の対象外になり、配偶者特別控除に切り替わる（2026年分。配偶者の合計所得62万円）</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">106万円の壁</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">従業員101人以上の会社では社会保険加入義務が発生（2024年10月から51人以上に拡大）</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">賃金要件（月8.8万円）は2026年10月に撤廃。従業員51人以上の会社では週20時間以上で社会保険に加入</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">130万円の壁</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">扶養から外れ、国民健康保険・国民年金の加入義務が発生（または勤め先の社会保険加入）</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">150万円の壁</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者特別控除の金額が段階的に減少し始める</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">169万円の壁</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者特別控除が満額（38万円）から段階的に減り始める（配偶者の合計所得95万円）</td>
             </tr>
             <tr>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">201万円の壁</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者特別控除が完全に消滅</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">207万円の壁</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者特別控除がなくなる（配偶者の合計所得133万円）</td>
             </tr>
           </tbody>
         </table>
       </div>
       <p>
-        2024年以降、政府は「103万円の壁」を引き上げる議論を進めています。最新の税制動向は適宜確認することをおすすめします。
+        2026年分は基礎控除と給与所得控除の引き上げで、配偶者本人に所得税がかかり始めるのは給与収入178万円超になりました（2024年分までは103万円）。金額は国税庁タックスアンサー（No.1191・1195）の令和8年分の基準です。
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />

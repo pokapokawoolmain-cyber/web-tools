@@ -39,7 +39,7 @@ export default function Page() {
               ["手取り年収（概算）", "約662万円"],
               ["月額手取り（概算）", "約55.2万円"],
               ["控除合計", "約238万円"],
-              ["手取り率", "約72.6%"],
+              ["手取り率", "約73.6%"],
             ].map(([label, value], i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className="border border-slate-200 dark:border-zinc-700 px-4 py-3 font-medium text-slate-700 dark:text-zinc-300 w-1/2">{label}</td>

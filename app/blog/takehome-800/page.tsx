@@ -33,7 +33,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "年収800万円と700万円の手取りの差はいくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "年収700万円の手取り（約532万円）と比べると、年収800万円（約596万円）は年間約64万円多い計算です。ただし所得税の税率が高い区間にかかるため、額面の差100万円に対して手取りの差は61万円と61%になります。" },
+      acceptedAnswer: { "@type": "Answer", text: "年収700万円の手取り（約532万円）と比べると、年収800万円（約596万円）は年間約64万円多い計算です。ただし所得税の税率が高い区間にかかるため、額面の差100万円に対して手取りの差は64万円と64%になります。" },
     },
     {
       "@type": "Question",
@@ -74,7 +74,7 @@ export default function Page() {
               ["手取り年収（概算）", "約596万円"],
               ["月額手取り（概算）", "約49.6万円"],
               ["控除合計", "約204万円"],
-              ["手取り率", "約73.6%"],
+              ["手取り率", "約74.5%"],
             ].map(([label, value], i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className="border border-slate-200 dark:border-zinc-700 px-4 py-3 font-medium text-slate-700 dark:text-zinc-300 w-1/2">{label}</td>

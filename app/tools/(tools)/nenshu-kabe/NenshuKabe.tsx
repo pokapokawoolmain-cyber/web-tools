@@ -18,35 +18,35 @@ export function NenshuKabe() {
   const result = useMemo(() => {
     const man = income / 10000;
 
-    // 各壁の判定（2026年7月時点の制度）
+    // 各壁の判定（2026年分の税制・2026年10月時点の社会保険制度）
+    //  税: 国税庁タックスアンサー No.1199・1410・1191・1195・1180（令和8年分）
     const walls: WallStatus[] = [
-      { label: "100万円の壁", amount: 100, desc: "住民税が発生し始めるライン（自治体により93〜100万円）", over: man > 100 },
-      { label: "106万円の壁", amount: 106, desc: "社会保険加入の賃金要件（2026年10月に撤廃予定→週20時間以上で判定へ）", over: man > 106 },
-      { label: "123万円の壁", amount: 123, desc: "本人の所得税がかかり始める基礎控除等のライン", over: man > 123 },
-      { label: "130万円の壁", amount: 130, desc: "配偶者等の社会保険上の扶養から外れるライン（2026年4月から労働契約ベースで判定）", over: man > 130 },
-      { label: "136万円の壁", amount: 136, desc: "配偶者控除（満額38万円）を受けられる配偶者の所得ライン", over: man > 136 },
-      { label: "160万円の壁", amount: 160, desc: "所得税の課税が本格化。給与所得控除等の目安", over: man > 160 },
-      { label: "169万円の壁", amount: 169, desc: "配偶者特別控除の満額（38万円）を受けられる上限", over: man > 169 },
-      { label: "178万円の壁", amount: 178, desc: "所得税の非課税ライン（基礎控除引き上げ後・2026年改正）", over: man > 178 },
+      { label: "106万円の壁", amount: 106, desc: "社会保険加入の賃金要件（月8.8万円）。2026年10月に撤廃され、従業員51人以上の勤務先では週20時間以上なら加入", over: man > 106 },
+      { label: "119万円の壁", amount: 119, desc: "住民税がかかり始める目安（2026年の収入・1級地。自治体により約112〜119万円）", over: man > 119 },
+      { label: "130万円の壁", amount: 130, desc: "配偶者等の社会保険上の扶養から外れるライン（2026年4月から労働契約の内容で判定）", over: man > 130 },
+      { label: "136万円の壁", amount: 136, desc: "配偶者控除・扶養控除の対象になる上限（合計所得62万円）。超えても配偶者は配偶者特別控除へ", over: man > 136 },
+      { label: "169万円の壁", amount: 169, desc: "配偶者特別控除の満額（38万円）を受けられる上限（配偶者の合計所得95万円）", over: man > 169 },
+      { label: "178万円の壁", amount: 178, desc: "本人に所得税がかかり始めるライン（給与所得控除74万円＋基礎控除104万円）", over: man > 178 },
     ];
 
     // 社会保険加入の要否（概算判定）
     let shakaiHoken = false;
+    let dependsOnHours = false;
     let shakaiReason = "";
     if (!isDependent) {
       shakaiHoken = true;
       shakaiReason = "扶養に入っていないため、ご自身で社会保険（または国民健康保険・国民年金）に加入します。";
-    } else if (bigCompany && man >= 106) {
-      shakaiHoken = true;
-      shakaiReason = "従業員51人以上の勤務先で月額賃金の要件（年106万円目安）を超えるため、勤務先の社会保険に加入します。※106万円の壁は2026年10月に撤廃され、以降は週20時間以上勤務で加入となる見込みです。";
     } else if (man >= 130) {
       shakaiHoken = true;
       shakaiReason = "年収130万円を超えるため、配偶者等の扶養から外れ、ご自身で社会保険に加入します。";
+    } else if (bigCompany) {
+      dependsOnHours = true;
+      shakaiReason = "年収130万円未満のため扶養の基準内ですが、従業員51人以上の勤務先では2026年10月から賃金要件が撤廃され、週の所定労働時間が20時間以上なら年収にかかわらず勤務先の社会保険に加入します。週20時間未満なら扶養内にとどまれる見込みです。";
     } else {
       shakaiReason = "現在の年収では配偶者等の社会保険の扶養内にとどまれる見込みです。";
     }
 
-    return { walls, shakaiHoken, shakaiReason };
+    return { walls, shakaiHoken, dependsOnHours, shakaiReason };
   }, [income, isDependent, bigCompany]);
 
   return (
@@ -107,15 +107,19 @@ export function NenshuKabe() {
       {/* 社会保険判定 */}
       <div
         className={`rounded-2xl border p-5 ${
-          result.shakaiHoken
+          result.shakaiHoken || result.dependsOnHours
             ? "bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800/50"
             : "bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800/50"
         }`}
       >
-        <p className={`text-sm font-bold mb-1 ${result.shakaiHoken ? "text-amber-800 dark:text-amber-300" : "text-emerald-800 dark:text-emerald-300"}`}>
-          {result.shakaiHoken ? "⚠️ 社会保険への加入が必要になる見込み" : "✅ 社会保険の扶養内にとどまれる見込み"}
+        <p className={`text-sm font-bold mb-1 ${result.shakaiHoken || result.dependsOnHours ? "text-amber-800 dark:text-amber-300" : "text-emerald-800 dark:text-emerald-300"}`}>
+          {result.shakaiHoken
+            ? "社会保険への加入が必要になる見込み"
+            : result.dependsOnHours
+              ? "週20時間以上なら勤務先の社会保険に加入"
+              : "社会保険の扶養内にとどまれる見込み"}
         </p>
-        <p className={`text-[13px] leading-relaxed ${result.shakaiHoken ? "text-amber-700 dark:text-amber-400" : "text-emerald-700 dark:text-emerald-400"}`}>
+        <p className={`text-[13px] leading-relaxed ${result.shakaiHoken || result.dependsOnHours ? "text-amber-700 dark:text-amber-400" : "text-emerald-700 dark:text-emerald-400"}`}>
           {result.shakaiReason}
         </p>
       </div>

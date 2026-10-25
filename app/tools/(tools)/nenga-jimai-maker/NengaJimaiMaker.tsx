@@ -2,7 +2,12 @@
 import { useState, useMemo, useEffect } from "react";
 import { createPortal } from "react-dom";
 
-type DocType = "nenga-jimai" | "mochu";
+type DocType = "nenga-jimai" | "mochu" | "kanchu";
+
+type Audience = "personal" | "business";
+
+/** 寒中見舞いの用途 */
+type KanchuCase = "reply" | "late";
 
 type NengaReason =
   | "高齢のため"
@@ -19,6 +24,14 @@ const NENGA_REASONS: NengaReason[] = [
   "今後はメール・SNS等でご挨拶させていただくため",
   "その他（自由入力）",
 ];
+
+/** 取引先向け（法人・個人事業主）の年賀状じまいの理由 */
+const BUSINESS_REASONS = [
+  "環境保護と資源節約の観点から",
+  "業務のデジタル化に伴い",
+  "その他（自由入力）",
+] as const;
+type BusinessReason = (typeof BUSINESS_REASONS)[number];
 
 const RELATIONS: Relation[] = ["父", "母", "祖父", "祖母", "夫", "妻", "息子", "娘", "兄", "姉", "弟", "妹", "その他（自由入力）"];
 
@@ -63,6 +76,64 @@ ${year}年　元旦
 ${senderAddress ? senderAddress + "\n" : ""}${senderName || "○○　○○"}`;
 }
 
+function buildBusinessNengaJimai(params: {
+  year: string;
+  reason: BusinessReason;
+  customReason: string;
+  senderName: string;
+  senderAddress: string;
+  customNote: string;
+}): string {
+  const { year, reason, customReason, senderName, senderAddress, customNote } = params;
+  const reasonText = reason === "その他（自由入力）" ? (customReason ? `${customReason}、` : "") : `${reason}、`;
+
+  return `謹んで新春のお慶びを申し上げます
+
+　旧年中は格別のお引き立てを賜り、厚く御礼申し上げます。
+
+　さて、弊社では${reasonText}誠に勝手ながら本年をもちまして年賀状による新年のご挨拶を控えさせていただくことといたしました。
+
+　今後はメール等にてご挨拶を申し上げたく存じます。何卒ご理解を賜りますようお願い申し上げます。${customNote ? "\n\n" + customNote : ""}
+
+　本年も変わらぬご愛顧を賜りますよう、よろしくお願い申し上げます。
+
+${year}年　元旦
+
+${senderAddress ? senderAddress + "\n" : ""}${senderName || "株式会社○○　代表取締役　○○　○○"}`;
+}
+
+function buildKanchu(params: {
+  kanchuCase: KanchuCase;
+  relation: Relation;
+  customRelation: string;
+  deathMonth: string;
+  senderName: string;
+  senderAddress: string;
+  customNote: string;
+}): string {
+  const { kanchuCase, relation, customRelation, deathMonth, senderName, senderAddress, customNote } = params;
+  const relationText = relation === "その他（自由入力）" ? (customRelation || "近親者") : relation;
+  const monthText = deathMonth ? `昨年${deathMonth}に` : "昨年";
+  const body =
+    kanchuCase === "reply"
+      ? `　ご丁寧な年始のご挨拶をいただき　ありがとうございました
+　${monthText}${relationText}が永眠いたしましたため　年頭のご挨拶を控えさせていただきました
+　旧年中にお知らせすべきところ　ご通知が行き届かず失礼いたしました`
+      : `　${monthText}${relationText}が永眠いたしましたため　年頭のご挨拶を控えさせていただきました
+　暮れも押し詰まってからのことで　ご通知が遅れましたことをお詫び申し上げます
+　生前に賜りましたご厚情に　心より御礼申し上げます`;
+
+  return `寒中お見舞い申し上げます
+
+${body}${customNote ? "\n\n" + customNote : ""}
+
+　寒さ厳しき折　皆様のご健康をお祈り申し上げます
+
+令和　　年　　月
+
+${senderAddress ? senderAddress + "\n" : ""}${senderName || "○○　○○"}`;
+}
+
 function buildMochu(params: {
   relation: Relation;
   customRelation: string;
@@ -93,6 +164,9 @@ ${senderAddress ? senderAddress + "\n" : ""}${senderName || "○○　○○"}`;
 
 export function NengaJimaiMaker() {
   const [docType, setDocType] = useState<DocType>("nenga-jimai");
+  const [audience, setAudience] = useState<Audience>("personal");
+  const [businessReason, setBusinessReason] = useState<BusinessReason>("環境保護と資源節約の観点から");
+  const [kanchuCase, setKanchuCase] = useState<KanchuCase>("reply");
 
   // 年賀状じまい
   const [year, setYear] = useState("2027");
@@ -114,10 +188,17 @@ export function NengaJimaiMaker() {
 
   const text = useMemo(() => {
     if (docType === "nenga-jimai") {
-      return buildNengaJimai({ year, reason, customReason, senderName, senderAddress, customNote });
+      return audience === "business"
+        ? buildBusinessNengaJimai({ year, reason: businessReason, customReason, senderName, senderAddress, customNote })
+        : buildNengaJimai({ year, reason, customReason, senderName, senderAddress, customNote });
+    }
+    if (docType === "kanchu") {
+      return buildKanchu({ kanchuCase, relation, customRelation, deathMonth, senderName, senderAddress, customNote });
     }
     return buildMochu({ relation, customRelation, deceasedName, deceasedAge, deathMonth, senderName, senderAddress, customNote });
-  }, [docType, year, reason, customReason, relation, customRelation, deceasedName, deceasedAge, deathMonth, senderName, senderAddress, customNote]);
+  }, [docType, audience, businessReason, kanchuCase, year, reason, customReason, relation, customRelation, deceasedName, deceasedAge, deathMonth, senderName, senderAddress, customNote]);
+
+  const docTitle = docType === "nenga-jimai" ? "年賀状じまい" : docType === "kanchu" ? "寒中見舞い" : "喪中はがき";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text).then(() => {
@@ -137,12 +218,12 @@ export function NengaJimaiMaker() {
       .split("\n")
       .map((line) => `<p style="margin:0;text-align:center">${line ? escapeHtml(line) : "&nbsp;"}</p>`)
       .join("");
-    const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>${docType === "nenga-jimai" ? "年賀状じまい" : "喪中はがき"}</title></head><body style="font-family:'MS Mincho',serif;font-size:13pt;line-height:2">${bodyHtml}</body></html>`;
+    const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>${docTitle}</title></head><body style="font-family:'MS Mincho',serif;font-size:13pt;line-height:2">${bodyHtml}</body></html>`;
     const blob = new Blob(["﻿", html], { type: "application/msword" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${docType === "nenga-jimai" ? "年賀状じまい" : "喪中はがき"}.doc`;
+    a.download = `${docTitle}.doc`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -154,13 +235,14 @@ export function NengaJimaiMaker() {
   return (
     <div className="space-y-6">
       {/* 文書タイプ切替 */}
-      <div className="grid grid-cols-2 gap-2 bg-slate-100 dark:bg-zinc-800 rounded-2xl p-1.5">
+      <div className="grid grid-cols-3 gap-2 bg-slate-100 dark:bg-zinc-800 rounded-2xl p-1.5">
         {(
           [
-            { key: "nenga-jimai", label: "年賀状じまい（年賀状の卒業）" },
-            { key: "mochu", label: "喪中はがき（年始挨拶の欠礼）" },
-          ] as { key: DocType; label: string }[]
-        ).map(({ key, label }) => (
+            { key: "nenga-jimai", label: "年賀状じまい", hint: "年賀状の卒業" },
+            { key: "mochu", label: "喪中はがき", hint: "年始挨拶の欠礼" },
+            { key: "kanchu", label: "寒中見舞い", hint: "喪中の年明けに" },
+          ] as { key: DocType; label: string; hint: string }[]
+        ).map(({ key, label, hint }) => (
           <button
             key={key}
             onClick={() => setDocType(key)}
@@ -170,7 +252,8 @@ export function NengaJimaiMaker() {
                 : "bg-transparent text-slate-500 dark:text-zinc-400"
             }`}
           >
-            {label}
+            <span className="block">{label}</span>
+            <span className={`block text-[11px] font-normal mt-0.5 ${docType === key ? "opacity-80" : "opacity-70"}`}>{hint}</span>
           </button>
         ))}
       </div>
@@ -182,28 +265,54 @@ export function NengaJimaiMaker() {
             <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-5 space-y-4">
               <h3 className="text-[14px] font-bold text-slate-800 dark:text-zinc-200">年賀状じまいの内容</h3>
               <div>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-2">送る相手</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {(
+                    [
+                      { key: "personal", label: "友人・知人・親戚" },
+                      { key: "business", label: "取引先（会社・お店）" },
+                    ] as { key: Audience; label: string }[]
+                  ).map(({ key, label }) => (
+                    <button
+                      key={key}
+                      onClick={() => setAudience(key)}
+                      className={`py-2.5 px-3 rounded-xl text-[13px] font-medium border transition-all ${
+                        audience === key
+                          ? "bg-rose-50 dark:bg-rose-950/30 border-rose-400 text-rose-700 dark:text-rose-400"
+                          : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
                 <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">お届けする年（元旦）</label>
                 <input type="text" value={year} onChange={(e) => setYear(e.target.value)} placeholder="2027" className={inputClass} />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-2">やめる理由</label>
                 <div className="grid grid-cols-1 gap-2">
-                  {NENGA_REASONS.map((r) => (
-                    <button
-                      key={r}
-                      onClick={() => setReason(r)}
-                      className={`py-2.5 px-4 rounded-xl text-[13px] font-medium border transition-all text-left ${
-                        reason === r
-                          ? "bg-rose-50 dark:bg-rose-950/30 border-rose-400 text-rose-700 dark:text-rose-400"
-                          : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400"
-                      }`}
-                    >
-                      {r}
-                    </button>
-                  ))}
+                  {(audience === "business" ? BUSINESS_REASONS : NENGA_REASONS).map((r) => {
+                    const selected = audience === "business" ? businessReason === r : reason === r;
+                    return (
+                      <button
+                        key={r}
+                        onClick={() => (audience === "business" ? setBusinessReason(r as BusinessReason) : setReason(r as NengaReason))}
+                        className={`py-2.5 px-4 rounded-xl text-[13px] font-medium border transition-all text-left ${
+                          selected
+                            ? "bg-rose-50 dark:bg-rose-950/30 border-rose-400 text-rose-700 dark:text-rose-400"
+                            : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400"
+                        }`}
+                      >
+                        {r}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
-              {reason === "その他（自由入力）" && (
+              {(audience === "business" ? businessReason : reason) === "その他（自由入力）" && (
                 <div>
                   <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">理由（自由入力・「〜のため」に続く形で）</label>
                   <input type="text" value={customReason} onChange={(e) => setCustomReason(e.target.value)} placeholder="家族と相談した結果" className={inputClass} />
@@ -212,7 +321,32 @@ export function NengaJimaiMaker() {
             </div>
           ) : (
             <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-5 space-y-4">
-              <h3 className="text-[14px] font-bold text-slate-800 dark:text-zinc-200">喪中はがきの内容</h3>
+              <h3 className="text-[14px] font-bold text-slate-800 dark:text-zinc-200">{docType === "kanchu" ? "寒中見舞いの内容" : "喪中はがきの内容"}</h3>
+              {docType === "kanchu" && (
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-2">送る場面</label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {(
+                      [
+                        { key: "reply", label: "喪中と知らずに年賀状をくれた方へのお返事" },
+                        { key: "late", label: "12月に不幸があり、喪中はがきが間に合わなかった" },
+                      ] as { key: KanchuCase; label: string }[]
+                    ).map(({ key, label }) => (
+                      <button
+                        key={key}
+                        onClick={() => setKanchuCase(key)}
+                        className={`py-2.5 px-4 rounded-xl text-[13px] font-medium border transition-all text-left ${
+                          kanchuCase === key
+                            ? "bg-rose-50 dark:bg-rose-950/30 border-rose-400 text-rose-700 dark:text-rose-400"
+                            : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400"
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div>
                 <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-2">故人との続柄</label>
                 <div className="grid grid-cols-3 gap-2">
@@ -237,15 +371,19 @@ export function NengaJimaiMaker() {
                   <input type="text" value={customRelation} onChange={(e) => setCustomRelation(e.target.value)} placeholder="義父" className={inputClass} />
                 </div>
               )}
-              <div>
-                <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">故人の名前（任意）</label>
-                <input type="text" value={deceasedName} onChange={(e) => setDeceasedName(e.target.value)} placeholder="山田太郎" className={inputClass} />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
+              {docType === "mochu" && (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">享年（任意）</label>
-                  <input type="text" value={deceasedAge} onChange={(e) => setDeceasedAge(e.target.value)} placeholder="82" className={inputClass} />
+                  <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">故人の名前（任意）</label>
+                  <input type="text" value={deceasedName} onChange={(e) => setDeceasedName(e.target.value)} placeholder="山田太郎" className={inputClass} />
                 </div>
+              )}
+              <div className="grid grid-cols-2 gap-3">
+                {docType === "mochu" && (
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">享年（任意）</label>
+                    <input type="text" value={deceasedAge} onChange={(e) => setDeceasedAge(e.target.value)} placeholder="82" className={inputClass} />
+                  </div>
+                )}
                 <div>
                   <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">お亡くなりになった月（任意）</label>
                   <input type="text" value={deathMonth} onChange={(e) => setDeathMonth(e.target.value)} placeholder="8月" className={inputClass} />
@@ -314,8 +452,12 @@ export function NengaJimaiMaker() {
           </div>
           <p className="text-[12px] text-slate-400 dark:text-zinc-600">
             {docType === "nenga-jimai"
-              ? "※年賀状じまいは、これまで年賀状を送ってきた相手に「今年（または来年）を最後にする」ことを伝える文面です。届くのが遅くならないよう、通常の年賀状と同じく元旦にお手元に届くよう投函してください。"
-              : "※喪中はがきは相手が年賀状を準備し始める前、11月中旬〜12月上旬までに届くよう投函するのがマナーです。"}
+              ? audience === "business"
+                ? "※取引先への年賀状じまいは、最後の年賀状に添えて伝えるのが一般的です。社名・代表者名・所在地を差出人欄に入れてください。今後のご挨拶の手段（メールなど）を明記すると丁寧です。"
+                : "※年賀状じまいは、これまで年賀状を送ってきた相手に「今年（または来年）を最後にする」ことを伝える文面です。届くのが遅くならないよう、通常の年賀状と同じく元旦にお手元に届くよう投函してください。"
+              : docType === "kanchu"
+                ? "※寒中見舞いは松の内（1月7日頃。地域によって15日）が明けてから、立春の前日（2月3日頃）までに届くよう送ります。年賀はがきではなく、通常のはがきや寒中見舞い用のはがきを使います。"
+                : "※喪中はがきは相手が年賀状を準備し始める前、11月中旬〜12月上旬までに届くよう投函するのがマナーです。"}
           </p>
         </div>
       </div>

@@ -74,7 +74,7 @@ export default function Page() {
               ["手取り年収（概算）", "約532万円"],
               ["月額手取り（概算）", "約44.3万円"],
               ["控除合計", "約168万円"],
-              ["手取り率", "約75.4%"],
+              ["手取り率", "約76.0%"],
             ].map(([label, value], i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className="border border-slate-200 dark:border-zinc-700 px-4 py-3 font-medium text-slate-700 dark:text-zinc-300 w-1/2">{label}</td>
@@ -221,7 +221,7 @@ export default function Page() {
           <strong>ふるさと納税</strong>：年収700万・独身の場合の寄附上限の目安は約10〜11万円。<Link href="/tools/furusato-simulator">ふるさと納税シミュレーター</Link>で正確な上限を確認できます。
         </li>
         <li>
-          <strong>iDeCo</strong>：月2.3万円（年27.6万円）まで全額所得控除。年収700万円の限界税率23%なら年間約6〜7万円の節税効果です。
+          <strong>iDeCo</strong>：月2.3万円（年27.6万円）まで全額所得控除。年収700万円は所得税20%＋住民税10%のため年間約8万円の節税効果です。
         </li>
         <li>
           <strong>住宅ローン控除</strong>：マイホーム購入時に最大13年間、年末ローン残高の0.7%が税額から直接控除されます。

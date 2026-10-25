@@ -485,7 +485,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "アルバイト・パートの月収・時給計算方法【深夜割増・シフト対応】",
     description: "バイトやパートの月収を正確に計算する方法を解説。深夜割増賃金・交通費・社会保険の壁となる収入上限まで。シフトベースの給与計算ツールも紹介。",
     publishedAt: "2026-05-12",
-    updatedAt: "2026-06-02",
+    updatedAt: "2026-10-26",
     category: "計算ツール",
     relatedToolId: "shift-salary",
     relatedToolHref: "/tools/shift-salary",
