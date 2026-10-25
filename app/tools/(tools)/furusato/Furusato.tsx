@@ -3,24 +3,7 @@
 import { useState, useMemo } from "react";
 import { SliderInput } from "@/components/ui/SliderInput";
 import { RelatedTools } from "@/components/tools/RelatedTools";
-
-function calcSalaryDeduction(income: number): number {
-  if (income <= 1625000) return 550000;
-  if (income <= 1800000) return income * 0.4 - 100000;
-  if (income <= 3600000) return income * 0.3 + 80000;
-  if (income <= 6600000) return income * 0.2 + 440000;
-  if (income <= 8500000) return income * 0.1 + 1100000;
-  return 1950000;
-}
-
-function getIncomeTaxRate(taxableIncome: number): number {
-  if (taxableIncome <= 1950000) return 0.05;
-  if (taxableIncome <= 3300000) return 0.10;
-  if (taxableIncome <= 6950000) return 0.20;
-  if (taxableIncome <= 9000000) return 0.23;
-  if (taxableIncome <= 18000000) return 0.33;
-  return 0.40;
-}
+import { calcFurusatoLimit } from "@/lib/furusato";
 
 export function Furusato() {
   const [income, setIncome] = useState(5000000);
@@ -28,24 +11,11 @@ export function Furusato() {
   const [hasSpouse, setHasSpouse] = useState(false);
 
   const result = useMemo(() => {
-    const salaryDeduction = calcSalaryDeduction(income);
-    const netIncome = income - salaryDeduction;
-    const socialInsurance = income * 0.145;
-    const basicDeduction = 480000;
-    const spouseDeduction = hasSpouse ? 380000 : 0;
-    const dependentDeduction = dependents * 380000;
-
-    const taxableIncome = Math.max(0, netIncome - socialInsurance - basicDeduction - spouseDeduction - dependentDeduction);
-    const residenceTaxableIncome = Math.max(0, netIncome - socialInsurance - 430000 - spouseDeduction - dependentDeduction);
-
-    const residenceTax = residenceTaxableIncome * 0.10;
-    const incomeTaxRate = getIncomeTaxRate(taxableIncome);
-
-    const limitRaw = (residenceTax * 0.20) / (0.90 - incomeTaxRate * 1.021) + 2000;
-    const limit = Math.floor(limitRaw / 1000) * 1000;
+    // 令和8年分の所得税・令和9年度分の住民税で計算（lib/furusato.ts）。扶養は16歳以上の一般扶養として扱う
+    const r = calcFurusatoLimit({ income, hasSpouse, generalDependents: dependents });
+    const limit = r.limit;
     const recommended = Math.floor((limit * 0.9) / 1000) * 1000;
-
-    return { limit, recommended, residenceTax: Math.round(residenceTax), incomeTaxRate };
+    return { limit, recommended, residenceTax: r.residentIncomeLevy, incomeTaxRate: r.incomeTaxRate };
   }, [income, dependents, hasSpouse]);
 
   const fmt = (v: number) => `¥${v.toLocaleString()}`;
@@ -141,7 +111,7 @@ export function Furusato() {
 
         {/* Note */}
         <p className="text-[13px] text-slate-400 dark:text-zinc-500 px-1">
-          ※ 概算値です。正確な金額は税務署または各自治体にご確認ください。
+          ※ 2026年分の所得税・2027年度分の住民税で計算した概算値です。扶養人数は16歳以上の扶養親族の人数です（15歳以下の子は扶養控除の対象外）。正確な金額は税務署または各自治体にご確認ください。
         </p>
 
         {/* Related Tools */}

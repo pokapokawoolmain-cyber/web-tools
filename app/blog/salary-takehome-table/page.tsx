@@ -9,7 +9,7 @@ const post = getBlogPost("salary-takehome-table")!;
 
 export const metadata: Metadata = generateMeta({
   title: "手取り早見表【2026年最新】年収300〜1500万円の月収換算・税金内訳を一覧確認",
-  description: "年収300万→月20万、400万→月26.5万、500万→月32.8万、600万→月38.5万、700万→月44万。年収別の手取りを一覧表でサッと確認。所得税・住民税・社会保険料の内訳と節税方法付き。",
+  description: "年収300万→月20万、400万→月26.5万、500万→月32.8万、600万→月38.9万、700万→月44.3万。年収別の手取りを一覧表でサッと確認。所得税・住民税・社会保険料の内訳と節税方法付き。",
   path: `/blog/${post.slug}`,
   keywords: ["手取り早見表 2026", "年収別 手取り 一覧", "年収500万 手取り いくら", "年収600万 手取り 月収", "手取り計算 会社員 独身", "年収1000万 手取り"],
   type: "article",
@@ -22,27 +22,27 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "年収500万円の手取りは月いくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "年収500万円（独身・会社員）の手取りは年間約394万円・月平均約32.8万円です。控除内訳は社会保険料約72万円、所得税約13万円、住民税約21万円で、合計約106万円が引かれます。" },
+      acceptedAnswer: { "@type": "Answer", text: "年収500万円（独身・会社員）の手取りは年間約394万円・月平均約32.8万円です。控除内訳は社会保険料約73万円、所得税約9万円、住民税約24万円で、合計約106万円が引かれます。" },
     },
     {
       "@type": "Question",
       name: "年収600万円の手取りは月いくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "年収600万円（独身・会社員）の手取りは年間約462万円・月平均約38.5万円です。控除内訳は社会保険料約85万円、所得税約22万円、住民税約31万円で、合計約138万円が引かれます。" },
+      acceptedAnswer: { "@type": "Answer", text: "年収600万円（独身・会社員）の手取りは年間約467万円・月平均約38.9万円です。控除内訳は社会保険料約88万円、所得税約15万円、住民税約31万円で、合計約133万円が引かれます。" },
     },
     {
       "@type": "Question",
       name: "年収1000万円の手取りは月いくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "年収1000万円（独身・会社員）の手取りは年間約720万円・月平均約60万円です。控除内訳は社会保険料約120万円、所得税約76万円、住民税約84万円で、合計約280万円が引かれます。" },
+      acceptedAnswer: { "@type": "Answer", text: "年収1000万円（独身・会社員）の手取りは年間約728万円・月平均約60.6万円です。控除内訳は社会保険料約126万円、所得税約82万円、住民税約64万円で、合計約272万円が引かれます。" },
     },
     {
       "@type": "Question",
       name: "手取りを増やす方法はありますか？",
-      acceptedAnswer: { "@type": "Answer", text: "主な方法は①iDeCo（個人型確定拠出年金）で所得控除を活用、②ふるさと納税で住民税・所得税を軽減、③各種所得控除（医療費控除・生命保険料控除）を確実に申告することです。これらで年収500万円なら年10〜30万円程度の節税効果が期待できます。" },
+      acceptedAnswer: { "@type": "Answer", text: "主な方法は①iDeCo（個人型確定拠出年金）で所得控除を活用、②ふるさと納税で住民税・所得税を軽減、③各種所得控除（医療費控除・生命保険料控除）を確実に申告することです。iDeCoの掛金を月2.3万円にした場合、年収500万円なら年約4万円の節税効果が目安です。" },
     },
     {
       "@type": "Question",
       name: "手取り率（手取り÷年収）の平均は何%ですか？",
-      acceptedAnswer: { "@type": "Answer", text: "会社員・独身の場合、年収300〜500万円は手取り率78〜80%程度、600〜800万円は75〜77%、1000万円以上は70%前後です。年収が上がるほど累進課税の影響で手取り率が下がる傾向があります。" },
+      acceptedAnswer: { "@type": "Answer", text: "会社員・独身の場合、年収300〜500万円は手取り率79〜81%程度、600〜800万円は74〜78%、1000万円以上は70%前後です（2026年分の税制で計算）。年収が上がるほど累進課税の影響で手取り率が下がる傾向があります。" },
     },
   ],
 };
@@ -61,7 +61,7 @@ export default function Page() {
 
       <h2>年収別・手取り早見表（最新版）</h2>
       <p>
-        以下は給与所得者（会社員・正社員）、独身、東京都在住を前提にした概算です。扶養家族の人数・居住地・加入している健康保険組合によって数万円単位で変わります。
+        以下は給与所得者（会社員・正社員）、独身、協会けんぽ加入を前提に、2026年分（令和8年分）の基礎控除・給与所得控除の引き上げを反映した概算です。扶養家族の人数・居住地・加入している健康保険組合によって数万円単位で変わります。
       </p>
 
       <div className="overflow-x-auto my-6">
@@ -78,17 +78,17 @@ export default function Page() {
           <tbody>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">300万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約240万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約20.0万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約60万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約80%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約242万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約20.1万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約58万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約80.6%</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">350万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約279万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約23.3万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約71万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約80%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約280万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約23.4万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約70万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約80.1%</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">400万円</td>
@@ -99,87 +99,87 @@ export default function Page() {
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">450万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約355万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約29.6万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約95万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約79%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約356万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約29.7万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約94万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約79.1%</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">500万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約393万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約394万円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約32.8万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約107万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約78.6%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約106万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約78.7%</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">550万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約428万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約35.7万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約122万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約77.8%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約431万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約35.9万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約119万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約78.3%</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">600万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約462万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約38.5万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約138万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約77%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約467万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約38.9万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約133万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約77.8%</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">650万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約495万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約41.3万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約155万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約76%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約503万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約41.9万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約147万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約77.3%</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">700万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約528万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約44.0万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約172万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約75.4%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約532万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約44.3万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約168万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約76.0%</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">800万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約594万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約49.5万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約206万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約74.3%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約596万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約49.6万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約204万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約74.5%</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">900万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約658万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約54.8万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約242万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約73.1%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約662万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約55.2万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約238万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約73.6%</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">1,000万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約718万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約59.8万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約282万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約71.8%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約728万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約60.6万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約272万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約72.8%</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">1,200万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約831万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約69.3万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約369万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約69.3%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約856万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約71.3万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約344万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約71.3%</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">1,500万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約992万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約82.7万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約508万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約66.1%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約1025万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約85.4万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約475万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約68.3%</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <p>
-        年収が上がるにつれて手取り率が下がっていくのは、累進課税と社会保険料の仕組みによるものです。年収300万円で約80%手元に残るのに対し、1,500万円では66%まで下がります。
+        年収が上がるにつれて手取り率が下がっていくのは、累進課税と社会保険料の仕組みによるものです。年収300万円で約80%手元に残るのに対し、1,500万円では約68%まで下がります。
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
@@ -203,7 +203,7 @@ export default function Page() {
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">健康保険</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約30万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約5.0%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約4.96%</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">組合健保は料率が異なる</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
@@ -214,14 +214,14 @@ export default function Page() {
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">雇用保険</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約3.6万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">0.6%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約3.3万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">0.55%</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">失業給付の財源</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">社会保険料合計</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">約88万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">約14.7%</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">約14.66%</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">会社も同額負担</td>
             </tr>
           </tbody>
@@ -245,17 +245,17 @@ export default function Page() {
           <tbody>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">所得税</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約23万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約15万円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">毎月源泉徴収→年末調整で精算</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">住民税</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約27万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約31万円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">翌年6月〜翌々年5月に徴収</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">税金合計</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">約50万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">約45万円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2"></td>
             </tr>
           </tbody>
@@ -274,7 +274,7 @@ export default function Page() {
         日本の給与所得者の平均年収（国税庁2022年調査）は約460万円です。500万円はその少し上で、標準的なサラリーマン像のイメージに近い水準です。
       </p>
       <p>
-        手取りは約393万円（月約32.8万円）。控除約107万円の内訳は、社会保険料が約74万円（うち厚生年金約46万円、健康保険約25万円）、所得税約13万円、住民税約20万円が目安です。
+        手取りは約394万円（月約32.8万円）。控除約106万円の内訳は、社会保険料が約73万円（うち厚生年金約46万円、健康保険約25万円）、所得税約9万円、住民税約24万円が目安です。
       </p>
       <p>
         月32.8万円から家賃・食費・光熱費・通信費などの固定費を引くと、可処分所得がどれくらい残るかがわかります。東京で一人暮らしなら家賃7〜10万円、生活費8〜10万円で手元に10〜15万円残るかどうかというイメージです。
@@ -282,15 +282,15 @@ export default function Page() {
 
       <h3>年収700万円の場合</h3>
       <p>
-        「高収入」と言われる水準ですが、手取りは約528万円（月約44万円）です。額面から約24.6%が控除されます。
+        「高収入」と言われる水準ですが、手取りは約532万円（月約44.3万円）です。額面から約24%が控除されます。
       </p>
       <p>
-        注目すべきは、年収500万円から700万円に増えると額面で200万円増えますが、手取りの増加は約135万円にとどまる点です。差額の約65万円が税・社会保険料として持っていかれます。昇給・転職で「年収が上がったのに思ったほど生活が変わらない」と感じる原因のひとつです。
+        注目すべきは、年収500万円から700万円に増えると額面で200万円増えますが、手取りの増加は約138万円にとどまる点です。差額の約62万円が税・社会保険料として持っていかれます。昇給・転職で「年収が上がったのに思ったほど生活が変わらない」と感じる原因のひとつです。
       </p>
 
       <h3>年収1,000万円の場合</h3>
       <p>
-        「年収1,000万円なのに手取りが700万円ちょっとしかない」と感じる人は多いです。手取り率は約71.8%で、300万円台のころの約80%と比べると大きく下がっています。
+        「年収1,000万円なのに手取りが730万円弱しかない」と感じる人は多いです。手取り率は約72.8%で、300万円台のころの約80%と比べると大きく下がっています。
       </p>
       <p>
         所得税の税率が上がることに加え、課税所得の計算時に使える「給与所得控除」が年収850万円超で上限に達することも影響します（最大195万円）。一方、厚生年金は標準報酬月額65万円が上限なので、年収1,000万円と800万円でほぼ同額の保険料です。高収入になるほど「払った保険料に対してもらえる年金の比率」が下がる構造になっています。
@@ -313,23 +313,23 @@ export default function Page() {
           <tbody>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">独身</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約462万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約467万円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">—</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者あり（専業主婦・収入なし）</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約476万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">+約14万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約474万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">+約7万円</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者＋子ども1人（16歳未満）</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約476万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">+約14万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約474万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">+約7万円</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">配偶者＋子ども1人（16〜18歳）</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約484万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">+約22万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約480万円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">+約13万円</td>
             </tr>
           </tbody>
         </table>
@@ -447,9 +447,9 @@ export default function Page() {
       <dl className="space-y-4">
         {[
           { q: "年収500万円の手取りは月いくらですか？", a: "独身・会社員の場合、年間約394万円・月平均約32.8万円です。社会保険料・所得税・住民税の合計で約106万円が控除されます。" },
-          { q: "年収600万円の手取りは月いくらですか？", a: "独身・会社員の場合、年間約462万円・月平均約38.5万円です。約138万円が控除され、手取り率は約77%です。" },
+          { q: "年収600万円の手取りは月いくらですか？", a: "独身・会社員の場合、年間約467万円・月平均約38.9万円です。約133万円が控除され、手取り率は約78%です。" },
           { q: "手取りを増やすために何ができますか？", a: "iDeCo・ふるさと納税・医療費控除・生命保険料控除などを活用することで、年10〜30万円程度の節税が可能です。" },
-          { q: "手取り率（手取り÷年収）の目安は？", a: "年収300〜500万円は78〜80%程度、600〜800万円は75〜77%、1000万円以上は70%前後。年収が高いほど累進課税の影響で手取り率は下がります。" },
+          { q: "手取り率（手取り÷年収）の目安は？", a: "年収300〜500万円は79〜81%程度、600〜800万円は74〜78%、1000万円以上は70%前後。年収が高いほど累進課税の影響で手取り率は下がります。" },
         ].map(({ q, a }) => (
           <div key={q} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-4">
             <dt className="font-semibold text-slate-800 dark:text-zinc-200 mb-1 flex items-start gap-2">
@@ -466,14 +466,14 @@ export default function Page() {
       <h2>年収別の詳細解説記事</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {[
-          { href: "/blog/takehome-300", text: "年収300万円の手取り", sub: "月20.3万円" },
+          { href: "/blog/takehome-300", text: "年収300万円の手取り", sub: "月20.1万円" },
           { href: "/blog/takehome-400", text: "年収400万円の手取り", sub: "月26.5万円" },
           { href: "/blog/takehome-500", text: "年収500万円の手取り", sub: "月32.8万円" },
-          { href: "/blog/takehome-600", text: "年収600万円の手取り", sub: "月38.5万円" },
-          { href: "/blog/takehome-700", text: "年収700万円の手取り", sub: "月44.0万円" },
-          { href: "/blog/takehome-800", text: "年収800万円の手取り", sub: "月49.5万円" },
-          { href: "/blog/takehome-900", text: "年収900万円の手取り", sub: "月55.0万円" },
-          { href: "/blog/takehome-1000", text: "年収1000万円の手取り", sub: "月60.0万円" },
+          { href: "/blog/takehome-600", text: "年収600万円の手取り", sub: "月38.9万円" },
+          { href: "/blog/takehome-700", text: "年収700万円の手取り", sub: "月44.3万円" },
+          { href: "/blog/takehome-800", text: "年収800万円の手取り", sub: "月49.6万円" },
+          { href: "/blog/takehome-900", text: "年収900万円の手取り", sub: "月55.2万円" },
+          { href: "/blog/takehome-1000", text: "年収1000万円の手取り", sub: "月60.6万円" },
         ].map(({ href, text, sub }) => (
           <Link key={href} href={href} className="flex items-center justify-between px-4 py-3 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
             <span className="text-[14px] text-blue-600 dark:text-blue-400 font-medium">{text}</span>

@@ -3,41 +3,21 @@ import { useState, useMemo } from "react";
 import { SliderInput } from "@/components/ui/SliderInput";
 import { ResultCard } from "@/components/ui/ResultCard";
 
-// ふるさと納税 控除上限の簡易計算
-// 参考: 総務省の控除上限額一覧（独身・夫婦・子供あり）
+import { calcFurusatoLimit } from "@/lib/furusato";
+
+// ふるさと納税 控除上限の計算は lib/furusato.ts（令和8年分の税制）に集約。
 // 計算式: (住民税所得割額 × 0.2) / (0.9 - 所得税率 × 1.021) + 2000
-
-// 給与所得控除後の金額を算出
-function calcSalaryIncome(salary: number): number {
-  if (salary <= 162.5) return salary - 55;
-  if (salary <= 180)   return salary * 0.6 + 37;
-  if (salary <= 360)   return salary * 0.7 + 18;
-  if (salary <= 660)   return salary * 0.8 - 18;
-  if (salary <= 850)   return salary * 0.9 - 84;
-  if (salary <= 1000)  return salary * 0.95 - 126.5;
-  return salary - 195.5;
-}
-
-// 所得税率（簡易版）
-function getIncomeTaxRate(income: number): number {
-  if (income <= 195)  return 0.05;
-  if (income <= 330)  return 0.10;
-  if (income <= 695)  return 0.20;
-  if (income <= 900)  return 0.23;
-  if (income <= 1800) return 0.33;
-  if (income <= 4000) return 0.40;
-  return 0.45;
-}
 
 type FamilyType = "single" | "spouse" | "spouse_child1" | "spouse_child2" | "child1" | "child2";
 
-const FAMILY_OPTIONS: { value: FamilyType; label: string; deduction: number }[] = [
-  { value: "single",        label: "独身・共働き",           deduction: 0 },
-  { value: "spouse",        label: "配偶者（専業主婦/夫）",  deduction: 38 },
-  { value: "spouse_child1", label: "配偶者 + 子1人（高校生以下）", deduction: 76 },
-  { value: "spouse_child2", label: "配偶者 + 子2人",         deduction: 114 },
-  { value: "child1",        label: "共働き + 子1人",         deduction: 38 },
-  { value: "child2",        label: "共働き + 子2人",         deduction: 76 },
+/** 子は扶養控除の対象となる16〜18歳（高校生）を想定。15歳以下の子は扶養控除がないため「独身・共働き」と同じ */
+const FAMILY_OPTIONS: { value: FamilyType; label: string; hasSpouse: boolean; children: number }[] = [
+  { value: "single",        label: "独身・共働き",                 hasSpouse: false, children: 0 },
+  { value: "spouse",        label: "配偶者（専業主婦/夫）",        hasSpouse: true,  children: 0 },
+  { value: "spouse_child1", label: "配偶者 + 子1人（高校生）",     hasSpouse: true,  children: 1 },
+  { value: "spouse_child2", label: "配偶者 + 子2人（高校生）",     hasSpouse: true,  children: 2 },
+  { value: "child1",        label: "共働き + 子1人（高校生・自分の扶養）", hasSpouse: false, children: 1 },
+  { value: "child2",        label: "共働き + 子2人（高校生・自分の扶養）", hasSpouse: false, children: 2 },
 ];
 
 export function FurusatoSimulator() {
@@ -46,23 +26,14 @@ export function FurusatoSimulator() {
 
   const result = useMemo(() => {
     const opt = FAMILY_OPTIONS.find((o) => o.value === family)!;
-    const salaryIncome = calcSalaryIncome(salary);    // 給与所得（万円）
-    const taxableIncome = Math.max(0, salaryIncome - opt.deduction - 48); // 基礎控除48万
-    const taxRate = getIncomeTaxRate(taxableIncome);
-
-    // 住民税所得割（税率10%）
-    const residentTaxBase = Math.max(0, taxableIncome - 43); // 住民税基礎控除43万
-    const residentTaxIncome = residentTaxBase * 10000; // 円に変換
-
-    // 控除上限額計算
-    const limit = Math.floor(
-      (residentTaxIncome * 0.2) / (0.9 - taxRate * 1.021) + 2000
-    );
-
+    const { limit, incomeTaxRate } = calcFurusatoLimit({
+      income: salary * 10000,
+      hasSpouse: opt.hasSpouse,
+      generalDependents: opt.children,
+    });
     // 実質負担 2,000円
     const netBenefit = Math.max(0, limit - 2000);
-
-    return { limit: Math.max(0, limit), netBenefit, taxRate, salaryIncome };
+    return { limit, netBenefit, taxRate: incomeTaxRate };
   }, [salary, family]);
 
   return (
@@ -141,7 +112,7 @@ export function FurusatoSimulator() {
       </div>
 
       <p className="text-xs text-slate-400 dark:text-slate-600 text-center">
-        ※ 給与所得のみを前提とした参考値です。副業・不動産収入がある場合は税理士にご確認ください。
+        ※ 2026年分の所得税・2027年度分の住民税で計算した、給与所得のみを前提とした参考値です。中学生以下の子は扶養控除の対象外のため上限額に影響しません。住宅ローン控除・医療費控除・iDeCo・副業収入がある場合は上限額が変わります。
       </p>
     </div>
   );

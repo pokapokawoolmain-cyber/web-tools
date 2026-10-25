@@ -17,14 +17,14 @@ export const metadata: Metadata = generateMeta({
 const MONTHLY_MAN = [25, 30, 34, 40, 50, 60, 70, 80, 90, 100];
 
 const posts = [
-  { slug: "takehome-300", title: "年収300万円の手取り", subtitle: "月20.3万円（年243万）", desc: "手取り率81%。一人暮らし・節税シミュレーション付き" },
+  { slug: "takehome-300", title: "年収300万円の手取り", subtitle: "月20.1万円（年242万）", desc: "手取り率81%。一人暮らし・節税シミュレーション付き" },
   { slug: "takehome-400", title: "年収400万円の手取り", subtitle: "月26.5万円（年318万）", desc: "控除約82万。生活費シミュレーション・独身/家族比較" },
-  { slug: "takehome-500", title: "年収500万円の手取り", subtitle: "月32.8万円（年393万）", desc: "平均年収を上回るレンジ。ボーナス手取り計算付き" },
-  { slug: "takehome-600", title: "年収600万円の手取り", subtitle: "月38.5万円（年462万）", desc: "独身・既婚別の手取り比較と節税方法を解説" },
-  { slug: "takehome-700", title: "年収700万円の手取り", subtitle: "月44万円（年528万）", desc: "控除172万。FIRE積立シミュレーション付き" },
-  { slug: "takehome-800", title: "年収800万円の手取り", subtitle: "月49.1万円（年589万）", desc: "所得税65万。節税効果が最大化する年収帯" },
-  { slug: "takehome-900", title: "年収900万円の手取り", subtitle: "月54.4万円（年653万）", desc: "控除247万。節税シミュレーション付き" },
-  { slug: "takehome-1000", title: "年収1000万円の手取り", subtitle: "月60.2万円（年722万）", desc: "税金・社会保険の全内訳。大台の手取り実額" },
+  { slug: "takehome-500", title: "年収500万円の手取り", subtitle: "月32.8万円（年394万）", desc: "平均年収を上回るレンジ。ボーナス手取り計算付き" },
+  { slug: "takehome-600", title: "年収600万円の手取り", subtitle: "月38.9万円（年467万）", desc: "独身・既婚別の手取り比較と節税方法を解説" },
+  { slug: "takehome-700", title: "年収700万円の手取り", subtitle: "月44.3万円（年532万）", desc: "控除168万。FIRE積立シミュレーション付き" },
+  { slug: "takehome-800", title: "年収800万円の手取り", subtitle: "月49.6万円（年596万）", desc: "所得税44万。節税効果が最大化する年収帯" },
+  { slug: "takehome-900", title: "年収900万円の手取り", subtitle: "月55.2万円（年662万）", desc: "控除238万。節税シミュレーション付き" },
+  { slug: "takehome-1000", title: "年収1000万円の手取り", subtitle: "月60.6万円（年728万）", desc: "税金・社会保険の全内訳。大台の手取り実額" },
 ];
 
 export default function SalaryPage() {
@@ -121,30 +121,31 @@ export default function SalaryPage() {
           <section className="mt-12">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">2026年税制改正：年収の壁が178万円に引き上げ</h2>
             <p className="text-[13px] text-slate-500 dark:text-zinc-400 mb-4">
-              2026年（令和8年）の税制改正により、所得税の非課税ライン（いわゆる「年収の壁」）が従来の103万円から
+              2026年（令和8年）の税制改正により、所得税の非課税ライン（いわゆる「年収の壁」）が2025年分の160万円（2024年分までは103万円）から
               <strong className="text-slate-700 dark:text-zinc-200">178万円</strong>
-              に大幅引き上げされます。給与所得控除と基礎控除の合計が最大178万円となり（年収665万円以下の場合）、
-              全給与所得者の約8割が手取り増の恩恵を受けます。
+              に引き上げられました。給与所得控除と基礎控除の合計が最大178万円となり（年収665万円以下の場合）、
+              全給与所得者の約8割が手取り増の恩恵を受けます。上の早見表もこの令和8年分の税制で計算しています。
             </p>
             <div className="overflow-x-auto mb-4">
               <table className="w-full border-collapse text-sm">
                 <thead>
                   <tr className="bg-slate-100 dark:bg-zinc-800">
                     <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">項目</th>
-                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">2025年まで（従来）</th>
-                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">2026年（改正後）</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">2024年分まで</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">2025年分</th>
+                    <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">2026年分（令和8年分）</th>
                   </tr>
                 </thead>
                 <tbody>
                   {[
-                    ["所得税の非課税ライン（年収の壁）", "103万円", "178万円"],
-                    ["基礎控除（最大）", "48万円", "104万円（特例）"],
-                    ["給与所得控除（最低保証）", "55万円", "74万円（特例）"],
-                    ["合計控除上限", "103万円", "178万円"],
-                  ].map(([item, before, after], i) => (
+                    ["所得税の非課税ライン（年収の壁）", "103万円", "160万円", "178万円"],
+                    ["基礎控除（最大）", "48万円", "95万円", "104万円"],
+                    ["給与所得控除（最低保障額）", "55万円", "65万円", "74万円"],
+                  ].map(([item, before, mid, after], i) => (
                     <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                       <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 font-medium text-[13px]">{item}</td>
                       <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-slate-500 dark:text-zinc-500 text-[13px]">{before}</td>
+                      <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-slate-500 dark:text-zinc-500 text-[13px]">{mid}</td>
                       <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-blue-600 dark:text-blue-400 font-semibold text-[13px]">{after}</td>
                     </tr>
                   ))}

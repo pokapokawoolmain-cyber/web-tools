@@ -19,7 +19,7 @@ export default function Page() {
   return (
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        年収900万円の手取りは<strong>約653万円（月54.4万円）</strong>が目安です。控除合計247万円の内訳と、iDeCo・ふるさと納税で年10万円超の節税を実現するシミュレーションを解説します。
+        年収900万円の手取りは<strong>約662万円（月55.2万円）</strong>が目安です。控除合計238万円の内訳と、iDeCo・ふるさと納税で年10万円超の節税を実現するシミュレーションを解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -36,9 +36,9 @@ export default function Page() {
           <tbody>
             {[
               ["額面年収", "900万円"],
-              ["手取り年収（概算）", "約653万円"],
-              ["月額手取り（概算）", "約54.4万円"],
-              ["控除合計", "約247万円"],
+              ["手取り年収（概算）", "約662万円"],
+              ["月額手取り（概算）", "約55.2万円"],
+              ["控除合計", "約238万円"],
               ["手取り率", "約72.6%"],
             ].map(([label, value], i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
@@ -66,13 +66,13 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["健康保険料（本人負担分）", "約43万円", "約3.6万円"],
-              ["厚生年金保険料", "約65万円", "約5.4万円"],
+              ["健康保険料（本人負担分）", "約45万円", "約3.7万円"],
+              ["厚生年金保険料", "約71万円", "約5.9万円"],
               ["雇用保険料", "約5万円", "約0.4万円"],
-              ["社会保険料 合計", "約113万円", "約9.4万円"],
-              ["所得税", "約85万円", "約7.1万円"],
-              ["住民税", "約49万円", "約4.1万円"],
-              ["控除 合計", "約247万円", "約20.6万円"],
+              ["社会保険料 合計", "約121万円", "約10.1万円"],
+              ["所得税", "約63万円", "約5.2万円"],
+              ["住民税", "約54万円", "約4.5万円"],
+              ["控除 合計", "約238万円", "約19.8万円"],
             ].map(([type, annual, monthly], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className={`border border-slate-200 dark:border-zinc-700 px-4 py-2 ${type.includes("合計") ? "font-medium" : ""}`}>{type}</td>
@@ -84,7 +84,7 @@ export default function Page() {
         </table>
       </div>
       <p>
-        年収900万円では<strong>所得税が85万円</strong>と高水準です。課税所得が695万円超の部分には所得税率23%が適用されるため、節税対策の費用対効果が非常に高い年収帯です。
+        年収900万円では<strong>所得税が63万円</strong>と高水準です。課税所得は約517万円で所得税率20%の区分にあたり、住民税10%と合わせて控除1万円あたり約3,000円が戻るため、節税対策の費用対効果が高い年収帯です。
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
@@ -100,11 +100,11 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["独身", "約653万円", "基準"],
-              ["配偶者あり（専業主婦/夫）", "約668万円", "+約15万円"],
-              ["配偶者あり＋子1人（16歳未満）", "約668万円", "+約15万円"],
-              ["配偶者あり＋子1人（16〜18歳）", "約680万円", "+約27万円"],
-              ["配偶者あり＋子2人（扶養）", "約693万円", "+約40万円"],
+              ["独身", "約662万円", "基準"],
+              ["配偶者あり（専業主婦/夫）", "約673万円", "+約11万円"],
+              ["配偶者あり＋子1人（16歳未満）", "約673万円", "+約11万円"],
+              ["配偶者あり＋子1人（16〜18歳）", "約684万円", "+約22万円"],
+              ["配偶者あり＋子2人（扶養）", "約695万円", "+約33万円"],
             ].map(([family, takehome, diff], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{family}</td>
@@ -130,10 +130,10 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["700万円", "約528万円", "約44万円", "約75.4%"],
-              ["800万円", "約589万円", "約49.1万円", "約73.6%"],
-              ["900万円", "約653万円", "約54.4万円", "約72.6%", true],
-              ["1000万円", "約722万円", "約60.2万円", "約72.2%"],
+              ["700万円", "約532万円", "約44.3万円", "約76.0%"],
+              ["800万円", "約596万円", "約49.6万円", "約74.5%"],
+              ["900万円", "約662万円", "約55.2万円", "約73.6%", true],
+              ["1000万円", "約728万円", "約60.6万円", "約72.8%"],
             ].map(([income, takehome, monthly, rate, isCurrent], i) => (
               <tr key={i} className={isCurrent ? "bg-blue-50 dark:bg-blue-950/30" : i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className={`border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium ${isCurrent ? "text-blue-700 dark:text-blue-300" : ""}`}>{income}{isCurrent ? " ◀ この記事" : ""}</td>
@@ -192,7 +192,7 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["月手取り", "約54.4万円", "年653万円"],
+              ["月手取り", "約54.4万円", "年662万円"],
               ["家賃", "約12〜18万円", "手取りの22〜33%が目安"],
               ["食費・外食", "約5〜8万円", "外食頻度が高い傾向"],
               ["光熱費・通信費", "約3〜4万円", ""],
@@ -214,8 +214,8 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>関連記事</h2>
       <ul className="space-y-2">
-        <li><Link href="/blog/takehome-800">年収800万円の手取りは月49.1万円</Link></li>
-        <li><Link href="/blog/takehome-1000">年収1000万円の手取りは月60.2万円</Link></li>
+        <li><Link href="/blog/takehome-800">年収800万円の手取りは月49.6万円</Link></li>
+        <li><Link href="/blog/takehome-1000">年収1000万円の手取りは月60.6万円</Link></li>
         <li><Link href="/blog/salary-takehome-table">手取り早見表2026年版（年収300〜1000万円一覧）</Link></li>
         <li><Link href="/blog/furusato-limit-by-income">年収別ふるさと納税の上限額早見表</Link></li>
         <li><Link href="/blog/shakai-hoken-guide">社会保険料の計算方法【年収別早見表・2026年版】</Link></li>

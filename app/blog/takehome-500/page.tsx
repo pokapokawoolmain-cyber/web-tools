@@ -19,7 +19,7 @@ export default function Page() {
   return (
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        年収500万円の手取りは<strong>約393万円（月32.8万円）</strong>が目安です。給与から引かれる社会保険料・所得税・住民税の内訳と、もう少し手取りを増やすための節税方法を解説します。
+        年収500万円の手取りは<strong>約394万円（月32.8万円）</strong>が目安です。給与から引かれる社会保険料・所得税・住民税の内訳と、もう少し手取りを増やすための節税方法を解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -36,9 +36,9 @@ export default function Page() {
           <tbody>
             {[
               ["額面年収", "500万円"],
-              ["手取り年収（概算）", "約393万円"],
+              ["手取り年収（概算）", "約394万円"],
               ["月額手取り（概算）", "約32.8万円"],
-              ["控除合計", "約107万円"],
+              ["控除合計", "約106万円"],
               ["手取り率", "約78.6%"],
             ].map(([label, value], i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
@@ -68,11 +68,11 @@ export default function Page() {
             {[
               ["健康保険料（本人負担分）", "約25万円", "約2.1万円"],
               ["厚生年金保険料", "約46万円", "約3.8万円"],
-              ["雇用保険料", "約3万円", "約0.3万円"],
-              ["社会保険料 合計", "約74万円", "約6.2万円"],
-              ["所得税", "約13万円", "約1.1万円"],
-              ["住民税", "約20万円", "約1.7万円"],
-              ["控除 合計", "約107万円", "約8.9万円"],
+              ["雇用保険料", "約2.8万円", "約0.2万円"],
+              ["社会保険料 合計", "約73万円", "約6.1万円"],
+              ["所得税", "約9.1万円", "約0.8万円"],
+              ["住民税", "約24万円", "約2万円"],
+              ["控除 合計", "約106万円", "約8.9万円"],
             ].map(([type, annual, monthly], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className={`border border-slate-200 dark:border-zinc-700 px-4 py-2 ${type.includes("合計") ? "font-medium" : ""}`}>{type}</td>
@@ -128,7 +128,7 @@ export default function Page() {
       <h2>年収500万円から手取りを増やす方法</h2>
       <ul className="space-y-2">
         <li>
-          <strong>iDeCo（個人型確定拠出年金）</strong>：会社員の場合、月2.3万円（年27.6万円）まで掛金が全額所得控除。年収500万円なら年間約5〜6万円の節税効果。
+          <strong>iDeCo（個人型確定拠出年金）</strong>：会社員の場合、月2.3万円（年27.6万円）まで掛金が全額所得控除。年収500万円なら年間約4万円の節税効果。
         </li>
         <li>
           <strong>ふるさと納税</strong>：年収500万・独身の場合の寄附上限の目安は約6万円。実質2,000円の自己負担で地域の特産品がもらえます。<Link href="/tools/furusato-simulator">ふるさと納税シミュレーター</Link>で上限額を確認できます。
@@ -174,11 +174,11 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>他の年収との手取り比較</h2>
       <ul className="space-y-2">
-        <li><Link href="/blog/takehome-300">年収300万円の手取り</Link>：約243万円（月20.3万円）</li>
+        <li><Link href="/blog/takehome-300">年収300万円の手取り</Link>：約242万円（月20.1万円）</li>
         <li><Link href="/blog/takehome-400">年収400万円の手取り</Link>：約318万円（月26.5万円）</li>
-        <li>年収500万円の手取り：<strong>約393万円（月32.8万円）← このページ</strong></li>
-        <li><Link href="/blog/takehome-600">年収600万円の手取り</Link>：約462万円（月38.5万円）</li>
-        <li><Link href="/blog/takehome-700">年収700万円の手取り</Link>：約528万円（月44万円）</li>
+        <li>年収500万円の手取り：<strong>約394万円（月32.8万円）← このページ</strong></li>
+        <li><Link href="/blog/takehome-600">年収600万円の手取り</Link>：約467万円（月38.9万円）</li>
+        <li><Link href="/blog/takehome-700">年収700万円の手取り</Link>：約532万円（月44.3万円）</li>
       </ul>
       <p>
         年収を100万円上げても手取りは約70〜75万円しか増えません。昇給が「思ったほど生活が変わらない」と感じるのはこの仕組みが原因です。

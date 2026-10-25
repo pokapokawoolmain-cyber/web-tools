@@ -9,8 +9,8 @@ import Link from "next/link";
 const post = getBlogPost("takehome-300")!;
 
 export const metadata: Metadata = generateMeta({
-  title: "年収300万円の手取りは月20万円（年243万）｜税金内訳・生活費シミュレーション【2026年版】",
-  description: "年収300万円の手取りは年間約243万円・月20.3万円。所得税5万・住民税8万・社会保険料44万の内訳を解説。東京一人暮らし・地方別の生活費シミュレーション、ふるさと納税・iDeCoの節税効果も。",
+  title: "年収300万円の手取りは月20万円（年242万）｜税金内訳・生活費シミュレーション【2026年版】",
+  description: "年収300万円の手取りは年間約242万円・月20.1万円。所得税2.8万・住民税12万・社会保険料44万の内訳を解説。東京一人暮らし・地方別の生活費シミュレーション、ふるさと納税・iDeCoの節税効果も。",
   path: `/blog/${post.slug}`,
   keywords: ["年収300万 手取り いくら", "年収300万 月収 手取り", "年収300万 税金 内訳", "300万 手取り 2026", "年収300万 一人暮らし きつい 余裕"],
   type: "article",
@@ -23,22 +23,22 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "年収300万円の手取りはいくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "年収300万円の手取りは年間約243万円（月平均20.3万円）が目安です。所得税約5万円・住民税約8万円・社会保険料約44万円の合計約57万円が控除されます。家族構成・加入する健康保険・各種控除により実際の金額は変わります。" },
+      acceptedAnswer: { "@type": "Answer", text: "年収300万円の手取りは年間約242万円（月平均20.1万円）が目安です。所得税約2.8万円・住民税約12万円・社会保険料約44万円の合計約58万円が控除されます。家族構成・加入する健康保険・各種控除により実際の金額は変わります。" },
     },
     {
       "@type": "Question",
       name: "年収300万円の月収（手取り）はいくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "月の手取りは約20.3万円が目安です。ボーナスがある場合は月収が少なくなりボーナス月に多くもらう形になります。ボーナスなしの月給のみの場合、毎月ほぼ均等に20万円前後が手取りになります。" },
+      acceptedAnswer: { "@type": "Answer", text: "月の手取りは約20.1万円が目安です。ボーナスがある場合は月収が少なくなりボーナス月に多くもらう形になります。ボーナスなしの月給のみの場合、毎月ほぼ均等に20万円前後が手取りになります。" },
     },
     {
       "@type": "Question",
       name: "年収300万円で東京での一人暮らしはできますか？",
-      acceptedAnswer: { "@type": "Answer", text: "月手取り20.3万円での東京一人暮らしはかなり厳しいです。家賃8〜10万円を払うと残りが10〜12万円となり、食費・光熱費・通信費などで使い切ってしまい貯蓄が難しくなります。地方（家賃5〜6万円）なら月6〜9万円の余裕が生まれます。" },
+      acceptedAnswer: { "@type": "Answer", text: "月手取り20.1万円での東京一人暮らしはかなり厳しいです。家賃8〜10万円を払うと残りが10〜12万円となり、食費・光熱費・通信費などで使い切ってしまい貯蓄が難しくなります。地方（家賃5〜6万円）なら月6〜9万円の余裕が生まれます。" },
     },
     {
       "@type": "Question",
       name: "年収300万円の住民税はいくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "年収300万円（独身・会社員）の住民税は概算で約8万円（月約0.7万円）です。住民税は前年の所得をもとに翌年6月から引かれます。所得税（約5万円）と合わせた税負担は年間約13万円です。" },
+      acceptedAnswer: { "@type": "Answer", text: "年収300万円（独身・会社員）の住民税は概算で約12万円（月約1万円）です。住民税は前年の所得をもとに翌年6月から引かれます。所得税（約2.8万円）と合わせた税負担は年間約14万円です。" },
     },
     {
       "@type": "Question",
@@ -54,7 +54,7 @@ export default function Page() {
     <JsonLd data={faqSchema} />
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        社会人1〜2年目、手取り20万円で一人暮らしを始めたとき、給与明細の控除欄を見て「思ったより少ない」と感じた記憶があります。年収300万円の手取りは<strong>約243万円（月20.3万円）</strong>が目安です。控除57万円の内訳と、東京・地方別の生活費シミュレーション、節税方法を解説します。
+        社会人1〜2年目、手取り20万円で一人暮らしを始めたとき、給与明細の控除欄を見て「思ったより少ない」と感じた記憶があります。年収300万円の手取りは<strong>約242万円（月20.1万円）</strong>が目安です。控除58万円の内訳と、東京・地方別の生活費シミュレーション、節税方法を解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -71,9 +71,9 @@ export default function Page() {
           <tbody>
             {[
               ["額面年収", "300万円"],
-              ["手取り年収（概算）", "約243万円"],
-              ["月額手取り（概算）", "約20.3万円"],
-              ["控除合計", "約57万円"],
+              ["手取り年収（概算）", "約242万円"],
+              ["月額手取り（概算）", "約20.1万円"],
+              ["控除合計", "約58万円"],
               ["手取り率", "約81%"],
             ].map(([label, value], i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
@@ -101,13 +101,13 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["健康保険料（本人負担分）", "約14万円", "約1.2万円"],
+              ["健康保険料（本人負担分）", "約15万円", "約1.2万円"],
               ["厚生年金保険料", "約27万円", "約2.3万円"],
-              ["雇用保険料", "約1.8万円", "約0.2万円"],
+              ["雇用保険料", "約1.6万円", "約0.1万円"],
               ["社会保険料 合計", "約44万円", "約3.7万円"],
-              ["所得税", "約5万円", "約0.4万円"],
-              ["住民税", "約8万円", "約0.7万円"],
-              ["控除 合計", "約57万円", "約4.8万円"],
+              ["所得税", "約2.8万円", "約0.2万円"],
+              ["住民税", "約12万円", "約1万円"],
+              ["控除 合計", "約58万円", "約4.9万円"],
             ].map(([type, annual, monthly], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className={`border border-slate-200 dark:border-zinc-700 px-4 py-2 ${type.includes("合計") ? "font-medium" : ""}`}>{type}</td>
@@ -123,7 +123,7 @@ export default function Page() {
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
-      <h2>月手取り20.3万円の生活費シミュレーション</h2>
+      <h2>月手取り20.1万円の生活費シミュレーション</h2>
 
       <h3>一人暮らし（地方・家賃5〜6万円）の場合</h3>
       <div className="overflow-x-auto my-6">
@@ -172,7 +172,7 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収300万円からのNISA積立シミュレーション</h2>
       <p>
-        月手取り20.3万円から少額でも積み立てを始めることが大切です。
+        月手取り20.1万円から少額でも積み立てを始めることが大切です。
       </p>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -205,10 +205,10 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>他の年収との手取り比較</h2>
       <ul className="space-y-2">
-        <li>年収300万円の手取り：<strong>約243万円（月20.3万円）← このページ</strong></li>
+        <li>年収300万円の手取り：<strong>約242万円（月20.1万円）← このページ</strong></li>
         <li><Link href="/blog/takehome-400">年収400万円の手取り</Link>：約318万円（月26.5万円）— 年収300万より75万円多い</li>
-        <li><Link href="/blog/takehome-500">年収500万円の手取り</Link>：約393万円（月32.8万円）</li>
-        <li><Link href="/blog/takehome-600">年収600万円の手取り</Link>：約462万円（月38.5万円）</li>
+        <li><Link href="/blog/takehome-500">年収500万円の手取り</Link>：約394万円（月32.8万円）</li>
+        <li><Link href="/blog/takehome-600">年収600万円の手取り</Link>：約467万円（月38.9万円）</li>
       </ul>
       <p>
         年収全体の手取り一覧は<Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link>でまとめて確認できます。

@@ -5,16 +5,113 @@
 // 数値の不整合をなくすための単一ソース。
 // 前提: 会社員・独身・基礎控除のみの概算。賞与は年収に含む想定。
 //   （配偶者控除・扶養控除・各種保険料控除は未反映）
+//
+// 適用する税制: 令和8年分（2026年分）の所得税と、同じ所得にかかる
+// 令和9年度の住民税。根拠は国税庁タックスアンサー No.1199（基礎控除）・
+// No.1410（給与所得控除）。令和8年分の改正は令和8年12月1日施行のため、
+// 毎月の源泉徴収ではなく年末調整で精算される年税額ベースの目安になる。
 // ============================================================
 
-/** 給与所得控除 */
+/** 計算に使っている税制の年分（画面の注記に表示する） */
+export const TAX_YEAR_LABEL = "令和8年分（2026年分）";
+
+/**
+ * 給与所得控除（令和8年分・令和9年分）。最低保障額は74万円
+ * （恒久措置の69万円＋令和8・9年分の特例5万円）。所得税・住民税（令和9年度分）共通。
+ */
 export function calcSalaryDeduction(income: number): number {
-  if (income <= 1625000) return 550000;
-  if (income <= 1800000) return income * 0.4 - 100000;
+  if (income <= 2200000) return Math.min(income, 740000);
   if (income <= 3600000) return income * 0.3 + 80000;
   if (income <= 6600000) return income * 0.2 + 440000;
   if (income <= 8500000) return income * 0.1 + 1100000;
   return 1950000;
+}
+
+/**
+ * 所得税の基礎控除（令和8年分・令和9年分）。合計所得金額で段階的に決まる。
+ * 489万円以下は104万円（令和10年分以後は132万円以下99万円・それ以外62万円に戻る）。
+ */
+export function calcBasicDeduction(totalIncome: number): number {
+  if (totalIncome <= 4890000) return 1040000;
+  if (totalIncome <= 6550000) return 670000;
+  if (totalIncome <= 23500000) return 620000;
+  if (totalIncome <= 24000000) return 480000;
+  if (totalIncome <= 24500000) return 320000;
+  if (totalIncome <= 25000000) return 160000;
+  return 0;
+}
+
+/** 住民税の基礎控除（合計所得2,400万円以下は43万円。住民税は所得税と金額が異なる） */
+export function calcResidentBasicDeduction(totalIncome: number): number {
+  if (totalIncome <= 24000000) return 430000;
+  if (totalIncome <= 24500000) return 290000;
+  if (totalIncome <= 25000000) return 150000;
+  return 0;
+}
+
+/** 社会保険料の料率（本人負担）。賞与の計算（calcBonusTakehome）と同じ値を使う */
+export const SOCIAL_INSURANCE_RATES = {
+  /** 健康保険（協会けんぽ・介護保険を含まない） */
+  health: 0.04955,
+  /** 厚生年金 */
+  pension: 0.0915,
+  /** 雇用保険（一般の事業） */
+  employment: 0.0055,
+} as const;
+
+export interface SocialInsuranceBreakdown {
+  health: number;
+  pension: number;
+  employment: number;
+  total: number;
+}
+
+/**
+ * 年間の社会保険料（本人負担）の概算と内訳。
+ * 厚生年金は標準報酬月額の上限65万円（年780万円）、健康保険は上限139万円
+ * （年1,668万円）を超えた部分には保険料をかけない。
+ */
+export function calcSocialInsuranceBreakdown(income: number): SocialInsuranceBreakdown {
+  const health = Math.min(income, 16680000) * SOCIAL_INSURANCE_RATES.health;
+  const pension = Math.min(income, 7800000) * SOCIAL_INSURANCE_RATES.pension;
+  const employment = income * SOCIAL_INSURANCE_RATES.employment;
+  return { health, pension, employment, total: health + pension + employment };
+}
+
+/** 年間の社会保険料（本人負担）の合計 */
+export function calcAnnualSocialInsurance(income: number): number {
+  return calcSocialInsuranceBreakdown(income).total;
+}
+
+/** 扶養の条件（手取り・ふるさと納税の計算で共通） */
+export interface FamilyOptions {
+  /** 配偶者控除の対象となる配偶者がいるか（配偶者の給与収入がおおむね136万円以下） */
+  hasSpouse?: boolean;
+  /** 一般の扶養親族（16〜18歳・23歳以上など）の人数。15歳以下の子は扶養控除の対象外 */
+  generalDependents?: number;
+  /** 特定扶養親族（19〜22歳）の人数 */
+  specificDependents?: number;
+}
+
+/** 配偶者控除（所得税・住民税）と、住民税の調整控除で使う人的控除差。本人の合計所得で逓減する */
+export function calcSpouseDeduction(totalIncome: number) {
+  if (totalIncome <= 9000000) return { incomeTax: 380000, resident: 330000, diff: 50000 };
+  if (totalIncome <= 9500000) return { incomeTax: 260000, resident: 220000, diff: 40000 };
+  if (totalIncome <= 10000000) return { incomeTax: 130000, resident: 110000, diff: 20000 };
+  return { incomeTax: 0, resident: 0, diff: 0 };
+}
+
+/** 扶養の条件から、所得税・住民税の人的控除（基礎控除を除く）を求める */
+export function calcFamilyDeductions(totalIncome: number, family: FamilyOptions = {}) {
+  const general = Math.max(0, Math.floor(family.generalDependents ?? 0));
+  const specific = Math.max(0, Math.floor(family.specificDependents ?? 0));
+  const spouse = family.hasSpouse ? calcSpouseDeduction(totalIncome) : { incomeTax: 0, resident: 0, diff: 0 };
+  return {
+    incomeTax: spouse.incomeTax + general * 380000 + specific * 630000,
+    resident: spouse.resident + general * 330000 + specific * 450000,
+    /** 調整控除の人的控除差（基礎控除分5万円を含む） */
+    personalDiff: 50000 + spouse.diff + general * 50000 + specific * 180000,
+  };
 }
 
 /** 所得税（速算表・復興特別所得税は別途乗算） */
@@ -161,15 +258,19 @@ export function calcBonusTakehome(
   };
 }
 
-/** 年収（額面・円）から手取りを概算する */
-export function calcTakehome(annualIncome: number): TakehomeResult {
+/** 年収（額面・円）から手取りを概算する。family を省略すると独身・扶養なし */
+export function calcTakehome(annualIncome: number, family: FamilyOptions = {}): TakehomeResult {
   const salaryDeduction = calcSalaryDeduction(annualIncome);
   const netIncome = annualIncome - salaryDeduction;
-  const socialInsurance = annualIncome * 0.1451;
-  const basicDeduction = 480000;
-  const taxableIncome = Math.max(0, netIncome - socialInsurance - basicDeduction);
+  const socialInsurance = calcAnnualSocialInsurance(annualIncome);
+  const familyDeductions = calcFamilyDeductions(netIncome, family);
+  const basicDeduction = calcBasicDeduction(netIncome);
+  const taxableIncome = Math.max(0, netIncome - socialInsurance - basicDeduction - familyDeductions.incomeTax);
   const incomeTax = calcIncomeTax(taxableIncome) * 1.021;
-  const residenceTaxableIncome = Math.max(0, netIncome - socialInsurance - 430000);
+  const residenceTaxableIncome = Math.max(
+    0,
+    netIncome - socialInsurance - calcResidentBasicDeduction(netIncome) - familyDeductions.resident,
+  );
   const residenceTax = residenceTaxableIncome * 0.10;
   const annualNet = annualIncome - socialInsurance - incomeTax - residenceTax;
   return {

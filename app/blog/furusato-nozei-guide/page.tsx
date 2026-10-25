@@ -71,26 +71,26 @@ export default function Page() {
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">300万円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約28,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約19,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約15,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約20,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約11,000円</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">400万円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約42,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約33,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約29,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約34,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約25,000円</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">500万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約61,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約49,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約44,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約57,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約50,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約41,000円</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">600万円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約77,000円</td>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約69,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約60,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約57,000円</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">700万円</td>
@@ -100,40 +100,40 @@ export default function Page() {
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">800万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約129,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約120,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約110,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約131,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約121,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約112,000円</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">900万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約151,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約141,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約132,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約156,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約147,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約137,000円</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">1,000万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約176,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約166,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約157,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約183,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約174,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約164,000円</td>
             </tr>
             <tr>
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">1,200万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約242,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約232,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約221,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約249,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約249,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約239,000円</td>
             </tr>
             <tr className="bg-slate-50 dark:bg-zinc-900">
               <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">1,500万円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約355,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約343,000円</td>
-              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約334,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約394,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約394,000円</td>
+              <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">約382,000円</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <p>
-        この表はあくまで目安です。住宅ローン控除・医療費控除・iDeCoなど他の控除を使っている場合は上限額が変わります。正確な金額は当サイトのシミュレーターか、各ふるさと納税ポータルサイトの計算ツールで確認することをおすすめします。
+        この表は2026年分の所得税（基礎控除の引き上げ後）と2027年度分の住民税で計算した目安です。住宅ローン控除・医療費控除・iDeCoなど他の控除を使っている場合は上限額が変わります。正確な金額は当サイトのシミュレーターか、各ふるさと納税ポータルサイトの計算ツールで確認することをおすすめします。
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />

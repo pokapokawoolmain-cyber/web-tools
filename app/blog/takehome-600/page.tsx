@@ -19,7 +19,7 @@ export default function Page() {
   return (
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        年収600万円の手取りは<strong>約462万円（月38.5万円）</strong>が目安です。「年収600万あるのに生活がそんなに楽じゃない」という声もありますが、その理由は138万円分の税金・社会保険料にあります。内訳と節税方法を解説します。
+        年収600万円の手取りは<strong>約467万円（月38.9万円）</strong>が目安です。「年収600万あるのに生活がそんなに楽じゃない」という声もありますが、その理由は133万円分の税金・社会保険料にあります。内訳と節税方法を解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -36,9 +36,9 @@ export default function Page() {
           <tbody>
             {[
               ["額面年収", "600万円"],
-              ["手取り年収（概算）", "約462万円"],
-              ["月額手取り（概算）", "約38.5万円"],
-              ["控除合計", "約138万円"],
+              ["手取り年収（概算）", "約467万円"],
+              ["月額手取り（概算）", "約38.9万円"],
+              ["控除合計", "約133万円"],
               ["手取り率", "約77%"],
             ].map(([label, value], i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
@@ -68,11 +68,11 @@ export default function Page() {
             {[
               ["健康保険料（本人負担分）", "約30万円", "約2.5万円"],
               ["厚生年金保険料", "約55万円", "約4.6万円"],
-              ["雇用保険料", "約3.6万円", "約0.3万円"],
+              ["雇用保険料", "約3.3万円", "約0.3万円"],
               ["社会保険料 合計", "約88万円", "約7.3万円"],
-              ["所得税", "約23万円", "約1.9万円"],
-              ["住民税", "約27万円", "約2.3万円"],
-              ["控除 合計", "約138万円", "約11.5万円"],
+              ["所得税", "約15万円", "約1.2万円"],
+              ["住民税", "約31万円", "約2.5万円"],
+              ["控除 合計", "約133万円", "約11.1万円"],
             ].map(([type, annual, monthly], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className={`border border-slate-200 dark:border-zinc-700 px-4 py-2 ${type.includes("合計") ? "font-medium" : ""}`}>{type}</td>
@@ -97,10 +97,10 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["独身", "約462万円", "—"],
-              ["配偶者あり（専業主婦・収入なし）", "約476万円", "+約14万円"],
-              ["配偶者＋子ども1人（16歳未満）", "約476万円", "+約14万円"],
-              ["配偶者＋子ども1人（高校生）", "約484万円", "+約22万円"],
+              ["独身", "約467万円", "—"],
+              ["配偶者あり（専業主婦・収入なし）", "約474万円", "+約7万円"],
+              ["配偶者＋子ども1人（16歳未満）", "約474万円", "+約7万円"],
+              ["配偶者＋子ども1人（高校生）", "約480万円", "+約13万円"],
             ].map(([family, income, diff], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{family}</td>
@@ -112,7 +112,7 @@ export default function Page() {
         </table>
       </div>
       <p>
-        配偶者控除（38万円）が適用されると所得税・住民税が合わせて約14万円減ります。子どもが16歳以上（高校生）になると扶養控除も加算され、さらに手取りが増えます。
+        配偶者控除（38万円）が適用されると所得税・住民税が合わせて約7万円減ります。子どもが16歳以上（高校生）になると扶養控除も加算され、さらに手取りが増えます。
       </p>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
@@ -122,7 +122,7 @@ export default function Page() {
           <strong>ふるさと納税</strong>：年収600万・独身の場合の寄附上限の目安は約7.7万円。<Link href="/tools/furusato-simulator">ふるさと納税シミュレーター</Link>で正確な上限を確認できます。
         </li>
         <li>
-          <strong>iDeCo</strong>：月2.3万円（年27.6万円）まで全額所得控除。年収600万円なら年間約6〜8万円の節税効果が見込めます。
+          <strong>iDeCo</strong>：月2.3万円（年27.6万円）まで全額所得控除。年収600万円なら年間約5〜6万円の節税効果が見込めます。
         </li>
         <li>
           <strong>住宅ローン控除</strong>：マイホーム購入時に最大13年間、年末ローン残高の0.7%が税額から直接控除されます。
@@ -135,7 +135,7 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>年収600万円からのFIRE・資産形成シミュレーション</h2>
       <p>
-        月手取り38.5万円から生活費を引いた余剰を積み立てると、長期的な資産形成が加速します。
+        月手取り38.9万円から生活費を引いた余剰を積み立てると、長期的な資産形成が加速します。
       </p>
       <div className="overflow-x-auto my-6">
         <table className="w-full border-collapse text-sm">
@@ -169,10 +169,10 @@ export default function Page() {
       <h2>他の年収との手取り比較</h2>
       <ul className="space-y-2">
         <li><Link href="/blog/takehome-400">年収400万円の手取り</Link>：約318万円（月26.5万円）</li>
-        <li><Link href="/blog/takehome-500">年収500万円の手取り</Link>：約393万円（月32.8万円）</li>
-        <li>年収600万円の手取り：<strong>約462万円（月38.5万円）← このページ</strong></li>
-        <li><Link href="/blog/takehome-700">年収700万円の手取り</Link>：約528万円（月44万円）</li>
-        <li><Link href="/blog/takehome-800">年収800万円の手取り</Link>：約589万円（月49.1万円）</li>
+        <li><Link href="/blog/takehome-500">年収500万円の手取り</Link>：約394万円（月32.8万円）</li>
+        <li>年収600万円の手取り：<strong>約467万円（月38.9万円）← このページ</strong></li>
+        <li><Link href="/blog/takehome-700">年収700万円の手取り</Link>：約532万円（月44.3万円）</li>
+        <li><Link href="/blog/takehome-800">年収800万円の手取り</Link>：約596万円（月49.6万円）</li>
       </ul>
       <p>
         全年収の手取り一覧は<Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link>で確認できます。

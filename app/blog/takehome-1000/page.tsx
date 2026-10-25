@@ -19,7 +19,7 @@ export default function Page() {
   return (
     <BlogLayout post={post}>
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
-        年収1000万円の手取りは<strong>約722万円（月60.2万円）</strong>が目安です。控除278万円の内訳と、1000万円プレーヤーが実践すべき節税戦略を具体的に解説します。
+        年収1000万円の手取りは<strong>約728万円（月60.6万円）</strong>が目安です。控除272万円の内訳と、1000万円プレーヤーが実践すべき節税戦略を具体的に解説します。
       </p>
 
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
@@ -36,9 +36,9 @@ export default function Page() {
           <tbody>
             {[
               ["額面年収", "1,000万円"],
-              ["手取り年収（概算）", "約722万円"],
-              ["月額手取り（概算）", "約60.2万円"],
-              ["控除合計", "約278万円"],
+              ["手取り年収（概算）", "約728万円"],
+              ["月額手取り（概算）", "約60.6万円"],
+              ["控除合計", "約272万円"],
               ["手取り率", "約72.2%"],
             ].map(([label, value], i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
@@ -66,13 +66,13 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["健康保険料（本人負担分）", "約47万円", "約3.9万円"],
-              ["厚生年金保険料", "約65万円", "約5.4万円"],
-              ["雇用保険料", "約6万円", "約0.5万円"],
-              ["社会保険料 合計", "約118万円", "約9.8万円"],
-              ["所得税", "約103万円", "約8.6万円"],
-              ["住民税", "約57万円", "約4.8万円"],
-              ["控除 合計", "約278万円", "約23.2万円"],
+              ["健康保険料（本人負担分）", "約50万円", "約4.1万円"],
+              ["厚生年金保険料", "約71万円", "約5.9万円"],
+              ["雇用保険料", "約5.5万円", "約0.5万円"],
+              ["社会保険料 合計", "約126万円", "約10.5万円"],
+              ["所得税", "約82万円", "約6.9万円"],
+              ["住民税", "約64万円", "約5.3万円"],
+              ["控除 合計", "約272万円", "約22.7万円"],
             ].map(([type, annual, monthly], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className={`border border-slate-200 dark:border-zinc-700 px-4 py-2 ${type.includes("合計") ? "font-medium" : ""}`}>{type}</td>
@@ -84,12 +84,12 @@ export default function Page() {
         </table>
       </div>
       <p>
-        年収1000万円では<strong>所得税が103万円</strong>に達します。月収ベースで見ると毎月8.6万円が所得税として天引きされる計算です。収入が増えるほど節税効果が高まるため、対策は早いほど有効です。
+        年収1000万円では<strong>所得税が82万円</strong>に達します。月収ベースで見ると毎月6.9万円が所得税として天引きされる計算です。収入が増えるほど節税効果が高まるため、対策は早いほど有効です。
       </p>
 
       <div className="my-5 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/40 text-[13px] text-amber-800 dark:text-amber-300">
         <strong className="block mb-1">⚠️ 年収1000万円のワナ：手取りが思ったより少ない理由</strong>
-        <p>額面1000万円に対して手取りは約722万円。「1000万円もらえる」と思っていたのに「手元に来るのは720万円ちょっと」という現実があります。特に所得税103万円は年収800万時の65万から38万円も跳ね上がります。</p>
+        <p>額面1000万円に対して手取りは約728万円。「1000万円もらえる」と思っていたのに「手元に来るのは730万円弱」という現実があります。特に所得税82万円は年収800万円時の約44万円から約39万円も跳ね上がります。</p>
       </div>
 
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
@@ -105,11 +105,11 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["独身", "約722万円", "基準"],
-              ["配偶者あり（専業主婦/夫）", "約739万円", "+約17万円"],
-              ["配偶者あり＋子1人（16歳未満）", "約739万円", "+約17万円"],
-              ["配偶者あり＋子1人（16〜18歳）", "約752万円", "+約30万円"],
-              ["配偶者あり＋子2人（扶養）", "約764万円", "+約42万円"],
+              ["独身", "約728万円", "基準"],
+              ["配偶者あり（専業主婦/夫）", "約739万円", "+約11万円"],
+              ["配偶者あり＋子1人（16歳未満）", "約739万円", "+約11万円"],
+              ["配偶者あり＋子1人（16〜18歳）", "約750万円", "+約22万円"],
+              ["配偶者あり＋子2人（扶養）", "約761万円", "+約33万円"],
             ].map(([family, takehome, diff], i) => (
               <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{family}</td>
@@ -135,12 +135,12 @@ export default function Page() {
           </thead>
           <tbody>
             {[
-              ["500万円", "約393万円", "約32.8万円", "約78.6%"],
-              ["600万円", "約462万円", "約38.5万円", "約77%"],
-              ["700万円", "約528万円", "約44万円", "約75.4%"],
-              ["800万円", "約589万円", "約49.1万円", "約73.6%"],
-              ["900万円", "約653万円", "約54.4万円", "約72.6%"],
-              ["1000万円", "約722万円", "約60.2万円", "約72.2%", true],
+              ["500万円", "約394万円", "約32.8万円", "約78.7%"],
+              ["600万円", "約467万円", "約38.9万円", "約77.8%"],
+              ["700万円", "約532万円", "約44.3万円", "約76.0%"],
+              ["800万円", "約596万円", "約49.6万円", "約74.5%"],
+              ["900万円", "約662万円", "約55.2万円", "約73.6%"],
+              ["1000万円", "約728万円", "約60.6万円", "約72.8%", true],
             ].map(([income, takehome, monthly, rate, isCurrent], i) => (
               <tr key={i} className={isCurrent ? "bg-blue-50 dark:bg-blue-950/30" : i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
                 <td className={`border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium ${isCurrent ? "text-blue-700 dark:text-blue-300" : ""}`}>{income}{isCurrent ? " ◀ この記事" : ""}</td>
@@ -187,7 +187,7 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>関連記事</h2>
       <ul className="space-y-2">
-        <li><Link href="/blog/takehome-900">年収900万円の手取りは月54.4万円</Link></li>
+        <li><Link href="/blog/takehome-900">年収900万円の手取りは月55.2万円</Link></li>
         <li><Link href="/blog/salary-takehome-table">手取り早見表2026年版（年収300〜1000万円一覧）</Link></li>
         <li><Link href="/blog/furusato-limit-by-income">年収別ふるさと納税の上限額早見表</Link></li>
         <li><Link href="/blog/nencho-guide">年末調整の書き方2026年完全ガイド</Link></li>

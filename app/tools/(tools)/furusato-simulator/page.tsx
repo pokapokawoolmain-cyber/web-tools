@@ -3,6 +3,7 @@ import { generateMeta } from "@/lib/seo";
 import { FurusatoSimulator } from "./FurusatoSimulator";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { calcFurusatoLimit } from "@/lib/furusato";
 
 export const metadata: Metadata = generateMeta({
   title: "ふるさと納税シミュレーター【2026年版】年収別・家族構成別の控除上限額を無料で即計算",
@@ -38,7 +39,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "年収500万円（独身）の場合、いくらまで寄附できますか？",
-      acceptedAnswer: { "@type": "Answer", text: "年収500万円・独身の場合、控除上限額の目安は約61,000円です。2,000円を超えた分（約59,000円）が所得税・住民税から控除されます。" },
+      acceptedAnswer: { "@type": "Answer", text: `年収500万円・独身の場合、控除上限額の目安は約${calcFurusatoLimit({ income: 5000000, hasSpouse: false, generalDependents: 0 }).limit.toLocaleString()}円です（2026年分の税制で計算）。2,000円を超えた分が所得税・住民税から控除されます。` },
     },
     {
       "@type": "Question",
@@ -53,26 +54,24 @@ const faqSchema = {
   ],
 };
 
-// 年収別・家族構成別 控除上限額の目安（総務省公表・独身/配偶者のみ/配偶者+子1人）
-const FURUSATO_TABLE = [
-  { income: "200万円", single: "約15,000円", married: "—",        withChild: "—" },
-  { income: "300万円", single: "約28,000円", married: "約19,000円", withChild: "—" },
-  { income: "400万円", single: "約42,000円", married: "約33,000円", withChild: "約29,000円" },
-  { income: "500万円", single: "約61,000円", married: "約49,000円", withChild: "約40,000円" },
-  { income: "600万円", single: "約77,000円", married: "約69,000円", withChild: "約60,000円" },
-  { income: "700万円", single: "約108,000円", married: "約86,000円", withChild: "約78,000円" },
-  { income: "800万円", single: "約129,000円", married: "約120,000円", withChild: "約111,000円" },
-  { income: "1,000万円", single: "約176,000円", married: "約166,000円", withChild: "約157,000円" },
-  { income: "1,200万円", single: "約247,000円", married: "約237,000円", withChild: "約229,000円" },
-  { income: "1,500万円", single: "約395,000円", married: "約395,000円", withChild: "約377,000円" },
-];
+// 年収別・家族構成別 控除上限額の目安。シミュレーターと同じ計算（lib/furusato.ts・令和8年分の税制）で生成する
+const yen = (v: number) => (v > 0 ? `約${v.toLocaleString()}円` : "—");
+const limitOf = (income: number, hasSpouse: boolean, generalDependents: number) =>
+  calcFurusatoLimit({ income: income * 10000, hasSpouse, generalDependents }).limit;
+const FURUSATO_TABLE = [200, 300, 400, 500, 600, 700, 800, 1000, 1200, 1500].map((man) => ({
+  income: `${man.toLocaleString()}万円`,
+  single: yen(limitOf(man, false, 0)),
+  married: yen(limitOf(man, true, 0)),
+  withChild: yen(limitOf(man, true, 1)),
+}));
+
 
 const seoContent = (
   <div className="space-y-8">
     <section>
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">ふるさと納税 年収別・家族構成別 控除上限額早見表（2026年版）</h2>
       <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-        下の早見表は独身・配偶者のみ（専業主婦）・配偶者＋子1人（高校生以下）の場合の目安です。社会保険料や各種控除の状況により実際の上限は異なるため、上のシミュレーターで個別に計算してください。
+        下の早見表は独身・配偶者のみ（専業主婦）・配偶者＋子1人（高校生）の場合の目安で、上のシミュレーターと同じ計算式で出しています。2026年分は所得税の基礎控除が引き上げられ、所得税率が下がる年収帯では総務省の目安表（旧税制ベース）より上限額がやや低くなります。中学生以下の子は扶養控除の対象外のため、上限額は子なしと同じです。社会保険料や各種控除の状況により実際の上限は異なるため、上のシミュレーターで個別に計算してください。
       </p>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-sm">
@@ -97,7 +96,7 @@ const seoContent = (
         </table>
       </div>
       <p className="text-[12px] text-slate-400 dark:text-zinc-500 mt-2">
-        ※ 給与所得者・社会保険料控除・基礎控除のみ適用の概算です。住宅ローン控除・医療費控除・iDeCoなどがある場合は上限額が変わります。
+        ※ 給与所得者・社会保険料控除・基礎控除・配偶者控除・扶養控除のみ適用の概算です（所得税は2026年分、住民税は同じ所得にかかる2027年度分）。住宅ローン控除・医療費控除・iDeCoなどがある場合は上限額が変わります。
       </p>
     </section>
 
@@ -110,7 +109,7 @@ const seoContent = (
         控除上限額 ＝ 住民税所得割額 × 20% ÷（1 − 0.1 − 所得税率 × 1.021）＋ 2,000円
       </div>
       <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-2">
-        <li><strong className="text-slate-700 dark:text-zinc-300">住民税所得割額</strong>：課税所得 × 10%。家族構成の違いで課税所得が変わるため、上限額も変わります。</li>
+        <li><strong className="text-slate-700 dark:text-zinc-300">住民税所得割額</strong>：住民税の課税所得 × 10% − 調整控除。住民税の課税所得は所得税と別に、住民税の基礎控除43万円などを引いて求めます。家族構成の違いで課税所得が変わるため、上限額も変わります。</li>
         <li><strong className="text-slate-700 dark:text-zinc-300">上限を超えた寄附</strong>：超過分は控除されず実質的な持ち出しになります。早見表を参考に上限の90〜95%を目安に寄附するのが安全です。</li>
       </ul>
     </section>
