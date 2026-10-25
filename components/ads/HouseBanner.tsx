@@ -6,15 +6,16 @@
 //  - 自社サービスなので「広告」ではなく「ToolBoxJPのアプリ」と明示する（Google 広告と誤認させない）
 //  - 広告ユニットとの間は十分に離す（誤タップ防止。AdSense の誤クリック誘発の禁止に配慮）
 //  - クリック元を計測できるよう UTM を付ける（utm_content = 表示したページのパス）
-//  - Mochico 自身のページには出さない
+//  - Mochico 自身のページと Mochico の紹介記事（記事の中に Mochico の案内がある）には出さない
 // ============================================================
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Mascot } from "@/components/mochico/Mascot";
+import { MOCHICO_ARTICLE_PATHS } from "@/lib/theme/forced-light-routes";
 
 export function HouseBanner({ className = "" }: { className?: string }) {
   const pathname = usePathname() ?? "/";
-  if (pathname.startsWith("/mochico")) return null;
+  if (pathname.startsWith("/mochico") || MOCHICO_ARTICLE_PATHS.includes(pathname)) return null;
   const href = `/mochico?utm_source=toolboxjp&utm_medium=house_banner&utm_campaign=mochico&utm_content=${encodeURIComponent(pathname)}`;
   return (
     <aside aria-label="ToolBoxJPのアプリ" className={`my-6 ${className}`} data-house-banner="mochico">
