@@ -6,12 +6,14 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { ColorCodes } from "./ColorCodes";
 
 export const metadata: Metadata = generateMeta({
-  title: "SNSカラーコード一覧｜TikTok・Twitter・Facebook色【無料】",
+  title: "SNSの色・カラーコード一覧｜Instagram・X・TikTok・LINE【コピー可】",
   description:
-    "TikTok・Twitter（X）・Facebook・Instagram・LINE・YouTube・PayPayなど主要SNS・サービスのブランドカラーと、Web制作の基本色・日本の伝統色のカラーコード（HEX・RGB）を一覧掲載。ワンタップでコピーでき、バナー・サムネイル・資料・Webデザインの配色にそのまま使えます。無料・登録不要。",
+    "Instagram（インスタ）・X（旧Twitter）・TikTok・LINE・YouTube・Facebook・PayPayなど主要SNS・サービスのブランドカラーと、Web制作の基本色・日本の伝統色のカラーコード（HEX・RGB）を一覧掲載。ワンタップでコピーでき、バナー・サムネイル・資料・Webデザインの配色にそのまま使えます。無料・登録不要。",
   path: "/tools/color-codes",
   keywords: [
     "カラーコード 一覧",
+    "sns 色",
+    "インスタ カラーコード",
     "tiktok カラーコード",
     "twitter カラーコード",
     "facebook カラーコード",
