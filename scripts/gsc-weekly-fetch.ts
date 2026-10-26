@@ -4,7 +4,8 @@
 //   実行: npm run gsc:fetch
 //
 // 認証: サービスアカウント（Search Console に「制限付き（閲覧のみ）」で追加したもの）
-//   GSC_SA_KEY_JSON  … サービスアカウントの鍵 JSON の中身（クラウド環境の秘密情報に登録）
+//   GSC_SA_KEY_B64   … 鍵 JSON を base64 にしたもの（クラウド環境の環境変数に登録。.env 形式でも崩れない）
+//   GSC_SA_KEY_JSON  … または鍵 JSON の中身そのもの
 //   GSC_SA_KEY_FILE  … または鍵ファイルのパス（ローカル実行用。リポジトリには置かない）
 //   GSC_SITE_URL     … プロパティ。既定は "https://www.toolboxjp.com/"（URL プレフィックス）
 //                      （ドメインプロパティなら "sc-domain:toolboxjp.com"）
@@ -21,8 +22,10 @@ import { join } from "node:path";
 type ServiceAccount = { client_email: string; private_key: string };
 
 function loadServiceAccount(): ServiceAccount {
-  const raw = process.env.GSC_SA_KEY_JSON ?? (process.env.GSC_SA_KEY_FILE ? readFileSync(process.env.GSC_SA_KEY_FILE, "utf8") : "");
-  if (!raw) throw new Error("GSC_SA_KEY_JSON または GSC_SA_KEY_FILE を設定してください");
+  const raw = process.env.GSC_SA_KEY_B64
+    ? Buffer.from(process.env.GSC_SA_KEY_B64, "base64").toString("utf8")
+    : process.env.GSC_SA_KEY_JSON ?? (process.env.GSC_SA_KEY_FILE ? readFileSync(process.env.GSC_SA_KEY_FILE, "utf8") : "");
+  if (!raw) throw new Error("GSC_SA_KEY_B64・GSC_SA_KEY_JSON・GSC_SA_KEY_FILE のいずれかを設定してください");
   const sa = JSON.parse(raw) as ServiceAccount;
   if (!sa.client_email || !sa.private_key) throw new Error("鍵 JSON に client_email / private_key がありません");
   return sa;
