@@ -37,7 +37,7 @@ const faqSchema = {
     {
       "@type": "Question",
       name: "年収別の手取りはいくらですか？",
-      acceptedAnswer: { "@type": "Answer", text: "社会保険料と税金を引いた手取りの目安は、年収400万円で約318万円（月約26.5万円）、年収500万円で約390万円、年収600万円で約460万円です。年収300〜1500万円の詳しい金額は当サイトの「手取り早見表（/blog/salary-takehome-table）」で確認でき、手取り計算ツールなら家族構成も反映した正確な金額を自動計算できます。" },
+      acceptedAnswer: { "@type": "Answer", text: "社会保険料と税金を引いた手取りの目安は、年収400万円で約318万円（月約26.5万円）、年収500万円で約394万円、年収600万円で約467万円です（2026年分の税制）。年収200万〜1500万円の詳しい金額は当サイトの「手取り早見表（/salary）」で確認でき、手取り計算ツールなら家族構成も反映した正確な金額を自動計算できます。" },
     },
     {
       "@type": "Question",
@@ -196,9 +196,9 @@ export default function Page() {
       <ul className="space-y-2">
         <li><Link href="/salary">年収別の手取り早見表（300〜1000万円・カテゴリ一覧）</Link></li>
         <li><Link href="/blog/jumin-zei-guide">住民税の計算方法【年収別早見表】</Link></li>
-        <li><Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link></li>
-        <li><Link href="/blog/takehome-500">年収500万円の手取り詳細</Link></li>
-        <li><Link href="/blog/takehome-400">年収400万円の手取り詳細</Link></li>
+        <li><Link href="/salary">手取り早見表【2026年版・年収200万〜1500万円】</Link></li>
+        <li><Link href="/salary#nenshu-500">年収500万円の手取りと税金の内訳（手取り早見表）</Link></li>
+        <li><Link href="/salary#nenshu-400">年収400万円の手取りと税金の内訳（手取り早見表）</Link></li>
         <li><Link href="/tools/net-income">手取り計算ツール（社会保険料込みで即計算）</Link></li>
       </ul>
 

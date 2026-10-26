@@ -31,7 +31,7 @@ export function RelatedPdfTools({ currentHref }: Props) {
         <h2 className="text-[13px] font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider">
           関連PDFツール
         </h2>
-        <Link href="/pdf-tools" className="text-[12px] text-blue-500 dark:text-blue-400 hover:underline">
+        <Link href="/pdf" className="text-[12px] text-blue-500 dark:text-blue-400 hover:underline">
           すべて見る →
         </Link>
       </div>

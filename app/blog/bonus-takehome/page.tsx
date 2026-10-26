@@ -85,9 +85,9 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>関連記事</h2>
       <ul className="space-y-2">
-        <li><Link href="/blog/takehome-500">年収500万円の手取り詳細（ボーナス込み）</Link></li>
-        <li><Link href="/blog/takehome-600">年収600万円の手取り詳細（ボーナス込み）</Link></li>
-        <li><Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link></li>
+        <li><Link href="/salary#nenshu-500">年収500万円の手取りと税金の内訳（手取り早見表）</Link></li>
+        <li><Link href="/salary#nenshu-600">年収600万円の手取りと税金の内訳（手取り早見表）</Link></li>
+        <li><Link href="/salary">手取り早見表【2026年版・年収200万〜1500万円】</Link></li>
       </ul>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">

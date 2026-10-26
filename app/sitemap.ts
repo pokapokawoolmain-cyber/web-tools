@@ -14,7 +14,6 @@ function blogDate(slug: string): Date {
 }
 
 const TOOL_LAUNCH = new Date("2026-05-10");
-const SITE_LAUNCH = new Date("2026-05-10");
 
 // 直近で新設・大幅更新したツール。lastmod を更新日にしてGoogleに変更を伝える
 // （全ツールを一律「最新」にするとlastmodの信頼性を損なうため、実際に更新したものだけ）
@@ -59,29 +58,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/pdf`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },
     { url: `${siteUrl}/image`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },
     { url: `${siteUrl}/money`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.92 },
-    { url: `${siteUrl}/pdf-tools`, lastModified: SITE_LAUNCH, changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
     { url: `${siteUrl}/blog/fire-how-much-needed`, lastModified: blogDate("fire-how-much-needed"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/nisa-monthly-simulation`, lastModified: blogDate("nisa-monthly-simulation"), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/salary-takehome-table`, lastModified: blogDate("salary-takehome-table"), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${siteUrl}/blog/furusato-nozei-guide`, lastModified: blogDate("furusato-nozei-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mercari-fees-guide`, lastModified: blogDate("mercari-fees-guide"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mortgage-simulation-guide`, lastModified: blogDate("mortgage-simulation-guide"), changeFrequency: "monthly", priority: 0.8 },
     // 手取りカテゴリ TOP
     { url: `${siteUrl}/salary`, lastModified: new Date("2026-05-17"), changeFrequency: "monthly", priority: 0.9 },
     // 手取り年収別（高ボリュームクエリ）
-    { url: `${siteUrl}/blog/takehome-300`, lastModified: blogDate("takehome-300"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-400`, lastModified: blogDate("takehome-400"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-500`, lastModified: blogDate("takehome-500"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-600`, lastModified: blogDate("takehome-600"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-700`, lastModified: blogDate("takehome-700"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-800`, lastModified: blogDate("takehome-800"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-900`, lastModified: blogDate("takehome-900"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/takehome-1000`, lastModified: blogDate("takehome-1000"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/nencho-guide`, lastModified: blogDate("nencho-guide"), changeFrequency: "yearly", priority: 0.88 },
-    { url: `${siteUrl}/blog/furusato-limit-by-income`, lastModified: blogDate("furusato-limit-by-income"), changeFrequency: "yearly", priority: 0.86 },
     // 手取り補完 3記事
-    { url: `${siteUrl}/blog/takehome-2026`, lastModified: blogDate("takehome-2026"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/takehome-20s`, lastModified: blogDate("takehome-20s"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/bonus-takehome`, lastModified: blogDate("bonus-takehome"), changeFrequency: "monthly", priority: 0.8 },
     // FIRE・資産形成 3記事
@@ -112,6 +98,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/x-post-format-guide`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.8 },
     // 冠婚葬祭・文書カテゴリ
     { url: `${siteUrl}/ceremony`, lastModified: new Date("2026-05-22"), changeFrequency: "weekly", priority: 0.92 },
+    { url: `${siteUrl}/business`, lastModified: new Date("2026-10-26"), changeFrequency: "weekly", priority: 0.9 },
     { url: `${siteUrl}/tools/noshi-maker`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/tools/koden-maker`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/tools/resignation-letter`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
@@ -178,14 +165,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 税金・社会保険 3記事
     { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/shakai-hoken-guide`, lastModified: blogDate("shakai-hoken-guide"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/blog/furusato-nozei-howto`, lastModified: blogDate("furusato-nozei-howto"), changeFrequency: "monthly", priority: 0.85 },
-    { url: `${siteUrl}/tools/finance`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/calculator`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/image`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/lifestyle`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/text`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/student`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
-    { url: `${siteUrl}/tools/work`, lastModified: TOOL_LAUNCH, changeFrequency: "monthly", priority: 0.75 },
     // 開発者ツール
     { url: `${siteUrl}/dev`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     // 計算・生活カテゴリ

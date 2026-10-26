@@ -94,7 +94,7 @@ export default function Page() {
         <li>最後に<Link href="/tools/pdf-compress">ファイルサイズを圧縮</Link>する</li>
       </ol>
       <p>
-        全種類のPDFツールは<Link href="/pdf-tools">PDFツール一覧</Link>から確認できます。
+        全種類のPDFツールは<Link href="/pdf">PDFツール一覧</Link>から確認できます。
       </p>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">

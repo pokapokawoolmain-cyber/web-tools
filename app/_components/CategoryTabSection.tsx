@@ -94,7 +94,7 @@ const TABS = [
       { name: "ガソリン代計算", href: "/tools/gas-calculator" },
       { name: "メルカリ利益計算", href: "/tools/mercari-profit" },
     ],
-    cta: { label: "生活ツールをすべて見る", href: "/tools/lifestyle" },
+    cta: { label: "生活ツールをすべて見る", href: "/life" },
   },
 ] as const;
 

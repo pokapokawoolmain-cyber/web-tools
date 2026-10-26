@@ -176,9 +176,9 @@ export default function Page() {
       <h2>関連記事</h2>
       <ul className="space-y-2">
         <li><Link href="/blog/shakai-hoken-guide">社会保険料の計算方法【年収別早見表】</Link></li>
-        <li><Link href="/blog/salary-takehome-table">手取り早見表【年収300〜1500万円】</Link></li>
-        <li><Link href="/blog/furusato-nozei-guide">ふるさと納税の控除上限額早見表</Link></li>
-        <li><Link href="/blog/takehome-400">年収400万円の手取り詳細</Link></li>
+        <li><Link href="/salary">手取り早見表【2026年版・年収200万〜1500万円】</Link></li>
+        <li><Link href="/tools/furusato-simulator">ふるさと納税シミュレーター（年収別・家族構成別の上限額早見表）</Link></li>
+        <li><Link href="/salary#nenshu-400">年収400万円の手取りと税金の内訳（手取り早見表）</Link></li>
       </ul>
 
       <div className="bg-slate-50 dark:bg-zinc-900 rounded-xl p-5 my-6 text-[13px] text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">

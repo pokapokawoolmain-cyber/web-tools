@@ -165,7 +165,6 @@ export const TOOL_ICONS: Record<string, ToolIconDef> = {
   "bonus-takehome": { icon: Coins, color: MONEY },
   "nenshu-kabe": { icon: Fence, color: MONEY },
   "furusato-simulator": { icon: Gift, color: MONEY },
-  "furusato": { icon: HandCoins, color: MONEY },
 
   // 計算ツール
   "mercari-profit": { icon: ShoppingBag, color: CALC },

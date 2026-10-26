@@ -234,9 +234,9 @@ export default function Page() {
       <h2>関連記事</h2>
       <ul className="space-y-2">
         <li><Link href="/blog/shakai-hoken-guide">社会保険料の計算方法【年収別早見表・2026年版】</Link></li>
-        <li><Link href="/blog/furusato-limit-by-income">年収別ふるさと納税の上限額早見表</Link></li>
-        <li><Link href="/blog/salary-takehome-table">手取り早見表2026年版（年収300〜1000万円一覧）</Link></li>
-        <li><Link href="/blog/takehome-1000">年収1000万円の手取りは月60.6万円</Link></li>
+        <li><Link href="/tools/furusato-simulator">ふるさと納税シミュレーター（年収別・家族構成別の上限額早見表）</Link></li>
+        <li><Link href="/salary">手取り早見表【2026年版・年収200万〜1500万円】</Link></li>
+        <li><Link href="/salary#nenshu-1000">年収1000万円の手取りと税金の内訳（手取り早見表）</Link></li>
       </ul>
 
     </BlogLayout>

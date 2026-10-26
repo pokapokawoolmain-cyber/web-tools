@@ -39,7 +39,6 @@ export const TOOLS: ToolItem[] = [
   { id: "resident-tax", title: "住民税の目安計算", seoTitle: "住民税の目安計算｜年収から住民税がいくらか自動計算【無料】", description: "年収と扶養人数から1年間の住民税の目安を計算。所得割・均等割の内訳、月あたり、年収別早見表、6月から引かれる理由も解説。", href: "/tools/resident-tax", emoji: "🧾", category: "お金・投資", isNew: true, updatedAt: "2026-10-26" },
   { id: "nenshu-kabe", title: "年収の壁シミュレーター", description: "パート・アルバイトの年収から超える壁・社会保険加入の要否を判定。106万円撤廃など2026年制度対応。", href: "/tools/nenshu-kabe", emoji: "🚧", category: "お金・投資", isNew: true },
   { id: "furusato-simulator", title: "ふるさと納税シミュレーター", description: "年収と家族構成を選ぶだけで控除上限額を即計算。2,000円負担で最大限活用。", href: "/tools/furusato-simulator", emoji: "🎁", category: "お金・投資", isPopular: true },
-  { id: "furusato", title: "ふるさと納税（詳細版）", description: "年収・扶養人数・配偶者の有無を入力して控除上限額を精密計算。推奨寄付額もわかる。", href: "/tools/furusato", emoji: "🎁", category: "お金・投資", isNew: true },
   // 計算ツール
   { id: "mercari-profit", title: "メルカリ利益計算", description: "販売価格・送料・手数料を入力。手取り利益と利益率を瞬時に計算します。", href: "/tools/mercari-profit", emoji: "🛍️", category: "計算ツール", isPopular: true },
   { id: "gas-calculator", title: "ガソリン代計算", description: "走行距離・燃費・ガソリン単価を入力。往復・月間のガソリン代をリアルタイム計算。", href: "/tools/gas-calculator", emoji: "⛽", category: "計算ツール" },

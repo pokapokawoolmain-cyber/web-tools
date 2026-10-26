@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     const toolIds = [
       "fire-simulator", "nisa-calculator", "mortgage-calculator", "net-income",
-      "furusato-simulator", "furusato", "mercari-profit", "gas-calculator",
+      "furusato-simulator", "mercari-profit", "gas-calculator",
       "shift-salary", "point-simulator", "heic-to-jpg", "image-compress",
       "video-compress", "image-resize", "id-photo", "side-job-profit",
       "youtube-tools", "sns-links", "word-counter", "markdown-editor",
@@ -43,6 +43,34 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
+    // 旧カテゴリ一覧（/tools/〇〇・/pdf-tools）を現行のカテゴリページへ統合（2026-10 インデックス整理）
+    const hubRedirects = [
+      ["/furusato", "/tools/furusato-simulator"],
+      ["/tools/furusato", "/tools/furusato-simulator"],
+      ["/tools/calculator", "/calc"],
+      ["/tools/finance", "/money"],
+      ["/tools/image", "/image"],
+      ["/tools/lifestyle", "/life"],
+      ["/tools/text", "/dev"],
+      ["/tools/student", "/calc"],
+      ["/tools/work", "/business"],
+      ["/tools/restaurant", "/industry/restaurant"],
+      ["/pdf-tools", "/pdf"],
+      // 年収別の手取り記事・早見表は /salary、ふるさと納税の記事はシミュレーターに統合
+      ["/blog/takehome-300", "/salary#nenshu-300"],
+      ["/blog/takehome-400", "/salary#nenshu-400"],
+      ["/blog/takehome-500", "/salary#nenshu-500"],
+      ["/blog/takehome-600", "/salary#nenshu-600"],
+      ["/blog/takehome-700", "/salary#nenshu-700"],
+      ["/blog/takehome-800", "/salary#nenshu-800"],
+      ["/blog/takehome-900", "/salary#nenshu-900"],
+      ["/blog/takehome-1000", "/salary#nenshu-1000"],
+      ["/blog/takehome-2026", "/salary"],
+      ["/blog/salary-takehome-table", "/salary"],
+      ["/blog/furusato-nozei-guide", "/tools/furusato-simulator"],
+      ["/blog/furusato-nozei-howto", "/tools/furusato-simulator"],
+      ["/blog/furusato-limit-by-income", "/tools/furusato-simulator"],
+    ].map(([source, destination]) => ({ source, destination, permanent: true }));
     // non-www → www への正規化（AdSense登録URLとの一致 / canonical統一）
     const wwwRedirects = [
       {
@@ -52,7 +80,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
-    return [...wwwRedirects, ...toolRedirects, ...blogRedirects];
+    return [...wwwRedirects, ...toolRedirects, ...blogRedirects, ...hubRedirects];
   },
 
   // ヘッダー設定（SEO・セキュリティ）
