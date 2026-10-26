@@ -32,7 +32,7 @@
 ### ③ 鍵をクラウド環境に登録
 claude.ai の Claude Code（クラウド）の「環境」設定で、環境変数（秘密情報）として登録します。
 - `GSC_SA_KEY_JSON` … ダウンロードした JSON ファイルの中身をそのまま貼り付け
-- `GSC_SITE_URL` … Search Console のプロパティがドメインなら `sc-domain:toolboxjp.com`、URL プレフィックスなら `https://www.toolboxjp.com/`
+- `GSC_SITE_URL` … `https://www.toolboxjp.com/`（URL プレフィックスのプロパティ。省略時も既定でこの値）
 
 > 鍵の値を Claude に送る必要はありません。登録後に「登録した」とだけ伝えてください。
 

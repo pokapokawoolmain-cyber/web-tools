@@ -6,8 +6,8 @@
 // 認証: サービスアカウント（Search Console に「制限付き（閲覧のみ）」で追加したもの）
 //   GSC_SA_KEY_JSON  … サービスアカウントの鍵 JSON の中身（クラウド環境の秘密情報に登録）
 //   GSC_SA_KEY_FILE  … または鍵ファイルのパス（ローカル実行用。リポジトリには置かない）
-//   GSC_SITE_URL     … プロパティ。既定は "sc-domain:toolboxjp.com"
-//                      （URL プレフィックスのプロパティなら "https://www.toolboxjp.com/"）
+//   GSC_SITE_URL     … プロパティ。既定は "https://www.toolboxjp.com/"（URL プレフィックス）
+//                      （ドメインプロパティなら "sc-domain:toolboxjp.com"）
 //
 // 出力: reports/gsc/<基準日>/*.json（直近7日・前の7日・直近28日・前の28日 × ページ/クエリ/デバイス/見え方）
 // 依存ゼロ: JWT 署名は node:crypto、API 呼び出しは fetch。
@@ -80,7 +80,7 @@ async function query(token: string, site: string, body: Record<string, unknown>)
 }
 
 async function main() {
-  const site = process.env.GSC_SITE_URL ?? "sc-domain:toolboxjp.com";
+  const site = process.env.GSC_SITE_URL ?? "https://www.toolboxjp.com/";
   const sa = loadServiceAccount();
   const token = await getAccessToken(sa);
 
