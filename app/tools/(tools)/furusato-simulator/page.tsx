@@ -64,6 +64,10 @@ const FURUSATO_TABLE = [200, 300, 400, 500, 600, 700, 800, 1000, 1200, 1500].map
   married: yen(limitOf(man, true, 0)),
   withChild: yen(limitOf(man, true, 1)),
 }));
+// 共働き夫婦（それぞれ会社員・扶養なし）の上限額
+const COUPLE_TABLE = [
+  [400, 300], [500, 300], [500, 500], [600, 400], [700, 500], [800, 600], [1000, 600],
+].map(([a, b]) => ({ a, b, la: limitOf(a, false, 0), lb: limitOf(b, false, 0) }));
 
 
 const seoContent = (
@@ -112,6 +116,58 @@ const seoContent = (
         <li><strong className="text-slate-700 dark:text-zinc-300">住民税所得割額</strong>：住民税の課税所得 × 10% − 調整控除。住民税の課税所得は所得税と別に、住民税の基礎控除43万円などを引いて求めます。家族構成の違いで課税所得が変わるため、上限額も変わります。</li>
         <li><strong className="text-slate-700 dark:text-zinc-300">上限を超えた寄附</strong>：超過分は控除されず実質的な持ち出しになります。早見表を参考に上限の90〜95%を目安に寄附するのが安全です。</li>
       </ul>
+    </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">ふるさと納税の手順（5ステップ）</h2>
+      <ol className="text-sm text-slate-600 dark:text-slate-400 space-y-3 list-decimal list-inside">
+        <li><strong className="text-slate-700 dark:text-zinc-300">控除上限額を確認する</strong>：上のシミュレーターで年収・家族構成から目安を出します。上限を超えた分は自己負担になります。</li>
+        <li><strong className="text-slate-700 dark:text-zinc-300">寄附先と返礼品を選ぶ</strong>：ふるさと納税のポータルサイトや自治体のサイトから選びます。複数の自治体に分けて寄附できます（ワンストップ特例は5自治体まで）。</li>
+        <li><strong className="text-slate-700 dark:text-zinc-300">12月31日までに寄附を完了する</strong>：その年の控除にするには、年内に決済まで終える必要があります。年末は混み合うため余裕をもって手続きします。</li>
+        <li><strong className="text-slate-700 dark:text-zinc-300">ワンストップ特例の申請（会社員など・確定申告をしない人）</strong>：寄附した自治体ごとに申請書とマイナンバー確認書類を<strong className="text-slate-700 dark:text-zinc-300">翌年1月10日（必着）</strong>までに提出します。間に合わなかった場合や6自治体以上に寄附した場合は確定申告をします。</li>
+        <li><strong className="text-slate-700 dark:text-zinc-300">翌年6月以降に住民税が安くなる</strong>：ワンストップ特例なら翌年6月から翌々年5月の住民税が減ります。住民税決定通知書で控除額を確認できます。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">共働き夫婦の上限額（年収別）</h2>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">共働きの場合は、夫婦それぞれが自分の年収で上限額を計算し、それぞれの名義で寄附します。2人分を合算した金額を1人の名義で寄附しても、控除は寄附した人の上限までです。</p>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">夫の年収</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">妻の年収</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">夫の上限</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">妻の上限</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-left">世帯の合計</th>
+            </tr>
+          </thead>
+          <tbody>
+            {COUPLE_TABLE.map((r, i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2">{r.a}万円</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2">{r.b}万円</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2">{yen(r.la)}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2">{yen(r.lb)}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-3 py-2 text-blue-600 dark:text-blue-400 font-medium">{yen(r.la + r.lb)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[12px] text-slate-400 dark:text-zinc-500 mt-2">※ 夫婦ともに会社員・扶養なしとして計算した目安です。子どもを扶養に入れている側は上限が下がります。</p>
+    </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">上限額が下がるケースと、上限を超えたとき</h2>
+      <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-2 mb-4">
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">iDeCo に加入している</strong>：掛金が所得控除になり課税所得が下がるため、上限も下がります。</li>
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">住宅ローン控除を受けている</strong>：住民税から引ききれない分があると、ふるさと納税で控除できる住民税が減ります。</li>
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">医療費控除などを確定申告する</strong>：所得が下がる分、上限も下がります。</li>
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">副業・不動産などの所得がある</strong>：所得が増える分、上限は上がります。給与だけの前提のこの計算より高くなるため、確定申告の数字で確認してください。</li>
+      </ul>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">上限を超えた分は控除されず、そのまま自己負担になります。例えば上限10万円の人が15万円を寄附すると、自己負担は2,000円ではなく約5万2,000円です。迷ったら上限の8〜9割にとどめるのが安全です。</p>
     </section>
 
     <section>

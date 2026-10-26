@@ -9,6 +9,8 @@
     "lint": "next lint",
     "test:subsidy": "tsx scripts/test-subsidy-status.ts",
     "test:tax": "tsx scripts/test-tax-2026.ts",
+    "gsc:fetch": "tsx scripts/gsc-weekly-fetch.ts",
+    "gsc:inspect": "tsx scripts/gsc-index-inspect.ts",
     "validate:subsidies": "tsx scripts/validate-subsidies.ts",
     "check:subsidy-links": "tsx scripts/check-subsidy-links.ts",
     "goods:rls-test": "tsx scripts/goods-rls-test.mts",

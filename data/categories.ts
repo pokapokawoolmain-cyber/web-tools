@@ -138,12 +138,12 @@ const MONEY_CATEGORY: CategoryConfig = {
   allToolIds: [
     "fire-simulator", "nisa-calculator", "net-income", "takehome-reverse", "bonus-takehome",
     "resident-tax", "nenshu-kabe", "mortgage-calculator",
-    "furusato-simulator", "furusato",
+    "furusato-simulator",
     "mercari-profit", "gas-calculator", "shift-salary", "point-simulator", "side-job-profit",
     "tax-calculator",
   ],
   stats: [
-    { label: "計算ツール数", value: "11種類" },
+    { label: "計算ツール数", value: "15種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・ログイン", value: "不要" },
     { label: "計算速度", value: "リアルタイム" },
@@ -213,9 +213,9 @@ const AI_CATEGORY: CategoryConfig = {
   title: "無料AI文章ツール集｜整形・自然化・X投稿・note最適化【登録不要】",
   keywords: ["ChatGPT 改行 整形", "AI文章 自然化", "AIっぽい 文章 修正", "X 改行 シミュレーター", "note 整形 AI"],
   popularToolIds: ["ai-email", "ai-keigo", "prompt-builder", "chatgpt-format", "ai-humanize"],
-  allToolIds: ["ai-email", "ai-keigo", "ai-apology", "ai-decline", "ai-inquiry", "prompt-builder", "chatgpt-format", "ai-humanize", "x-post-preview", "note-format"],
+  allToolIds: ["ai-email", "ai-keigo", "ai-apology", "ai-decline", "ai-inquiry", "prompt-builder", "chatgpt-format", "ai-humanize", "x-post-preview", "note-format", "word-counter"],
   stats: [
-    { label: "AIツール数", value: "10種類" },
+    { label: "AIツール数", value: "11種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・インストール", value: "不要" },
     { label: "処理場所", value: "ブラウザ完結" },
@@ -415,7 +415,7 @@ const DEV_CATEGORY: CategoryConfig = {
   slug: "dev",
   name: "開発者ツール",
   nameEn: "Developer Tools",
-  tagline: "開発者向けツール集｜JSON整形・Base64・UUID・ハッシュ・Unix時刻",
+  tagline: "開発者向けツール集｜JSON整形・Base64・UUID・パスワード・QRコード",
   description:
     "JSON整形／圧縮・Base64エンコード・URLエンコード・UUID生成・SHAハッシュ生成・Unixタイムスタンプ変換など、開発でよく使うツールを無料で。すべてブラウザ内で処理され、データは外部に送信されません。登録不要。",
   longDescription:
@@ -426,12 +426,12 @@ const DEV_CATEGORY: CategoryConfig = {
   gradientLight: "from-sky-50 to-indigo-50 dark:from-sky-950/30 dark:to-indigo-950/20",
   accentColor: "text-sky-600 dark:text-sky-400",
   accentBg: "bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300",
-  title: "無料の開発者ツール集｜JSON整形・Base64・UUID・ハッシュ【登録不要】",
+  title: "無料の開発者・Webツール集｜JSON整形・Base64・パスワード生成・QRコード【登録不要】",
   keywords: ["json 整形 ツール", "base64 エンコード デコード", "url エンコード", "uuid 生成", "sha256 ハッシュ 生成", "unixタイム 変換"],
   popularToolIds: ["json-formatter", "base64", "unix-time", "hash"],
-  allToolIds: ["json-formatter", "base64", "url-encode", "uuid", "unix-time", "hash"],
+  allToolIds: ["json-formatter", "base64", "url-encode", "uuid", "unix-time", "hash", "password-generator", "qr-generator", "short-link", "markdown-editor"],
   stats: [
-    { label: "開発者ツール数", value: "6種類" },
+    { label: "開発者ツール数", value: "10種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・インストール", value: "不要" },
     { label: "処理場所", value: "ブラウザ完結" },
@@ -468,7 +468,7 @@ const CALC_CATEGORY: CategoryConfig = {
   allToolIds: [
     "warikan-calculator", "percentage-calculator", "bmi-calculator", "age-calculator",
     "date-calculator", "tax-calculator", "wareki-converter", "gas-calculator",
-    "mercari-profit", "shift-salary", "point-simulator",
+    "mercari-profit", "shift-salary", "point-simulator", "gpa",
   ],
   stats: [
     { label: "計算ツール数", value: "11種類" },
@@ -509,10 +509,10 @@ const LIFE_CATEGORY: CategoryConfig = {
   allToolIds: [
     "speed-test", "keyboard-test", "mouse-test", "mic-test", "webcam-test",
     "speaker-test", "dead-pixel-test", "screen-resolution", "refresh-rate",
-    "side-job-profit", "youtube-tools", "sns-links",
+    "side-job-profit", "youtube-tools", "sns-links", "wifi-qr",
   ],
   stats: [
-    { label: "診断・便利ツール数", value: "12種類" },
+    { label: "診断・便利ツール数", value: "13種類" },
     { label: "利用料金", value: "完全無料" },
     { label: "登録・インストール", value: "不要" },
     { label: "カメラ・音声", value: "録画/送信なし" },

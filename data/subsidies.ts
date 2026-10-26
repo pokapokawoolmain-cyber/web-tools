@@ -1437,7 +1437,7 @@ export const PREFECTURES = [
 ];
 
 export const RELATED_TOOLS = [
-  { id: "finance", title: "事業計画の数値計算", href: "/tools/finance", emoji: "📊", desc: "売上・利益計画の試算に" },
+  { id: "finance", title: "事業計画の数値計算", href: "/money", emoji: "📊", desc: "売上・利益計画の試算に" },
   { id: "net-income", title: "手取り計算", href: "/tools/net-income", emoji: "💴", desc: "採用時の給与設計に" },
   { id: "chatgpt-format", title: "AI文章フォーマッター", href: "/tools/chatgpt-format", emoji: "✍️", desc: "申請書の文章整理に" },
   { id: "pdf-merge", title: "PDF結合", href: "/tools/pdf-merge", emoji: "📄", desc: "添付書類のまとめに" },

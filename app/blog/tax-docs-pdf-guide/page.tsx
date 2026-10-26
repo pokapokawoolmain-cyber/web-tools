@@ -189,7 +189,7 @@ export default function Page() {
         <li><Link href="/blog/android-pdf-guide">Androidスマホで写真・書類を複数まとめてPDFにする方法</Link></li>
         <li><Link href="/blog/iphone-pdf-guide">iPhoneでPDFを編集・加工する方法まとめ【アプリ不要】</Link></li>
         <li><Link href="/blog/pdf-merge-guide">PDFをスマホで結合・まとめる方法</Link></li>
-        <li><Link href="/blog/furusato-limit-by-income">年収別ふるさと納税の上限額早見表</Link></li>
+        <li><Link href="/tools/furusato-simulator">ふるさと納税シミュレーター（年収別・家族構成別の上限額早見表）</Link></li>
         <li><Link href="/blog/nencho-guide">年末調整のやり方と必要書類まとめ</Link></li>
       </ul>
 

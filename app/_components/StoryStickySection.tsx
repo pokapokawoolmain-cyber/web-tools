@@ -82,7 +82,7 @@ const STORIES = [
     heading: "Wi-FiのQRコードを\n1秒で作る。",
     desc: "来客用Wi-FiのQRコード生成。シフト給与計算。ガソリン代計算。日常の小さな作業をさっと片付ける。",
     img: "/previews/home/wifi-qr.jpg",
-    href: "/tools/lifestyle",
+    href: "/life",
     ctaLabel: "生活ツールを見る",
     tools: [
       { name: "Wi-Fi QRコード生成", href: "/tools/wifi-qr" },

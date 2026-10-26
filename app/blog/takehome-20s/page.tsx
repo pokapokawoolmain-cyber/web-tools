@@ -121,8 +121,8 @@ export default function Page() {
       <hr className="border-slate-100 dark:border-zinc-800 my-2" />
       <h2>関連記事</h2>
       <ul className="space-y-2">
-        <li><Link href="/blog/takehome-400">年収400万円の手取り詳細</Link></li>
-        <li><Link href="/blog/takehome-2026">手取り早見表2026年版（年収200〜1000万円）</Link></li>
+        <li><Link href="/salary#nenshu-400">年収400万円の手取りと税金の内訳（手取り早見表）</Link></li>
+        <li><Link href="/salary#nenshu-2026">年収2026万円の手取りと税金の内訳（手取り早見表）</Link></li>
         <li><Link href="/blog/nisa-monthly-simulation">新NISAの積立シミュレーション</Link></li>
       </ul>
 

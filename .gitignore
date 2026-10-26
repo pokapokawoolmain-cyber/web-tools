@@ -42,3 +42,6 @@ next-env.d.ts
 # Playwright
 /test-results/
 /playwright-report/
+
+# Search Console の週次データ（公開リポジトリには入れない）
+/reports/
