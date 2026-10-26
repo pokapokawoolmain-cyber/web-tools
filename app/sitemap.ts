@@ -225,5 +225,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...toolRoutes];
+  // 同じ URL が静的リストとツール一覧の両方に載ると、サイトマップに重複して出てしまう。
+  // ツール一覧側（更新日を反映している）を優先して1件にまとめる。
+  const byUrl = new Map<string, MetadataRoute.Sitemap[number]>();
+  for (const route of [...staticRoutes, ...toolRoutes]) byUrl.set(route.url, route);
+  return [...byUrl.values()];
 }
