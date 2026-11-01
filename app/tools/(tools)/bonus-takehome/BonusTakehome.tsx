@@ -80,12 +80,12 @@ export function BonusTakehome() {
         <section>
           <p className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider px-1 mb-2">年齢（介護保険）</p>
           <div className="bg-slate-100 dark:bg-zinc-800 rounded-xl p-1 flex">
-            {(["40歳未満", "40歳以上"] as const).map(o => (
+            {(["40歳未満・65歳以上", "40〜64歳"] as const).map(o => (
               <button
                 key={o}
-                onClick={() => setIsOver40(o === "40歳以上")}
+                onClick={() => setIsOver40(o === "40〜64歳")}
                 className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${
-                  (o === "40歳以上") === isOver40
+                  (o === "40〜64歳") === isOver40
                     ? "bg-white dark:bg-zinc-700 text-slate-900 dark:text-white shadow-sm"
                     : "text-slate-500"
                 }`}
@@ -106,7 +106,7 @@ export function BonusTakehome() {
             額面に対する手取り率 <span className="font-semibold text-blue-500">{result.netRate}%</span>
           </p>
           <div className="mt-4">
-            <CopyResultButton text={`賞与${(bonus / 10000).toLocaleString()}万円の手取り: ${fmt(result.net)}（手取り率${result.netRate}%）｜健康保険${fmt(result.healthInsurance)}・厚生年金${fmt(result.pension)}・雇用保険${fmt(result.employmentInsurance)}・所得税${fmt(result.incomeTax)}（税率${result.taxRate}%）｜https://www.toolboxjp.com/tools/bonus-takehome`} />
+            <CopyResultButton text={`賞与${(bonus / 10000).toLocaleString()}万円の手取り: ${fmt(result.net)}（手取り率${result.netRate}%）｜健康保険${fmt(result.healthInsurance)}・子ども・子育て支援金${fmt(result.childSupport)}・厚生年金${fmt(result.pension)}・雇用保険${fmt(result.employmentInsurance)}・所得税${fmt(result.incomeTax)}（税率${result.taxRate}%）｜https://www.toolboxjp.com/tools/bonus-takehome`} />
           </div>
         </div>
 
@@ -123,6 +123,10 @@ export function BonusTakehome() {
                 健康保険料{isOver40 ? "（介護保険込）" : ""}
               </span>
               <span className="text-[15px] font-medium text-red-500">－{fmt(result.healthInsurance)}</span>
+            </div>
+            <div className="flex items-center px-5 py-[14px]">
+              <span className="text-[15px] text-slate-600 dark:text-slate-400 flex-1">子ども・子育て支援金</span>
+              <span className="text-[15px] font-medium text-red-500">－{fmt(result.childSupport)}</span>
             </div>
             <div className="flex items-center px-5 py-[14px]">
               <span className="text-[15px] text-slate-600 dark:text-slate-400 flex-1">厚生年金保険料</span>
@@ -147,7 +151,7 @@ export function BonusTakehome() {
 
         {/* Note */}
         <p className="text-[13px] text-slate-400 dark:text-zinc-500 px-1">
-          ※ 協会けんぽ・本人負担・扶養控除等申告書提出済み（甲欄）を前提とした概算です。健康保険組合や都道府県により料率は異なります。住民税はボーナスからは天引きされません。
+          ※ 協会けんぽ（東京支部・令和8年度の料率）・本人負担・扶養控除等申告書提出済み（甲欄）を前提とした概算です。子ども・子育て支援金は2026年4月分から徴収されています。健康保険組合や都道府県により料率は異なります。住民税はボーナスからは天引きされません。
         </p>
       </div>
     </div>

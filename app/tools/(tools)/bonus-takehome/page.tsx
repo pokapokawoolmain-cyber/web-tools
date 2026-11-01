@@ -111,7 +111,7 @@ export default function Page() {
             </div>
             <ul className="space-y-2.5">
               <li>
-                <span className="font-semibold text-slate-700 dark:text-zinc-300">社会保険料</span>：標準賞与額（賞与額の1,000円未満切捨て）に、健康保険 4.955%・厚生年金 9.15%・雇用保険 0.55%（協会けんぽ・本人負担の目安）を掛けた合計。40歳以上は介護保険 0.795%が加わります。
+                <span className="font-semibold text-slate-700 dark:text-zinc-300">社会保険料</span>：標準賞与額（賞与額の1,000円未満切捨て）に、健康保険 4.925%・子ども・子育て支援金 0.115%・厚生年金 9.15%・雇用保険 0.5%（協会けんぽ東京支部・令和8年度・本人負担の目安）を掛けた合計。40〜64歳は介護保険 0.81%が加わります。子ども・子育て支援金は2026年4月分から始まった新しい負担で、賞与にもかかります。
               </li>
               <li>
                 <span className="font-semibold text-slate-700 dark:text-zinc-300">源泉所得税</span>：社会保険料を引いた後の賞与額に、<strong className="text-slate-800 dark:text-zinc-200">前月の給与額（社会保険料控除後）と扶養親族の数</strong>で決まる税率（0〜45.945%）を掛けて計算します。国税庁「賞与に対する源泉徴収税額の算出率の表」に基づく仕組みで、月給が高い人ほど賞与の税率も高くなります。
