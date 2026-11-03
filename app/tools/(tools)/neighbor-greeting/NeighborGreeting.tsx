@@ -10,7 +10,21 @@ type WorkType =
   | "マンション大規模修繕"
   | "外構・舗装工事"
   | "設備・配管工事"
-  | "増築工事";
+  | "増築工事"
+  | "防水工事"
+  | "内装工事（店舗・テナント）";
+
+/** 作る文書の種類 */
+type DocKind = "neighbor" | "posting" | "owner";
+
+type Holiday = "日曜・祝日" | "土曜・日曜・祝日" | "なし（毎日作業）";
+const HOLIDAYS: Holiday[] = ["日曜・祝日", "土曜・日曜・祝日", "なし（毎日作業）"];
+
+const DOC_KINDS: { key: DocKind; label: string; hint: string }[] = [
+  { key: "neighbor", label: "近隣挨拶状", hint: "ポスト投函・手渡し用" },
+  { key: "posting", label: "掲示用お知らせ", hint: "現場・掲示板に貼る" },
+  { key: "owner", label: "施主様への着工案内", hint: "お客様に渡す文面" },
+];
 
 type NoiseLevel = "高い（解体・基礎・鉄骨等）" | "中程度（一般的な工事）" | "低め（内装・設備等）";
 
@@ -41,11 +55,32 @@ const WORK_TYPE_PRESETS: Record<WorkType, { concern: string; isPosting?: boolean
   "増築工事": {
     concern: "基礎・躯体工事の工程では騒音・振動が発生する場合がございます。工事車両の出入りにも十分注意して作業いたします。",
   },
+  "防水工事": {
+    concern: "屋上・バルコニーの防水材の施工に伴い、材料の臭いが生じる場合がございます。換気や作業時間に配慮し、臭いの強い工程は事前にお知らせするよう努めます。",
+  },
+  "内装工事（店舗・テナント）": {
+    concern: "店舗内部の解体・造作に伴い、作業音や資材の搬入・搬出が発生いたします。営業時間外の作業や共用部の使用については、管理会社の規則に従って行います。",
+  },
+};
+
+/** 施主様への着工案内で、工事の種類ごとにお願いしたいこと */
+const OWNER_REQUESTS: Record<WorkType, string[]> = {
+  "解体工事": ["建物内に残っている家具・家電などの残置物がないかご確認ください（残置物の処分は別途ご相談となる場合がございます）。", "電気・ガス・電話・インターネットなどの停止や撤去のお手続きを、着工前にお願いいたします（水道は散水に使用するため、停止時期はご相談ください）。"],
+  "新築工事": ["工事中に電気・水道をお借りする場合がございます。仮設の電気・水道の手配について担当よりご相談いたします。", "地鎮祭・上棟などの行事を予定されている場合は、日程を担当までお知らせください。"],
+  "リフォーム・改修工事": ["工事箇所の周辺にある家具・貴重品・壊れやすい物の移動をお願いいたします。移動が難しい物は担当までご相談ください。", "工事中に電気・水道をお借りする場合がございます。"],
+  "外壁・屋根塗装工事": ["足場の設置中・塗装期間中は、窓の開閉や洗濯物の外干しを控えていただく日がございます。日程は事前にお知らせいたします。", "建物周りの植木鉢・自転車などの移動にご協力をお願いいたします。"],
+  "マンション大規模修繕": ["管理組合・管理会社と工程を調整のうえ、ご入居者様への掲示・配布物でご案内いたします。", "バルコニーの私物の移動など、ご協力をお願いする日程は別途お知らせいたします。"],
+  "外構・舗装工事": ["工事中は駐車場・出入口が一時的に使えない日がございます。お車の移動が必要な日は事前にお知らせいたします。"],
+  "設備・配管工事": ["断水・停電を伴う作業の日時は事前にお知らせいたします。", "作業箇所の周辺の片付けにご協力をお願いいたします。"],
+  "増築工事": ["既存部分との接続工事の際に、一部のお部屋が使えない日がございます。日程は事前にご相談いたします。", "工事中に電気・水道をお借りする場合がございます。"],
+  "防水工事": ["施工中・乾燥中は屋上・バルコニーへの立ち入りを控えていただく期間がございます。", "材料の臭いが気になる場合は、換気のタイミングなどを担当までご相談ください。"],
+  "内装工事（店舗・テナント）": ["工事の届出・作業時間について、ビルの管理会社との調整を弊社で行います。必要な書類がございましたらご協力をお願いいたします。"],
 };
 
 const WORK_TYPES: WorkType[] = [
   "解体工事", "新築工事", "リフォーム・改修工事", "外壁・屋根塗装工事",
   "マンション大規模修繕", "外構・舗装工事", "設備・配管工事", "増築工事",
+  "防水工事", "内装工事（店舗・テナント）",
 ];
 
 const NOISE_DESCS: Record<NoiseLevel, string> = {
@@ -70,11 +105,13 @@ function buildGreeting(params: {
   hasDust: boolean;
   customNote: string;
   ownerName: string;
+  holiday: Holiday;
+  kind: DocKind;
 }): string {
   const {
     companyName, contactName, contactPhone, workType,
     address, startDate, endDate, workHoursStart, workHoursEnd,
-    noiseLevel, hasCrane, hasParking, hasDust, customNote, ownerName,
+    noiseLevel, hasCrane, hasParking, hasDust, customNote, ownerName, holiday, kind,
   } = params;
 
   const noiseDesc = NOISE_DESCS[noiseLevel];
@@ -100,6 +137,78 @@ function buildGreeting(params: {
     : "8:00〜18:00（予定）";
 
   const preset = WORK_TYPE_PRESETS[workType];
+  const holidayText = holiday === "なし（毎日作業）" ? "なし（工程により作業しない日があります）" : `${holiday}（工程により作業する場合は事前にお知らせします）`;
+  const company = companyName || "○○建設株式会社";
+  const contact = contactName || "担当　○○";
+  const phone = contactPhone || "000-0000-0000";
+
+  if (kind === "posting") {
+    const requests = [
+      preset.concern,
+      hasParking ? "工事車両の出入りの際は、通行の妨げにならないよう誘導いたします。" : "",
+      hasCrane ? "クレーン・重機の作業中は、付近の通行にご注意ください。" : "",
+      hasDust ? "粉じんの飛散防止のため、養生・散水を行います。" : "",
+    ].filter(Boolean);
+    return `工事のお知らせ
+
+近隣の皆様には、工事期間中ご迷惑をおかけいたしますが、
+ご理解とご協力をお願い申し上げます。
+
+工事名称　：${workType}
+工事場所　：${address || "○○市○○町○丁目○番地"}
+工事期間　：${dateText}
+作業時間　：${hoursText}
+休 工 日　：${holidayText}
+
+【お願い】
+${requests.map((r) => `・${r}`).join("\n")}${customNote ? "\n・" + customNote : ""}
+
+お気づきの点がございましたら、下記までご連絡ください。
+
+施工会社：${company}
+担 当 者：${contact}
+電　　話：${phone}（受付時間：平日 8:00〜18:00）`;
+  }
+
+  if (kind === "owner") {
+    const ownerRequests = [
+      ...OWNER_REQUESTS[workType],
+      hasParking ? "工事車両の駐車スペースについてご相談させてください。敷地内に駐車できない場合は、近隣の駐車場を利用いたします。" : "",
+    ].filter(Boolean);
+    return `${ownerName || "○○　様"}
+
+工事着工のご案内
+
+拝啓
+
+　平素は格別のお引き立てを賜り、厚く御礼申し上げます。
+　このたびは${workType}をご用命いただき、誠にありがとうございます。下記のとおり着工させていただきますので、ご案内申し上げます。
+
+敬具
+
+記
+
+【工 事 名】　${workType}
+【工事場所】　${address || "○○市○○町○丁目○番地"}
+【工事期間】　${dateText}
+【作業時間】　${hoursText}
+【休 工 日】　${holidayText}
+
+【ご近隣へのご挨拶】
+　着工前に、弊社にて工事場所の周辺のご近隣へご挨拶にうかがいます。ご同行をご希望の場合や、特にご挨拶が必要なお宅がございましたら、担当までお知らせください。
+
+【施主様へのお願い】
+${ownerRequests.map((r) => `・${r}`).join("\n")}${customNote ? "\n・" + customNote : ""}
+
+【工事中のご連絡】
+　工程の変更やお気づきの点がございましたら、いつでも担当までご連絡ください。
+
+以上
+
+${company}
+担当：${contact}
+電話：${phone}`;
+  }
 
   // マンション大規模修繕は掲示板への掲示を想定した形式
   const header = preset.isPosting
@@ -126,7 +235,8 @@ function buildGreeting(params: {
 【工事場所】　${address || "○○市○○町○丁目○番地"}
 【施 主 名】　${ownerName || "○○　様"}
 【工事期間】　${dateText}
-【作業時間】　${hoursText}（土日祝は作業を行わない場合があります）
+【作業時間】　${hoursText}
+【休 工 日】　${holidayText}
 
 ━━━━━━━━━━━━━━━━━━━━━━
 ご案内・お願い
@@ -168,15 +278,19 @@ export function NeighborGreeting() {
   const [hasParking, setHasParking] = useState(true);
   const [hasDust, setHasDust] = useState(false);
   const [customNote, setCustomNote] = useState("");
+  const [holiday, setHoliday] = useState<Holiday>("日曜・祝日");
+  const [kind, setKind] = useState<DocKind>("neighbor");
   const [copied, setCopied] = useState(false);
 
   const greeting = useMemo(() => buildGreeting({
     companyName, contactName, contactPhone, workType,
     address, startDate, endDate, workHoursStart, workHoursEnd,
-    noiseLevel, hasCrane, hasParking, hasDust, customNote, ownerName,
+    noiseLevel, hasCrane, hasParking, hasDust, customNote, ownerName, holiday, kind,
   }), [companyName, contactName, contactPhone, workType, address, startDate,
        endDate, workHoursStart, workHoursEnd, noiseLevel, hasCrane, hasParking,
-       hasDust, customNote, ownerName]);
+       hasDust, customNote, ownerName, holiday, kind]);
+
+  const docTitle = kind === "owner" ? "工事着工のご案内" : kind === "posting" ? "工事のお知らせ（掲示用）" : "工事のお知らせ";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(greeting).then(() => {
@@ -198,12 +312,12 @@ export function NeighborGreeting() {
       .split("\n")
       .map((line) => `<p style="margin:0">${line ? escapeHtml(line) : "&nbsp;"}</p>`)
       .join("");
-    const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>工事のお知らせ</title></head><body style="font-family:'MS Mincho',serif;font-size:12pt;line-height:1.8">${bodyHtml}</body></html>`;
+    const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>${docTitle}</title></head><body style="font-family:'MS Mincho',serif;font-size:12pt;line-height:1.8">${bodyHtml}</body></html>`;
     const blob = new Blob(["﻿", html], { type: "application/msword" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `工事のお知らせ_${workType}.doc`;
+    a.download = `${docTitle}_${workType}.doc`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -214,6 +328,24 @@ export function NeighborGreeting() {
 
   return (
     <div className="space-y-6">
+      {/* 作る文書の種類 */}
+      <div className="grid grid-cols-3 gap-2 bg-slate-100 dark:bg-zinc-800 rounded-2xl p-1.5">
+        {DOC_KINDS.map(({ key, label, hint }) => (
+          <button
+            key={key}
+            onClick={() => setKind(key)}
+            className={`py-2.5 px-2 rounded-xl text-[13px] font-semibold transition-all ${
+              kind === key
+                ? "bg-slate-800 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-lg"
+                : "bg-transparent text-slate-500 dark:text-zinc-400"
+            }`}
+          >
+            <span className="block">{label}</span>
+            <span className={`block text-[11px] font-normal mt-0.5 ${kind === key ? "opacity-80" : "opacity-70"}`}>{hint}</span>
+          </button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 入力フォーム */}
         <div className="space-y-4">
@@ -264,6 +396,24 @@ export function NeighborGreeting() {
               <div>
                 <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">作業終了時刻</label>
                 <input type="time" value={workHoursEnd} onChange={(e) => setWorkHoursEnd(e.target.value)} className={inputClass} />
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 mb-1.5">休工日</label>
+              <div className="grid grid-cols-3 gap-2">
+                {HOLIDAYS.map((h) => (
+                  <button
+                    key={h}
+                    onClick={() => setHoliday(h)}
+                    className={`py-2 px-2 rounded-xl text-[12px] font-medium border transition-all ${
+                      holiday === h
+                        ? "bg-blue-50 dark:bg-blue-950/30 border-blue-400 text-blue-700 dark:text-blue-400"
+                        : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 hover:border-slate-300"
+                    }`}
+                  >
+                    {h}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -341,7 +491,7 @@ export function NeighborGreeting() {
         {/* プレビュー */}
         <div className="space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h3 className="text-[14px] font-bold text-slate-800 dark:text-zinc-200">生成された挨拶文</h3>
+            <h3 className="text-[14px] font-bold text-slate-800 dark:text-zinc-200">生成された文面（{docTitle}）</h3>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={handleCopy}
@@ -370,7 +520,11 @@ export function NeighborGreeting() {
             {greeting}
           </div>
           <p className="text-[12px] text-slate-400 dark:text-zinc-600">
-            ※挨拶文は工事前日までに、対象範囲（通常は工事現場から半径50m〜100m）の近隣へお届けください。
+            {kind === "posting"
+              ? "※掲示用のお知らせは、工事現場の仮囲いや出入口、マンションの掲示板など、通りがかる方の目に入る場所に着工前から掲示してください。"
+              : kind === "owner"
+                ? "※施主様への着工案内は、近隣挨拶の前にお渡しし、ご近隣への挨拶の範囲や同行の有無を確認しておくとスムーズです。"
+                : "※挨拶文は工事前日までに、対象範囲（通常は工事現場から半径50m〜100m）の近隣へお届けください。"}
           </p>
         </div>
       </div>

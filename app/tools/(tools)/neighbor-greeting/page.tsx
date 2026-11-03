@@ -6,8 +6,8 @@ import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = generateMeta({
-  title: "工事近隣挨拶文メーカー【無料・コピーOK】解体・新築・リフォーム・外壁塗装の例文テンプレート",
-  description: "工事種別・期間・会社情報を入力して近隣挨拶文を即生成。解体・新築・外壁塗装・リフォーム工事に対応。騒音・粉塵・重機などの注意事項も自動挿入。ダウンロード不要・ブラウザで完結・コピー印刷対応。",
+  title: "工事の近隣挨拶文・お知らせ掲示文メーカー【無料】解体・新築・リフォーム・外壁塗装の例文と施主向け着工案内",
+  description: "工事の種類・期間・会社情報を入れるだけで、近隣挨拶状・現場掲示用の「工事のお知らせ」・施主様への着工案内の3種類を自動作成。解体・新築・リフォーム・外壁塗装・防水・店舗内装など10種類の工事に対応し、騒音・粉じん・重機・休工日も自動で記載。Word・印刷対応、登録不要",
   path: "/tools/neighbor-greeting",
   ogImage: `/api/og?${new URLSearchParams({ title: "近隣挨拶文メーカー", icon: "📝", desc: "工事名・期間・会社名を入力して近隣への挨拶文を自動生成" }).toString()}`,
   keywords: [
@@ -23,6 +23,11 @@ export const metadata: Metadata = generateMeta({
     "工事 着工 近隣 挨拶",
     "工事 近所 挨拶文",
     "近隣挨拶文 テンプレート",
+    "工事のお知らせ 掲示 テンプレート",
+    "工事 お知らせ 張り紙",
+    "着工 案内 施主",
+    "防水工事 近隣 挨拶",
+    "店舗 内装工事 お知らせ",
   ],
 });
 
@@ -84,6 +89,47 @@ const seoContent = (
           </div>
         ))}
       </div>
+    </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">3種類の文面の使い分け</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {[
+          { title: "近隣挨拶状", body: "着工の3〜7日前に、工事現場の周辺のお宅へ手渡しまたはポストに投函する文面です。工事の内容・期間・作業時間・休工日と、騒音や粉じんへの配慮、連絡先を伝えます。" },
+          { title: "掲示用お知らせ", body: "仮囲いや出入口、マンションの掲示板に貼る文面です。通りがかる方が立ち止まらずに読めるよう、工事名・期間・作業時間・連絡先を短くまとめます。" },
+          { title: "施主様への着工案内", body: "工事を依頼したお客様に渡す文面です。工程に加えて、近隣挨拶の予定や、家具の移動・駐車スペースなど施主様にお願いしたいことを工事の種類に合わせて記載します。" },
+        ].map((c) => (
+          <div key={c.title} className="rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 p-4">
+            <p className="text-sm font-semibold text-slate-800 dark:text-zinc-200 mb-1.5">{c.title}</p>
+            <p className="text-[13px] text-slate-500 dark:text-zinc-400 leading-relaxed">{c.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">掲示用「工事のお知らせ」の書き方</h2>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">掲示用のお知らせは、挨拶状よりも短く、遠くからでも要点が分かることが大切です。次の項目を上から順に並べると読みやすくなります。</p>
+      <ol className="text-sm text-slate-600 dark:text-slate-400 space-y-1.5 list-decimal list-inside mb-3">
+        <li>見出し「工事のお知らせ」と、ご迷惑をおかけすることへのお詫び</li>
+        <li>工事名称・工事場所</li>
+        <li>工事期間・作業時間・休工日</li>
+        <li>騒音・粉じん・車両の出入りなど、通行する方へのお願い</li>
+        <li>施工会社名・担当者・電話番号（受付時間）</li>
+      </ol>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">A4またはA3で印刷し、雨に濡れる場所ではクリアファイルやラミネートで保護します。工期や作業時間が変わったときは、掲示も忘れずに差し替えましょう。</p>
+    </section>
+
+    <section>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-3">施主様への着工案内に入れておきたいこと</h2>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">着工前に施主様と確認しておくと、工事中の行き違いやご近隣とのトラブルを防げます。ツールでは工事の種類に合わせて、次のようなお願いを自動で入れます。</p>
+      <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-1.5 mb-3">
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">解体工事</strong>：残置物の確認、電気・ガス・電話などの停止手続き（散水に使う水道は時期を相談）</li>
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">リフォーム・増築</strong>：工事箇所の周りの家具・貴重品の移動、電気・水道を借りる場合の確認</li>
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">外壁・屋根塗装、防水</strong>：窓の開閉や洗濯物を控える日、屋上・バルコニーに立ち入れない期間</li>
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">外構・設備</strong>：駐車場や出入口が使えない日、断水・停電の日時</li>
+        <li>・<strong className="text-slate-700 dark:text-zinc-300">共通</strong>：近隣挨拶の範囲と同行の有無、工事車両の駐車スペース</li>
+      </ul>
     </section>
 
     <section>
@@ -149,6 +195,8 @@ const seoContent = (
           { q: "近隣挨拶は法律で義務付けられていますか？", a: "法的な義務ではありませんが、建設業界の慣習として広く行われています。近隣トラブルを未然に防ぐためにも強く推奨されます。特に解体・新築・外壁塗装工事では必須と考えてください。" },
           { q: "留守の場合はどうすればいい？", a: "ポストに挨拶状（文書）と名刺・粗品を置いていく方法が一般的です。訪問した旨のメモも添えると丁寧です。後日電話で一声かけるとなお好印象です。" },
           { q: "マンションの工事の場合は？", a: "掲示板への掲示と管理会社経由の周知が基本です。管理組合・管理会社への事前届出が必要な場合も多いです。本ツールの「マンション大規模修繕」プリセットを選ぶと、掲示用の文面を作成できます。" },
+          { q: "現場に貼る「工事のお知らせ」も作れますか？", a: "作れます。上部で「掲示用お知らせ」を選ぶと、工事名・期間・作業時間・休工日・連絡先を短くまとめた掲示用の文面になります。A4・A3で印刷して仮囲いや掲示板に貼ってください。" },
+          { q: "施主様に渡す着工案内も作れますか？", a: "作れます。「施主様への着工案内」を選ぶと、工程と近隣挨拶の予定に加えて、工事の種類に合わせたお願い（家具の移動、駐車スペース、停止手続きなど）を入れた文面になります。" },
           { q: "生成した文章をそのまま使えますか？", a: "そのまま使えるよう設計しています。実際の工事内容・状況に合わせて必要に応じて修正してください。「追加で伝えたいこと」欄で個別の事情を追記することをお勧めします。" },
           { q: "Word形式でダウンロードできますか？", a: "できます。「Word形式でダウンロード」ボタンから.docファイルとして保存でき、Wordで開いてそのまま編集・印刷できます。無料・登録不要です。コピー・印刷ボタンも利用できます。" },
         ].map(({ q, a }) => (
@@ -202,6 +250,16 @@ const faqSchema = {
     },
     {
       "@type": "Question",
+      name: "現場に貼る「工事のお知らせ」も作れますか？",
+      acceptedAnswer: { "@type": "Answer", text: "作れます。上部で「掲示用お知らせ」を選ぶと、工事名・期間・作業時間・休工日・連絡先を短くまとめた掲示用の文面になります。A4・A3で印刷して仮囲いや掲示板に貼ってください。" },
+    },
+    {
+      "@type": "Question",
+      name: "施主様に渡す着工案内も作れますか？",
+      acceptedAnswer: { "@type": "Answer", text: "作れます。「施主様への着工案内」を選ぶと、工程と近隣挨拶の予定に加えて、工事の種類に合わせたお願い（家具の移動、駐車スペース、停止手続きなど）を入れた文面になります。" },
+    },
+    {
+      "@type": "Question",
       name: "Word形式でダウンロードできますか？",
       acceptedAnswer: { "@type": "Answer", text: "できます。「Word形式でダウンロード」ボタンから.docファイルとして保存でき、Wordでそのまま編集・印刷できます。無料・登録不要です。" },
     },
@@ -214,7 +272,7 @@ export default function Page() {
       <JsonLd data={faqSchema} />
       <ToolLayout
         title="工事近隣挨拶文メーカー"
-        description="工事の種類・期間・会社情報を入力して近隣挨拶文を自動生成。解体・新築・外壁塗装・リフォーム工事に対応。ダウンロード不要・コピー・印刷対応。"
+        description="工事の種類・期間・会社情報を入れるだけで、近隣挨拶状・掲示用の工事のお知らせ・施主様への着工案内を自動作成。10種類の工事に対応し、コピー・Word・印刷ができます。"
         icon="📝"
         slug="neighbor-greeting"
         seoContent={seoContent}
