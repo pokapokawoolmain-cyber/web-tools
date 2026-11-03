@@ -11,6 +11,7 @@ import {
   calcResidentBasicDeduction,
   calcAnnualSocialInsurance,
   calcTakehome,
+  calcBonusTakehome,
 } from "../lib/takehome";
 import { calcResidentTax, RESIDENT_EXEMPT_SALARY_SINGLE } from "../lib/resident-tax";
 import { calcFurusatoLimit } from "../lib/furusato";
@@ -72,17 +73,35 @@ test("単身の住民税非課税ラインは給与収入119万円", () => {
   assert.equal(calcResidentTax(1_200_000).isExempt, false);
 });
 
+console.log("賞与の社会保険料（令和8年度）");
+test("賞与50万円・40歳未満: 健康保険24,625円・支援金575円・厚生年金45,750円・雇用保険2,500円", () => {
+  const r = calcBonusTakehome(500_000, 300_000, 0, false);
+  assert.equal(r.healthInsurance, 24_625);
+  assert.equal(r.childSupport, 575);
+  assert.equal(r.pension, 45_750);
+  assert.equal(r.employmentInsurance, 2_500);
+  assert.equal(r.socialInsurance, 24_625 + 575 + 45_750 + 2_500);
+});
+test("賞与50万円・40〜64歳: 健康保険に介護保険0.81%が加わる", () => {
+  assert.equal(calcBonusTakehome(500_000, 300_000, 0, true).healthInsurance, Math.round(500_000 * (0.04925 + 0.0081)));
+});
+test("厚生年金は1回150万円・健康保険と支援金は573万円が上限", () => {
+  const r = calcBonusTakehome(8_000_000, 600_000, 0, false);
+  assert.equal(r.pension, Math.round(1_500_000 * 0.0915));
+  assert.equal(r.childSupport, Math.round(5_730_000 * 0.00115));
+});
+
 console.log("社会保険料");
-test("780万円以下は健康保険4.955%＋厚生年金9.15%＋雇用保険0.55%", () => assert.equal(Math.round(calcAnnualSocialInsurance(5_000_000)), 732_750));
+test("780万円以下は健康保険4.925%＋子ども・子育て支援金0.115%＋厚生年金9.15%＋雇用保険0.5%（令和8年度）", () => assert.equal(Math.round(calcAnnualSocialInsurance(5_000_000)), 734_500));
 test("厚生年金の上限を超えた部分には年金保険料がかからない", () => {
-  assert.equal(Math.round(calcAnnualSocialInsurance(20_000_000)), Math.round(16_680_000 * 0.04955 + 7_800_000 * 0.0915 + 20_000_000 * 0.0055));
+  assert.equal(Math.round(calcAnnualSocialInsurance(20_000_000)), Math.round(16_680_000 * (0.04925 + 0.00115) + 7_800_000 * 0.0915 + 20_000_000 * 0.005));
 });
 
 console.log("手取り");
 test("年収500万円：所得税は課税所得×5%の帯（約9.2万円）", () => {
   const r = calcTakehome(5_000_000);
-  // 給与所得356万 − 社保73.275万 − 基礎控除104万 = 178.725万 → 5% × 1.021
-  assert.equal(r.incomeTax, Math.round(1_787_250 * 0.05 * 1.021));
+  // 給与所得356万 − 社保73.45万 − 基礎控除104万 = 178.55万 → 5% × 1.021
+  assert.equal(r.incomeTax, Math.round(1_785_500 * 0.05 * 1.021));
 });
 test("手取りは年収が増えるほど増える（2,000万円まで単調）", () => {
   let prev = 0;

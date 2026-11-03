@@ -49,17 +49,35 @@ export function calcResidentBasicDeduction(totalIncome: number): number {
   return 0;
 }
 
-/** 社会保険料の料率（本人負担）。賞与の計算（calcBonusTakehome）と同じ値を使う */
+/**
+ * 社会保険料の料率（本人負担・令和8年度）。賞与の計算（calcBonusTakehome）と同じ値を使う。
+ * 根拠:
+ *  - 健康保険 9.85%・介護保険 1.62%（協会けんぽ東京支部、令和8年3月分から）
+ *  - 子ども・子育て支援金 0.23%（全国一律、令和8年4月分から）
+ *    協会けんぽ「令和8年3月分（4月納付分）からの保険料額表（東京支部）」
+ *    https://www.kyoukaikenpo.or.jp/assets/R8_13tokyo.pdf
+ *  - 雇用保険（一般の事業）労働者負担 1,000分の5（令和8年度）
+ *    厚生労働省「令和8(2026)年度 雇用保険料率のご案内」
+ *  - 厚生年金 18.3%（平成29年9月分から据え置き）
+ */
 export const SOCIAL_INSURANCE_RATES = {
-  /** 健康保険（協会けんぽ・介護保険を含まない） */
-  health: 0.04955,
+  /** 健康保険（協会けんぽ東京支部・介護保険を含まない） */
+  health: 0.04925,
+  /** 介護保険（40〜64歳のみ） */
+  care: 0.0081,
+  /** 子ども・子育て支援金（健康保険料と一緒に徴収） */
+  childSupport: 0.00115,
   /** 厚生年金 */
   pension: 0.0915,
   /** 雇用保険（一般の事業） */
-  employment: 0.0055,
+  employment: 0.005,
 } as const;
 
+/** 画面の注記に出す料率の年度 */
+export const SOCIAL_INSURANCE_YEAR_LABEL = "令和8年度";
+
 export interface SocialInsuranceBreakdown {
+  /** 健康保険（子ども・子育て支援金を含む） */
   health: number;
   pension: number;
   employment: number;
@@ -70,9 +88,11 @@ export interface SocialInsuranceBreakdown {
  * 年間の社会保険料（本人負担）の概算と内訳。
  * 厚生年金は標準報酬月額の上限65万円（年780万円）、健康保険は上限139万円
  * （年1,668万円）を超えた部分には保険料をかけない。
+ * 子ども・子育て支援金は健康保険と同じ上限で、年間を通して徴収される前提の目安。
  */
 export function calcSocialInsuranceBreakdown(income: number): SocialInsuranceBreakdown {
-  const health = Math.min(income, 16680000) * SOCIAL_INSURANCE_RATES.health;
+  const health =
+    Math.min(income, 16680000) * (SOCIAL_INSURANCE_RATES.health + SOCIAL_INSURANCE_RATES.childSupport);
   const pension = Math.min(income, 7800000) * SOCIAL_INSURANCE_RATES.pension;
   const employment = income * SOCIAL_INSURANCE_RATES.employment;
   return { health, pension, employment, total: health + pension + employment };
@@ -150,11 +170,12 @@ export function calcRequiredIncome(targetAnnualNet: number): number {
 // 賞与（ボーナス）の手取り計算
 //
 // 手取り = 賞与額 − 社会保険料 − 源泉所得税
-//  - 社会保険料: 標準賞与額（1,000円未満切捨て）× 料率
-//      健康保険 4.955%（協会けんぽ・本人負担、年573万円上限）
-//      介護保険 0.795%（40歳以上のみ、健康保険と同じ上限）
+//  - 社会保険料: 標準賞与額（1,000円未満切捨て）× 料率（令和8年度・本人負担）
+//      健康保険 4.925%（協会けんぽ東京支部、年度累計573万円上限）
+//      介護保険 0.81%（40〜64歳のみ、健康保険と同じ上限）
+//      子ども・子育て支援金 0.115%（令和8年4月分から、健康保険と同じ上限）
 //      厚生年金 9.15%（1回あたり150万円上限）
-//      雇用保険 0.55%
+//      雇用保険 0.5%
 //  - 源泉所得税: (賞与額 − 社会保険料) × 賞与に対する源泉徴収税率
 //      税率は「前月の社会保険料控除後の給与額」と扶養親族数で決まる
 //      国税庁「賞与に対する源泉徴収税額の算出率の表」（令和6年分以降・甲欄）に基づく概算
@@ -199,6 +220,8 @@ export interface BonusTakehomeResult {
   net: number;
   /** 健康保険料（介護保険料を含む場合あり・円） */
   healthInsurance: number;
+  /** 子ども・子育て支援金（円） */
+  childSupport: number;
   /** 厚生年金保険料（円） */
   pension: number;
   /** 雇用保険料（円） */
@@ -231,15 +254,17 @@ export function calcBonusTakehome(
   const standardBonus = Math.floor(bonus / 1000) * 1000;
   // 健康保険（+介護保険）: 年度累計573万円上限（ここでは1回の賞与で判定）
   const healthBase = Math.min(standardBonus, 5_730_000);
-  const healthRate = 0.04955 + (isOver40 ? 0.00795 : 0);
+  const healthRate = SOCIAL_INSURANCE_RATES.health + (isOver40 ? SOCIAL_INSURANCE_RATES.care : 0);
   const healthInsurance = Math.round(healthBase * healthRate);
+  // 子ども・子育て支援金: 健康保険と同じ標準賞与額にかかる
+  const childSupport = Math.round(healthBase * SOCIAL_INSURANCE_RATES.childSupport);
   // 厚生年金: 1か月あたり150万円上限
   const pensionBase = Math.min(standardBonus, 1_500_000);
-  const pension = Math.round(pensionBase * 0.0915);
+  const pension = Math.round(pensionBase * SOCIAL_INSURANCE_RATES.pension);
   // 雇用保険
-  const employmentInsurance = Math.round(standardBonus * 0.0055);
+  const employmentInsurance = Math.round(standardBonus * SOCIAL_INSURANCE_RATES.employment);
 
-  const socialInsurance = healthInsurance + pension + employmentInsurance;
+  const socialInsurance = healthInsurance + childSupport + pension + employmentInsurance;
 
   // 源泉所得税: (賞与額 − 社会保険料) × 税率（1円未満切捨て）
   const taxRate = getBonusTaxRate(prevMonthSalary, dependents);
@@ -249,6 +274,7 @@ export function calcBonusTakehome(
   return {
     net,
     healthInsurance,
+    childSupport,
     pension,
     employmentInsurance,
     socialInsurance,
