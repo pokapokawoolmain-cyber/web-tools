@@ -80,7 +80,17 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
-    return [...wwwRedirects, ...toolRedirects, ...blogRedirects, ...hubRedirects];
+    // Vercel の既定ドメイン（本番と同じ内容）を正規ドメインへ。Google がこのドメイン経由でもページを見つけていたため
+    // （プレビュー環境の *.vercel.app には影響させないよう、本番の既定ドメインだけを指定）
+    const vercelHostRedirects = [
+      {
+        source: "/:path*",
+        has: [{ type: "host" as const, value: "toolbox-jp-eight.vercel.app" }],
+        destination: "https://www.toolboxjp.com/:path*",
+        permanent: true,
+      },
+    ];
+    return [...wwwRedirects, ...vercelHostRedirects, ...toolRedirects, ...blogRedirects, ...hubRedirects];
   },
 
   // ヘッダー設定（SEO・セキュリティ）
