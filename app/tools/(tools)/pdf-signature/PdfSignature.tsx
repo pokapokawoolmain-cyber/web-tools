@@ -4,6 +4,7 @@ import { PDFDocument, rgb, degrees } from "pdf-lib";
 import { getSavedSeals } from "@/lib/seal-storage";
 import type { SavedSeal } from "@/lib/seal-storage";
 import { toPdfCoords, sigToPercent } from "@/lib/pdf-coords";
+import { loadPdfjs } from "@/lib/pdfjs";
 
 type Mode = "draw" | "text" | "seal";
 
@@ -264,8 +265,7 @@ export function PdfSignature() {
 
   const renderPdfPage = useCallback(async (file: File, page: number) => {
     try {
-      const { getDocument, GlobalWorkerOptions } = await import("pdfjs-dist");
-      GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
+      const { getDocument } = await loadPdfjs();
       const ab = await file.arrayBuffer();
       const pdfDoc = await getDocument({ data: ab }).promise;
       setTotalPages(pdfDoc.numPages);

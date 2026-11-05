@@ -1,6 +1,7 @@
 "use client";
 import { useState, useCallback, useRef } from "react";
 import { Upload, Download, Loader2, CheckCircle2, FileText } from "lucide-react";
+import { loadPdfjs } from "@/lib/pdfjs";
 
 function formatSize(bytes: number) {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
@@ -28,8 +29,7 @@ export function PdfToJpg() {
     setError(null); setDone(false); setPreviews([]); setProgress(0);
     setFile(f);
     try {
-      const pdfjs = await import("pdfjs-dist");
-      pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+      const pdfjs = await loadPdfjs();
       const bytes = await f.arrayBuffer();
       const doc = await pdfjs.getDocument({ data: bytes }).promise;
       setPageCount(doc.numPages);
@@ -47,8 +47,7 @@ export function PdfToJpg() {
     if (!file) return;
     setConverting(true); setError(null); setPreviews([]); setDone(false);
     try {
-      const pdfjs = await import("pdfjs-dist");
-      pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+      const pdfjs = await loadPdfjs();
       const JSZip = (await import("jszip")).default;
 
       const bytes = await file.arrayBuffer();
