@@ -1,6 +1,7 @@
 "use client";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload, GripVertical, ChevronUp, ChevronDown, Download, Loader2, CheckCircle2, X } from "lucide-react";
+import { openPdfDocument } from "@/lib/pdfjs";
 
 type PageItem = { index: number; originalIndex: number; thumb: string | null };
 
@@ -10,9 +11,7 @@ function formatSize(bytes: number) {
 }
 
 async function renderThumbnail(pdfBytes: ArrayBuffer, pageIndex: number): Promise<string> {
-  const pdfjs = await import("pdfjs-dist");
-  pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-  const pdf = await pdfjs.getDocument({ data: new Uint8Array(pdfBytes) }).promise;
+  const pdf = await openPdfDocument(pdfBytes);
   const page = await pdf.getPage(pageIndex + 1);
   const viewport = page.getViewport({ scale: 0.3 });
   const canvas = document.createElement("canvas");

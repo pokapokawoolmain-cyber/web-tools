@@ -2,6 +2,7 @@
 import { useState, useCallback, useRef } from "react";
 import { Upload, Download, Loader2, CheckCircle2, FileText } from "lucide-react";
 import { trackToolStarted, trackToolCompleted, trackToolFailed } from "@/lib/analytics/track";
+import { loadPdfjs } from "@/lib/pdfjs";
 
 function formatSize(bytes: number) {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
@@ -44,8 +45,7 @@ export function PdfCompress() {
     const startedAt = trackToolStarted({ toolId: "pdf-compress", toolCategory: "pdf", toolName: "PDF圧縮" });
     try {
       const { PDFDocument } = await import("pdf-lib");
-      const pdfjs = await import("pdfjs-dist");
-      pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+      const pdfjs = await loadPdfjs();
 
       const bytes = await file.arrayBuffer();
       const srcDoc = await PDFDocument.load(bytes);
