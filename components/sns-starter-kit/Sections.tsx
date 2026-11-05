@@ -15,6 +15,7 @@ import {
   statusLabel,
   type ClaimStatus,
 } from "@/lib/sns-starter-kit/content";
+import { TEXT } from "@/lib/sns-starter-kit/commerce";
 import { HeroPhone } from "./PhoneMock";
 import { Phrase } from "./Phrase";
 import { Ja } from "./Ja";
@@ -67,9 +68,15 @@ export function Hero() {
             <p className={s.heroNote}>サーバー・AIツール等の外部費用は別途必要です</p>
           </div>
           <div className={s.heroCtas}>
-            <a href="#reserve" className={`${s.btn} ${s.btnPrimary}`} data-cta="hero">
-              先行予約する
-            </a>
+            {PRODUCT.purchasable ? (
+              <a href="#price" className={`${s.btn} ${s.btnPrimary}`} data-cta="hero">
+                購入について見る
+              </a>
+            ) : (
+              <a href="#reserve" className={`${s.btn} ${s.btnPrimary}`} data-cta="hero">
+                先行予約する
+              </a>
+            )}
             <a href="#experience" className={`${s.btn} ${s.btnGhost}`}>
               どんなものか見る
               <ArrowDown size={16} aria-hidden="true" />
@@ -432,17 +439,58 @@ export function Price() {
             <br />
             <Phrase text="自分の|SNSを|育て始めるための|スタート地点。" />
           </p>
-          <div className={s.priceCta}>
-            <a href="#reserve" className={`${s.btn} ${s.btnPrimary}`} data-cta="price">
-              先行予約する
-            </a>
-          </div>
-          <p className={s.priceNotice}>
-            <Ja text="現在は販売準備中です。先行予約は購入ではありません。" />
-          </p>
+          {PRODUCT.purchasable ? (
+            <>
+              <PurchaseTerms />
+              <div className={s.priceCta}>
+                <a href="/sns-starter-kit/purchase" className={`${s.btn} ${s.btnPrimary}`} data-cta="price">
+                  購入内容を確認する
+                </a>
+              </div>
+              <p className={s.priceNotice}>
+                次の画面で購入内容を確認してから、Stripe の支払い画面へ進みます。
+                <a href="/sns-starter-kit/tokushoho" style={{ textDecoration: "underline", textUnderlineOffset: 3 }}>特定商取引法に基づく表記</a>
+                ・
+                <a href="/sns-starter-kit/terms" style={{ textDecoration: "underline", textUnderlineOffset: 3 }}>販売利用規約・使用許諾条件</a>
+              </p>
+            </>
+          ) : (
+            <>
+              <div className={s.priceCta}>
+                <a href="#reserve" className={`${s.btn} ${s.btnPrimary}`} data-cta="price">
+                  先行予約する
+                </a>
+              </div>
+              <p className={s.priceNotice}>
+                <Ja text="現在は販売準備中です。先行予約は購入ではありません。" />
+              </p>
+            </>
+          )}
         </div>
       </div>
     </section>
+  );
+}
+
+/** 購入ボタンの近くに置く条件（文言は lib/sns-starter-kit/commerce.ts の TEXT をそのまま使う） */
+export function PurchaseTerms() {
+  const rows: [string, string][] = [
+    ["価格", TEXT.price],
+    ["返品・返金", TEXT.refund],
+    ["ライセンス", TEXT.license],
+    ["動作環境", TEXT.env],
+    ["更新", TEXT.update],
+    ["外部サービス", TEXT.external],
+  ];
+  return (
+    <dl style={{ textAlign: "left", margin: "20px 0 4px", fontSize: 14, lineHeight: 1.7, display: "grid", gap: 10 }}>
+      {rows.map(([k, v]) => (
+        <div key={k}>
+          <dt style={{ fontWeight: 700 }}>{k}</dt>
+          <dd style={{ margin: 0 }}>{v}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
