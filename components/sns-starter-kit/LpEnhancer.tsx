@@ -1,4 +1,5 @@
 "use client";
+import { PURCHASABLE } from "@/lib/sns-starter-kit/commerce";
 
 import { useEffect, useRef, useState } from "react";
 import { getSnsKitAttribution } from "@/lib/sns-starter-kit/attribution";
@@ -120,15 +121,15 @@ export function LpEnhancer({ rootId }: { rootId: string }) {
     <div className={s.sticky} data-visible={stickyVisible ? "" : undefined} aria-hidden={!stickyVisible}>
       <p className={s.stickyPrice}>
         49,800円
-        <small>税込 ・ 販売準備中</small>
+        <small>税込 ・ {PURCHASABLE ? "販売中" : "販売準備中"}</small>
       </p>
       <a
-        href="#reserve"
+        href={PURCHASABLE ? "#price" : "#reserve"}
         className={`${s.btn} ${s.stickyBtn}`}
         data-cta="sticky"
         tabIndex={stickyVisible ? 0 : -1}
       >
-        先行予約
+        {PURCHASABLE ? "購入について" : "先行予約"}
       </a>
     </div>
   );

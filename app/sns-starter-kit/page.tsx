@@ -22,9 +22,10 @@ import { Ja } from "@/components/sns-starter-kit/Ja";
 import s from "@/components/sns-starter-kit/lp.module.css";
 
 // ============================================================
-// SNS Starter Kit — Premium Launch Page（販売準備中・先行予約のみ）
+// SNS Starter Kit — Launch Page
 //
-// ・購入/決済は実装しない。Product 構造化データも出さない（販売前のため）。
+// ・販売中かどうかは lib/sns-starter-kit/commerce.ts（SALE_OPEN と支払いリンク）で決まる。
+//   販売中は先行予約の代わりに、価格の欄（購入条件つき）→ 購入内容の確認画面 → Stripe へ進む。
 // ・何を「確認済み」と言えるかは lib/sns-starter-kit/content.ts が唯一の根拠。
 // ============================================================
 
@@ -90,7 +91,8 @@ export default function SnsStarterKitPage() {
       <Prerequisites />
       <Price />
 
-      {/* Reservation */}
+      {/* Reservation（販売前だけ） */}
+      {!PRODUCT.purchasable && (
       <section
         id="reserve"
         className={s.section}
@@ -118,6 +120,7 @@ export default function SnsStarterKitPage() {
           <ReservationForm accepting={accepting} />
         </div>
       </section>
+      )}
 
       <LpEnhancer rootId="sns-kit" />
     </div>

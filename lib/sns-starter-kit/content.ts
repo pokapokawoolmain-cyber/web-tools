@@ -15,6 +15,8 @@
 // status を "verified" に切り替える（ページ側の修正は不要）。
 // ============================================================
 
+import { PURCHASABLE } from "./commerce";
+
 export type ClaimStatus = "verified" | "planned" | "concept" | "excluded";
 
 export interface StatusItem {
@@ -33,29 +35,29 @@ export const PRODUCT = {
   priceYen: 49800,
   priceLabel: "49,800円",
   taxLabel: "税込",
-  saleState: "販売準備中",
-  /** 販売開始済みか。true にするまで購入導線・Product構造化データは出さない。 */
-  purchasable: false,
+  saleState: PURCHASABLE ? "販売中" : "販売準備中",
+  /** 販売開始済みか（lib/sns-starter-kit/commerce.ts の SALE_OPEN と支払いリンクで決まる）。 */
+  purchasable: PURCHASABLE,
 } as const;
 
 // ── Section 03: Starter Kit の土台（Developmentの検証結果で切り替える） ──
 export const FOUNDATION_FEATURES: StatusItem[] = [
-  { id: "auth", label: "メール認証・パスワード再設定", status: "planned" },
-  { id: "account-deletion", label: "アカウント削除", status: "planned" },
-  { id: "profile", label: "プロフィール", status: "planned" },
-  { id: "post", label: "投稿・返信", status: "planned" },
-  { id: "image", label: "画像アップロード", status: "planned" },
-  { id: "access-control", label: "データベース・ストレージのアクセス制御", status: "planned" },
-  { id: "report-block", label: "通報・ブロック", status: "planned" },
-  { id: "admin", label: "管理画面（通報対応・投稿の非表示）", status: "planned" },
+  { id: "auth", label: "メール認証・パスワード再設定", status: "verified" },
+  { id: "account-deletion", label: "アカウント削除", status: "verified" },
+  { id: "profile", label: "プロフィール", status: "verified" },
+  { id: "post", label: "投稿・返信", status: "verified" },
+  { id: "image", label: "画像アップロード", status: "verified" },
+  { id: "access-control", label: "データベース・ストレージのアクセス制御", status: "verified" },
+  { id: "report-block", label: "通報・ブロック", status: "verified" },
+  { id: "admin", label: "管理画面（通報対応・投稿の非表示）", status: "verified" },
 ];
 
 // ── Section 04: 同梱ファイル（構想。商品完成まで concept のまま） ──
 export const KIT_FILES: StatusItem[] = [
-  { id: "start-here", label: "START_HERE.md", note: "最初に読む手順", status: "concept" },
-  { id: "claude-md", label: "CLAUDE.md", note: "AI向けの開発ルール", status: "concept" },
-  { id: "agents-md", label: "AGENTS.md", note: "AI向けの開発ルール", status: "concept" },
-  { id: "safe-change", label: "SAFE_CHANGE_GUIDE.md", note: "安全に変更できる範囲", status: "concept" },
+  { id: "start-here", label: "START_HERE.md", note: "最初に読む手順", status: "verified" },
+  { id: "claude-md", label: "CLAUDE.md", note: "AI向けの開発ルール", status: "verified" },
+  { id: "agents-md", label: "AGENTS.md", note: "AI向けの開発ルール", status: "verified" },
+  { id: "safe-change", label: "SAFE_CHANGE_GUIDE.md", note: "安全に変更できる範囲", status: "verified" },
 ];
 
 // ── 強い販売コピーの切り替え ────────────────────────────────
@@ -63,8 +65,9 @@ export const KIT_FILES: StatusItem[] = [
 // 文字列中の "|" は文節の区切り、"\n" は改行（components/sns-starter-kit/Phrase.tsx）。
 export const CLAIMS = {
   signatureHeading: {
-    status: "concept" as ClaimStatus,
-    verified: "ファイルを|渡して、\n作りたい|SNSを|話す。",
+    status: "verified" as ClaimStatus,
+    // Chief 承認（2026-10）: 初期設定後は Claude Code に話してカスタマイズ（Phase 6 で実証）
+    verified: "初期設定後は、|Claude Codeに\n「こんな|SNSに|したい」と|話す。",
     concept: "AI開発環境で|開いて、\n作りたい|コミュニティを|伝える。",
   },
 } as const;
@@ -95,13 +98,13 @@ export const SENSITIVE_AREAS: string[] = [
 
 // ── Section 06: パッケージ内容（販売時に verified のものだけ確定表示） ──
 export const PACKAGE_ITEMS: StatusItem[] = [
-  { id: "app", label: "SNS本体（ソースコード）", status: "planned" },
-  { id: "setup-guide", label: "日本語セットアップガイド", status: "planned" },
-  { id: "dev-rules", label: "AI向け開発ルール", status: "planned" },
-  { id: "safe-change-guide", label: "Safe Change Guide", status: "planned" },
-  { id: "initial-prompt", label: "最初に使うプロンプト", status: "planned" },
-  { id: "verification-guide", label: "動作確認ガイド", status: "planned" },
-  { id: "setup-support", label: "限定導入サポート", status: "planned" },
+  { id: "app", label: "SNS本体（ソースコード）", status: "verified" },
+  { id: "setup-guide", label: "日本語セットアップガイド", status: "verified" },
+  { id: "dev-rules", label: "AI向け開発ルール（hook と guard で重要な領域を保護）", status: "verified" },
+  { id: "safe-change-guide", label: "Safe Change Guide", status: "verified" },
+  { id: "initial-prompt", label: "最初に使うプロンプト（FIRST_PROMPT）", status: "verified" },
+  { id: "verification-guide", label: "動作確認のコマンド（verify / verify:full）", status: "verified" },
+  { id: "setup-support", label: "購入後30日間のメールサポート（導入できない重大な問題）", status: "verified" },
 ];
 
 // ── Section 07: 初期版に含めないもの ───────────────────────
@@ -125,7 +128,7 @@ export const NOT_INCLUDED: string[] = [
 export const STEPS: { title: string; body: string }[] = [
   { title: "Starter Kitを受け取る", body: "ソースコード一式とガイドを受け取ります。" },
   { title: "Supabase / Vercelを準備", body: "ご自身のアカウントで、データベースと公開先を用意します。" },
-  { title: "AI開発環境でプロジェクトを開く", body: "Claude Code 等の対応予定のAI開発環境で開きます。" },
+  { title: "Claude Code でプロジェクトを開く", body: "同梱の FIRST_PROMPT を最初に渡します。" },
   { title: "作りたいコミュニティを伝える", body: "誰のための場所か、どんな投稿が集まるかを伝えます。" },
   { title: "確認済みの範囲から変更", body: "同梱ルールで安全とされた範囲から変えていきます。" },
   { title: "動作確認", body: "ガイドに沿って、ログインから投稿までを確かめます。" },
@@ -141,19 +144,23 @@ export const REQUIREMENTS: { label: string; body: string }[] = [
 ];
 
 /** 初期の対応候補（確定ではない）。 */
-export const SUPPORTED_CANDIDATES: string[] = ["Supabase", "Vercel"];
+export const SUPPORTED_CANDIDATES: string[] = ["Supabase", "Vercel", "Resend など SMTP 対応のメール送信サービス", "Claude Code"];
 
 /**
  * 検証完了後に確定する動作環境（OS / ブラウザ / AIツール / バージョン / 制限）。
  * 空のあいだは「検証後に掲載」とだけ表示する。
  */
-export const CONFIRMED_ENVIRONMENT: { label: string; value: string }[] = [];
+export const CONFIRMED_ENVIRONMENT: { label: string; value: string }[] = [
+  { label: "動作確認済み", value: "macOS 26（Apple シリコン）、Node.js 22.18 以上、Google Chrome" },
+  { label: "対象外", value: "Windows・Linux は動作確認の対象外です" },
+];
 
 // ── Section 10: 価格の補足 ─────────────────────────────────
 export const PRICE_TERMS: StatusItem[] = [
-  { id: "license", label: "1サービス・非独占ライセンス", status: "planned" },
+  { id: "license", label: "1 Production Project ライセンス（非公開の検証環境は数えない）", status: "verified" },
   { id: "external", label: "外部サービス費用は別途", status: "verified" },
-  { id: "support", label: "限定導入サポート", status: "planned" },
+  { id: "support", label: "購入後30日間のメールサポート", status: "verified" },
+  { id: "update", label: "将来の更新は保証しません（購入時点の版を提供）", status: "verified" },
 ];
 
 // ── Section 02: コミュニティ例（すべて架空の例） ──────────────
