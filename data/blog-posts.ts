@@ -15,6 +15,33 @@ export type BlogPost = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "yonezu-ghost-tour-goods",
+    title: "米津玄師「GHOST」ツアーグッズ全20アイテムと物販攻略｜整理券・会場受け取り・支払い方法まとめ",
+    description:
+      "米津玄師 2026 TOUR / GHOST のツアーグッズ全20アイテムの価格一覧と、予算のモデルコース、会場別の物販時間、アプリ整理券の配布日、神奈川公演の会場受け取り、購入制限・支払い方法を公式情報をもとにまとめました。",
+    publishedAt: "2026-11-07",
+    category: "推し活ガイド",
+    readingMinutes: 9,
+  },
+  {
+    slug: "live-ensei-checklist",
+    title: "ライブ遠征の持ち物チェックリスト｜身分証・現金とキャッシュレス・モバイルバッテリーの新ルールまで",
+    description:
+      "ライブ遠征の前日にそのまま使える持ち物チェックリスト。本人確認の身分証、現金とキャッシュレスの両方が必要な理由、2026年4月からの飛行機のモバイルバッテリーのルール、グッズの持ち帰り、冬の寒さ対策、新幹線の特大荷物までまとめました。",
+    publishedAt: "2026-11-07",
+    category: "推し活ガイド",
+    readingMinutes: 8,
+  },
+  {
+    slug: "k-arena-yokohama-guide",
+    title: "Kアリーナ横浜 完全ガイド｜アクセス・コインロッカー・座席LEVEL・物販のコツ",
+    description:
+      "Kアリーナ横浜に初めて行く人向けのガイド。3つの最寄り駅と帰りの規制退場、LEVEL表記の読み方、現金のみのコインロッカーとクローク、キャッシュレスのみの売店、トイレ・Wi-Fi・周辺施設まで公式情報をもとに整理しました。",
+    publishedAt: "2026-11-07",
+    category: "推し活ガイド",
+    readingMinutes: 9,
+  },
+  {
     slug: "fire-how-much-needed",
     title: "FIREに必要な資産はいくら？年収・生活費別にシミュレーションしてみた",
     description: "「FIRE達成には何億必要？」という疑問に、年収300〜800万円・生活費別のシミュレーション結果で正直に答えます。4%ルールの限界と、日本での現実的なFIRE戦略も。",
