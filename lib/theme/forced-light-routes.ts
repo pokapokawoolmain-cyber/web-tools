@@ -16,6 +16,9 @@ export const MOCHICO_ARTICLE_PATHS = [
   "/blog/prevent-duplicate-goods",
   "/blog/goods-list-spreadsheet",
   "/blog/mochico-how-to-use",
+  "/blog/yonezu-ghost-tour-goods",
+  "/blog/k-arena-yokohama-guide",
+  "/blog/live-ensei-checklist",
 ];
 /** 配下のページには適用しない（完全一致のみ）。Mochico は公開 LP と関連記事だけを白基調に固定する */
 const FORCED_LIGHT_EXACT = ["/mochico", ...MOCHICO_ARTICLE_PATHS];

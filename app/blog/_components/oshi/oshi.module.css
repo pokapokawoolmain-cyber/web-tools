@@ -1,0 +1,881 @@
+/* ============================================================
+   推し活ガイド（ライブ・会場・遠征の読み物）のポップなライトテーマ
+   - Mochico 記事（../mochico/article.module.css）と同じ紫を軸に、ピンク・ミント・レモンを差し色に使う
+   - 文字色は白・淡色背景で WCAG AA 以上（--ink 15:1 / --ink2 9:1 / --muted 5.3:1 / 各 Ink 色 4.5:1 以上）
+   - 本文 16px 以上・行間 1.9。JS なし・アニメーションなし（チェックボックスは素の HTML）
+   ============================================================ */
+.page {
+  --ink: #1b1430;
+  --ink2: #3e3756;
+  --muted: #625b7c;
+  --line: #ebe6f6;
+  --soft: #fbf9ff;
+  --lav: #efe9ff;
+  --lavDeep: #ddd2ff;
+  --accent: #7c4dff;
+  --accentInk: #5a2fd2;
+  --pink: #ffe4f0;
+  --pinkInk: #be185d;
+  --mint: #dcf7ec;
+  --mintInk: #047857;
+  --lemon: #fff6cc;
+  --lemonInk: #8a5a00;
+  --sky: #e0f0ff;
+  --skyInk: #1d5fae;
+
+  background:
+    radial-gradient(900px 420px at 110% -80px, #ffe4f0 0%, transparent 60%),
+    radial-gradient(800px 420px at -20% 0px, #e9e1ff 0%, transparent 60%),
+    var(--soft);
+  color: var(--ink);
+  font-feature-settings: "palt";
+  overflow-x: clip;
+}
+.page :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── パンくず ───────────────────────────────── */
+.crumbs {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 14px 20px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.crumbs li + li::before {
+  content: "›";
+  margin-right: 6px;
+  color: var(--lavDeep);
+}
+.crumbs a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.crumbs a:hover {
+  color: var(--accentInk);
+  text-decoration: underline;
+}
+
+/* ── Hero ───────────────────────────────────── */
+.hero {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 18px 20px 26px;
+}
+.stickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 5px 12px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 0 rgba(27, 20, 48, 0.08);
+}
+.sticker:nth-child(1) {
+  background: var(--lav);
+  color: var(--accentInk);
+  transform: rotate(-2deg);
+}
+.sticker:nth-child(2) {
+  background: var(--pink);
+  color: var(--pinkInk);
+  transform: rotate(1.5deg);
+}
+.sticker:nth-child(3) {
+  background: var(--mint);
+  color: var(--mintInk);
+  transform: rotate(-1deg);
+}
+.sticker:nth-child(4) {
+  background: var(--lemon);
+  color: var(--lemonInk);
+  transform: rotate(2deg);
+}
+.h1 {
+  margin: 16px 0 0;
+  font-size: clamp(1.6rem, 6.4vw, 2.3rem);
+  line-height: 1.38;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.h1 mark {
+  background: linear-gradient(transparent 62%, #ffd1e6 62%);
+  color: inherit;
+  padding: 0 2px;
+}
+.lead {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ink2);
+}
+.meta {
+  margin: 14px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.unofficial {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px dashed var(--lavDeep);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+/* ── 本文の紙面 ─────────────────────────────── */
+.paper {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 820px) {
+  .paper {
+    max-width: 780px;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    box-shadow: 0 10px 40px -24px rgba(90, 47, 210, 0.35);
+  }
+}
+.body {
+  max-width: 690px;
+  margin: 0 auto;
+  padding: 28px 20px 44px;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ink2);
+}
+@media (min-width: 640px) {
+  .body {
+    padding: 44px 40px 60px;
+    font-size: 17px;
+  }
+}
+.body p {
+  margin: 0 0 1.15em;
+}
+.body strong {
+  color: var(--ink);
+  font-weight: 800;
+}
+.body .hl {
+  background: linear-gradient(transparent 60%, var(--lemon) 60%);
+  color: var(--ink);
+  font-weight: 700;
+}
+.body a {
+  color: var(--accentInk);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.body a:hover {
+  text-decoration-thickness: 2px;
+}
+.body h2 {
+  position: relative;
+  margin: 2.8em 0 0.9em;
+  padding: 14px 16px 14px 18px;
+  font-size: clamp(1.2rem, 5vw, 1.45rem);
+  line-height: 1.5;
+  font-weight: 900;
+  color: var(--ink);
+  background: linear-gradient(90deg, var(--lav), #fff 85%);
+  border-left: 6px solid var(--accent);
+  border-radius: 6px 16px 16px 6px;
+  scroll-margin-top: 84px;
+}
+.body h2 .num {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--accentInk);
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.body h3 {
+  margin: 1.9em 0 0.6em;
+  font-size: 1.075rem;
+  line-height: 1.6;
+  font-weight: 800;
+  color: var(--ink);
+  scroll-margin-top: 84px;
+}
+.body h3::before {
+  content: "●";
+  color: var(--pinkInk);
+  font-size: 0.7em;
+  margin-right: 8px;
+  vertical-align: 2px;
+}
+.body ul,
+.body ol {
+  margin: 0 0 1.2em;
+  padding-left: 1.4em;
+}
+.body ul {
+  list-style: disc;
+}
+.body ol {
+  list-style: decimal;
+}
+.body li {
+  margin: 0.3em 0;
+}
+.body li::marker {
+  color: var(--accent);
+}
+
+/* ── 先に結論（3行まとめ） ──────────────────── */
+.tldr {
+  margin: 1.6em 0;
+  padding: 18px 18px 8px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f3edff 0%, #ffeef6 100%);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--lavDeep);
+}
+.tldrTitle {
+  display: inline-block;
+  margin: 0 0 8px !important;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: var(--accentInk);
+  border-radius: 999px;
+  padding: 3px 12px;
+}
+.body .tldr ol {
+  padding-left: 1.3em;
+}
+.body .tldr li {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ── 目次 ──────────────────────────────────── */
+.toc {
+  margin: 1.6em 0 2em;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--soft);
+  padding: 4px 18px 10px;
+}
+.toc summary {
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--ink);
+  padding: 10px 0;
+}
+.body .toc ol {
+  margin: 0;
+  padding-left: 1.4em;
+  font-size: 15px;
+}
+.toc a {
+  color: var(--ink2) !important;
+  text-decoration: none !important;
+}
+.toc a:hover {
+  color: var(--accentInk) !important;
+  text-decoration: underline !important;
+}
+
+/* ── もちこの吹き出し ────────────────────────── */
+.bubble {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 1.5em 0;
+}
+.bubbleFace {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--lav);
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--lavDeep);
+}
+.bubbleBody {
+  position: relative;
+  flex: 1;
+  background: #fff;
+  border: 2px solid var(--lavDeep);
+  border-radius: 4px 18px 18px 18px;
+  padding: 10px 14px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.bubbleName {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accentInk);
+  letter-spacing: 0.06em;
+}
+.bubbleBody p {
+  margin: 0 !important;
+}
+
+/* ── カード（POINT / 注意 / メモ） ───────────── */
+.card {
+  margin: 1.4em 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.85;
+}
+.card p:last-child,
+.card ul:last-child {
+  margin-bottom: 0;
+}
+.cardLabel {
+  display: block;
+  margin: 0 0 4px !important;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+.point {
+  background: var(--mint);
+}
+.point .cardLabel {
+  color: var(--mintInk);
+}
+.caution {
+  background: var(--pink);
+}
+.caution .cardLabel {
+  color: var(--pinkInk);
+}
+.memo {
+  background: var(--lemon);
+}
+.memo .cardLabel {
+  color: var(--lemonInk);
+}
+.info {
+  background: var(--sky);
+}
+.info .cardLabel {
+  color: var(--skyInk);
+}
+
+/* ── 数字タイル ──────────────────────────────── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 1.4em 0;
+}
+@media (min-width: 560px) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.stat {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px 12px 10px;
+  text-align: center;
+}
+.statNum {
+  display: block;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 900;
+  color: var(--accentInk);
+  font-variant-numeric: tabular-nums;
+}
+.statNum small {
+  font-size: 13px;
+  margin-left: 2px;
+}
+.statLabel {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ── タイムライン ────────────────────────────── */
+.body .timeline {
+  list-style: none;
+  margin: 1.2em 0 1.6em;
+  padding: 0;
+  border-left: 3px dotted var(--lavDeep);
+}
+.body .timeline li {
+  position: relative;
+  margin: 0;
+  padding: 0 0 16px 20px;
+}
+.body .timeline li::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 6px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--accent);
+}
+.body .timeline li.hot::before {
+  background: var(--pinkInk);
+  border-color: var(--pinkInk);
+}
+.tlDate {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accentInk);
+}
+.tlText {
+  display: block;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink2);
+}
+
+/* ── 表 ─────────────────────────────────────── */
+.tableWrap {
+  margin: 0 0 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.table caption {
+  text-align: left;
+  padding: 10px 12px 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.table th,
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.table thead th {
+  background: var(--soft);
+  color: var(--ink);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.table tbody th {
+  color: var(--ink);
+  font-weight: 700;
+}
+.table tr:last-child th,
+.table tr:last-child td {
+  border-bottom: 0;
+}
+.table .price {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.table tr.group th {
+  background: var(--lav);
+  color: var(--accentInk);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.tableNote {
+  margin: 0 0 1.4em !important;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── プラン（予算コース） ─────────────────────── */
+.plans {
+  display: grid;
+  gap: 12px;
+  margin: 1.4em 0;
+}
+@media (min-width: 620px) {
+  .plans {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.plan {
+  border-radius: 18px;
+  padding: 14px 14px 12px;
+  border: 2px solid var(--line);
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.plan:nth-child(1) {
+  border-color: #c9f0dd;
+  background: linear-gradient(180deg, var(--mint), #fff 55%);
+}
+.plan:nth-child(2) {
+  border-color: #ffc9df;
+  background: linear-gradient(180deg, var(--pink), #fff 55%);
+}
+.plan:nth-child(3) {
+  border-color: var(--lavDeep);
+  background: linear-gradient(180deg, var(--lav), #fff 55%);
+}
+.planName {
+  display: block;
+  font-weight: 900;
+  color: var(--ink);
+  font-size: 15px;
+}
+.planTotal {
+  display: block;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--accentInk);
+  font-variant-numeric: tabular-nums;
+  margin: 2px 0 6px;
+}
+.body .plan ul {
+  margin: 0;
+  padding-left: 1.1em;
+}
+.body .plan li {
+  margin: 0.15em 0;
+}
+
+/* ── チェックリスト（素の checkbox。状態は保存しない） ─ */
+.check {
+  margin: 1em 0 1.6em;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.checkHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--soft);
+  font-weight: 900;
+  color: var(--ink);
+  font-size: 15px;
+}
+.body .check ul {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+}
+.body .check li {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.body .check li:first-child {
+  border-top: 0;
+}
+.check label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 9px 14px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.check input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+.check input:checked + span {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.checkWhy {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+}
+.must {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 900;
+  color: #fff;
+  background: var(--pinkInk);
+  border-radius: 6px;
+  padding: 0 6px;
+  margin-right: 6px;
+  vertical-align: 2px;
+}
+
+/* ── 図（自作のイラスト） ─────────────────────── */
+.figure {
+  margin: 1.4em 0 1.8em;
+}
+.figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.figure figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ── 公式リンクカード ─────────────────────────── */
+.links {
+  display: grid;
+  gap: 10px;
+  margin: 1.2em 0 1.6em;
+}
+@media (min-width: 620px) {
+  .links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.link {
+  display: flex !important;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: #fff;
+  text-decoration: none !important;
+  color: var(--ink) !important;
+}
+.link:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px -8px rgba(90, 47, 210, 0.5);
+}
+.linkIcon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  background: var(--lav);
+}
+.linkText {
+  min-width: 0;
+}
+.linkTitle {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.linkDomain {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Mochico のさりげない紹介 ────────────────── */
+.nudge {
+  margin: 2em 0;
+  border-radius: 22px;
+  padding: 18px;
+  background:
+    radial-gradient(260px 120px at 100% 0%, #ffe4f0 0%, transparent 70%),
+    linear-gradient(135deg, #f4efff, #fff);
+  border: 2px solid var(--lavDeep);
+}
+.nudgeHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nudgeKicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--pinkInk);
+}
+.nudgeTitle {
+  display: block;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.nudge p {
+  margin: 10px 0 0 !important;
+  font-size: 15px;
+}
+.nudgeButton {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--accentInk);
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none !important;
+}
+.nudgeButton:hover {
+  background: #4a22b8;
+}
+.nudgeNote {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── 出典 ───────────────────────────────────── */
+.sources {
+  margin: 2.4em 0 0;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+.sourcesTitle {
+  margin: 0 0 6px !important;
+  font-weight: 900;
+  color: var(--ink);
+  font-size: 14px;
+}
+.body .sources ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.body .sources li {
+  margin: 0.2em 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── 広告・関連記事・フッター ─────────────────── */
+.adArea {
+  margin: 2.2em 0;
+}
+.related {
+  max-width: 780px;
+  margin: 28px auto 0;
+  padding: 0 20px;
+}
+.relatedTitle {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.relatedList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+@media (min-width: 640px) {
+  .relatedList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.relatedLink {
+  display: block;
+  height: 100%;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+.relatedLink:hover {
+  border-color: var(--accent);
+}
+.relatedTag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--pinkInk);
+  background: var(--pink);
+  border-radius: 999px;
+  padding: 1px 8px;
+  margin-bottom: 4px;
+}
+.relatedName {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: var(--accentInk);
+}
+.relatedLp {
+  margin: 14px 0 0;
+  font-size: 14px;
+}
+.relatedLp a {
+  color: var(--accentInk);
+  font-weight: 800;
+}
+.bottomArea {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+.footerNote {
+  margin: 20px 0 0;
+  font-size: 14px;
+}
+.back {
+  color: var(--accentInk);
+  font-weight: 700;
+}
