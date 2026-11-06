@@ -287,8 +287,19 @@ export function ImageWorkspace() {
                   type="button"
                   role="radio"
                   aria-checked={active}
+                  tabIndex={active || (i === 0 && !suggestions.some((x) => x.purpose.id === purposeId)) ? 0 : -1}
                   disabled={running}
                   onClick={() => applyPurpose(s)}
+                  onKeyDown={(e) => {
+                    // ラジオボタンと同じく、矢印キーで選択を移す
+                    const step = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
+                    if (!step) return;
+                    e.preventDefault();
+                    const next = (i + step + suggestions.length) % suggestions.length;
+                    applyPurpose(suggestions[next]);
+                    const buttons = e.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("[role=radio]");
+                    buttons?.[next]?.focus();
+                  }}
                   className={`text-left rounded-xl border p-3.5 min-h-[44px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                     active ? "border-blue-500 bg-blue-50 dark:bg-blue-950/40" : "border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:border-slate-300 dark:hover:border-zinc-600"
                   }`}
