@@ -4,6 +4,7 @@ import { generateMeta } from "@/lib/seo";
 import { ImageResize } from "./ImageResize";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { WorkspaceHint } from "@/components/tools/WorkspaceHint";
 
 export const metadata: Metadata = generateMeta({
   title: "画像リサイズ・アスペクト比変更【無料】16:9・1:1・SNSサイズに変換｜ブラウザ完結",
@@ -220,6 +221,7 @@ export default function ImageResizePage() {
       seoContent={seoContent}
     >
       <ImageResize />
+      <WorkspaceHint text="軽くする・形式を変える・PDFにまとめるまで一度に済ませたいときは" />
     </ToolLayout>
     </>
   );
