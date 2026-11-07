@@ -1,6 +1,8 @@
 "use client";
 import { useState, useCallback, useRef } from "react";
 import { FileText, Printer, AlertCircle, CheckCircle2, X, RefreshCw } from "lucide-react";
+import { escapeHtml, openPrintDialog } from "@/lib/print-save";
+import { PrintSaveGuide } from "@/components/tools/PrintSaveGuide";
 
 type ConversionResult = {
   html: string;
@@ -32,7 +34,7 @@ function buildPrintHtml(html: string, pageSize: PageSize, fontSize: FontSize, fi
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>${fileName}</title>
+<title>${escapeHtml(fileName)}</title>
 <style>
 @page { ${PAGE_SIZES[pageSize].css} margin: 20mm 25mm; }
 @media print { * { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
@@ -124,20 +126,7 @@ export function WordToPdf() {
   const handlePrint = () => {
     if (!result || !file) return;
     const fileName = file.name.replace(/\.docx$/i, "");
-    const html = buildPrintHtml(result.html, pageSize, fontSize, fileName);
-    const iframe = document.createElement("iframe");
-    iframe.style.cssText = "position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:none;";
-    document.body.appendChild(iframe);
-    const doc = iframe.contentDocument;
-    if (!doc) return;
-    doc.open();
-    doc.write(html);
-    doc.close();
-    iframe.contentWindow?.focus();
-    setTimeout(() => {
-      iframe.contentWindow?.print();
-      setTimeout(() => document.body.removeChild(iframe), 3000);
-    }, 350);
+    openPrintDialog(buildPrintHtml(result.html, pageSize, fontSize, fileName));
   };
 
   const handleReset = () => {
@@ -284,24 +273,7 @@ export function WordToPdf() {
               <Printer className="w-5 h-5" />
               PDFとして保存する
             </button>
-            <div className="mt-4 space-y-2">
-              <p className="text-[12px] font-semibold text-blue-700 dark:text-blue-300">
-                保存手順（ブラウザの印刷ダイアログが開きます）
-              </p>
-              <ol className="space-y-1.5">
-                {[
-                  'プリンター欄で「PDFとして保存」または「Save as PDF」を選択する',
-                  '「保存」ボタンをクリックして、任意の場所に保存する',
-                ].map((step, i) => (
-                  <li key={i} className="flex items-start gap-2 text-[12px] text-blue-600 dark:text-blue-400">
-                    <span className="w-4 h-4 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-700 dark:text-blue-200 flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5">
-                      {i + 1}
-                    </span>
-                    {step}
-                  </li>
-                ))}
-              </ol>
-            </div>
+            <PrintSaveGuide />
           </div>
 
           {/* プレビュー */}
