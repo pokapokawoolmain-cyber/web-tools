@@ -4,6 +4,7 @@ import { HeicConverter } from "./HeicConverter";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
+import { WorkspaceHint } from "@/components/tools/WorkspaceHint";
 
 export const metadata: Metadata = generateMeta({
   title: "HEIC JPG変換【無料・アプリ不要】iPhone写真をブラウザで一括変換",
@@ -122,6 +123,7 @@ export default function HeicToJpgPage() {
         seoContent={seoContent}
       >
         <HeicConverter />
+        <WorkspaceHint text="JPGにした後、軽くする・大きさをそろえる・PDFにまとめるまで一度に済ませたいときは" />
       </ToolLayout>
     </>
   );
