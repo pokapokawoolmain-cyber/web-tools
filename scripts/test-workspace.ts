@@ -7,6 +7,9 @@ import assert from "node:assert/strict";
 import { sniffBytes, kindFromName } from "../lib/workspace/sniff";
 import { planDraw, resolveFormat, outputName, dedupeNames, DEFAULT_JOB_OPTIONS, LIMITS } from "../lib/workspace/image-plan";
 import { suggest } from "../lib/workspace/suggest";
+import {
+  initialPages, movePage, parseRanges, pdfOutputName, removePages, rotatePages, sniffPdf, splitGroups, suggestPdf,
+} from "../lib/workspace/pdf-plan";
 
 let passed = 0;
 function test(name: string, fn: () => void) {
@@ -138,6 +141,64 @@ test("特徴がなければ既定の順番、複数枚は ZIP", () => {
   assert.equal(s[0].reason, undefined);
   assert.equal(s[0].purpose.output, "zip");
   assert.equal(new Set(s.map((x) => x.purpose.id)).size, s.length);
+});
+
+console.log("PDF（判定・ページ操作・範囲指定・おすすめ）");
+test("PDF の判定と暗号化の目安", () => {
+  assert.deepEqual(sniffPdf(bytes("%PDF-1.7\n%âãÏÓ\n")), { isPdf: true, encrypted: false });
+  // 先頭にゴミがあっても 1024 バイト以内なら PDF
+  assert.equal(sniffPdf(bytes("\n\n  %PDF-1.4\n")).isPdf, true);
+  assert.equal(sniffPdf(bytes("PK\u0003\u0004")).isPdf, false);
+  const tail = bytes("trailer\n<< /Size 10 /Root 1 0 R /Encrypt 9 0 R /ID [<a><b>] >>\nstartxref\n123\n%%EOF");
+  assert.equal(sniffPdf(bytes("%PDF-1.6\n"), tail).encrypted, true);
+});
+const pages3 = initialPages([{ pages: [{ landscape: false }, { landscape: false }] }, { pages: [{ landscape: true }] }]);
+test("ページの並び（ファイル順・ページ順）", () => {
+  assert.deepEqual(pages3.map((p) => p.key), ["0-0", "0-1", "1-0"]);
+});
+test("回転は足し算で、90°ごとに向きが入れ替わる", () => {
+  const r = rotatePages(pages3, new Set(["0-0"]), -90);
+  assert.equal(r[0].rotation, 270);
+  assert.equal(r[0].landscape, true);
+  assert.equal(rotatePages(r, new Set(["0-0"]), 90)[0].rotation, 0);
+  assert.equal(rotatePages(pages3, new Set(["1-0"]), 180)[2].landscape, true);
+});
+test("並び替えと削除", () => {
+  assert.deepEqual(movePage(pages3, 2, 0).map((p) => p.key), ["1-0", "0-0", "0-1"]);
+  assert.deepEqual(movePage(pages3, 0, 99).map((p) => p.key), ["0-1", "1-0", "0-0"]);
+  assert.deepEqual(removePages(pages3, new Set(["0-1"])).map((p) => p.key), ["0-0", "1-0"]);
+});
+test("範囲指定（全角・省略・エラー）", () => {
+  assert.deepEqual(parseRanges("1-3, 5, 8-", 10).ranges, [[1, 3], [5, 5], [8, 10]]);
+  assert.deepEqual(parseRanges("１－３、５", 10).ranges, [[1, 3], [5, 5]]);
+  assert.deepEqual(parseRanges("-2", 10).ranges, [[1, 2]]);
+  assert.match(parseRanges("12", 10).error ?? "", /全10ページ/);
+  assert.match(parseRanges("5-3", 10).error ?? "", /後ろ/);
+  assert.match(parseRanges("a", 10).error ?? "", /読み取れません/);
+  assert.ok(parseRanges("", 10).error);
+});
+test("分け方（1つ・範囲ごと・1ページずつ・nページずつ）", () => {
+  const items = initialPages([{ pages: Array.from({ length: 5 }, () => ({ landscape: false })) }]);
+  assert.equal(splitGroups(items, "single").length, 1);
+  assert.equal(splitGroups(items, "each").length, 5);
+  assert.deepEqual(splitGroups(items, "every", { every: 2 }).map((g) => g.length), [2, 2, 1]);
+  assert.deepEqual(splitGroups(items, "ranges", { ranges: [[1, 2], [4, 5]] }).map((g) => g.map((p) => p.pageIndex)), [[0, 1], [3, 4]]);
+});
+test("PDFのおすすめ", () => {
+  assert.equal(suggestPdf([{ pages: 3, landscapePages: 0 }, { pages: 2, landscapePages: 0 }])[0].purpose.id, "merge");
+  assert.equal(suggestPdf([{ pages: 1, landscapePages: 0 }])[0].purpose.id, "to-image");
+  assert.equal(suggestPdf([{ pages: 40, landscapePages: 0 }])[0].purpose.id, "extract");
+  const mixed = suggestPdf([{ pages: 6, landscapePages: 2 }]);
+  assert.equal(mixed[0].purpose.id, "organize");
+  assert.ok(mixed[0].reason?.includes("横 2ページ"));
+  // 1件のときは「まとめる」を出さない・重複なし
+  const one = suggestPdf([{ pages: 4, landscapePages: 0 }]);
+  assert.ok(!one.some((s) => s.purpose.id === "merge"));
+  assert.equal(new Set(one.map((s) => s.purpose.id)).size, one.length);
+});
+test("PDFの書き出し名", () => {
+  assert.equal(pdfOutputName("見積書.PDF", "_p1-3"), "見積書_p1-3.pdf");
+  assert.equal(pdfOutputName('a:b?.pdf', "", "zip"), "a_b_.zip");
 });
 
 console.log(`\n${passed} passed`);

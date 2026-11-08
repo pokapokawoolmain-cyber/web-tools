@@ -7,6 +7,7 @@
 // ============================================================
 import type { FileKind } from "./sniff";
 import { INPUT_KINDS, LIMITS } from "./image-plan";
+import { PDF_LIMITS } from "./pdf-plan";
 
 export interface OperationParam {
   key: string;
@@ -86,5 +87,37 @@ export const IMAGE_OPERATIONS: OperationSpec[] = [
     params: [],
     runtime: "browser",
     limits,
+  },
+];
+
+const pdfLimits = { maxFiles: PDF_LIMITS.maxFiles, maxBytes: PDF_LIMITS.maxTotalBytes, maxPages: PDF_LIMITS.maxPages };
+
+/** PDF の操作。ページは書き出すまで並び（PageItem[]）で扱い、PDF本体は書き出し時に組み立てる */
+export const PDF_OPERATIONS: (Omit<OperationSpec, "limits"> & { limits: typeof pdfLimits })[] = [
+  { id: "pdf.merge", label: "1つのPDFにまとめる", accepts: ["pdf"], produces: ["pdf"], params: [], runtime: "browser", limits: pdfLimits },
+  {
+    id: "pdf.reorder", label: "ページを並べ替える", accepts: ["pdf"], produces: ["pdf"],
+    params: [{ key: "order", label: "ページの順番（1始まり）", type: "number", min: 1, max: PDF_LIMITS.maxPages }], runtime: "browser", limits: pdfLimits,
+  },
+  {
+    id: "pdf.rotate", label: "ページを回転する", accepts: ["pdf"], produces: ["pdf"],
+    params: [{ key: "rotation", label: "回転", type: "enum", values: ["90", "180", "270"] }], runtime: "browser", limits: pdfLimits,
+  },
+  { id: "pdf.delete", label: "ページを削除する", accepts: ["pdf"], produces: ["pdf"], params: [], runtime: "browser", limits: pdfLimits },
+  {
+    id: "pdf.split", label: "PDFを分ける", accepts: ["pdf"], produces: ["pdf", "zip"],
+    params: [
+      { key: "mode", label: "分け方", type: "enum", values: ["single", "ranges", "each", "every"] },
+      { key: "every", label: "何ページずつ", type: "number", min: 1, max: PDF_LIMITS.maxPages },
+    ],
+    runtime: "browser", limits: pdfLimits,
+  },
+  {
+    id: "pdf.to-image", label: "画像にする", accepts: ["pdf"], produces: ["jpeg", "png", "zip"],
+    params: [
+      { key: "format", label: "形式", type: "enum", values: ["jpeg", "png"] },
+      { key: "dpi", label: "解像度（dpi）", type: "number", min: 72, max: 300 },
+    ],
+    runtime: "browser", limits: pdfLimits,
   },
 ];
