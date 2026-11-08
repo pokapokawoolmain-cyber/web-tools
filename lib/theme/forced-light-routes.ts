@@ -20,6 +20,10 @@ export const MOCHICO_ARTICLE_PATHS = [
   "/blog/k-arena-yokohama-guide",
   "/blog/live-ensei-checklist",
   "/blog/osaka-jo-hall-guide",
+  "/blog/marine-messe-fukuoka-guide",
+  "/blog/sekisui-heim-super-arena-guide",
+  "/blog/port-messe-nagoya-guide",
+  "/blog/vtuber-live-goods-guide",
 ];
 /** SNS Starter Kit のガイド記事（ToolBoxJP ブログ内だが LP と同じ白基調で表示する）。記事を増やしたらここに足す */
 export const SNS_KIT_ARTICLE_PATHS = [

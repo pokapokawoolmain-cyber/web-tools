@@ -345,6 +345,9 @@ export default function Page() {
       <Figure caption="編集部作成。日程と物販の開始時刻は公式サイトの発表によります（2日間で時刻が違う会場は「1日目／2日目」の順）。">
         <TourRoute />
       </Figure>
+      <p className={s.tableNote}>
+        会場ごとのアクセス・帰り方：<Link href="/blog/k-arena-yokohama-guide">Kアリーナ横浜</Link>／<Link href="/blog/osaka-jo-hall-guide">大阪城ホール</Link>／<Link href="/blog/marine-messe-fukuoka-guide">マリンメッセ福岡</Link>／<Link href="/blog/sekisui-heim-super-arena-guide">セキスイハイムスーパーアリーナ</Link>／<Link href="/blog/port-messe-nagoya-guide">ポートメッセなごや</Link>
+      </p>
       <p>
         販売開始時刻と、整理券で案内される時間帯は会場ごとに違います。横浜は10時から、大阪・福岡・宮城・名古屋の平日は昼からなど、かなり差があるので、自分の公演の行を確認しておきましょう。
       </p>
