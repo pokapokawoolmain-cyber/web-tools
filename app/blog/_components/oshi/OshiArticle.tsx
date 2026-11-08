@@ -344,6 +344,29 @@ export function MochicoNudge({ title, children }: { title: string; children: Rea
   );
 }
 
+/** 体験談のまとめ（ファンの投稿・ブログ・Q&A を編集部が要約したもの。原文の転載はしない） */
+export function FanVoices({ title, items }: { title: string; items: { text: ReactNode; from: string }[] }) {
+  return (
+    <div className={s.voices}>
+      <p className={s.voicesTitle}>
+        <span aria-hidden="true">💬</span>
+        {title}
+      </p>
+      <ul>
+        {items.map((it, i) => (
+          <li key={i}>
+            <span className={s.voiceText}>{it.text}</span>
+            <span className={s.voiceFrom}>{it.from}</span>
+          </li>
+        ))}
+      </ul>
+      <p className={s.voicesNote}>
+        ファンの体験談を編集部が要約したものです。公演や時期によって状況は変わります。
+      </p>
+    </div>
+  );
+}
+
 export function Sources({ items }: { items: { href: string; label: string }[] }) {
   return (
     <div className={s.sources}>

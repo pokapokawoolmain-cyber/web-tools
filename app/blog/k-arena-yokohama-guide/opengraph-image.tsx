@@ -10,6 +10,6 @@ export default function OpengraphImage() {
   return renderMochicoArticleOg({
     kicker: "推し活ガイド｜会場ガイド",
     title: "Kアリーナ横浜 完全ガイド",
-    subLines: ["アクセス・ロッカー・座席LEVEL・", "物販の日の動き方"],
+    subLines: ["帰りの混雑・座席の見え方・", "トイレ・ロッカーを図で解説"],
   });
 }
