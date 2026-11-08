@@ -261,7 +261,7 @@ export function KodenMaker() {
           <p className="text-[12px] font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-3">関連ツール</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {[
-              { href: "/tools/noshi-maker", emoji: "🎀", label: "のし紙作成", desc: "慶事用のし紙" },
+              { href: "/tools/noshi-maker", emoji: "🎀", label: "のし紙作成", desc: "のし紙・香典返しのかけ紙" },
               { href: "/tools/fax-cover", emoji: "📠", label: "送付状作成", desc: "書類送付状" },
               { href: "/tools/resignation-letter", emoji: "📄", label: "退職届作成", desc: "テンプレ多数" },
             ].map((t) => (
