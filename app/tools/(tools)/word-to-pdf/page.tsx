@@ -78,6 +78,7 @@ const seoContent = (
         <li>用紙サイズ・フォントサイズを調整する</li>
         <li>「PDFとして保存する」ボタンを押す</li>
         <li>印刷ダイアログの「プリンター」欄で「PDFとして保存」を選んで保存</li>
+        <li>iPhone・Androidでは印刷用のページが新しいタブで開きます。「印刷・PDF保存」を押し、iPhoneは共有ボタンから「“ファイル”に保存」、Androidは「PDF形式で保存」を選びます</li>
       </ol>
     </section>
     <section>

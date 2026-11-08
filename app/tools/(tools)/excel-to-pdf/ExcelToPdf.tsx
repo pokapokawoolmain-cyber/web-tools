@@ -1,6 +1,9 @@
 "use client";
 import { useState, useCallback, useRef } from "react";
 import { Table, Printer, AlertCircle, CheckCircle2, X, RefreshCw, ChevronDown } from "lucide-react";
+import { escapeHtml, openPrintDialog } from "@/lib/print-save";
+import { decodeCsvBytes } from "@/lib/csv-text";
+import { PrintSaveGuide } from "@/components/tools/PrintSaveGuide";
 
 type SheetData = {
   name: string;
@@ -35,7 +38,7 @@ function buildPrintHtml(
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>${fileName}</title>
+<title>${escapeHtml(fileName)}</title>
 <style>
 @page { size: A4 ${orientation}; margin: 15mm 20mm; }
 @media print { * { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
@@ -70,7 +73,7 @@ tr:nth-child(even) td { background: #f7f7f7; }
 </style>
 </head>
 <body>
-<div class="sheet-title">${sheetsTitle}</div>
+<div class="sheet-title">${escapeHtml(sheetsTitle)}</div>
 ${sheetsHtml}
 </body>
 </html>`;
@@ -105,7 +108,10 @@ export function ExcelToPdf() {
     try {
       const XLSX = await import("xlsx");
       const arrayBuffer = await f.arrayBuffer();
-      const wb = XLSX.read(arrayBuffer, { type: "array", cellStyles: true });
+      // CSV は文字コードを判定して文字列で渡す（バイト列のままだと日本語が文字化けする）
+      const wb = name.endsWith(".csv")
+        ? XLSX.read(decodeCsvBytes(new Uint8Array(arrayBuffer)), { type: "string" })
+        : XLSX.read(arrayBuffer, { type: "array", cellStyles: true });
 
       const sheetData: SheetData[] = wb.SheetNames.map((sheetName) => {
         const ws = wb.Sheets[sheetName];
@@ -173,20 +179,7 @@ export function ExcelToPdf() {
       ? sheets[sortedIndices[0]].name
       : `${fileName}（${sortedIndices.length}シート）`;
 
-    const html = buildPrintHtml(combined, sheetsTitle, orientation, fontSize, fileName);
-    const iframe = document.createElement("iframe");
-    iframe.style.cssText = "position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:none;";
-    document.body.appendChild(iframe);
-    const doc = iframe.contentDocument;
-    if (!doc) return;
-    doc.open();
-    doc.write(html);
-    doc.close();
-    iframe.contentWindow?.focus();
-    setTimeout(() => {
-      iframe.contentWindow?.print();
-      setTimeout(() => document.body.removeChild(iframe), 3000);
-    }, 350);
+    openPrintDialog(buildPrintHtml(combined, sheetsTitle, orientation, fontSize, fileName));
   };
 
   const handleReset = () => {
@@ -375,24 +368,7 @@ export function ExcelToPdf() {
                 </span>
               )}
             </button>
-            <div className="mt-4 space-y-2">
-              <p className="text-[12px] font-semibold text-green-700 dark:text-green-300">
-                保存手順（ブラウザの印刷ダイアログが開きます）
-              </p>
-              <ol className="space-y-1.5">
-                {[
-                  'プリンター欄で「PDFとして保存」または「Save as PDF」を選択する',
-                  '「保存」ボタンをクリックして、任意の場所に保存する',
-                ].map((step, i) => (
-                  <li key={i} className="flex items-start gap-2 text-[12px] text-green-600 dark:text-green-400">
-                    <span className="w-4 h-4 rounded-full bg-green-200 dark:bg-green-800 text-green-700 dark:text-green-200 flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5">
-                      {i + 1}
-                    </span>
-                    {step}
-                  </li>
-                ))}
-              </ol>
-            </div>
+            <PrintSaveGuide tone="green" />
           </div>
 
           {/* シートタブ（プレビュー切り替え用） */}
