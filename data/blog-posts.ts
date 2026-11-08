@@ -51,6 +51,42 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 8,
   },
   {
+    slug: "marine-messe-fukuoka-guide",
+    title: "マリンメッセ福岡A館 完全ガイド｜バス・帰りの混雑・座席・駐車場を図で解説",
+    description:
+      "マリンメッセ福岡A館の公式情報とファンの体験談をまとめた会場ガイド。博多駅・天神からのバスと地下鉄、帰りのバス待ちを避ける方法、A館・B館・サンパレスの違い、座席の見え方、ロッカー、駐車場3か所の違いまで図つきで解説します。",
+    publishedAt: "2026-11-08",
+    category: "推し活ガイド",
+    readingMinutes: 9,
+  },
+  {
+    slug: "sekisui-heim-super-arena-guide",
+    title: "セキスイハイムスーパーアリーナ 完全ガイド｜シャトルバス・帰りの逆算・座席・寒さ対策",
+    description:
+      "宮城・利府のセキスイハイムスーパーアリーナに行く人向けのガイド。仙台駅からのシャトルバスの使い方、新幹線に間に合わせる帰りの逆算、東西2面のスタンド、会場まわりの食べ物・トイレ・寒さ対策まで、体験談をもとに図つきでまとめました。",
+    publishedAt: "2026-11-08",
+    category: "推し活ガイド",
+    readingMinutes: 8,
+  },
+  {
+    slug: "port-messe-nagoya-guide",
+    title: "ポートメッセなごや ライブ完全ガイド｜あおなみ線の混雑・帰り方・ロッカー",
+    description:
+      "ポートメッセなごや（第1展示館）でのライブに行く人向けのガイド。あおなみ線が終演後に混む理由を図で解説し、シャトルバス・時間ずらし・宿泊での避け方、ロッカーや喫煙所などの館内情報、物販と会場の建物の違いまでまとめました。",
+    publishedAt: "2026-11-08",
+    category: "推し活ガイド",
+    readingMinutes: 7,
+  },
+  {
+    slug: "vtuber-live-goods-guide",
+    title: "Vtuberのライブ・受注グッズで後悔しないためのガイド｜会場受け取り・当日販売・オンラインガチャ",
+    description:
+      "Vtuberの現地イベントで迷いやすいグッズの買い方を整理。事前オーダーの会場受け取り・当日販売・オンラインガチャ・受注生産の違い、受注グッズの締切を逃さないコツ、入場やライブビューイングの注意点を、この冬の大きなライブを例に解説します。",
+    publishedAt: "2026-11-08",
+    category: "推し活ガイド",
+    readingMinutes: 8,
+  },
+  {
     slug: "osaka-jo-hall-guide",
     title: "大阪城ホール 完全ガイド｜帰りの混雑・ロッカー・座席の見え方・立見を図で解説",
     description:
