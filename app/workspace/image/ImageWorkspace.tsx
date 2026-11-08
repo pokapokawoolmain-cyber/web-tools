@@ -18,6 +18,7 @@ import { suggest, type OutputMode, type Suggestion } from "@/lib/workspace/sugge
 import { ImageEngine, type EngineOutcome } from "@/lib/workspace/image-engine";
 import type { ImageJobErrorCode, ImageJobResult } from "@/lib/workspace/image-core";
 import { saveBlob, toPdf, toZip } from "@/lib/workspace/export";
+import { takeHandOff } from "@/lib/workspace/handoff";
 
 type Status = "ready" | "rejected" | "processing" | "done" | "failed" | "cancelled";
 
@@ -151,6 +152,15 @@ export function ImageWorkspace() {
     document.addEventListener("paste", onPaste);
     return () => document.removeEventListener("paste", onPaste);
   }, [addFiles, phase]);
+
+  // ホームで入れた画像を受け取る（最初の1回だけ）
+  const handOffDone = useRef(false);
+  useEffect(() => {
+    if (handOffDone.current) return;
+    handOffDone.current = true;
+    const files = takeHandOff("image");
+    if (files.length) void addFiles(files);
+  }, [addFiles]);
 
   const run = async () => {
     const targets = entries.filter((e) => e.status === "ready");

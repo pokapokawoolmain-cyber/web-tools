@@ -16,6 +16,7 @@ import {
 } from "@/lib/workspace/pdf-plan";
 import { PdfLoadError, buildPdf, closePdfs, loadPdf, renderPageImage, renderThumbnail, type ImageFormat, type LoadedPdf, type PdfLoadErrorCode } from "@/lib/workspace/pdf-export";
 import { saveBlob, toZip } from "@/lib/workspace/export";
+import { takeHandOff } from "@/lib/workspace/handoff";
 
 const MB = 1024 * 1024;
 
@@ -135,6 +136,15 @@ export function PdfWorkspace() {
     }
     setLoading(false);
   }, [sources, totalBytes, totalSourcePages]);
+
+  // ホームで入れたPDFを受け取る（最初の1回だけ）
+  const handOffDone = useRef(false);
+  useEffect(() => {
+    if (handOffDone.current) return;
+    handOffDone.current = true;
+    const files = takeHandOff("pdf");
+    if (files.length) void addFiles(files);
+  }, [addFiles]);
 
   const update = (next: PageItem[]) => {
     setHistory((h) => [...h.slice(-29), pages]);

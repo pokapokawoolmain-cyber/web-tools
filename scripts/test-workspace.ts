@@ -7,6 +7,8 @@ import assert from "node:assert/strict";
 import { sniffBytes, kindFromName } from "../lib/workspace/sniff";
 import { planDraw, resolveFormat, outputName, dedupeNames, DEFAULT_JOB_OPTIONS, LIMITS } from "../lib/workspace/image-plan";
 import { suggest } from "../lib/workspace/suggest";
+import { searchTools, toSearchEntries } from "../lib/tool-search";
+import { TOOLS } from "../data/tools";
 import {
   initialPages, movePage, parseRanges, pdfOutputName, removePages, rotatePages, sniffPdf, splitGroups, suggestPdf,
 } from "../lib/workspace/pdf-plan";
@@ -199,6 +201,31 @@ test("PDFのおすすめ", () => {
 test("PDFの書き出し名", () => {
   assert.equal(pdfOutputName("見積書.PDF", "_p1-3"), "見積書_p1-3.pdf");
   assert.equal(pdfOutputName('a:b?.pdf', "", "zip"), "a_b_.zip");
+});
+
+console.log("ホームの検索");
+const entries = toSearchEntries(TOOLS);
+const top = (q: string) => searchTools(entries, q, 3).map((h) => h.entry.id);
+test("言い換えで探せる", () => {
+  assert.equal(top("PDF くっつける")[0], "pdf-merge");
+  assert.equal(top("pdfくっつける")[0], "pdf-merge");
+  assert.equal(top("iPhone 写真")[0], "heic-to-jpg");
+  assert.equal(top("香典")[0], "koden-maker");
+});
+test("全角・半角カナ・カタカナ英語のゆれを吸収", () => {
+  assert.equal(top("ﾊﾟｰｾﾝﾄ")[0], "percentage-calculator");
+  assert.equal(top("ワード PDF")[0], "word-to-pdf");
+  assert.equal(top("エクセル")[0], "excel-to-pdf");
+});
+test("「パスワード」の中の「ワード」は弱く扱う", () => {
+  assert.notEqual(top("ワード")[0], "pdf-password");
+});
+test("「まとめて」でワークスペースが出る", () => {
+  assert.deepEqual(top("まとめて").slice(0, 2).sort(), ["workspace-image", "workspace-pdf"]);
+});
+test("空の入力・見つからない語", () => {
+  assert.deepEqual(searchTools(entries, "  "), []);
+  assert.deepEqual(searchTools(entries, "zzzzqqq"), []);
 });
 
 console.log(`\n${passed} passed`);

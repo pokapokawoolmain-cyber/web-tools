@@ -12,6 +12,8 @@ import { BottomAd } from "@/components/ads/presets";
 import { CategoryTabSection } from "./_components/CategoryTabSection";
 import { HeroPreviewDeck } from "./_components/HeroPreviewDeck";
 import { StoryStickySection } from "./_components/StoryStickySection";
+import { TaskFinder } from "./_components/TaskFinder";
+import { WorkspaceSection } from "./_components/WorkspaceSection";
 import { ScrollReveal } from "./_components/ScrollReveal";
 import { Parallax, ScrollScale } from "./_components/ScrollFX";
 import { getSiteUrl } from "@/lib/utils";
@@ -161,26 +163,22 @@ export default function HomePage() {
                     </span>
                   ))}
                 </div>
-                <p className="text-[16px] sm:text-[17px] text-zinc-300 leading-relaxed mb-10 max-w-md">
+                <p className="text-[16px] sm:text-[17px] text-zinc-300 leading-relaxed mb-6 max-w-md">
                   {TOOLS.length}種類のツールが、ブラウザだけで使える。
                 </p>
               </ScrollReveal>
 
-              <ScrollReveal delay={600}>
-                <div className="flex flex-col sm:flex-row gap-3 mb-10">
-                  <Link
-                    href="/tools"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white text-zinc-900 text-[15px] font-bold hover:bg-zinc-100 transition-all hover:-translate-y-0.5 hover:shadow-lg min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
-                  >
-                    今すぐ使う
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <Link
-                    href="/pdf"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md text-zinc-300 hover:border-white/35 hover:bg-white/10 hover:text-white text-[15px] font-semibold transition-all min-h-[52px] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
-                  >
-                    PDFツールを試す
-                  </Link>
+              <ScrollReveal delay={300}>
+                <div className="mb-6">
+                  <TaskFinder />
+                  <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3">
+                    <Link href="/tools" className="inline-flex items-center gap-1 min-h-[44px] text-[13px] text-zinc-400 hover:text-white transition-colors">
+                      すべてのツールを見る <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                    <Link href="/pdf" className="inline-flex items-center gap-1 min-h-[44px] text-[13px] text-zinc-400 hover:text-white transition-colors">
+                      PDFツール一覧 <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
               </ScrollReveal>
 
@@ -224,6 +222,11 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* ══════════════════════════════════════════════
+          2.5 ワークスペース（ファイルを入れてまとめて片付ける）
+      ══════════════════════════════════════════════ */}
+      <WorkspaceSection />
 
       {/* ══════════════════════════════════════════════
           3. STORY STICKY SECTION
