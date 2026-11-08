@@ -6,6 +6,8 @@ import {
   ArticleAd,
   Bubble,
   Card,
+  FanVoices,
+  Figure,
   H2,
   MochicoNudge,
   OfficialLinks,
@@ -36,6 +38,7 @@ const TOC: TocItem[] = [
   { id: "budget", label: "予算はいくら？3つのモデルコース" },
   { id: "ways", label: "買い方は3通り（当日・会場受け取り・ツアー後）" },
   { id: "schedule", label: "会場別の物販時間と、アプリ整理券の配布日" },
+  { id: "nagano", label: "長野公演の様子と、前回ツアーから分かること" },
   { id: "rules", label: "購入制限・支払い方法・ガチャのルール" },
   { id: "day", label: "当日の動き方と、11月の外テント対策" },
   { id: "after", label: "買ったあとにやっておきたいこと" },
@@ -93,6 +96,58 @@ const SALES: { venue: string; day1: string; day2: string; place: string }[] = [
   { venue: "K-Arena Yokohama（12月）", day1: "12/16(水) 10:00〜（整理券 〜13:00）", day2: "12/17(木) 10:00〜（整理券 〜12:00）", place: "外テント" },
 ];
 
+/** 自作の図：ツアーの流れ（会場・日程・物販開始時刻） */
+function TourRoute() {
+  const stops = [
+    { city: "長野", venue: "長野ビッグハット", date: "11/6・7", sale: "11:00〜", done: true },
+    { city: "横浜", venue: "K-Arena Yokohama", date: "11/11・12", sale: "10:00〜", next: true },
+    { city: "大阪", venue: "大阪城ホール", date: "11/18・19", sale: "12:00〜／13:00〜" },
+    { city: "福岡", venue: "マリンメッセ福岡A館", date: "11/27・28", sale: "12:00〜／11:00〜" },
+    { city: "宮城", venue: "セキスイハイムSA", date: "12/3・4", sale: "12:00〜／13:00〜" },
+    { city: "愛知", venue: "ポートメッセなごや", date: "12/8・9", sale: "12:00〜／13:00〜" },
+    { city: "横浜", venue: "K-Arena Yokohama", date: "12/16・17", sale: "10:00〜", final: true },
+  ];
+  return (
+    <svg viewBox="0 0 360 392" role="img" aria-labelledby="route-title route-desc">
+      <title id="route-title">米津玄師 2026 TOUR / GHOST の国内ツアーの流れ</title>
+      <desc id="route-desc">
+        長野（11/6・7）、横浜（11/11・12）、大阪（11/18・19）、福岡（11/27・28）、宮城（12/3・4）、愛知（12/8・9）、横浜（12/16・17）の順に回る。物販の開始時刻は会場と日によって10時から13時。
+      </desc>
+      <line x1="40" y1="30" x2="40" y2="366" stroke="#ddd2ff" strokeWidth="4" strokeDasharray="2 8" strokeLinecap="round" />
+      {stops.map((st, i) => {
+        const y = 30 + i * 56;
+        const fill = st.done ? "#f4f2f8" : st.next ? "#ffe4f0" : st.final ? "#efe9ff" : "#fff";
+        return (
+          <g key={st.date}>
+            <circle cx="40" cy={y} r="15" fill={st.done ? "#cfc8e4" : st.next ? "#be185d" : "#7c4dff"} />
+            <text x="40" y={y + 4} fontSize="11" fill="#fff" fontWeight="900" textAnchor="middle">
+              {i + 1}
+            </text>
+            <rect x="64" y={y - 22} width="288" height="44" rx="12" fill={fill} stroke={st.next ? "#be185d" : "#ebe6f6"} strokeWidth={st.next ? 2 : 1} />
+            <text x="76" y={y - 3} fontSize="13" fontWeight="900" fill="#1b1430">
+              {st.city}
+              <tspan dx="6" fontSize="11" fontWeight="700" fill="#625b7c">
+                {st.venue}
+              </tspan>
+            </text>
+            <text x="76" y={y + 14} fontSize="11" fill="#5a2fd2" fontWeight="800">
+              {st.date}
+              <tspan dx="8" fill="#3e3756" fontWeight="400">
+                物販 {st.sale}
+              </tspan>
+            </text>
+            {(st.done || st.next || st.final) && (
+              <text x="342" y={y - 3} fontSize="10.5" fontWeight="900" textAnchor="end" fill={st.done ? "#625b7c" : st.next ? "#be185d" : "#5a2fd2"}>
+                {st.done ? "終了" : st.next ? "次はここ" : "FINAL"}
+              </text>
+            )}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 export default function Page() {
   return (
     <OshiArticleLayout
@@ -105,10 +160,10 @@ export default function Page() {
       }
       heroLead="価格の一覧、予算のモデルコース、アプリ整理券の配布日、会場受け取り、支払い方法まで。公式の発表をもとに、物販の前に知っておきたいことを1ページにまとめました。"
       stickers={["🎤 ライブ物販", "👻 GHOST", "🧾 価格一覧つき", "📅 11/6〜12/17"]}
-      unofficialNote="この記事は、公式サイトの発表をもとにToolBoxJP編集部がまとめた非公式のガイドです。米津玄師さん・REISSUE RECORDSとは関係ありません。販売時間や在庫は変わることがあるので、出かける前に必ず公式の最新情報を確認してください（2026年11月6日時点の情報）。"
+      unofficialNote="この記事は、公式サイトの発表をもとにToolBoxJP編集部がまとめた非公式のガイドです。米津玄師さん・REISSUE RECORDSとは関係ありません。販売時間や在庫は変わることがあるので、出かける前に必ず公式の最新情報を確認してください（2026年11月8日更新）。"
     >
       <p>
-        11月6日の長野ビッグハットから始まった「米津玄師 2026 TOUR / GHOST」。全国6都市14公演のアリーナツアーで、12月17日のK-Arena Yokohamaまで約6週間続きます。
+        11月6日・7日の長野ビッグハット公演で幕を開けた「米津玄師 2026 TOUR / GHOST」。全国6都市14公演のアリーナツアーで、12月17日のK-Arena Yokohamaまで約6週間続きます。国内公演のあとは、12月26日からアジア・北米・ヨーロッパの11都市を回るワールドツアーも控えています。
       </p>
       <p>
         今回のツアーグッズは、米津さん描き下ろしのビジュアルを使ったアパレルから、リイシューねこちゃん・とんがりくん・ティースくんのキャラクターグッズ、ガチャガチャまで<span className={s.hl}>全20アイテム</span>。公式のグッズページには価格・購入制限・支払い方法が細かく載っていますが、情報量が多いので、物販の前に押さえておきたいところを整理しました。
@@ -285,6 +340,12 @@ export default function Page() {
         会場別の物販時間と、アプリ整理券の配布日
       </H2>
       <p>
+        ツアーは長野から横浜・大阪・福岡・宮城・名古屋と回り、最後にもう一度横浜に戻ってきます。
+      </p>
+      <Figure caption="編集部作成。日程と物販の開始時刻は公式サイトの発表によります（2日間で時刻が違う会場は「1日目／2日目」の順）。">
+        <TourRoute />
+      </Figure>
+      <p>
         販売開始時刻と、整理券で案内される時間帯は会場ごとに違います。横浜は10時から、大阪・福岡・宮城・名古屋の平日は昼からなど、かなり差があるので、自分の公演の行を確認しておきましょう。
       </p>
       <div className={s.tableWrap} role="region" aria-label="会場別の物販時間（横にスクロールできます）" tabIndex={0}>
@@ -328,7 +389,44 @@ export default function Page() {
         次は11/8(日)の夜、横浜公演の整理券だよ。スマホのリマインダーに「20時 整理券」って入れておこう！
       </Bubble>
 
-      <H2 id="rules" num={5}>
+      <H2 id="nagano" num={5}>
+        長野公演の様子と、前回ツアーから分かること
+      </H2>
+      <p>
+        11月6日・7日の長野公演では、さっそく物販に多くの人が集まりました。SNSや知恵袋に投稿された体験談から、これから行く人に役立ちそうなことをまとめます（個人の体験談で、公式の在庫情報ではありません）。
+      </p>
+      <FanVoices
+        title="長野公演の物販についての声（まとめ）"
+        items={[
+          { text: "売り切れのお知らせが次々に出て、2日目はさらに減るのが早かったという声が多い。「横浜は早めの整理券を取りたい」という投稿も", from: "長野公演に行ったファンの投稿より（11/6〜11/7）" },
+          { text: "整理券は11時台の枠でも「自分の番まで在庫が残るか不安」という声。整理券の順番は配布の取り方で決まる", from: "ファンの投稿より" },
+          { text: "物販だけで来た人も多く、駅との行き来で長く歩いたという投稿も。ガチャのコイン交換所やレジのスタッフの対応が丁寧だったという声も", from: "ファンの投稿より" },
+          { text: "横浜公演の会場受け取り（11/3〜11/5に予約）では、ボルゾイ スウェットが選べなかったという報告", from: "Yahoo!知恵袋の投稿より" },
+        ]}
+      />
+      <h3>前回ツアー「JUNK」（2025年）の物販から分かること</h3>
+      <p>2025年1〜2月のドームツアー「JUNK」でも、同じアプリ「米津玄師 STORE」の整理券方式でした。当時の体験談には、今回にも当てはまりそうなヒントがあります。</p>
+      <ul>
+        <li>
+          <strong>整理券は先着順。</strong>配布開始の20:00ちょうどに操作するのが基本。直前にキャンセルが出て枠が空くこともあり、何度か見直して取れたという人もいました。
+        </li>
+        <li>
+          <strong>整理券がなくても、整理券の時間帯が終わったあとに並べば買える。</strong>ただし人気の商品は昼過ぎに売り切れていた、という体験談があります。
+        </li>
+        <li>
+          <strong>タオルやリストバンドのような小物は売り切れにくい</strong>という声があります（今回のツアーのラインナップでも同じとは限りません）。
+        </li>
+        <li>
+          <strong>ツアー後の通販</strong>は、前回はワールドツアーのあとしばらくしてから始まったという声があります（今回の時期は未発表）。
+        </li>
+      </ul>
+      <Card kind="point" label="これから行く人へ">
+        <p>
+          「絶対に欲しいアパレル」がある人は、整理券を取って早めの枠で並ぶのがいちばん確実です。小物中心なら、整理券の時間帯が終わったあとや、開場後・終演後の販売でも間に合う可能性があります。どちらにしても、当日の朝に公式SNSで売り切れのお知らせを確認してから出かけましょう。
+        </p>
+      </Card>
+
+      <H2 id="rules" num={6}>
         購入制限・支払い方法・ガチャのルール
       </H2>
       <h3>購入制限</h3>
@@ -372,7 +470,7 @@ export default function Page() {
         <li>支払いは現金、クレジットカード、PayPay、交通系IC（PiTaPaを除く）。</li>
       </ul>
 
-      <H2 id="day" num={6}>
+      <H2 id="day" num={7}>
         当日の動き方と、11月の外テント対策
       </H2>
       <p>公式の情報をもとに、当日の流れを組み立てるとこんな感じです。</p>
@@ -408,10 +506,17 @@ export default function Page() {
         <Link href="/blog/live-ensei-checklist">ライブ遠征の持ち物チェックリスト</Link>
         」に、横浜公演に行く人は「
         <Link href="/blog/k-arena-yokohama-guide">Kアリーナ横浜ガイド</Link>
-        」にまとめています。
+        」にまとめています。大阪公演に行く人は「
+        <Link href="/blog/osaka-jo-hall-guide">大阪城ホール完全ガイド</Link>
+        」もどうぞ。
       </p>
+      <Card kind="memo" label="横浜公演の寄り道に">
+        <p>
+          Kアリーナ横浜から歩いて行ける紀伊國屋書店 横浜店で、ブックフェア「米津玄師と文学2026」が開催中です（11/8〜12/24）。米津さんがインタビューなどで触れた本が並んでいます（音楽ナタリーの報道より）。
+        </p>
+      </Card>
 
-      <H2 id="after" num={7}>
+      <H2 id="after" num={8}>
         買ったあとにやっておきたいこと
       </H2>
       <p>
@@ -427,7 +532,7 @@ export default function Page() {
         </p>
       </MochicoNudge>
 
-      <H2 id="links" num={8}>
+      <H2 id="links" num={9}>
         公式情報へのリンク
       </H2>
       <p>グッズの写真やサイズ、最新のお知らせは公式で確認できます。</p>
@@ -447,6 +552,12 @@ export default function Page() {
           { href: "https://ticket.kenshiyonezu.jp/pages/2026_ticketcaution", label: "KENSHI YONEZU TICKET「注意事項」（本人確認・撮影禁止など）" },
           { href: "https://natalie.mu/music/news/696163", label: "音楽ナタリー「米津玄師ツアー『GHOST』グッズ リイシューねこちゃん、とんがりくん、ティースくんが大集合」" },
           { href: "https://www.thefirsttimes.jp/news/0000910204/", label: "THE FIRST TIMES「『米津玄師 2026 TOUR / GHOST』グッズビジュアル公開」" },
+          { href: "https://www.thefirsttimes.jp/news/0000900081/", label: "THE FIRST TIMES「米津玄師、自身最大規模のワールドツアー『GHOST』開催決定」" },
+          { href: "https://news.yahoo.co.jp/articles/9df15bb56b74aff470e7dbb2fb2381a32aafde6e", label: "音楽ナタリー「ブックフェア『米津玄師と文学』紀伊國屋書店横浜店で」" },
+          { href: "https://search.yahoo.co.jp/realtime/search?p=%E7%B1%B3%E6%B4%A5%20%E7%89%A9%E8%B2%A9%20%E9%95%B7%E9%87%8E", label: "Yahoo!リアルタイム検索「米津 物販 長野」（長野公演の物販についての投稿）" },
+          { href: "https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q10332502760", label: "Yahoo!知恵袋「米津玄師さんの2026TOUR_GHOSTのグッズについて」" },
+          { href: "https://note.com/torii_katou/n/n2daca7555c56", label: "note「米津玄師ライブレポ『2025 TOUR / JUNK』宮城 開演前まで」（前回ツアーの整理券・物販）" },
+          { href: "https://haru-smile.blog/%E3%80%90%E3%83%A9%E3%82%A4%E3%83%96%E3%80%91%E7%B1%B3%E6%B4%A5%E7%8E%84%E5%B8%AB2025tour%E3%80%80junk%E3%80%80%E3%82%B0%E3%83%83%E3%82%BA%E8%B2%A9%E5%A3%B2%E3%81%AB%E3%81%A4/", label: "ブログ「米津玄師2025TOUR JUNK グッズ販売について」（前回ツアーの物販の体験談）" },
         ]}
       />
     </OshiArticleLayout>

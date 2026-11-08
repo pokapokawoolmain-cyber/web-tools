@@ -100,8 +100,48 @@ export default function Page() {
         お金：「現金」と「キャッシュレス」を両方
       </H2>
       <p>
-        最近の会場は、場所によって使えるお金がバラバラです。たとえば<Link href="/blog/k-arena-yokohama-guide">Kアリーナ横浜</Link>では、コインロッカーは<strong>現金のみ</strong>（両替機は1,000円札だけ）、館内の売店・バーは<strong>キャッシュレスのみ</strong>で、自動販売機はありません。
+        最近の会場は、場所によって使えるお金がバラバラです。たとえば<Link href="/blog/k-arena-yokohama-guide">Kアリーナ横浜</Link>では、コインロッカーは<strong>現金のみ</strong>（両替機は1,000円札だけ）、館内の売店・バーは<strong>キャッシュレスのみ</strong>で、自動販売機はありません。一方、<Link href="/blog/osaka-jo-hall-guide">大阪城ホール</Link>のロッカーは<strong>100円玉しか使えず、館内に両替機もありません</strong>。
       </p>
+      <div className={s.tableWrap} role="region" aria-label="会場ごとのお金のルールの違い" tabIndex={0}>
+        <table className={s.table} style={{ minWidth: 520 }}>
+          <caption>同じアリーナでもこんなに違う（各会場の公式案内より）</caption>
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Kアリーナ横浜</th>
+              <th scope="col">大阪城ホール</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">ロッカーの数</th>
+              <td>最大6,240個（館内外）</td>
+              <td>160個（館内）</td>
+            </tr>
+            <tr>
+              <th scope="row">ロッカーの支払い</th>
+              <td>現金のみ・両替機は1,000円札だけ</td>
+              <td>100円玉のみ・両替機なし</td>
+            </tr>
+            <tr>
+              <th scope="row">売店</th>
+              <td>キャッシュレスのみ</td>
+              <td>1F・2Fのロビーにあり</td>
+            </tr>
+            <tr>
+              <th scope="row">自動販売機</th>
+              <td>なし</td>
+              <td>ロビーの各所にあり</td>
+            </tr>
+            <tr>
+              <th scope="row">駐車場</th>
+              <td>公演日は事前予約制</td>
+              <td>なし</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p className={s.tableNote}>行く会場のルールは、出発前に公式サイトの「よくある質問」で確認しておきましょう。</p>
       <Checklist
         title="お金セット"
         icon="💴"

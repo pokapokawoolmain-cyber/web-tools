@@ -165,6 +165,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/yonezu-ghost-tour-goods`, lastModified: blogDate("yonezu-ghost-tour-goods"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/k-arena-yokohama-guide`, lastModified: blogDate("k-arena-yokohama-guide"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/live-ensei-checklist`, lastModified: blogDate("live-ensei-checklist"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/blog/osaka-jo-hall-guide`, lastModified: blogDate("osaka-jo-hall-guide"), changeFrequency: "weekly", priority: 0.8 },
     // 税金・社会保険 3記事
     { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/shakai-hoken-guide`, lastModified: blogDate("shakai-hoken-guide"), changeFrequency: "monthly", priority: 0.85 },
