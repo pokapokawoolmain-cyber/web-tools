@@ -21,8 +21,15 @@ export const MOCHICO_ARTICLE_PATHS = [
   "/blog/live-ensei-checklist",
   "/blog/osaka-jo-hall-guide",
 ];
+/** SNS Starter Kit のガイド記事（ToolBoxJP ブログ内だが LP と同じ白基調で表示する）。記事を増やしたらここに足す */
+export const SNS_KIT_ARTICLE_PATHS = [
+  "/blog/community-sns-how-to-own",
+  "/blog/claude-code-community-sns",
+  "/blog/supabase-community-sns-security",
+  "/blog/community-sns-moderation",
+];
 /** 配下のページには適用しない（完全一致のみ）。Mochico は公開 LP と関連記事だけを白基調に固定する */
-const FORCED_LIGHT_EXACT = ["/mochico", ...MOCHICO_ARTICLE_PATHS];
+const FORCED_LIGHT_EXACT = ["/mochico", ...MOCHICO_ARTICLE_PATHS, ...SNS_KIT_ARTICLE_PATHS];
 
 export function isForcedLightRoute(pathname: string | null | undefined): boolean {
   if (!pathname) return false;

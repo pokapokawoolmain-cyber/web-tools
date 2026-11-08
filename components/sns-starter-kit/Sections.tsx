@@ -453,6 +453,11 @@ export function Price() {
                 ・
                 <a href="/sns-starter-kit/terms" style={{ textDecoration: "underline", textUnderlineOffset: 3 }}>販売利用規約・使用許諾条件</a>
               </p>
+              <p className={s.priceNotice}>
+                作れるSNSの例・外部サービスの費用の目安・よくある質問は、
+                <a href="/sns-starter-kit/guide" style={{ textDecoration: "underline", textUnderlineOffset: 3 }} data-cta="guide">活用ガイド</a>
+                にまとめています。
+              </p>
             </>
           ) : (
             <>

@@ -15,6 +15,42 @@ export type BlogPost = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "community-sns-how-to-own",
+    title: "自分たちのコミュニティSNSを持つには｜LINE・Discord・自分たちのSNSの比べ方と、始める前に決めること",
+    description:
+      "趣味の会やファンの集まりを、LINE や Discord ではなく自分たちの名前の場所にしたい運営者へ。始めやすさ・自分たちらしさ・データの置き場所・費用・運営の手間で比べ、自分たちのSNSを持つ前に決めておきたい4つのことをまとめました。",
+    publishedAt: "2026-11-08",
+    category: "コミュニティSNSづくり",
+    readingMinutes: 7,
+  },
+  {
+    slug: "claude-code-community-sns",
+    title: "Claude Codeでコミュニティ用のSNSを作る流れ｜用意するもの・費用の目安・つまずきやすいところ",
+    description:
+      "プログラミングに詳しくない運営者が Claude Code でコミュニティSNSを作るときに、用意するもの、外部サービスの費用の目安、作る流れ、AI への頼み方のコツ、メールやリンクでつまずきやすいところを説明します。",
+    publishedAt: "2026-11-08",
+    category: "コミュニティSNSづくり",
+    readingMinutes: 8,
+  },
+  {
+    slug: "supabase-community-sns-security",
+    title: "Supabaseで会員制コミュニティを作るときの安全チェックリスト｜RLS・Storage・管理者権限・退会",
+    description:
+      "Supabase と Next.js で会員制のコミュニティSNSを作る開発者向けに、公開前に確かめたい項目をまとめました。RLS と既定の権限、SECURITY DEFINER とビュー、Storage のポリシー、メールの先読み対策、管理者権限、退会の削除、鍵の扱い、失敗を確かめるテストまで。",
+    publishedAt: "2026-11-08",
+    category: "コミュニティSNSづくり",
+    readingMinutes: 9,
+  },
+  {
+    slug: "community-sns-moderation",
+    title: "コミュニティSNSの通報・ブロック・管理画面の作り方｜後回しにすると困る理由と、よくある抜け漏れ",
+    description:
+      "コミュニティSNSの通報・ブロック・非表示・利用停止・投稿の上限を、公開前に設計に入れておくべき理由と、画面だけで制限してしまうなどの実装の抜け漏れ、運営の決まりの用意までを開発者向けに説明します。",
+    publishedAt: "2026-11-08",
+    category: "コミュニティSNSづくり",
+    readingMinutes: 8,
+  },
+  {
     slug: "osaka-jo-hall-guide",
     title: "大阪城ホール 完全ガイド｜帰りの混雑・ロッカー・座席の見え方・立見を図で解説",
     description:

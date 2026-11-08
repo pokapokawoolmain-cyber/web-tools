@@ -47,8 +47,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/about/reprint`, lastModified: new Date("2026-06-04"), changeFrequency: "yearly", priority: 0.4 },
     { url: `${siteUrl}/contact`, lastModified: new Date("2026-06-04"), changeFrequency: "yearly", priority: 0.6 },
     { url: `${siteUrl}/release-notes`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
-    // 商品ページ（販売準備中・先行予約）
-    { url: `${siteUrl}/sns-starter-kit`, lastModified: new Date("2026-09-29"), changeFrequency: "weekly", priority: 0.8 },
+    // 商品ページ（販売中）と活用ガイド
+    { url: `${siteUrl}/sns-starter-kit`, lastModified: new Date("2026-11-05"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/sns-starter-kit/guide`, lastModified: new Date("2026-11-08"), changeFrequency: "monthly", priority: 0.8 },
     // Mochico 公開 LP（アプリ本体・共有URLは載せない）
     { url: `${siteUrl}/mochico`, lastModified: new Date("2026-10-26"), changeFrequency: "weekly", priority: 0.8 },
     // 業界特化ページ
@@ -165,6 +166,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/yonezu-ghost-tour-goods`, lastModified: blogDate("yonezu-ghost-tour-goods"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/k-arena-yokohama-guide`, lastModified: blogDate("k-arena-yokohama-guide"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/live-ensei-checklist`, lastModified: blogDate("live-ensei-checklist"), changeFrequency: "weekly", priority: 0.8 },
+    // SNS Starter Kit 関連記事（運営者向け2本・開発者向け2本）
+    { url: `${siteUrl}/blog/community-sns-how-to-own`, lastModified: blogDate("community-sns-how-to-own"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/claude-code-community-sns`, lastModified: blogDate("claude-code-community-sns"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/supabase-community-sns-security`, lastModified: blogDate("supabase-community-sns-security"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/community-sns-moderation`, lastModified: blogDate("community-sns-moderation"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/osaka-jo-hall-guide`, lastModified: blogDate("osaka-jo-hall-guide"), changeFrequency: "weekly", priority: 0.8 },
     // 税金・社会保険 3記事
     { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
