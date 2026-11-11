@@ -4,6 +4,7 @@ import { ImageCompressor } from "./ImageCompressor";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import Link from "next/link";
+import { WorkspaceHint } from "@/components/tools/WorkspaceHint";
 
 export const metadata: Metadata = generateMeta({
   title: "画像圧縮ツール【無料】JPG・PNG・WebPを画質を保って軽量化｜サーバー送信なし",
@@ -128,6 +129,7 @@ export default function ImageCompressPage() {
         seoContent={seoContent}
       >
         <ImageCompressor />
+        <WorkspaceHint text="大きさの変更やJPG化、PDFへのまとめも一緒に行いたいときは" />
       </ToolLayout>
     </>
   );

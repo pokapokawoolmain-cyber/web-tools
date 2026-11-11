@@ -4,6 +4,7 @@ import { generateMeta } from "@/lib/seo";
 import { ToolLayout } from "@/components/layout/ToolLayout";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ImageConverter } from "./ImageConverter";
+import { WorkspaceHint } from "@/components/tools/WorkspaceHint";
 
 export const metadata: Metadata = generateMeta({
   title: "画像一括変換｜JPG・PNG・WebP・AVIFをまとめて変換【無料・ブラウザ完結】",
@@ -186,6 +187,7 @@ export default function Page() {
         seoContent={seoContent}
       >
         <ImageConverter />
+        <WorkspaceHint text="目的に合った設定を自動でおすすめしてほしいときは" />
       </ToolLayout>
     </>
   );
