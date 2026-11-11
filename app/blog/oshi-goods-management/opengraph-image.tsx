@@ -1,5 +1,6 @@
 // 記事「推しグッズの管理方法」の OG 画像（Mochico の LP と同じ白基調・公式 purple。架空の数値は載せない）
 import { ImageResponse } from "next/og";
+import { loadNotoSansJp, ogFonts } from "@/lib/og/google-font";
 import { MascotSvg } from "@/lib/mochico/icon-render";
 
 export const alt = "推しグッズの管理方法｜持っているものを把握して重複買いを防ぐコツ";
@@ -11,32 +12,12 @@ const L1 = "推しグッズの管理方法";
 const L2 = "持っているものを把握して、重複買いを防ぐコツ";
 const FOOT = "ToolBoxJP ブログ ｜ Mochico ガイド";
 
-async function loadFont(text: string, weight: number): Promise<ArrayBuffer | null> {
-  try {
-    const css = await fetch(
-      `https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@${weight}&text=${encodeURIComponent(text)}`,
-      {
-        headers: {
-          // satori は woff/ttf を要求するため、旧 Safari の UA で取得する（Mochico LP の OG と同じ方式）
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
-        },
-      }
-    ).then((r) => r.text());
-    const url = css.match(/src: url\((.+?)\)/)?.[1];
-    if (!url) return null;
-    return await fetch(url).then((r) => r.arrayBuffer());
-  } catch {
-    return null;
-  }
-}
-
 export default async function OpengraphImage() {
-  const [bold, regular] = await Promise.all([loadFont(L1, 800), loadFont(KICKER + L2 + FOOT, 500)]);
-  const fonts = [
-    ...(bold ? [{ name: "NotoJP", data: bold, weight: 800 as const, style: "normal" as const }] : []),
-    ...(regular ? [{ name: "NotoJP", data: regular, weight: 500 as const, style: "normal" as const }] : []),
-  ];
+  const [bold, regular] = await Promise.all([loadNotoSansJp(L1, 800), loadNotoSansJp(KICKER + L2 + FOOT, 500)]);
+  const fonts = ogFonts("NotoJP", [
+    { data: bold, weight: 800 },
+    { data: regular, weight: 500 },
+  ]);
   return new ImageResponse(
     (
       <div

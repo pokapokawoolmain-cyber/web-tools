@@ -2,16 +2,20 @@
 // 旧 Safari の UA で取得すると、satori が読める woff/ttf の URL が返る
 const FONT_UA =
   "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1";
+export type OgFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+
 const FONT_ATTEMPTS = 3;
 const FONT_TIMEOUT_MS = 10_000;
 
 /**
- * Google Fonts から Noto Sans JP（使う文字だけのサブセット）を取得する。
+ * Google Fonts から Noto Sans JP（text を渡すと使う文字だけのサブセット）を取得する。
  * ビルド時は多数のページが同時に取りに行くため、429 や一時的な失敗が起きうる。
  * HTTP ステータスと中身を確認し、失敗したら間隔をあけて再試行する。最後まで失敗したら null。
  */
-export async function loadNotoSansJp(text: string, weight: number): Promise<ArrayBuffer | null> {
-  const cssUrl = `https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@${weight}&text=${encodeURIComponent(text)}`;
+export async function loadNotoSansJp(text: string | undefined, weight: OgFontWeight): Promise<ArrayBuffer | null> {
+  // text を省くとフォント全体を取得する（任意の文字列を描く /api/og 用）
+  const cssUrl =
+    `https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@${weight}` + (text === undefined ? "" : `&text=${encodeURIComponent(text)}`);
   let lastError: unknown = null;
   for (let attempt = 1; attempt <= FONT_ATTEMPTS; attempt++) {
     try {
@@ -33,14 +37,14 @@ export async function loadNotoSansJp(text: string, weight: number): Promise<Arra
   return null;
 }
 
-type OgFont = { name: string; data: ArrayBuffer; weight: 500 | 800; style: "normal" };
+type OgFont = { name: string; data: ArrayBuffer; weight: OgFontWeight; style: "normal" };
 
 /**
  * ImageResponse の fonts に渡す値を作る。
  * 空配列を渡すと satori が「No fonts are loaded」で落ちるため、1つも取れなかったときは undefined を返し、
  * next/og 同梱の既定フォント（日本語の字形は next/og が動的に補う）で描かせる。
  */
-export function ogFonts(name: string, loaded: { data: ArrayBuffer | null; weight: 500 | 800 }[]): OgFont[] | undefined {
+export function ogFonts(name: string, loaded: { data: ArrayBuffer | null; weight: OgFontWeight }[]): OgFont[] | undefined {
   const fonts = loaded.flatMap(({ data, weight }) => (data ? [{ name, data, weight, style: "normal" as const }] : []));
   return fonts.length > 0 ? fonts : undefined;
 }
