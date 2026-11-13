@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { PRODUCT } from "@/lib/sns-starter-kit/content";
 
 // 規約への同意のチェックを入れるまで、支払い画面へ進めないようにする
 export function PurchaseConsent({ paymentLink }: { paymentLink: string }) {
@@ -20,14 +21,14 @@ export function PurchaseConsent({ paymentLink }: { paymentLink: string }) {
           href={paymentLink}
           className="block w-full rounded-lg bg-slate-900 px-5 py-4 text-center text-base font-bold text-white hover:bg-slate-700"
         >
-          49,800円（税込）の支払い画面へ進む
+          {PRODUCT.priceLabel}（税込）の支払い画面へ進む
         </a>
       ) : (
         <span
           aria-disabled="true"
           className="block w-full rounded-lg bg-slate-300 px-5 py-4 text-center text-base font-bold text-white cursor-not-allowed"
         >
-          49,800円（税込）の支払い画面へ進む
+          {PRODUCT.priceLabel}（税込）の支払い画面へ進む
         </span>
       )}
       <p className="text-sm text-slate-600">次の Stripe の画面でメールアドレスとカード情報を入力し、「支払う」を押すと購入が確定します。</p>

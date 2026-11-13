@@ -6,8 +6,18 @@
 //   文言を変えるときは、このファイルだけを直す。
 // ============================================================
 
+/**
+ * 先行販売（先着10件・29,800円）。true の間は先行販売価格と、その支払いリンクを使う。
+ * 先行販売が終わったら false にする（通常価格 49,800円と、通常の支払いリンクに戻る）。
+ * 先着の件数は、Stripe の支払いリンクの「支払い回数の上限（10）」で止める。
+ */
+export const LAUNCH_SALE = true;
+export const LAUNCH_LIMIT = 10;
+
 /** Stripe の支払いリンク（本番）。公開してよい URL。販売を止めるときは SALE_OPEN を false にする。 */
-export const PAYMENT_LINK = "https://buy.stripe.com/14AfZh4891Rif9zaCrcQU01";
+const REGULAR_PAYMENT_LINK = "https://buy.stripe.com/14AfZh4891Rif9zaCrcQU01"; // 49,800円（通常価格。削除しない）
+const LAUNCH_PAYMENT_LINK = ""; // 29,800円（先行販売・上限10回）。Stripe で作成後に入れる
+export const PAYMENT_LINK = LAUNCH_SALE ? LAUNCH_PAYMENT_LINK : REGULAR_PAYMENT_LINK;
 export const SALE_OPEN = true;
 export const PURCHASABLE = SALE_OPEN && PAYMENT_LINK.startsWith("https://buy.stripe.com/");
 
@@ -20,11 +30,11 @@ export const SELLER = {
 } as const;
 
 /** 規約・特商法の表記の施行日（最終更新日） */
-export const TERMS_EFFECTIVE_DATE = "2026年11月5日";
+export const TERMS_EFFECTIVE_DATE = "2026年11月13日";
 
 export const TEXT = {
   product: "SNS Starter Kit Standard 1.0.0",
-  price: "49,800円（税込）",
+  price: LAUNCH_SALE ? "29,800円（税込）※先行販売価格。先行販売終了後は49,800円（税込）となります。" : "49,800円（税込）",
   form: "買い切りのデジタル商品（ZIP ファイルのダウンロード）です。購入時点の版（1.0.0）を提供します。",
   update: "将来の更新（アップデート）の提供は保証しません。",
   license:
