@@ -13,6 +13,25 @@ import { TOOLS } from "@/data/tools";
 import type { BlogPost } from "@/data/blog-posts";
 
 export type PromoPlacement = "top" | "bottom";
+/** calm は法事・弔事など落ち着いた話題の記事向け（青を使わず墨色・生成りでまとめる） */
+export type PromoTone = "default" | "calm";
+
+const TONE: Record<PromoTone, { bar: string; iconBox: string; label: string; dot: string; button: string }> = {
+  default: {
+    bar: "border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/40 text-slate-800 dark:text-zinc-100 hover:border-blue-400",
+    iconBox: "bg-white dark:bg-zinc-900 text-blue-600 dark:text-blue-400",
+    label: "text-blue-700 dark:text-blue-300",
+    dot: "bg-blue-500",
+    button: "bg-blue-600 text-white hover:bg-blue-700",
+  },
+  calm: {
+    bar: "border-stone-300 dark:border-stone-700 bg-[#fffdf8] dark:bg-stone-900/60 text-stone-800 dark:text-stone-100 hover:border-stone-500",
+    iconBox: "bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300",
+    label: "text-stone-600 dark:text-stone-300",
+    dot: "bg-stone-400",
+    button: "bg-stone-700 text-white hover:bg-stone-800 dark:bg-stone-200 dark:text-stone-900 dark:hover:bg-white",
+  },
+};
 
 interface Promo {
   href: string;
@@ -114,39 +133,41 @@ function PromoIcon({ icon, size }: { icon: Promo["icon"]; size: number }) {
 }
 
 /** 記事の冒頭に出す1行の案内 */
-export function ServicePromoTop({ post }: { post: BlogPost }) {
+export function ServicePromoTop({ post, tone = "default" }: { post: BlogPost; tone?: PromoTone }) {
   const p = pickPromo(post);
+  const c = TONE[tone];
   return (
     <aside data-promo="top" aria-label="ToolBoxJPのサービスの案内" className="not-prose my-5">
       <Link
         href={p.href}
         // 記事本文のリンクの下線スタイルを打ち消す（推し活ガイドなどの本文CSSが a に下線を付けるため）
         style={{ textDecoration: "none" }}
-        className="flex items-center gap-3 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/40 px-4 py-3 min-h-[52px] text-slate-800 dark:text-zinc-100 hover:border-blue-400 transition-colors"
+        className={`flex items-center gap-3 rounded-xl border px-4 py-3 min-h-[52px] transition-colors ${c.bar}`}
       >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white dark:bg-zinc-900 text-blue-600 dark:text-blue-400">
+        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${c.iconBox}`}>
           <PromoIcon icon={p.icon} size={26} />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[11px] font-semibold text-blue-700 dark:text-blue-300">ToolBoxJPのサービス</span>
+          <span className={`block text-[11px] font-semibold ${c.label}`}>ToolBoxJPのサービス</span>
           <span className="block text-[14px] font-semibold leading-snug">
             {p.name}：{p.short}
           </span>
         </span>
-        <ArrowRight className="h-4 w-4 shrink-0 text-blue-600" aria-hidden />
+        <ArrowRight className={`h-4 w-4 shrink-0 ${c.label}`} aria-hidden />
       </Link>
     </aside>
   );
 }
 
 /** 記事の終わりに出すカード */
-export function ServicePromoBottom({ post }: { post: BlogPost }) {
+export function ServicePromoBottom({ post, tone = "default" }: { post: BlogPost; tone?: PromoTone }) {
   const p = pickPromo(post);
+  const c = TONE[tone];
   return (
     <aside data-promo="bottom" aria-label="ToolBoxJPのサービスの紹介" className="not-prose my-10 rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 sm:p-6 shadow-sm text-slate-800 dark:text-zinc-100">
-      <p className="text-[11px] font-semibold text-blue-700 dark:text-blue-300">ToolBoxJPのサービス</p>
+      <p className={`text-[11px] font-semibold ${c.label}`}>ToolBoxJPのサービス</p>
       <div className="mt-2 flex items-start gap-3">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400">
+        <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${c.iconBox}`}>
           <PromoIcon icon={p.icon} size={40} />
         </span>
         <div className="min-w-0">
@@ -157,7 +178,7 @@ export function ServicePromoBottom({ post }: { post: BlogPost }) {
       <ul className="mt-4 grid gap-1.5 text-[13px] text-slate-700 dark:text-zinc-300">
         {p.points.map((pt) => (
           <li key={pt} className="flex gap-2">
-            <span aria-hidden className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
+            <span aria-hidden className={`mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full ${c.dot}`} />
             {pt}
           </li>
         ))}
@@ -166,7 +187,7 @@ export function ServicePromoBottom({ post }: { post: BlogPost }) {
         href={p.href}
         // 記事本文のリンクの下線スタイルを打ち消す（推し活ガイドなどの本文CSSが a に下線を付けるため）
         style={{ textDecoration: "none" }}
-        className="mt-5 inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-[15px] font-semibold text-white hover:bg-blue-700"
+        className={`mt-5 inline-flex min-h-[48px] items-center gap-2 rounded-xl px-5 py-3 text-[15px] font-semibold ${c.button}`}
       >
         {p.cta}
         <ArrowRight className="h-4 w-4" aria-hidden />

@@ -52,6 +52,7 @@ export default function Page() {
   return (
     <OshiArticleLayout
       post={post}
+      theme="comiket"
       heading={
         <>
           コミケC109の<mark>入場チケット・リストバンド</mark>の買い方

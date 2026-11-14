@@ -5,14 +5,17 @@ import { getSiteUrl } from "@/lib/utils";
 import { BottomAd, InArticleAd } from "@/components/ads/presets";
 import type { BlogPost } from "@/data/blog-posts";
 import { ArticleLinkTracker } from "./ArticleLinkTracker";
+import calm from "./calm.module.css";
 import { ServicePromoBottom, ServicePromoTop } from "@/components/blog/ServicePromo";
 
 type Props = {
   post: BlogPost;
+  /** 記事の見た目。calm は法事・弔事など落ち着いた話題向け（明朝体の見出し・生成りの紙色） */
+  tone?: "default" | "calm";
   children: React.ReactNode;
 };
 
-export function BlogLayout({ post, children }: Props) {
+export function BlogLayout({ post, tone = "default", children }: Props) {
   const siteUrl = getSiteUrl();
   const articleUrl = `${siteUrl}/blog/${post.slug}`;
   const ogImageUrl = `${siteUrl}/og-default.png`;
@@ -72,7 +75,7 @@ export function BlogLayout({ post, children }: Props) {
   return (
     <>
       <JsonLd data={schemas as Record<string, unknown>[]} />
-      <div className="min-h-screen bg-white dark:bg-zinc-950">
+      <div className={tone === "calm" ? `min-h-screen ${calm.calm}` : "min-h-screen bg-white dark:bg-zinc-950"}>
         {/* Breadcrumb */}
         <div className="border-b border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1 text-[13px] text-slate-400">
@@ -90,7 +93,7 @@ export function BlogLayout({ post, children }: Props) {
           {/* Header */}
           <header className="mb-10">
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-[12px] font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 px-2.5 py-1 rounded-full">
+              <span className={`text-[12px] font-medium px-2.5 py-1 rounded-full ${tone === "calm" ? "text-stone-600 dark:text-stone-300 bg-stone-200/70 dark:bg-stone-800" : "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40"}`}>
                 {post.category}
               </span>
               <span className="flex items-center gap-1 text-[12px] text-slate-400">
@@ -115,7 +118,7 @@ export function BlogLayout({ post, children }: Props) {
           </header>
 
           {/* 自社サービスの案内（記事の冒頭） */}
-          <ServicePromoTop post={post} />
+          <ServicePromoTop post={post} tone={tone} />
 
           {/* 記事中広告（本文の前・導入後の自然な区切り） */}
           <InArticleAd className="not-prose" />
@@ -137,7 +140,7 @@ export function BlogLayout({ post, children }: Props) {
           </div>
 
           {/* 自社サービスの紹介（記事の終わり） */}
-          <ServicePromoBottom post={post} />
+          <ServicePromoBottom post={post} tone={tone} />
 
           {/* FAQ section */}
           {post.faqs && post.faqs.length > 0 && (
