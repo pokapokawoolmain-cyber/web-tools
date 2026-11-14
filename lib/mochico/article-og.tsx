@@ -3,30 +3,11 @@
 //   各記事の opengraph-image.tsx から呼ぶ。見た目は app/blog/oshi-goods-management/opengraph-image.tsx と同じ。
 // ============================================================
 import { ImageResponse } from "next/og";
+import { loadNotoSansJp, ogFonts } from "@/lib/og/google-font";
 import { MascotSvg } from "@/lib/mochico/icon-render";
 
 export const MOCHICO_OG_SIZE = { width: 1200, height: 630 };
 const FOOT = "ToolBoxJP ブログ ｜ Mochico ガイド";
-
-async function loadFont(text: string, weight: number): Promise<ArrayBuffer | null> {
-  try {
-    const css = await fetch(
-      `https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@${weight}&text=${encodeURIComponent(text)}`,
-      {
-        headers: {
-          // satori は woff/ttf を要求するため、旧 Safari の UA で取得する（Mochico LP の OG と同じ方式）
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
-        },
-      }
-    ).then((r) => r.text());
-    const url = css.match(/src: url\((.+?)\)/)?.[1];
-    if (!url) return null;
-    return await fetch(url).then((r) => r.arrayBuffer());
-  } catch {
-    return null;
-  }
-}
 
 export async function renderMochicoArticleOg({
   kicker = "推し活・グッズ管理",
@@ -39,11 +20,11 @@ export async function renderMochicoArticleOg({
   /** 見出しの下の説明（行ごとに改行） */
   subLines: string[];
 }) {
-  const [bold, regular] = await Promise.all([loadFont(title, 800), loadFont(kicker + subLines.join("") + FOOT, 500)]);
-  const fonts = [
-    ...(bold ? [{ name: "NotoJP", data: bold, weight: 800 as const, style: "normal" as const }] : []),
-    ...(regular ? [{ name: "NotoJP", data: regular, weight: 500 as const, style: "normal" as const }] : []),
-  ];
+  const [bold, regular] = await Promise.all([loadNotoSansJp(title, 800), loadNotoSansJp(kicker + subLines.join("") + FOOT, 500)]);
+  const fonts = ogFonts("NotoJP", [
+    { data: bold, weight: 800 },
+    { data: regular, weight: 500 },
+  ]);
   const titleSize = title.length > 12 ? 60 : 72;
   return new ImageResponse(
     (

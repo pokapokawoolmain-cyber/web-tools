@@ -1,36 +1,17 @@
 // SNS Starter Kit ガイド記事の OG 画像（LP と同じ中立色＋青。架空の数値や画面は載せない）
 import { ImageResponse } from "next/og";
+import { loadNotoSansJp, ogFonts } from "@/lib/og/google-font";
 
 export const OG_SIZE = { width: 1200, height: 630 };
-
-async function loadFont(text: string, weight: number): Promise<ArrayBuffer | null> {
-  try {
-    const css = await fetch(
-      `https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@${weight}&text=${encodeURIComponent(text)}`,
-      {
-        headers: {
-          // satori は woff/ttf を要求するため、旧 Safari の UA で取得する（Mochico 記事の OG と同じ方式）
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
-        },
-      }
-    ).then((r) => r.text());
-    const url = css.match(/src: url\((.+?)\)/)?.[1];
-    if (!url) return null;
-    return await fetch(url).then((r) => r.arrayBuffer());
-  } catch {
-    return null;
-  }
-}
 
 /** kicker: 上の小さなラベル / title: 大見出し（1〜2行）/ sub: 補足の行 */
 export async function snsKitOgImage({ kicker, title, sub }: { kicker: string; title: string[]; sub: string[] }) {
   const foot = "ToolBoxJP ブログ ｜ SNS Starter Kit";
-  const [bold, regular] = await Promise.all([loadFont(title.join(""), 800), loadFont(kicker + sub.join("") + foot, 500)]);
-  const fonts = [
-    ...(bold ? [{ name: "NotoJP", data: bold, weight: 800 as const, style: "normal" as const }] : []),
-    ...(regular ? [{ name: "NotoJP", data: regular, weight: 500 as const, style: "normal" as const }] : []),
-  ];
+  const [bold, regular] = await Promise.all([loadNotoSansJp(title.join(""), 800), loadNotoSansJp(kicker + sub.join("") + foot, 500)]);
+  const fonts = ogFonts("NotoJP", [
+    { data: bold, weight: 800 },
+    { data: regular, weight: 500 },
+  ]);
   return new ImageResponse(
     (
       <div
