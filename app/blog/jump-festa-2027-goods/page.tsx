@@ -65,6 +65,7 @@ export default function Page() {
   return (
     <OshiArticleLayout
       post={post}
+      theme="jump"
       heading={
         <>
           ジャンプフェスタ2027の<mark>グッズの買い方</mark>
