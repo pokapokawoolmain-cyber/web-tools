@@ -9,6 +9,8 @@ import { planDraw, resolveFormat, outputName, dedupeNames, DEFAULT_JOB_OPTIONS, 
 import { suggest } from "../lib/workspace/suggest";
 import { searchTools, toSearchEntries } from "../lib/tool-search";
 import { TOOLS } from "../data/tools";
+import { classifyArticleLink } from "../lib/analytics/article";
+import { pickPromo } from "../components/blog/ServicePromo";
 import {
   initialPages, movePage, parseRanges, pdfOutputName, removePages, rotatePages, sniffPdf, splitGroups, suggestPdf,
 } from "../lib/workspace/pdf-plan";
@@ -226,6 +228,31 @@ test("「まとめて」でワークスペースが出る", () => {
 test("空の入力・見つからない語", () => {
   assert.deepEqual(searchTools(entries, "  "), []);
   assert.deepEqual(searchTools(entries, "zzzzqqq"), []);
+});
+
+console.log("記事からの送客の計測");
+const O = "https://www.toolboxjp.com";
+test("リンクの種類と送る値", () => {
+  assert.deepEqual(classifyArticleLink("/mochico", O, "/blog/a"), { type: "mochico", target: "/mochico" });
+  assert.deepEqual(classifyArticleLink("/mochico/app?x=1", O, "/blog/a"), { type: "mochico", target: "/mochico/*" });
+  assert.deepEqual(classifyArticleLink("/tools/koden-maker", O, "/blog/a"), { type: "tool", target: "/tools/koden-maker" });
+  assert.deepEqual(classifyArticleLink("/workspace/pdf", O, "/blog/a"), { type: "workspace", target: "/workspace/pdf" });
+  assert.deepEqual(classifyArticleLink("/blog/b", O, "/blog/a"), { type: "blog", target: "/blog/b" });
+  // 外部はホスト名だけ（パス・クエリは送らない）
+  assert.deepEqual(classifyArticleLink("https://www.jumpfesta.com/guide/flow/?ref=x", O, "/blog/a"), { type: "official", target: "www.jumpfesta.com" });
+});
+test("目次（同じページの #）・メール・トップは送らない", () => {
+  assert.equal(classifyArticleLink("#schedule", O, "/blog/a"), null);
+  assert.equal(classifyArticleLink("mailto:a@example.com", O, "/blog/a"), null);
+  assert.equal(classifyArticleLink("/", O, "/blog/a"), null);
+});
+test("記事に合う自社サービスを選ぶ", () => {
+  const base = { slug: "x", title: "", description: "", publishedAt: "2026-11-15", readingMinutes: 1 };
+  assert.equal(pickPromo({ ...base, category: "推し活ガイド" }).href, "/mochico");
+  assert.equal(pickPromo({ ...base, category: "PDF活用" }).href, "/workspace/pdf");
+  assert.equal(pickPromo({ ...base, category: "画像変換" }).href, "/workspace/image");
+  assert.equal(pickPromo({ ...base, category: "冠婚葬祭", relatedToolHref: "/tools/koden-maker" }).href, "/tools/koden-maker");
+  assert.equal(pickPromo({ ...base, category: "その他" }).href, "/");
 });
 
 console.log(`\n${passed} passed`);

@@ -170,6 +170,8 @@ export default function Page() {
       <h2>関連記事</h2>
       <ul className="space-y-2">
         <li><Link href="/blog/noshi-paper-guide">のし紙の書き方・選び方完全ガイド｜無料で印刷する方法</Link></li>
+        <li><Link href="/blog/shijukunichi-keisan">四十九日の計算方法｜命日を入れるだけの計算機と早見表</Link></li>
+        <li><Link href="/blog/mochu-hagaki-itsumade">喪中はがきはいつまでに出す？2027年用の日付一覧</Link></li>
       </ul>
 
       {/* BOTTOM CTA */}

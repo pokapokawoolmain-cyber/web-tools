@@ -55,6 +55,9 @@ const seoContent = (
       <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         忌日法要は<strong>命日を1日目</strong>として数えます。四十九日は命日を含めて49日目（命日の48日後）です。一方、年忌法要の一周忌は<strong>満1年後</strong>の祥月命日ですが、三回忌以降は「回忌数−1年後」に営みます（三回忌＝満2年後、七回忌＝満6年後）。この数え方の違いを間違えやすいため、本ツールで正確な日付を確認してください。
       </p>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mt-2">
+        四十九日の日付だけをすぐ知りたい場合や、法要を前倒しする土日・三月越しの確認は、<Link href="/blog/shijukunichi-keisan" className="text-blue-600 dark:text-blue-400 underline">四十九日の計算方法と早見表</Link>でまとめています。
+      </p>
     </section>
 
     <section>

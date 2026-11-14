@@ -927,3 +927,22 @@
   font-size: 12px;
   color: var(--muted);
 }
+
+/* よくある質問（記事データに faqs がある記事だけ） */
+.faq {
+  border: 1px solid #ece6fb;
+  border-radius: 14px;
+  background: #fff;
+  margin: 10px 0;
+}
+.faq summary {
+  cursor: pointer;
+  padding: 14px 16px;
+  min-height: 44px;
+  font-weight: 700;
+  color: #2b2340;
+}
+.faq p {
+  margin: 0;
+  padding: 0 16px 14px;
+}

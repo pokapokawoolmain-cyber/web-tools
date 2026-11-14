@@ -13,6 +13,8 @@ import { MascotSvg } from "@/lib/mochico/icon-render";
 import { getSiteUrl } from "@/lib/utils";
 import { BLOG_POSTS, type BlogPost } from "@/data/blog-posts";
 import s from "./article.module.css";
+import { ArticleLinkTracker } from "../ArticleLinkTracker";
+import { ServicePromoBottom, ServicePromoTop } from "@/components/blog/ServicePromo";
 
 export type TocItem = { id: string; label: string };
 
@@ -74,6 +76,7 @@ export function MochicoArticleLayout({
   ];
 
   return (
+    <ArticleLinkTracker slug={post.slug}>
     <div className={s.page}>
       <JsonLd data={schemas} />
 
@@ -117,7 +120,11 @@ export function MochicoArticleLayout({
         </header>
 
         <div className={s.paper}>
-          <div className={s.body}>{children}</div>
+          <div className={s.body}>
+            <ServicePromoTop post={post} />
+            {children}
+            <ServicePromoBottom post={post} />
+          </div>
         </div>
       </article>
 
@@ -132,6 +139,7 @@ export function MochicoArticleLayout({
         </p>
       </div>
     </div>
+    </ArticleLinkTracker>
   );
 }
 
