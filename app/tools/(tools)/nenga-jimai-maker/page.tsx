@@ -64,6 +64,9 @@ const seoContent = (
         企業でも年賀状をやめる動きが広がっています。東京商工リサーチが2025年12月に実施した調査（有効回答6,306社）では、2026年の年賀状を出すと答えた企業は<strong>36.0%</strong>にとどまり、出さない企業が64.0%でした。
         高齢化や郵便料金の値上げ、SNS・メールでの挨拶への移行などが主な理由で、個人でも取引先でも、年賀状じまいは定着した習慣になりつつあります。
       </p>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mt-2">
+        喪中はがきを出す時期は、今年（2027年用）の年賀状の受付開始日（12月20日）などの日付と合わせて<Link href="/blog/mochu-hagaki-itsumade" className="text-blue-600 dark:text-blue-400 underline">喪中はがきはいつまでに出す？</Link>で一覧にしています。
+      </p>
     </section>
 
     <section>

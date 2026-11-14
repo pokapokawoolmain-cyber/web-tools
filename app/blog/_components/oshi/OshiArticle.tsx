@@ -14,6 +14,8 @@ import { getSiteUrl } from "@/lib/utils";
 import { BLOG_POSTS, type BlogPost } from "@/data/blog-posts";
 import { MOCHICO_GUIDE_CATEGORY } from "../mochico/MochicoArticle";
 import s from "./oshi.module.css";
+import { ArticleLinkTracker } from "../ArticleLinkTracker";
+import { ServicePromoBottom, ServicePromoTop } from "@/components/blog/ServicePromo";
 
 export type TocItem = { id: string; label: string };
 
@@ -80,9 +82,20 @@ export function OshiArticleLayout({
         { "@type": "ListItem", position: 3, name: post.title, item: url },
       ],
     },
+    // よくある質問（記事データに faqs がある記事だけ。画面にも同じ内容を出す）
+    ...(post.faqs?.length
+      ? [
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: post.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+          },
+        ]
+      : []),
   ];
 
   return (
+    <ArticleLinkTracker slug={post.slug}>
     <div className={s.page}>
       <JsonLd data={schemas} />
 
@@ -125,7 +138,22 @@ export function OshiArticleLayout({
         </header>
 
         <div className={s.paper}>
-          <div className={s.body}>{children}</div>
+          <div className={s.body}>
+            <ServicePromoTop post={post} />
+            {children}
+            {post.faqs && post.faqs.length > 0 && (
+              <section aria-labelledby="faq-title">
+                <h2 id="faq-title">よくある質問</h2>
+                {post.faqs.map((f) => (
+                  <details key={f.q} className={s.faq}>
+                    <summary>{f.q}</summary>
+                    <p>{f.a}</p>
+                  </details>
+                ))}
+              </section>
+            )}
+            <ServicePromoBottom post={post} />
+          </div>
         </div>
       </article>
 
@@ -140,6 +168,7 @@ export function OshiArticleLayout({
         </p>
       </div>
     </div>
+    </ArticleLinkTracker>
   );
 }
 
@@ -270,7 +299,7 @@ export function Timeline({ items }: { items: { date: string; text: ReactNode; ho
 }
 
 export type CheckItem = { text: ReactNode; why?: ReactNode; must?: boolean };
-export function Checklist({ title, icon, items }: { title: string; icon: string; items: CheckItem[] }) {
+export function Checklist({ title, icon, items }: { title: string; icon: ReactNode; items: CheckItem[] }) {
   return (
     <div className={s.check}>
       <div className={s.checkHead}>
@@ -295,7 +324,7 @@ export function Checklist({ title, icon, items }: { title: string; icon: string;
   );
 }
 
-export function OfficialLinks({ items }: { items: { href: string; title: string; icon: string }[] }) {
+export function OfficialLinks({ items }: { items: { href: string; title: string; icon: ReactNode }[] }) {
   return (
     <div className={s.links}>
       {items.map((it) => (

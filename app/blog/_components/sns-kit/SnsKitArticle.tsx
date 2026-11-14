@@ -13,6 +13,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
 import { BLOG_POSTS, type BlogPost } from "@/data/blog-posts";
 import s from "./article.module.css";
+import { ServicePromoBottom, ServicePromoTop } from "@/components/blog/ServicePromo";
+import { ArticleLinkTracker } from "../ArticleLinkTracker";
 
 export type TocItem = { id: string; label: string };
 
@@ -83,6 +85,7 @@ export function SnsKitArticleLayout({
   ];
 
   return (
+    <ArticleLinkTracker slug={post.slug}>
     <div className={s.page}>
       <JsonLd data={schemas} />
 
@@ -121,7 +124,11 @@ export function SnsKitArticleLayout({
         </header>
 
         <div className={s.paper}>
-          <div className={s.body}>{children}</div>
+          <div className={s.body}>
+            <ServicePromoTop post={post} />
+            {children}
+            <ServicePromoBottom post={post} />
+          </div>
         </div>
       </article>
 
@@ -135,6 +142,7 @@ export function SnsKitArticleLayout({
         </p>
       </div>
     </div>
+    </ArticleLinkTracker>
   );
 }
 

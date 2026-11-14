@@ -4,6 +4,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl } from "@/lib/utils";
 import { BottomAd, InArticleAd } from "@/components/ads/presets";
 import type { BlogPost } from "@/data/blog-posts";
+import { ArticleLinkTracker } from "./ArticleLinkTracker";
+import { ServicePromoBottom, ServicePromoTop } from "@/components/blog/ServicePromo";
 
 type Props = {
   post: BlogPost;
@@ -82,7 +84,8 @@ export function BlogLayout({ post, children }: Props) {
           </div>
         </div>
 
-        {/* Article */}
+        {/* Article（本文内のリンクの押下を計測する） */}
+        <ArticleLinkTracker slug={post.slug}>
         <article className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
           {/* Header */}
           <header className="mb-10">
@@ -111,6 +114,9 @@ export function BlogLayout({ post, children }: Props) {
             </div>
           </header>
 
+          {/* 自社サービスの案内（記事の冒頭） */}
+          <ServicePromoTop post={post} />
+
           {/* 記事中広告（本文の前・導入後の自然な区切り） */}
           <InArticleAd className="not-prose" />
 
@@ -129,6 +135,9 @@ export function BlogLayout({ post, children }: Props) {
             prose-hr:border-slate-100 dark:prose-hr:border-zinc-800">
             {children}
           </div>
+
+          {/* 自社サービスの紹介（記事の終わり） */}
+          <ServicePromoBottom post={post} />
 
           {/* FAQ section */}
           {post.faqs && post.faqs.length > 0 && (
@@ -182,6 +191,7 @@ export function BlogLayout({ post, children }: Props) {
           {/* 記事末尾の広告（操作要素から離れた本文末。審査中は ENABLED=false で非表示） */}
           <BottomAd />
         </article>
+        </ArticleLinkTracker>
       </div>
     </>
   );

@@ -176,6 +176,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/sekisui-heim-super-arena-guide`, lastModified: blogDate("sekisui-heim-super-arena-guide"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/port-messe-nagoya-guide`, lastModified: blogDate("port-messe-nagoya-guide"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/vtuber-live-goods-guide`, lastModified: blogDate("vtuber-live-goods-guide"), changeFrequency: "weekly", priority: 0.8 },
+    // 2026-11-15 トレンド型・ストック型（公開後に日付の更新が必要。各記事の確認日を参照）
+    { url: `${siteUrl}/blog/jump-festa-2027-goods`, lastModified: blogDate("jump-festa-2027-goods"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/blog/comiket-109-ticket-guide`, lastModified: blogDate("comiket-109-ticket-guide"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/blog/shijukunichi-keisan`, lastModified: blogDate("shijukunichi-keisan"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/mochu-hagaki-itsumade`, lastModified: blogDate("mochu-hagaki-itsumade"), changeFrequency: "monthly", priority: 0.8 },
     // 税金・社会保険 3記事
     { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/shakai-hoken-guide`, lastModified: blogDate("shakai-hoken-guide"), changeFrequency: "monthly", priority: 0.85 },

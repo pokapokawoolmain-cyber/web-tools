@@ -24,6 +24,8 @@ export const MOCHICO_ARTICLE_PATHS = [
   "/blog/sekisui-heim-super-arena-guide",
   "/blog/port-messe-nagoya-guide",
   "/blog/vtuber-live-goods-guide",
+  "/blog/jump-festa-2027-goods",
+  "/blog/comiket-109-ticket-guide",
 ];
 /** SNS Starter Kit のガイド記事（ToolBoxJP ブログ内だが LP と同じ白基調で表示する）。記事を増やしたらここに足す */
 export const SNS_KIT_ARTICLE_PATHS = [
