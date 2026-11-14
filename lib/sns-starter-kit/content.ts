@@ -15,7 +15,7 @@
 // status を "verified" に切り替える（ページ側の修正は不要）。
 // ============================================================
 
-import { PURCHASABLE } from "./commerce";
+import { LAUNCH_LIMIT, LAUNCH_SALE, PURCHASABLE } from "./commerce";
 
 export type ClaimStatus = "verified" | "planned" | "concept" | "excluded";
 
@@ -32,8 +32,10 @@ export const PRODUCT = {
   edition: "Standard",
   path: "/sns-starter-kit",
   canonical: "https://www.toolboxjp.com/sns-starter-kit",
-  priceYen: 49800,
-  priceLabel: "49,800円",
+  priceYen: LAUNCH_SALE ? 29800 : 49800,
+  priceLabel: LAUNCH_SALE ? "29,800円" : "49,800円",
+  /** 先行販売中だけ表示する（「先行販売価格」「先着10件限定 ― 通常価格 49,800円」） */
+  launch: LAUNCH_SALE ? { label: "先行販売価格", limit: LAUNCH_LIMIT, regularPriceLabel: "49,800円" } : null,
   taxLabel: "税込",
   saleState: PURCHASABLE ? "販売中" : "販売準備中",
   /** 販売開始済みか（lib/sns-starter-kit/commerce.ts の SALE_OPEN と支払いリンクで決まる）。 */

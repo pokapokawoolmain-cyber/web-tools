@@ -62,9 +62,15 @@ export function Hero() {
           </p>
           <div className={s.heroPriceRow}>
             <p className={s.heroPrice}>
+              {PRODUCT.launch && <span className={s.heroPriceLabel}>{PRODUCT.launch.label}</span>}
               {PRODUCT.priceLabel.replace("円", "")}
               <small>円（{PRODUCT.taxLabel}）</small>
             </p>
+            {PRODUCT.launch && (
+              <p className={s.heroLaunch}>
+                先着{PRODUCT.launch.limit}件限定 ― 通常価格 {PRODUCT.launch.regularPriceLabel}
+              </p>
+            )}
             <p className={s.heroNote}>サーバー・AIツール等の外部費用は別途必要です</p>
           </div>
           <div className={s.heroCtas}>
@@ -421,10 +427,17 @@ export function Price() {
           <p className={s.priceName}>
             {PRODUCT.name} {PRODUCT.edition}
           </p>
+          {PRODUCT.launch && <p className={s.priceLaunch}>{PRODUCT.launch.label}</p>}
           <p className={s.priceFigure}>
-            49,800<small>円</small>
+            {PRODUCT.priceLabel.replace("円", "")}
+            <small>円</small>
           </p>
           <p className={s.priceTax}>税込 ・ 買い切り</p>
+          {PRODUCT.launch && (
+            <p className={s.priceRegular}>
+              ※通常価格 {PRODUCT.launch.regularPriceLabel}。先行販売は先着{PRODUCT.launch.limit}件までです。
+            </p>
+          )}
           <ul className={s.priceTerms}>
             {PRICE_TERMS.map((t) => (
               <li key={t.id}>

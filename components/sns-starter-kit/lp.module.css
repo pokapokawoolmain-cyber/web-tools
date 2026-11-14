@@ -301,6 +301,23 @@
   margin-left: 2px;
 }
 
+.heroPriceLabel {
+  display: block;
+  margin-bottom: 2px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent, #1d5fd1);
+}
+
+.heroLaunch {
+  flex-basis: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2, #3a3d44);
+}
+
 .heroNote {
   font-size: 13px;
   color: var(--ink-3);
@@ -2350,6 +2367,25 @@
   font-weight: 700;
   letter-spacing: 0;
   margin-left: 4px;
+}
+
+.priceLaunch {
+  margin-top: 14px;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.priceRegular {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #c9cbd0;
 }
 
 .priceTax {
