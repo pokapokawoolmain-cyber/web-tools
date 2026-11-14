@@ -946,3 +946,188 @@
   margin: 0;
   padding: 0 16px 14px;
 }
+
+/* ============================================================
+   界隈ごとのテーマ（OshiArticleLayout の theme で切り替える。指定しない記事は上の既定のまま）
+   - themeJump   : 少年漫画の誌面。黄・赤・黒、網点、集中線、太枠のコマと吹き出し
+   - themeComiket: 同人誌即売会のカタログ。紙と方眼、サークルカット風の枠、マスキングテープ
+   - 文字色は白・淡色背景で WCAG AA 以上を保つ（赤 #b8000e・紺 #1f3f8f は白地で 4.5:1 以上）
+   ============================================================ */
+
+/* ── 少年漫画（ジャンプ系） ───────────────────── */
+.themeJump {
+  --ink: #111111;
+  --ink2: #2a2a2a;
+  --muted: #555555;
+  --line: #e2dcc4;
+  --soft: #fffbe6;
+  --lav: #fff4b8;
+  --lavDeep: #111111;
+  --accent: #e60012;
+  --accentInk: #b8000e;
+  --pink: #ffe1e1;
+  --pinkInk: #b8000e;
+  background:
+    radial-gradient(circle, rgba(0, 0, 0, 0.09) 1.1px, transparent 1.4px) 0 0 / 12px 12px,
+    #fff6c2;
+}
+.themeJump .hero {
+  position: relative;
+  background: repeating-conic-gradient(from 0deg at 50% 115%, rgba(0, 0, 0, 0.07) 0deg 1.6deg, transparent 1.6deg 6deg);
+}
+.themeJump .sticker {
+  border: 2px solid #111;
+  border-radius: 4px;
+  background: #111 !important;
+  color: #ffd400 !important;
+  transform: skew(-8deg);
+}
+.themeJump .h1 {
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+.themeJump .h1 mark {
+  background: #ffd400;
+  box-shadow: 4px 4px 0 #111;
+  border: 2px solid #111;
+  padding: 0 6px;
+}
+.themeJump .paper {
+  background: #fff;
+  border-top: 4px solid #111;
+  border-bottom: 4px solid #111;
+}
+.themeJump .body h2 {
+  background: #fff;
+  border: 3px solid #111;
+  border-radius: 4px;
+  box-shadow: 6px 6px 0 #111;
+}
+.themeJump .body h2 .num {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 2px 10px;
+  background: #e60012;
+  color: #fff;
+  transform: skew(-10deg);
+}
+.themeJump .tldr {
+  position: relative;
+  background: #fff;
+  border: 3px solid #111;
+  border-radius: 28px;
+  box-shadow: none;
+}
+.themeJump .tldr::after {
+  content: "";
+  position: absolute;
+  left: 46px;
+  bottom: -17px;
+  width: 26px;
+  height: 18px;
+  background: #fff;
+  border-right: 3px solid #111;
+  border-bottom: 3px solid #111;
+  transform: skew(35deg) rotate(8deg);
+}
+.themeJump .tldrTitle {
+  background: #111 !important;
+  color: #ffd400 !important;
+}
+.themeJump .card,
+.themeJump .check,
+.themeJump .tableWrap {
+  border: 2px solid #111;
+  border-radius: 6px;
+}
+.themeJump .table thead th {
+  background: #111;
+  color: #ffd400;
+}
+.themeJump .body .timeline li.hot::before {
+  background: #e60012;
+  border-color: #111;
+}
+
+/* ── 同人誌即売会（コミケ系） ─────────────────── */
+.themeComiket {
+  --ink: #1a1d2b;
+  --ink2: #33384d;
+  --muted: #5a6078;
+  --line: #dfe5f0;
+  --soft: #fffdf7;
+  --lav: #eaf1ff;
+  --lavDeep: #c9d6f2;
+  --accent: #2b59c3;
+  --accentInk: #1f3f8f;
+  --pink: #ffe1ea;
+  --pinkInk: #b4234f;
+  background:
+    linear-gradient(#e6ecf6 1px, transparent 1px) 0 0 / 100% 22px,
+    linear-gradient(90deg, #e6ecf6 1px, transparent 1px) 0 0 / 22px 100%,
+    #fffdf7;
+}
+.themeComiket .sticker {
+  border: none;
+  border-radius: 2px;
+  background: rgba(255, 196, 214, 0.85) !important;
+  color: #5b1530 !important;
+  padding: 5px 14px;
+  transform: rotate(-1.5deg);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+}
+.themeComiket .sticker:nth-child(2n) {
+  background: rgba(186, 225, 255, 0.9) !important;
+  color: #0f3a66 !important;
+  transform: rotate(1.2deg);
+}
+.themeComiket .h1 mark {
+  background: linear-gradient(transparent 58%, rgba(186, 225, 255, 0.95) 58%);
+}
+.themeComiket .paper {
+  background: #fffdf7;
+}
+.themeComiket .body h2 {
+  background: #fff;
+  border: 1.5px solid #1a1d2b;
+  border-radius: 2px;
+  padding-top: 26px;
+}
+.themeComiket .body h2::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 18px;
+  width: 74px;
+  height: 18px;
+  background: rgba(255, 196, 214, 0.85);
+  transform: rotate(-3deg);
+}
+.themeComiket .body h2 .num {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 8px;
+  background: #1a1d2b;
+  color: #fff;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.themeComiket .tldr {
+  background: #fff;
+  border: 3px double #1a1d2b;
+  border-radius: 2px;
+  box-shadow: none;
+}
+.themeComiket .tldrTitle {
+  background: #1f3f8f !important;
+}
+.themeComiket .card,
+.themeComiket .check,
+.themeComiket .tableWrap {
+  border: 1.5px solid #1a1d2b;
+  border-radius: 2px;
+}
+.themeComiket .table thead th {
+  background: #eaf1ff;
+}

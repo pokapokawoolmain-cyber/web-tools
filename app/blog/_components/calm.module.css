@@ -1,0 +1,33 @@
+/* ============================================================
+   法事・弔事の記事の落ち着いた見た目（BlogLayout の tone="calm"）
+   - 生成りの紙色、明朝体の見出し、墨色の罫線。強い色・装飾は使わない
+   - ダークモードでは背景を落とし、罫線だけ残す
+   ============================================================ */
+.calm {
+  background: #f8f5ee;
+}
+:global(.dark) .calm {
+  background: #141311;
+}
+.calm h1,
+.calm h2,
+.calm h3 {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.calm article h2 {
+  padding: 0.2em 0 0.35em 0.75em;
+  border-left: 3px solid #5c5346;
+  border-bottom: 1px solid #ddd5c6;
+}
+:global(.dark) .calm article h2 {
+  border-left-color: #a59a87;
+  border-bottom-color: #3a362f;
+}
+.calm table {
+  background: #fffdf8;
+}
+:global(.dark) .calm table {
+  background: transparent;
+}

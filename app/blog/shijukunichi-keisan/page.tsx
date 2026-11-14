@@ -38,7 +38,7 @@ const SOURCES: { href: string; label: string }[] = [
 
 export default function Page() {
   return (
-    <BlogLayout post={post}>
+    <BlogLayout post={post} tone="calm">
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         四十九日は、<strong>命日を1日目として数えて49日目</strong>です。日付で言うと「命日の48日後」。たとえば11月1日に亡くなった場合は12月19日になります。下の計算機に命日を入れると、四十九日と、その前の土日、気をつけたい点がすぐ分かります。
       </p>

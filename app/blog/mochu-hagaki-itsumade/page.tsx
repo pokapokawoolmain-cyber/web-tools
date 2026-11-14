@@ -36,7 +36,7 @@ const SOURCES: { href: string; label: string }[] = [
 
 export default function Page() {
   return (
-    <BlogLayout post={post}>
+    <BlogLayout post={post} tone="calm">
       <p className="text-[16px] leading-loose font-medium text-slate-800 dark:text-zinc-100">
         喪中はがきは、<strong>相手が年賀状を用意し始める前、11月中から遅くとも12月上旬までに届くように</strong>出すのが一般的です。今年（2027年用）は日本郵便が年賀状の受付開始を<strong>12月20日</strong>に遅らせ、元日に届ける投函の目安も<strong>12月27日</strong>に変わりました。日付を一覧にして、出す範囲と、間に合わないときの対応をまとめます。
       </p>
