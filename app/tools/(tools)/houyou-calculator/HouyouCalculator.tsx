@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { memorialPlan } from "@/lib/memorial-dates";
 
 // 忌日法要（命日を1日目と数える。四十九日 = 命日 + 48日）
 const KICHI = [
@@ -29,12 +30,28 @@ const NENKI = [
 
 const WD = ["日", "月", "火", "水", "木", "金", "土"];
 
-function fmt(d: Date): { date: string; wd: string; isWeekend: boolean } {
+function md(d: Date): string {
+  return `${d.getMonth() + 1}月${d.getDate()}日（${WD[d.getDay()]}）`;
+}
+
+// 法要日が平日のとき、その日より前で直近の土曜・日曜（前倒しで営む場合の候補）
+function weekendBefore(d: Date): string | null {
+  const wd = d.getDay();
+  if (wd === 0 || wd === 6) return null;
+  const sun = new Date(d);
+  sun.setDate(sun.getDate() - wd); // 直前の日曜
+  const sat = new Date(sun);
+  sat.setDate(sat.getDate() - 1); // その前日の土曜
+  return `${md(sat)}・${md(sun)}`;
+}
+
+function fmt(d: Date): { date: string; wd: string; isWeekend: boolean; before: string | null } {
   const wd = d.getDay();
   return {
     date: `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`,
     wd: WD[wd],
     isWeekend: wd === 0 || wd === 6,
+    before: weekendBefore(d),
   };
 }
 
@@ -56,7 +73,8 @@ export function HouyouCalculator() {
       d.setFullYear(d.getFullYear() + n.years);
       return { ...n, ...fmt(d) };
     });
-    return { kichi, nenki };
+    const plan = memorialPlan(deathDate);
+    return { kichi, nenki, day49: kichi.find((k) => k.days === 48)!, plan };
   }, [deathDate]);
 
   return (
@@ -84,6 +102,29 @@ export function HouyouCalculator() {
         </div>
       ) : (
         <>
+          {/* 四十九日のまとめ */}
+          <section aria-live="polite" className="rounded-2xl border border-blue-200 dark:border-blue-800/60 bg-blue-50/60 dark:bg-blue-950/20 p-5 space-y-2">
+            <p className="text-xs text-blue-700 dark:text-blue-300 font-medium">49日（四十九日）</p>
+            <p className="text-2xl font-bold text-slate-900 dark:text-white">
+              {result.day49.date}（{result.day49.wd}）
+            </p>
+            {result.day49.before && (
+              <p className="text-sm text-slate-700 dark:text-zinc-300">
+                前倒しで営む場合の候補（直前の土日）: {result.day49.before}
+              </p>
+            )}
+            {result.plan?.spansThreeMonths && (
+              <p className="text-[13px] text-amber-800 dark:text-amber-300">
+                命日の月から数えて3か月目にかかります（いわゆる「三月越し」）。気にするかどうかは地域や家によって違うため、菩提寺や親族に相談すると安心です。
+              </p>
+            )}
+            {result.plan?.newYearOverlap && (
+              <p className="text-[13px] text-amber-800 dark:text-amber-300">
+                年末年始（12月29日〜1月3日）に重なります。お寺や会場の予定が限られることがあるため、早めに相談しましょう。
+              </p>
+            )}
+          </section>
+
           {/* 忌日法要 */}
           <section>
             <h2 className="font-bold text-slate-900 dark:text-white mb-3">忌日法要（四十九日まで）</h2>
@@ -105,6 +146,7 @@ export function HouyouCalculator() {
                       <td className="px-4 py-3 text-slate-700 dark:text-zinc-300 whitespace-nowrap">
                         {k.date}（{k.wd}）
                         {k.isWeekend && <span className="ml-1 text-[11px] text-rose-500">土日</span>}
+                        {k.before && <span className="block text-[11px] text-slate-400 dark:text-zinc-500">直前の土日: {k.before}</span>}
                       </td>
                       <td className="px-4 py-3 text-[13px] text-slate-500 dark:text-zinc-500 hidden sm:table-cell">{k.note}</td>
                     </tr>
@@ -135,6 +177,7 @@ export function HouyouCalculator() {
                       <td className="px-4 py-3 text-slate-700 dark:text-zinc-300 whitespace-nowrap">
                         {n.date}（{n.wd}）
                         {n.isWeekend && <span className="ml-1 text-[11px] text-rose-500">土日</span>}
+                        {n.before && <span className="block text-[11px] text-slate-400 dark:text-zinc-500">直前の土日: {n.before}</span>}
                       </td>
                       <td className="px-4 py-3 text-[13px] text-slate-500 dark:text-zinc-500 hidden sm:table-cell">{n.note}</td>
                     </tr>

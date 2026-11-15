@@ -6,12 +6,14 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { SpeakerTest } from "./SpeakerTest";
 
 export const metadata: Metadata = generateMeta({
-  title: "スピーカーテスト【無料】左右(L/R)の音をブラウザでチェック｜イヤホン確認",
+  title: "イヤホン・スピーカーの左右確認（LRチェック）【無料】ブラウザで左右の音をテスト",
   description:
     "スピーカーやイヤホンの左右（L/R）が正しく鳴るかをブラウザで即チェック。左・右・両方のテスト音を再生し、片方が鳴らない・左右が逆などの不具合を確認できます。アプリ不要・登録不要・無料。オーディオ結線の確認に。",
   path: "/tools/speaker-test",
   keywords: [
     "スピーカーテスト",
+    "イヤホン 左右確認",
+    "LRチェック",
     "イヤホン 左右 確認",
     "スピーカー 左右 テスト",
     "音 左右 確認",

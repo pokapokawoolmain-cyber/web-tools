@@ -26,6 +26,9 @@ const NEWEST_TOOL_UPDATED = new Date("2026-09-21");
 const NEWEST_UPDATED_TOOL_IDS = new Set<string>([
   "imikotoba-checker", "percentage-calculator", "gross-profit-calculator",
 ]);
+// 週次の改善で中身（機能）を更新したツール
+const WEEKLY_TOOL_UPDATED = new Date("2026-11-16");
+const WEEKLY_UPDATED_TOOL_IDS = new Set<string>(["houyou-calculator"]);
 const RECENTLY_UPDATED_TOOL_IDS = new Set<string>([
   // 新設ツール
   "takehome-reverse", "bonus-takehome", "nenshu-kabe", "houyou-calculator", "shugi-maker",
@@ -218,7 +221,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 各ツールページ
   const toolRoutes: MetadataRoute.Sitemap = tools.map((tool) => ({
     url: `${siteUrl}${tool.href}`,
-    lastModified: NEWEST_UPDATED_TOOL_IDS.has(tool.id) ? NEWEST_TOOL_UPDATED : LATEST_UPDATED_TOOL_IDS.has(tool.id) ? LATEST_TOOL_UPDATED : RECENTLY_UPDATED_TOOL_IDS.has(tool.id) ? TOOL_UPDATED : TOOL_LAUNCH,
+    lastModified: WEEKLY_UPDATED_TOOL_IDS.has(tool.id) ? WEEKLY_TOOL_UPDATED : NEWEST_UPDATED_TOOL_IDS.has(tool.id) ? NEWEST_TOOL_UPDATED : LATEST_UPDATED_TOOL_IDS.has(tool.id) ? LATEST_TOOL_UPDATED : RECENTLY_UPDATED_TOOL_IDS.has(tool.id) ? TOOL_UPDATED : TOOL_LAUNCH,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
