@@ -6,7 +6,7 @@ import { ToolLayout } from "@/components/layout/ToolLayout";
 import { ShiftSalary } from "./ShiftSalary";
 
 export const metadata: Metadata = generateMeta({
-  title: "シフト給与計算ツール【無料】時給×勤務時間で月収を自動計算・深夜割増25%対応",
+  title: "シフト給与計算・深夜手当 計算ツール【無料】時給×勤務時間で月収を自動計算（深夜25%割増）",
   description:
     "時給・1日の勤務時間・深夜時間・月の勤務日数を入力するだけで、アルバイト・パートの月収を自動計算。深夜割増賃金（25%増し）・交通費にも対応。登録不要・スマホ対応の無料ツール。",
   path: "/tools/shift-salary",

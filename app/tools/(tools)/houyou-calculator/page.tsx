@@ -6,12 +6,13 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { HouyouCalculator } from "./HouyouCalculator";
 
 export const metadata: Metadata = generateMeta({
-  title: "四十九日・法要日程 自動計算【無料】命日から忌日・年忌法要の日程表を作成",
+  title: "49日（四十九日）計算 自動【無料】命日を入れるだけで法要日と直前の土日がわかる",
   description:
-    "命日を入力するだけで四十九日・一周忌・三回忌などの法要日程を自動計算。初七日から三十三回忌までの日付と曜日を一覧表示。忌日の数え方・繰り上げ法要・香典の表書きの変わるタイミングも解説。無料・登録不要。",
+    "命日を入力するだけで49日（四十九日）・一周忌・三回忌などの法要日程を自動計算。平日にあたる場合は前倒しの候補になる直前の土日も表示。初七日から三十三回忌までの日付と曜日を一覧表示。忌日の数え方・繰り上げ法要・香典の表書きの変わるタイミングも解説。無料・登録不要。",
   path: "/tools/houyou-calculator",
   ogImage: `/api/og?${new URLSearchParams({ title: "四十九日・法要日程 計算", icon: "🪷", desc: "命日を入力するだけで四十九日・一周忌・三回忌などの法要日" }).toString()}`,
   keywords: [
+    "49日計算 自動",
     "四十九日 計算",
     "法要 日程 計算",
     "四十九日 いつ 計算",
@@ -129,8 +130,8 @@ export default function Page() {
     <>
       <JsonLd data={faqSchema} />
       <ToolLayout
-        title="四十九日・法要日程 自動計算"
-        description="命日を入力するだけで四十九日・一周忌・三回忌などの法要日程を自動で計算。忌日・年忌の日付と曜日を一覧表示します。"
+        title="49日（四十九日）・法要日程 自動計算"
+        description="命日を入力するだけで49日（四十九日）・一周忌・三回忌などの法要日程を自動で計算。日付と曜日、前倒しの候補になる直前の土日を一覧表示します。"
         icon="🪷"
         slug="houyou-calculator"
         seoContent={seoContent}
