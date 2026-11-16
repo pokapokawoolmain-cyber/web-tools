@@ -102,6 +102,7 @@ const DISNEY_XMAS: GoodsTemplate = {
   checkedAt: "2026-11-16",
   coverage: "公式サイトの商品ページで価格を確認できた20点です。クリスマスグッズの全商品ではありません。足りないものはリストを作ったあとに自分で追加できます。",
   selectAll: true,
+  articleHref: "/blog/disney-christmas-2026-goods",
   items: [
     { name: "ぬいぐるみ（リルリンリン）", price: 4500, category: "リルリンリン" },
     { name: "ぬいぐるみバッジ（リルリンリン・グリーンの衣装）", price: 2500, category: "リルリンリン" },

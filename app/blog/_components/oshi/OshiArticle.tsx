@@ -47,8 +47,8 @@ export function OshiArticleLayout({
   stickers: string[];
   /** 非公式であることの注記（アーティスト・会場名を扱う記事で出す） */
   unofficialNote?: string;
-  /** 界隈ごとの見た目（jump: 少年漫画の誌面 / comiket: 同人誌即売会のカタログ）。既定はポップな紫 */
-  theme?: "default" | "jump" | "comiket";
+  /** 界隈ごとの見た目（jump: 少年漫画の誌面 / comiket: 同人誌即売会のカタログ / xmas: テーマパークのクリスマス）。既定はポップな紫 */
+  theme?: "default" | "jump" | "comiket" | "xmas";
   children: ReactNode;
 }) {
   const siteUrl = getSiteUrl();
@@ -99,7 +99,7 @@ export function OshiArticleLayout({
 
   return (
     <ArticleLinkTracker slug={post.slug}>
-    <div className={`${s.page} ${theme === "jump" ? s.themeJump : theme === "comiket" ? s.themeComiket : ""}`}>
+    <div className={`${s.page} ${theme === "jump" ? s.themeJump : theme === "comiket" ? s.themeComiket : theme === "xmas" ? s.themeXmas : ""}`}>
       <JsonLd data={schemas} />
 
       <nav aria-label="パンくずリスト" className={s.crumbs}>

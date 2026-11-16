@@ -1131,3 +1131,80 @@
 .themeComiket .table thead th {
   background: #eaf1ff;
 }
+
+/* ── ディズニーのクリスマス（テーマパーク系） ─────────
+   赤と緑のチェック、金の星、リボンの見出し。キャラクターやロゴは使わない */
+.themeXmas {
+  --ink: #2a1416;
+  --ink2: #42292b;
+  --muted: #6b5154;
+  --line: #f0dfd3;
+  --soft: #fff9f1;
+  --lav: #fdeee4;
+  --lavDeep: #e7c9b4;
+  --accent: #b3122e;
+  --accentInk: #9c0f27;
+  --pink: #fde3e3;
+  --pinkInk: #9c0f27;
+  --mint: #e1f2e6;
+  --mintInk: #1d6b3a;
+  background:
+    repeating-linear-gradient(0deg, rgba(179, 18, 46, 0.07) 0 14px, transparent 14px 28px),
+    repeating-linear-gradient(90deg, rgba(29, 107, 58, 0.07) 0 14px, transparent 14px 28px),
+    #fff6ec;
+}
+.themeXmas .sticker {
+  border: 2px solid #c9a227;
+  background: #fff !important;
+  color: #9c0f27 !important;
+}
+.themeXmas .sticker:nth-child(2n) {
+  color: #1d6b3a !important;
+}
+.themeXmas .h1 mark {
+  background: linear-gradient(transparent 60%, #f6dc8a 60%);
+}
+.themeXmas .paper {
+  background: #fffdf8;
+  border-top: 6px double #1d6b3a;
+  border-bottom: 6px double #1d6b3a;
+}
+.themeXmas .body h2 {
+  background: #9c0f27;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 0 3px #fffdf8, 0 0 0 5px #c9a227;
+}
+.themeXmas .body h2 .num {
+  color: #f6dc8a;
+}
+.themeXmas .body h2::after {
+  content: "★";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f6dc8a;
+  font-size: 18px;
+}
+.themeXmas .tldr {
+  background: #fff;
+  border: 2px solid #1d6b3a;
+  box-shadow: 0 0 0 4px #fdeee4;
+}
+.themeXmas .tldrTitle {
+  background: #1d6b3a !important;
+}
+.themeXmas .card,
+.themeXmas .check,
+.themeXmas .tableWrap {
+  border: 2px solid #f0dfd3;
+}
+.themeXmas .table thead th {
+  background: #1d6b3a;
+  color: #fff;
+}
+.themeXmas .body .timeline li.hot::before {
+  background: #b3122e;
+  border-color: #c9a227;
+}

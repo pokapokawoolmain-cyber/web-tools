@@ -181,6 +181,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/comiket-109-ticket-guide`, lastModified: blogDate("comiket-109-ticket-guide"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/shijukunichi-keisan`, lastModified: blogDate("shijukunichi-keisan"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog/mochu-hagaki-itsumade`, lastModified: blogDate("mochu-hagaki-itsumade"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/blog/disney-christmas-2026-goods`, lastModified: blogDate("disney-christmas-2026-goods"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/blog/disney-christmas-2026-guide`, lastModified: blogDate("disney-christmas-2026-guide"), changeFrequency: "weekly", priority: 0.8 },
     // 税金・社会保険 3記事
     { url: `${siteUrl}/blog/jumin-zei-guide`, lastModified: blogDate("jumin-zei-guide"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/blog/shakai-hoken-guide`, lastModified: blogDate("shakai-hoken-guide"), changeFrequency: "monthly", priority: 0.85 },
