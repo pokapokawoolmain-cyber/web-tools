@@ -1,5 +1,6 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Printer, RefreshCw } from "lucide-react";
 import Link from "next/link";
 
@@ -7,7 +8,19 @@ type OmoteGaki = {
   label: string;
   mizuhiki: "cho" | "musubi" | "awaji";
   color: string;
+  /** kei = 慶事（のし紙・熨斗あり） / cho = 弔事（かけ紙・熨斗なし） */
+  kind?: "kei" | "cho";
+  /** 弔事の水引の色: 黒白 / 黄白（関西など） */
+  tie?: "kokubyaku" | "kiiro";
 };
+
+// 水引の2色（印刷・プレビュー共通）
+function tieColors(og: OmoteGaki): [string, string] {
+  if (og.kind === "cho") {
+    return og.tie === "kiiro" ? ["#ca8a04", "#9ca3af"] : ["#1f2937", "#9ca3af"];
+  }
+  return ["#e11d48", "#d4a017"];
+}
 
 const OMOTE_GAKI: OmoteGaki[] = [
   { label: "御祝", mizuhiki: "cho", color: "#e11d48" },
@@ -22,7 +35,17 @@ const OMOTE_GAKI: OmoteGaki[] = [
   { label: "御見舞", mizuhiki: "musubi", color: "#64748b" },
   { label: "粗品", mizuhiki: "cho", color: "#64748b" },
   { label: "寸志", mizuhiki: "cho", color: "#64748b" },
+  { label: "御礼", mizuhiki: "cho", color: "#e11d48" },
+  { label: "寒中御見舞", mizuhiki: "cho", color: "#2563eb" },
+  // 弔事（かけ紙）: 熨斗は付けず、水引は結び切り
+  { label: "志", mizuhiki: "musubi", color: "#1f2937", kind: "cho", tie: "kokubyaku" },
+  { label: "御供", mizuhiki: "musubi", color: "#1f2937", kind: "cho", tie: "kokubyaku" },
+  { label: "粗供養", mizuhiki: "musubi", color: "#ca8a04", kind: "cho", tie: "kiiro" },
+  { label: "満中陰志", mizuhiki: "musubi", color: "#ca8a04", kind: "cho", tie: "kiiro" },
 ];
+
+const KEI_LIST = OMOTE_GAKI.filter((og) => og.kind !== "cho");
+const CHO_LIST = OMOTE_GAKI.filter((og) => og.kind === "cho");
 
 const MIZUHIKI_LABELS: Record<string, string> = {
   cho: "蝶結び（花結び）",
@@ -31,8 +54,8 @@ const MIZUHIKI_LABELS: Record<string, string> = {
 };
 
 // SVG components for mizuhiki
-function MizuhikiSvg({ type, color }: { type: string; color: string }) {
-  const c2 = "#d4a017";
+function MizuhikiSvg({ type, color, color2 = "#d4a017" }: { type: string; color: string; color2?: string }) {
+  const c2 = color2;
   if (type === "cho") {
     return (
       <svg viewBox="0 0 200 60" className="w-full h-12" aria-hidden="true">
@@ -88,9 +111,16 @@ export function NoshiMaker() {
   const [showPreview, setShowPreview] = useState(false);
 
   const effectiveMizuhiki = mizuhikiOverride === "auto" ? selected.mizuhiki : mizuhikiOverride;
+  const isCho = selected.kind === "cho";
+  const [tie1, tie2] = tieColors(selected);
+  const verticalText = { writingMode: "vertical-rl" as const, textOrientation: "upright" as const, whiteSpace: "nowrap" as const };
   const displayText = customText.trim() || selected.label;
   const displayName = name.trim();
   const displaySubName = subName.trim();
+
+  // 印刷エリアを body 直下に置くため、マウント後に portal を使う
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const handlePrint = useCallback(() => {
     window.print();
@@ -101,6 +131,7 @@ export function NoshiMaker() {
       {/* Print styles */}
       <style>{`
         @media print {
+          /* 印刷エリアは body 直下に置く（createPortal）。それ以外を隠して1枚だけ印刷する */
           body > *:not(#noshi-print-area) { display: none !important; }
           #noshi-print-area { display: flex !important; }
           @page { size: A4; margin: 10mm; }
@@ -111,8 +142,10 @@ export function NoshiMaker() {
       `}</style>
 
       {/* Print output (hidden on screen, shown on print) */}
+      {mounted && createPortal(
       <div id="noshi-print-area" className="hidden print:flex items-center justify-center w-full h-full">
         <div className="relative border-2 border-slate-300" style={{ width: "150mm", height: "210mm", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "10mm", fontFamily: "'Noto Serif JP', serif", background: "white" }}>
+          {!isCho && (
           <div style={{ position: "absolute", top: "8mm", right: "8mm", width: "20mm", height: "28mm" }}>
             <svg viewBox="0 0 50 70" style={{ width: "100%", height: "100%" }}>
               <polygon points="25,2 48,35 25,68 2,35" fill="#fff9c4" stroke="#d4a017" strokeWidth="1.5"/>
@@ -120,62 +153,73 @@ export function NoshiMaker() {
               <text x="25" y="40" textAnchor="middle" fontSize="10" fill="#92400e" fontFamily="serif">熨斗</text>
             </svg>
           </div>
+          )}
           <div style={{ marginBottom: "8mm", width: "120mm" }}>
             {effectiveMizuhiki === "cho" && (
               <svg viewBox="0 0 200 60" style={{ width: "100%", height: "20mm" }}>
-                <path d="M10,30 Q50,5 100,30 Q150,55 190,30" stroke="#e11d48" strokeWidth="2" fill="none"/>
-                <path d="M10,30 Q50,55 100,30 Q150,5 190,30" stroke="#d4a017" strokeWidth="2" fill="none"/>
-                <circle cx="100" cy="30" r="5" fill="#e11d48"/>
-                <path d="M100,30 Q90,42 85,50" stroke="#e11d48" strokeWidth="2" fill="none"/>
-                <path d="M100,30 Q110,42 115,50" stroke="#d4a017" strokeWidth="2" fill="none"/>
+                <path d="M10,30 Q50,5 100,30 Q150,55 190,30" stroke={tie1} strokeWidth="2" fill="none"/>
+                <path d="M10,30 Q50,55 100,30 Q150,5 190,30" stroke={tie2} strokeWidth="2" fill="none"/>
+                <circle cx="100" cy="30" r="5" fill={tie1}/>
+                <path d="M100,30 Q90,42 85,50" stroke={tie1} strokeWidth="2" fill="none"/>
+                <path d="M100,30 Q110,42 115,50" stroke={tie2} strokeWidth="2" fill="none"/>
               </svg>
             )}
             {effectiveMizuhiki === "musubi" && (
               <svg viewBox="0 0 200 60" style={{ width: "100%", height: "20mm" }}>
-                <path d="M10,25 L85,25 Q100,25 100,30 Q100,35 115,35 L190,35" stroke="#e11d48" strokeWidth="2" fill="none"/>
-                <path d="M10,35 L85,35 Q100,35 100,30 Q100,25 115,25 L190,25" stroke="#d4a017" strokeWidth="2" fill="none"/>
+                <path d="M10,25 L85,25 Q100,25 100,30 Q100,35 115,35 L190,35" stroke={tie1} strokeWidth="2" fill="none"/>
+                <path d="M10,35 L85,35 Q100,35 100,30 Q100,25 115,25 L190,25" stroke={tie2} strokeWidth="2" fill="none"/>
               </svg>
             )}
             {effectiveMizuhiki === "awaji" && (
               <svg viewBox="0 0 200 60" style={{ width: "100%", height: "20mm" }}>
-                <path d="M10,30 Q40,10 70,25 Q100,40 100,30 Q100,20 130,25 Q160,30 190,30" stroke="#e11d48" strokeWidth="2" fill="none"/>
-                <path d="M10,30 Q40,50 70,35 Q100,20 100,30 Q100,40 130,35 Q160,30 190,30" stroke="#d4a017" strokeWidth="2" fill="none"/>
+                <path d="M10,30 Q40,10 70,25 Q100,40 100,30 Q100,20 130,25 Q160,30 190,30" stroke={tie1} strokeWidth="2" fill="none"/>
+                <path d="M10,30 Q40,50 70,35 Q100,20 100,30 Q100,40 130,35 Q160,30 190,30" stroke={tie2} strokeWidth="2" fill="none"/>
               </svg>
             )}
           </div>
-          <p style={{ fontSize: "22pt", fontWeight: "bold", letterSpacing: "0.15em", textAlign: "center", color: "#1e293b", marginBottom: "12mm", fontFamily: "'Noto Serif JP', serif", writingMode: "horizontal-tb" }}>
+          <p style={{ fontSize: "22pt", fontWeight: "bold", letterSpacing: "0.15em", textAlign: "center", color: "#1e293b", marginBottom: "12mm", fontFamily: "'Noto Serif JP', serif", ...verticalText }}>
             {displayText}
           </p>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4mm" }}>
+          <div style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", justifyContent: "center", gap: "4mm" }}>
             {displayName && (
-              <p style={{ fontSize: "16pt", textAlign: "center", color: "#1e293b", fontFamily: "'Noto Serif JP', serif" }}>{displayName}</p>
+              <p style={{ fontSize: "16pt", textAlign: "center", color: "#1e293b", fontFamily: "'Noto Serif JP', serif", letterSpacing: "0.1em", ...verticalText }}>{displayName}</p>
             )}
             {displaySubName && (
-              <p style={{ fontSize: "12pt", textAlign: "center", color: "#64748b", fontFamily: "'Noto Serif JP', serif" }}>{displaySubName}</p>
+              <p style={{ fontSize: "12pt", textAlign: "center", color: "#64748b", fontFamily: "'Noto Serif JP', serif", ...verticalText }}>{displaySubName}</p>
             )}
           </div>
         </div>
-      </div>
+      </div>,
+      document.body
+      )}
 
       <div className="space-y-5">
         {/* 表書き selection */}
         <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-5">
           <p className="text-[12px] font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-3">表書きを選択</p>
-          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-4">
-            {OMOTE_GAKI.map((og) => (
-              <button
-                key={og.label}
-                onClick={() => { setSelected(og); setCustomText(""); }}
-                className={`py-2.5 px-2 rounded-xl text-[13px] font-semibold text-center transition-all ${
-                  selected.label === og.label && !customText
-                    ? "bg-rose-600 text-white shadow-lg shadow-rose-200 dark:shadow-rose-900/30"
-                    : "bg-slate-50 dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-rose-700"
-                }`}
-              >
-                {og.label}
-              </button>
-            ))}
-          </div>
+          {([
+            ["慶事（のし紙・紅白の水引）", KEI_LIST],
+            ["弔事（かけ紙・熨斗なし・黒白／黄白の水引）", CHO_LIST],
+          ] as const).map(([groupLabel, list]) => (
+            <div key={groupLabel} className="mb-4">
+              <p className="text-[12px] font-medium text-slate-500 dark:text-zinc-400 mb-2">{groupLabel}</p>
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                {list.map((og) => (
+                  <button
+                    key={og.label}
+                    onClick={() => { setSelected(og); setCustomText(""); }}
+                    className={`py-2.5 px-2 rounded-xl text-[13px] font-semibold text-center transition-all ${
+                      selected.label === og.label && !customText
+                        ? "bg-rose-600 text-white shadow-lg shadow-rose-200 dark:shadow-rose-900/30"
+                        : "bg-slate-50 dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-rose-700"
+                    }`}
+                  >
+                    {og.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
           <div>
             <label className="text-[12px] font-medium text-slate-500 dark:text-zinc-400 mb-1 block">独自の表書き（任意）</label>
             <input
@@ -202,13 +246,23 @@ export function NoshiMaker() {
                     : "border-slate-200 dark:border-zinc-700 hover:border-rose-200"
                 }`}
               >
-                {type !== "auto" && <MizuhikiSvg type={type} color="#e11d48" />}
+                {type !== "auto" && <MizuhikiSvg type={type} color={tie1} color2={tie2} />}
                 <p className="text-[11px] font-semibold text-slate-700 dark:text-zinc-200 mt-1">
                   {type === "auto" ? "自動（表書きに合わせる）" : MIZUHIKI_LABELS[type]}
                 </p>
               </button>
             ))}
           </div>
+          {isCho && effectiveMizuhiki === "cho" && (
+            <p className="mt-3 text-[12px] text-amber-700 dark:text-amber-300">
+              弔事に蝶結びは使いません。「繰り返さない」意味の結び切り（またはあわじ結び）を選んでください。
+            </p>
+          )}
+          {isCho && (
+            <p className="mt-3 text-[12px] text-slate-500 dark:text-zinc-400">
+              弔事用はのし飾り（熨斗）を付けない「かけ紙」になります。黄白の水引は主に関西・北陸の法要で使われます。地域の慣習に合わせてください。
+            </p>
+          )}
         </div>
 
         {/* 名入れ */}
@@ -249,24 +303,28 @@ export function NoshiMaker() {
         {/* Screen preview */}
         {showPreview && (
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border-2 border-rose-200 dark:border-rose-800/50 p-6">
-            <p className="text-[12px] font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-4 text-center">プレビュー（のし紙イメージ）</p>
+            <p className="text-[12px] font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-4 text-center">プレビュー（{isCho ? "かけ紙" : "のし紙"}イメージ・縦書き）</p>
             <div className="relative mx-auto bg-white border border-slate-200 rounded-lg shadow-sm" style={{ width: "min(280px, 100%)", aspectRatio: "150/210", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px" }}>
-              <NoshiSymbol />
+              {!isCho && <NoshiSymbol />}
               <div className="w-full mb-4">
-                <MizuhikiSvg type={effectiveMizuhiki} color={selected.color} />
+                <MizuhikiSvg type={effectiveMizuhiki} color={tie1} color2={tie2} />
               </div>
-              <p className="text-[22px] font-bold text-center text-slate-800 tracking-widest" style={{ fontFamily: "'Noto Serif JP', Georgia, serif" }}>
+              <p className="text-[22px] font-bold text-center text-slate-800 tracking-widest" style={{ fontFamily: "'Noto Serif JP', Georgia, serif", ...verticalText }}>
                 {displayText || "表書き"}
               </p>
-              {displayName && (
-                <p className="text-[14px] text-center text-slate-600 mt-4" style={{ fontFamily: "'Noto Serif JP', Georgia, serif" }}>
-                  {displayName}
-                </p>
-              )}
-              {displaySubName && (
-                <p className="text-[11px] text-center text-slate-400 mt-1" style={{ fontFamily: "'Noto Serif JP', Georgia, serif" }}>
-                  {displaySubName}
-                </p>
+              {(displayName || displaySubName) && (
+                <div className="flex flex-row-reverse items-start justify-center gap-2 mt-4">
+                  {displayName && (
+                    <p className="text-[14px] text-slate-600 tracking-wider" style={{ fontFamily: "'Noto Serif JP', Georgia, serif", ...verticalText }}>
+                      {displayName}
+                    </p>
+                  )}
+                  {displaySubName && (
+                    <p className="text-[11px] text-slate-400" style={{ fontFamily: "'Noto Serif JP', Georgia, serif", ...verticalText }}>
+                      {displaySubName}
+                    </p>
+                  )}
+                </div>
               )}
             </div>
           </div>

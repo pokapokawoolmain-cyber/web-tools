@@ -162,7 +162,7 @@ export default function Page() {
       <h2>関連ツール</h2>
       <ul className="space-y-2">
         <li><Link href="/tools/koden-maker">香典袋表書きメーカー</Link>：宗派別表書き・薄墨フォント・漢数字変換対応。</li>
-        <li><Link href="/tools/noshi-maker">のし紙作成ツール</Link>：御祝・内祝など慶事ののし紙を無料作成。</li>
+        <li><Link href="/tools/noshi-maker">のし紙作成ツール</Link>：御祝・内祝など慶事ののし紙と、志・粗供養など香典返しのかけ紙を無料作成。</li>
         <li><Link href="/tools/resignation-letter">退職届作成ツール</Link>：会社提出用の退職届・退職願を印刷形式で作成。</li>
       </ul>
 

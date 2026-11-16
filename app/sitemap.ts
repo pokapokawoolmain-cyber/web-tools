@@ -100,7 +100,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 冠婚葬祭・文書カテゴリ
     { url: `${siteUrl}/ceremony`, lastModified: new Date("2026-05-22"), changeFrequency: "weekly", priority: 0.92 },
     { url: `${siteUrl}/business`, lastModified: new Date("2026-10-26"), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${siteUrl}/tools/noshi-maker`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
+    { url: `${siteUrl}/tools/noshi-maker`, lastModified: new Date("2026-11-09"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/tools/koden-maker`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/tools/resignation-letter`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
     { url: `${siteUrl}/tools/fax-cover`, lastModified: new Date("2026-05-22"), changeFrequency: "monthly", priority: 0.85 },
