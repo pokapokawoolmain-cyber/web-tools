@@ -1,8 +1,38 @@
 "use client";
 import { useState, useCallback, useRef } from "react";
-import { Upload, Download, Loader2, CheckCircle2, FileText } from "lucide-react";
+import { Upload, Download, Loader2, CheckCircle2, FileText, AlertCircle } from "lucide-react";
 import { trackToolStarted, trackToolCompleted, trackToolFailed } from "@/lib/analytics/track";
 import { loadPdfjs } from "@/lib/pdfjs";
+
+const TEXT_PDF_WARNING = "このPDFは文字のPDFのため、圧縮すると大きくなり、文字の検索もできなくなります";
+
+// 文字の層があるか（先頭の数ページだけ確認）。判定できなかったときは null
+async function detectTextLayer(f: File): Promise<boolean | null> {
+  try {
+    const pdfjs = await loadPdfjs();
+    const task = pdfjs.getDocument({ data: new Uint8Array(await f.arrayBuffer()) });
+    const doc = await task.promise;
+    try {
+      const pages = Math.min(doc.numPages, 5);
+      for (let i = 1; i <= pages; i++) {
+        const page = await doc.getPage(i);
+        const content = await page.getTextContent();
+        if (content.items.some((item) => "str" in item && item.str.trim().length > 0)) return true;
+      }
+      return false;
+    } finally {
+      await task.destroy();
+    }
+  } catch {
+    return null;
+  }
+}
+
+function downloadBlob(blob: Blob, name: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href = url; a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
 
 function formatSize(bytes: number) {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
@@ -22,16 +52,20 @@ export function PdfCompress() {
   const [quality, setQuality] = useState<Quality>("medium");
   const [dragOver, setDragOver] = useState(false);
   const [compressing, setCompressing] = useState(false);
-  const [result, setResult] = useState<{ originalSize: number; compressedSize: number } | null>(null);
+  const [result, setResult] = useState<{ originalSize: number; compressedSize: number; blob: Blob } | null>(null);
+  const [hasText, setHasText] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const currentFileRef = useRef<File | null>(null);
 
   const loadFile = useCallback((f: File) => {
     if (!f.name.toLowerCase().endsWith(".pdf") && f.type !== "application/pdf") {
       setError("PDFファイルを選択してください"); return;
     }
-    setError(null); setResult(null); setProgress(0); setFile(f);
+    setError(null); setResult(null); setProgress(0); setFile(f); setHasText(null);
+    currentFileRef.current = f;
+    detectTextLayer(f).then((v) => { if (currentFileRef.current === f) setHasText(v); });
   }, []);
 
   const onDrop = useCallback((e: React.DragEvent) => {
@@ -41,7 +75,7 @@ export function PdfCompress() {
 
   const compress = async () => {
     if (!file) return;
-    setCompressing(true); setError(null); setProgress(0);
+    setCompressing(true); setError(null); setProgress(0); setResult(null);
     const startedAt = trackToolStarted({ toolId: "pdf-compress", toolCategory: "pdf", toolName: "PDF圧縮" });
     try {
       const { PDFDocument } = await import("pdf-lib");
@@ -79,10 +113,9 @@ export function PdfCompress() {
       setProgress(95);
       const out = await newDoc.save();
       const blob = new Blob([out.buffer as ArrayBuffer], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a"); a.href = url; a.download = `compressed-${file.name}`; a.click();
-      URL.revokeObjectURL(url);
-      setResult({ originalSize: file.size, compressedSize: out.byteLength });
+      // 元より大きくなった場合は自動でダウンロードせず、注意を表示して元のまま使うよう案内する
+      if (out.byteLength < file.size) downloadBlob(blob, `compressed-${file.name}`);
+      setResult({ originalSize: file.size, compressedSize: out.byteLength, blob });
       setProgress(100);
       trackToolCompleted({ toolId: "pdf-compress", toolCategory: "pdf", toolName: "PDF圧縮", completionType: "processed", durationMs: Date.now() - startedAt });
     } catch {
@@ -127,8 +160,15 @@ export function PdfCompress() {
                 <p className="text-[14px] font-medium text-slate-700 dark:text-slate-300 truncate">{file.name}</p>
                 <p className="text-[12px] text-slate-400">{formatSize(file.size)}</p>
               </div>
-              <button onClick={() => { setFile(null); setResult(null); }} className="text-[12px] text-slate-400 hover:text-slate-600 transition-colors shrink-0">変更</button>
+              <button onClick={() => { setFile(null); setResult(null); setHasText(null); currentFileRef.current = null; }} className="text-[12px] text-slate-400 hover:text-slate-600 transition-colors shrink-0">変更</button>
             </div>
+
+            {hasText && !result && (
+              <div className="flex gap-2 px-4 py-3 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/40 text-[13px] text-amber-700 dark:text-amber-400 leading-relaxed">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>このPDFには文字の情報が含まれています。圧縮すると大きくなることが多く、文字の検索もできなくなります。スキャンした書類など、画像のPDFに向いた機能です。</span>
+              </div>
+            )}
 
             {/* Quality selector */}
             <div>
@@ -158,7 +198,41 @@ export function PdfCompress() {
               </div>
             )}
 
-            {result && (
+            {result && result.compressedSize >= result.originalSize && (
+              <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/40">
+                <div className="flex items-start gap-2 mb-3">
+                  <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-[14px] font-semibold text-amber-700 dark:text-amber-400">
+                      {hasText === false ? "圧縮すると元のファイルより大きくなります" : TEXT_PDF_WARNING}
+                    </p>
+                    <p className="text-[13px] text-amber-700/80 dark:text-amber-400/80 mt-1">元のPDFをそのままお使いください。</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <p className="text-[11px] text-slate-400 mb-0.5">元のPDF</p>
+                    <p className="text-[14px] font-bold text-slate-700 dark:text-slate-300">{formatSize(result.originalSize)}</p>
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-slate-400 mb-0.5">圧縮後</p>
+                    <p className="text-[14px] font-bold text-slate-700 dark:text-slate-300">{formatSize(result.compressedSize)}</p>
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-slate-400 mb-0.5">増加率</p>
+                    <p className="text-[14px] font-bold text-amber-600 dark:text-amber-400">+{Math.round((result.compressedSize / result.originalSize - 1) * 100)}%</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => file && downloadBlob(result.blob, `compressed-${file.name}`)}
+                  className="mt-3 w-full text-[12px] text-slate-400 hover:text-slate-600 underline transition-colors"
+                >
+                  それでも圧縮したPDFをダウンロードする
+                </button>
+              </div>
+            )}
+
+            {result && result.compressedSize < result.originalSize && (
               <div className="p-4 rounded-2xl bg-green-50 dark:bg-green-950/20 border border-green-100 dark:border-green-900/40">
                 <div className="flex items-center gap-2 mb-3">
                   <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
@@ -200,14 +274,14 @@ export function PdfCompress() {
             <li className="flex gap-3"><span className="w-5 h-5 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>圧縮品質を選択（推奨：標準）</li>
             <li className="flex gap-3"><span className="w-5 h-5 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>ボタンを押してダウンロード</li>
           </ol>
-          <p className="mt-4 text-[12px] text-slate-400 dark:text-zinc-500">画像ページを再レンダリングして圧縮します。テキスト主体のPDFは効果が限定的な場合があります。</p>
+          <p className="mt-4 text-[12px] text-slate-400 dark:text-zinc-500">ページを画像に描き直して圧縮します。スキャンした書類など画像のPDFに向いています。文字のPDFは大きくなり、文字の検索もできなくなるため、元のままお使いください。</p>
         </div>
 
         <div className="mt-8">
           <h2 className="text-[15px] font-bold text-slate-900 dark:text-white mb-4">よくある質問</h2>
           <div className="space-y-4">
             {[
-              { q: "どのくらい圧縮できますか？", a: "画像が多いPDFでは50〜80%の削減が見込めます。テキスト主体のPDFは効果が小さい場合があります。" },
+              { q: "どのくらい圧縮できますか？", a: "スキャンした書類など画像が多いPDFでは、大きく削減できることがあります。文字のPDFは圧縮すると大きくなり、文字の検索もできなくなるため、元のままお使いください。" },
               { q: "ファイルはどこで処理されますか？", a: "すべてブラウザ内で処理されます。ファイルが外部サーバーに送信されることはありません。" },
             ].map((item) => (
               <div key={item.q} className="p-4 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800">
