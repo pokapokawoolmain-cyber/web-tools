@@ -103,7 +103,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "月々の費用はかかりますか？",
-    a: "商品は買い切り（49,800円・税込）で、月額の利用料はありません。ただし Claude・Supabase・Vercel・メール送信サービス・ドメインなどの外部サービスの費用は、ご自身の契約で別途かかります（このページの「費用の目安」をご覧ください）。",
+    a: `商品は買い切り（${PRODUCT.launch ? `${PRODUCT.launch.label} ${PRODUCT.priceLabel}・税込。先着${PRODUCT.launch.limit}件まで、通常価格は${PRODUCT.launch.regularPriceLabel}` : `${PRODUCT.priceLabel}・税込`}）で、月額の利用料はありません。ただし Claude・Supabase・Vercel・メール送信サービス・ドメインなどの外部サービスの費用は、ご自身の契約で別途かかります（このページの「費用の目安」をご覧ください）。`,
   },
   {
     q: "いくつのSNSに使えますか？",
@@ -443,7 +443,7 @@ export default function SnsStarterKitGuidePage() {
             <div className={s.cta}>
               <div className={s.ctaText}>
                 <p className={s.ctaTitle}>
-                  SNS Starter Kit Standard ・ {PRODUCT.priceLabel}（{PRODUCT.taxLabel}）
+                  SNS Starter Kit Standard ・ {PRODUCT.launch ? `${PRODUCT.launch.label} ` : ""}{PRODUCT.priceLabel}（{PRODUCT.taxLabel}）
                 </p>
                 <p className={s.ctaSub}>買い切り・1 Production Project・購入後30日間のメールサポート</p>
               </div>

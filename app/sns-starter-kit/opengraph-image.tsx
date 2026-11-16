@@ -8,7 +8,7 @@ export const contentType = "image/png";
 
 const LINE1 = "自分のコミュニティに合う";
 const LINE2 = "SNSを、自分の環境で。";
-const SUB = `SNS Starter Kit ・ ${PRODUCT.priceLabel}（${PRODUCT.taxLabel}）・ ${PRODUCT.saleState} ・ ToolBoxJP`;
+const SUB = `SNS Starter Kit ・ ${PRODUCT.launch ? `${PRODUCT.launch.label} ` : ""}${PRODUCT.priceLabel}（${PRODUCT.taxLabel}）・ ${PRODUCT.saleState} ・ ToolBoxJP`;
 
 async function loadFont(text: string): Promise<ArrayBuffer | null> {
   try {
