@@ -117,6 +117,8 @@ function toolPromo(href: string): Promo | null {
 const TEMPLATE_BY_SLUG: Record<string, { id: string; short: string }> = {
   "yonezu-ghost-tour-goods": { id: "yonezu-ghost-2026", short: "GHOSTグッズ20点を、そのまま自分の買い物リストに" },
   "jump-festa-2027-goods": { id: "jump-festa-2027", short: "JF公式ショップの109点から、欲しい作品のグッズだけを買い物リストに" },
+  "disney-christmas-2026-goods": { id: "disney-christmas-2026", short: "クリスマスグッズ20点を、そのまま自分の買い物リストに" },
+  "disney-christmas-2026-guide": { id: "disney-christmas-2026", short: "クリスマスグッズ20点を、そのまま自分の買い物リストに" },
 };
 
 function templatePromo(slug: string): Promo | null {
