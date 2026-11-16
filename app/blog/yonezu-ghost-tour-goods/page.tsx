@@ -23,6 +23,9 @@ import {
 
 const post = getBlogPost("yonezu-ghost-tour-goods")!;
 
+/** 「次の会場」「次の整理券」を日付で切り替えるため、1時間ごとに作り直す */
+export const revalidate = 3600;
+
 export const metadata = mochicoArticleMeta(post, [
   "米津玄師 GHOST グッズ",
   "米津玄師 ツアーグッズ 2026",
@@ -96,17 +99,50 @@ const SALES: { venue: string; day1: string; day2: string; place: string }[] = [
   { venue: "K-Arena Yokohama（12月）", day1: "12/16(水) 10:00〜（整理券 〜13:00）", day2: "12/17(木) 10:00〜（整理券 〜12:00）", place: "外テント" },
 ];
 
+// ツアーの進み具合は日付から決める（ページは1時間ごとに作り直す。revalidate を参照）
+// 公式（REISSUE RECORDS「GOODS / GHOST」）で確認：2026-11-16
+const STOPS = [
+  { city: "長野", venue: "長野ビッグハット", date: "11/6・7", sale: "11:00〜", last: "2026-11-07", ticket: "2026-11-02", ticketLabel: "11/2(月) 20:00〜", area: "長野" },
+  { city: "横浜", venue: "K-Arena Yokohama", date: "11/11・12", sale: "10:00〜", last: "2026-11-12", ticket: "2026-11-08", ticketLabel: "11/8(日) 20:00〜", area: "神奈川（11月）" },
+  { city: "大阪", venue: "大阪城ホール", date: "11/18・19", sale: "12:00〜／13:00〜", last: "2026-11-19", ticket: "2026-11-13", ticketLabel: "11/13(金) 20:00〜", area: "大阪" },
+  { city: "福岡", venue: "マリンメッセ福岡A館", date: "11/27・28", sale: "12:00〜／11:00〜", last: "2026-11-28", ticket: "2026-11-20", ticketLabel: "11/20(金) 20:00〜", area: "福岡" },
+  { city: "宮城", venue: "セキスイハイムSA", date: "12/3・4", sale: "12:00〜／13:00〜", last: "2026-12-04", ticket: "2026-11-25", ticketLabel: "11/25(水) 20:00〜", area: "宮城" },
+  { city: "愛知", venue: "ポートメッセなごや", date: "12/8・9", sale: "12:00〜／13:00〜", last: "2026-12-09", ticket: "2026-12-05", ticketLabel: "12/5(土) 20:00〜", area: "愛知" },
+  { city: "横浜", venue: "K-Arena Yokohama", date: "12/16・17", sale: "10:00〜", last: "2026-12-17", ticket: "2026-12-11", ticketLabel: "12/11(金) 20:00〜", area: "神奈川（12月）" },
+];
+
+/** 日本時間で、公演最終日の終わり（翌日0時）・整理券の配布開始（20時） */
+const endOfDayJst = (ymd: string) => new Date(`${ymd}T23:59:59.999+09:00`);
+const ticketOpenJst = (ymd: string) => new Date(`${ymd}T20:00:00+09:00`);
+
+/** 次の公演（まだ終わっていない最初の会場）と、次に配布される整理券。全公演が終われば -1 */
+function tourStatus(now: Date) {
+  const nextIndex = STOPS.findIndex((st) => now < endOfDayJst(st.last));
+  const nextTicketIndex = STOPS.findIndex((st) => now < ticketOpenJst(st.ticket));
+  return { nextIndex, nextTicketIndex };
+}
+
+/** もちのひとこと（次の公演と整理券の状況に合わせて変える） */
+function nextTicketMessage(now: Date): string {
+  const { nextIndex, nextTicketIndex } = tourStatus(now);
+  if (nextIndex === -1) return "国内ツアーはすべて終わったよ。ツアーグッズはツアー終了後にオンラインストアで販売予定だから、公式の発表を待とう！";
+  const next = STOPS[nextIndex];
+  if (nextTicketIndex === nextIndex) {
+    return `次は${next.city}公演（${next.date}）。整理券は${next.ticketLabel}に配布だよ。スマホのリマインダーに「20時 整理券」って入れておこう！`;
+  }
+  const after = nextTicketIndex === -1 ? "" : `その次の${STOPS[nextTicketIndex].city}公演の整理券は${STOPS[nextTicketIndex].ticketLabel}だよ。`;
+  return `次は${next.city}公演（${next.date}）。整理券はもう配布済みだから、取れなかった人は整理券の時間帯が終わったあとの販売や、開場後・終演後の販売を狙おう。${after}`;
+}
+
 /** 自作の図：ツアーの流れ（会場・日程・物販開始時刻） */
 function TourRoute() {
-  const stops = [
-    { city: "長野", venue: "長野ビッグハット", date: "11/6・7", sale: "11:00〜", done: true },
-    { city: "横浜", venue: "K-Arena Yokohama", date: "11/11・12", sale: "10:00〜", next: true },
-    { city: "大阪", venue: "大阪城ホール", date: "11/18・19", sale: "12:00〜／13:00〜" },
-    { city: "福岡", venue: "マリンメッセ福岡A館", date: "11/27・28", sale: "12:00〜／11:00〜" },
-    { city: "宮城", venue: "セキスイハイムSA", date: "12/3・4", sale: "12:00〜／13:00〜" },
-    { city: "愛知", venue: "ポートメッセなごや", date: "12/8・9", sale: "12:00〜／13:00〜" },
-    { city: "横浜", venue: "K-Arena Yokohama", date: "12/16・17", sale: "10:00〜", final: true },
-  ];
+  const { nextIndex } = tourStatus(new Date());
+  const stops = STOPS.map((st, i) => ({
+    ...st,
+    done: nextIndex === -1 || i < nextIndex,
+    next: i === nextIndex,
+    final: i === STOPS.length - 1 && i !== nextIndex && nextIndex !== -1,
+  }));
   return (
     <svg viewBox="0 0 360 392" role="img" aria-labelledby="route-title route-desc">
       <title id="route-title">米津玄師 2026 TOUR / GHOST の国内ツアーの流れ</title>
@@ -378,19 +414,13 @@ export default function Page() {
 
       <p>アプリの整理券は、各会場の公演の数日前の<strong>20:00から</strong>配布されます。</p>
       <Timeline
-        items={[
-          { date: "11/2(月) 20:00〜", text: "長野公演の整理券" },
-          { date: "11/8(日) 20:00〜", text: "神奈川（11月）公演の整理券", hot: true },
-          { date: "11/13(金) 20:00〜", text: "大阪公演の整理券" },
-          { date: "11/20(金) 20:00〜", text: "福岡公演の整理券" },
-          { date: "11/25(水) 20:00〜", text: "宮城公演の整理券" },
-          { date: "12/5(土) 20:00〜", text: "愛知公演の整理券" },
-          { date: "12/11(金) 20:00〜", text: "神奈川（12月）公演の整理券" },
-        ]}
+        items={STOPS.map((st, i) => {
+          const { nextTicketIndex } = tourStatus(new Date());
+          const past = nextTicketIndex === -1 || i < nextTicketIndex;
+          return { date: st.ticketLabel, text: `${st.area}公演の整理券${past ? "（配布済み）" : ""}`, hot: i === nextTicketIndex };
+        })}
       />
-      <Bubble>
-        次は11/8(日)の夜、横浜公演の整理券だよ。スマホのリマインダーに「20時 整理券」って入れておこう！
-      </Bubble>
+      <Bubble>{nextTicketMessage(new Date())}</Bubble>
 
       <H2 id="nagano" num={5}>
         長野公演の様子と、前回ツアーから分かること

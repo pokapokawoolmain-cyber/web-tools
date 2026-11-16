@@ -162,6 +162,42 @@ export default function Page() {
         <li>転売は禁止。転売されたものは買わない</li>
       </ul>
 
+      <h3>アニメイト・とらのあな・メロンブックスの取扱い</h3>
+      <p>コミケ公式の告知に載っている取扱いの範囲です。店舗ごとの在庫や販売方法の詳細は、各社のサイトで確認してください（各社の案内が出たらこの記事も更新します）。</p>
+      <div className={s.tableWrap} role="region" aria-label="リストバンドの取扱店（横にスクロールできます）" tabIndex={0}>
+        <table className={s.table}>
+          <thead>
+            <tr>
+              <th>販売店</th>
+              <th>通販</th>
+              <th>店舗</th>
+              <th>海外の店舗</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">アニメイト</th>
+              <td>あり</td>
+              <td>あり</td>
+              <td>韓国・台湾地区・タイ・マレーシア・アメリカ</td>
+            </tr>
+            <tr>
+              <th scope="row">とらのあな</th>
+              <td>あり</td>
+              <td>池袋店、とらのあな出張所（未知書房小田部店、駿河屋日本橋アウトレット別館＆メンズ館を除く）</td>
+              <td>台北店（発売が遅れる場合あり）</td>
+            </tr>
+            <tr>
+              <th scope="row">メロンブックス</th>
+              <td>あり</td>
+              <td>あり</td>
+              <td>台北店</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p className={s.tableNote}>出典：コミックマーケット109リストバンド型参加証販売について（2026年11月9日公開）。販売開始はどの店も12月5日(土)。</p>
+
       <H2 id="list" num={6}>
         買うものリストを作っておく
       </H2>
