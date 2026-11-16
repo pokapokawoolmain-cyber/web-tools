@@ -11,6 +11,7 @@ import { searchTools, toSearchEntries } from "../lib/tool-search";
 import { TOOLS } from "../data/tools";
 import { classifyArticleLink } from "../lib/analytics/article";
 import { pickPromo } from "../components/blog/ServicePromo";
+import { GOODS_TEMPLATES, getTemplate, parsePick, sumPrice } from "../lib/mochico/templates";
 import {
   initialPages, movePage, parseRanges, pdfOutputName, removePages, rotatePages, sniffPdf, splitGroups, suggestPdf,
 } from "../lib/workspace/pdf-plan";
@@ -235,6 +236,8 @@ const O = "https://www.toolboxjp.com";
 test("リンクの種類と送る値", () => {
   assert.deepEqual(classifyArticleLink("/mochico", O, "/blog/a"), { type: "mochico", target: "/mochico" });
   assert.deepEqual(classifyArticleLink("/mochico/app?x=1", O, "/blog/a"), { type: "mochico", target: "/mochico/*" });
+  assert.deepEqual(classifyArticleLink("/mochico/templates/yonezu-ghost-2026", O, "/blog/a"), { type: "mochico", target: "/mochico/templates/yonezu-ghost-2026" });
+  assert.deepEqual(classifyArticleLink("/mochico/s/SECRETTOKEN", O, "/blog/a"), { type: "mochico", target: "/mochico/*" });
   assert.deepEqual(classifyArticleLink("/tools/koden-maker", O, "/blog/a"), { type: "tool", target: "/tools/koden-maker" });
   assert.deepEqual(classifyArticleLink("/workspace/pdf", O, "/blog/a"), { type: "workspace", target: "/workspace/pdf" });
   assert.deepEqual(classifyArticleLink("/blog/b", O, "/blog/a"), { type: "blog", target: "/blog/b" });
@@ -249,10 +252,36 @@ test("目次（同じページの #）・メール・トップは送らない", 
 test("記事に合う自社サービスを選ぶ", () => {
   const base = { slug: "x", title: "", description: "", publishedAt: "2026-11-15", readingMinutes: 1 };
   assert.equal(pickPromo({ ...base, category: "推し活ガイド" }).href, "/mochico");
+  assert.equal(pickPromo({ ...base, slug: "yonezu-ghost-tour-goods", category: "推し活ガイド" }).href, "/mochico/templates/yonezu-ghost-2026");
   assert.equal(pickPromo({ ...base, category: "PDF活用" }).href, "/workspace/pdf");
   assert.equal(pickPromo({ ...base, category: "画像変換" }).href, "/workspace/image");
   assert.equal(pickPromo({ ...base, category: "冠婚葬祭", relatedToolHref: "/tools/koden-maker" }).href, "/tools/koden-maker");
   assert.equal(pickPromo({ ...base, category: "その他" }).href, "/");
+});
+
+console.log("Mochico テンプレート");
+test("テンプレートのデータ（件数・価格・カテゴリの長さ）", () => {
+  const ids = GOODS_TEMPLATES.map((t) => t.id);
+  assert.deepEqual(ids, ["yonezu-ghost-2026", "jump-festa-2027", "disney-christmas-2026"]);
+  assert.equal(getTemplate("yonezu-ghost-2026")!.items.length, 20);
+  assert.equal(getTemplate("jump-festa-2027")!.items.length, 109);
+  assert.equal(getTemplate("disney-christmas-2026")!.items.length, 20);
+  for (const t of GOODS_TEMPLATES) {
+    assert.ok(t.eventTitle.length <= 100);
+    assert.ok(new Set(t.items.map((i) => i.category)).size <= 50);
+    for (const it of t.items) {
+      assert.ok(it.name.length >= 1 && it.name.length <= 100, it.name);
+      assert.ok(it.category.length >= 1 && it.category.length <= 30, it.category);
+      assert.ok(it.price === null || (Number.isInteger(it.price) && it.price >= 0), it.name);
+      assert.ok((it.note ?? "").length <= 1000);
+    }
+  }
+  assert.equal(sumPrice(getTemplate("yonezu-ghost-2026")!.items), 102300);
+});
+test("選んだ番号の読み取り", () => {
+  assert.deepEqual(parsePick("3,1,1,99,-1,x", 10), [1, 3]);
+  assert.equal(parsePick("", 10), null);
+  assert.equal(parsePick(undefined, 10), null);
 });
 
 console.log(`\n${passed} passed`);

@@ -6,7 +6,7 @@
 // ライトテーマに固定し、テーマ切替ボタン（押しても変わらないUI）を出さない。
 // ============================================================
 
-const FORCED_LIGHT_PREFIXES = ["/sns-starter-kit"];
+const FORCED_LIGHT_PREFIXES = ["/sns-starter-kit", "/mochico/templates"];
 /** Mochico 関連記事（ToolBoxJP ブログ内だが Mochico の白基調で表示する）。記事を増やしたらここに足す */
 export const MOCHICO_ARTICLE_PATHS = [
   "/blog/oshi-goods-management",
