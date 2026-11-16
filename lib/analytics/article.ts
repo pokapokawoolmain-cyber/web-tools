@@ -39,6 +39,8 @@ export function classifyArticleLink(href: string, origin: string, currentPath = 
     return { type: "official", target: url.hostname };
   }
   const path = url.pathname;
+  // テンプレートページはIDまで送る（公開ページ・個人情報なし）。それ以外のアプリ内のパスは送らない
+  if (/^\/mochico\/templates\/[a-z0-9-]+$/.test(path)) return { type: "mochico", target: path };
   if (path === "/mochico" || path.startsWith("/mochico/")) return { type: "mochico", target: path === "/mochico" ? path : "/mochico/*" };
   if (path.startsWith("/tools/")) return { type: "tool", target: path };
   if (path.startsWith("/workspace/")) return { type: "workspace", target: path };

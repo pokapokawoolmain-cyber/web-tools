@@ -113,8 +113,30 @@ function toolPromo(href: string): Promo | null {
   };
 }
 
+/** グッズのテンプレートがある記事は、そのグッズでリストを作る入口にする */
+const TEMPLATE_BY_SLUG: Record<string, { id: string; short: string }> = {
+  "yonezu-ghost-tour-goods": { id: "yonezu-ghost-2026", short: "GHOSTグッズ20点を、そのまま自分の買い物リストに" },
+  "jump-festa-2027-goods": { id: "jump-festa-2027", short: "JF公式ショップの109点から、欲しい作品のグッズだけを買い物リストに" },
+};
+
+function templatePromo(slug: string): Promo | null {
+  const t = TEMPLATE_BY_SLUG[slug];
+  if (!t) return null;
+  return {
+    href: `/mochico/templates/${t.id}`,
+    name: "Mochico（モチコ）",
+    short: t.short,
+    lead: "この記事のグッズの名前と価格が入ったリストを、そのまま Mochico で使えます。選んだグッズの合計金額もすぐ分かります。",
+    points: ["欲しいグッズを選ぶだけ。手入力はいらない", "作ったあとは追加・削除・写真の登録も自由", "買えたものをタップで記録（取得状況は本人だけに表示）"],
+    cta: "この記事のグッズでリストを作る（無料）",
+    icon: "mochico",
+  };
+}
+
 /** 記事に合うサービスを選ぶ（カテゴリ優先、なければ関連ツール、なければツール検索） */
 export function pickPromo(post: BlogPost): Promo {
+  const tpl = templatePromo(post.slug);
+  if (tpl) return tpl;
   if (MOCHICO_CATEGORIES.includes(post.category)) return MOCHICO;
   if (post.category === "コミュニティSNSづくり") return SNS_KIT;
   if (PDF_CATEGORIES.includes(post.category)) return PDF_WS;
