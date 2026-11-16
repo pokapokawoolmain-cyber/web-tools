@@ -12,7 +12,20 @@ type CompressedImage = {
   compressedSize: number;
   previewUrl: string;
   compressionRate: number;
+  originalWidth: number;
+  originalHeight: number;
+  width: number;
+  height: number;
 };
+
+// 長辺の上限（0 は「元のまま」）
+const MAX_EDGE_OPTIONS: { value: number; label: string }[] = [
+  { value: 0, label: "元のまま" },
+  { value: 2560, label: "2560px" },
+  { value: 1920, label: "1920px" },
+  { value: 1280, label: "1280px" },
+];
+const DEFAULT_MAX_EDGE = 2560;
 
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -20,35 +33,74 @@ function formatSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 }
 
-// Canvas APIで画像を圧縮する関数
-async function compressImage(file: File, quality: number): Promise<Blob> {
+function loadImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const url = URL.createObjectURL(file);
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) { reject(new Error("Canvas error")); return; }
-      ctx.drawImage(img, 0, 0);
-      canvas.toBlob(
-        (blob) => {
-          URL.revokeObjectURL(url);
-          if (blob) resolve(blob);
-          else reject(new Error("圧縮に失敗しました"));
-        },
-        "image/jpeg",
-        quality / 100
-      );
-    };
-    img.onerror = () => reject(new Error("画像の読み込みに失敗しました"));
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("画像の読み込みに失敗しました")); };
     img.src = url;
   });
 }
 
+function makeCanvas(width: number, height: number) {
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas error");
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  return { canvas, ctx };
+}
+
+// Canvas APIで画像を縮小・圧縮する関数（すべてブラウザ内で処理）
+async function compressImage(
+  file: File,
+  quality: number,
+  maxEdge: number
+): Promise<{ blob: Blob; originalWidth: number; originalHeight: number; width: number; height: number }> {
+  const img = await loadImage(file);
+  const originalWidth = img.naturalWidth;
+  const originalHeight = img.naturalHeight;
+  const longEdge = Math.max(originalWidth, originalHeight);
+  const scale = maxEdge > 0 && longEdge > maxEdge ? maxEdge / longEdge : 1;
+  const width = Math.max(1, Math.round(originalWidth * scale));
+  const height = Math.max(1, Math.round(originalHeight * scale));
+
+  // 大きく縮小するときは半分ずつ段階的に縮めて、ギザギザを抑える
+  let source: CanvasImageSource = img;
+  let sw = originalWidth;
+  let sh = originalHeight;
+  while (sw / 2 >= width && sh / 2 >= height) {
+    const nw = Math.round(sw / 2);
+    const nh = Math.round(sh / 2);
+    const step = makeCanvas(nw, nh);
+    step.ctx.drawImage(source, 0, 0, sw, sh, 0, 0, nw, nh);
+    source = step.canvas;
+    sw = nw;
+    sh = nh;
+  }
+
+  const { canvas, ctx } = makeCanvas(width, height);
+  // JPEG は透明を持てないため、透明部分を白で塗ってから描く（黒くなるのを防ぐ）
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+  ctx.drawImage(source, 0, 0, sw, sh, 0, 0, width, height);
+
+  const blob = await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (b) => (b ? resolve(b) : reject(new Error("圧縮に失敗しました"))),
+      "image/jpeg",
+      quality / 100
+    );
+  });
+  return { blob, originalWidth, originalHeight, width, height };
+}
+
 export function ImageCompressor() {
   const [quality, setQuality] = useState(80);
+  const [maxEdge, setMaxEdge] = useState(DEFAULT_MAX_EDGE);
   const [results, setResults] = useState<CompressedImage[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [dragOver, setDragOver] = useState(false);
@@ -65,7 +117,8 @@ export function ImageCompressor() {
 
     for (const file of imageFiles) {
       try {
-        const compressed = await compressImage(file, quality);
+        const { blob: compressed, originalWidth, originalHeight, width, height } =
+          await compressImage(file, quality, maxEdge);
         const previewUrl = URL.createObjectURL(compressed);
         const compressionRate =
           ((file.size - compressed.size) / file.size) * 100;
@@ -76,6 +129,10 @@ export function ImageCompressor() {
           compressedSize: compressed.size,
           previewUrl,
           compressionRate,
+          originalWidth,
+          originalHeight,
+          width,
+          height,
         });
       } catch {
         // エラーはスキップして次のファイルへ
@@ -97,7 +154,7 @@ export function ImageCompressor() {
     } else {
       trackToolFailed({ toolId: "image-compress", toolCategory: "image", toolName: "画像圧縮", errorStage: "compress" });
     }
-  }, [quality]);
+  }, [quality, maxEdge]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -137,6 +194,29 @@ export function ImageCompressor() {
         <div className="flex justify-between text-xs text-slate-400">
           <span>← 高圧縮（ファイル小）</span>
           <span>高品質（ファイル大）→</span>
+        </div>
+        <div className="pt-2">
+          <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">長辺の上限</p>
+          <div className="grid grid-cols-4 gap-2">
+            {MAX_EDGE_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => setMaxEdge(opt.value)}
+                aria-pressed={maxEdge === opt.value}
+                className={`py-2 rounded-lg border text-xs sm:text-sm font-medium transition-colors ${
+                  maxEdge === opt.value
+                    ? "border-blue-400 bg-blue-50 text-blue-700 dark:bg-blue-950/30 dark:border-blue-600 dark:text-blue-300"
+                    : "border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-slate-400 hover:border-blue-300"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-slate-400 mt-2">
+            写真は縦横を縮めると大きく軽くなります。上限より小さい画像はそのままの大きさです。
+          </p>
         </div>
       </div>
 
@@ -210,13 +290,20 @@ export function ImageCompressor() {
                   ) : (
                     <span className="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-1.5 py-0.5 rounded-full flex items-center gap-1">
                       <AlertCircle className="w-3 h-3" />
-                      これ以上小さくなりません
+                      {result.compressionRate < 0 ? "元より大きくなりました" : "これ以上小さくなりません"}
                     </span>
                   )}
                 </div>
+                <p className="text-xs text-slate-400 mt-1">
+                  {result.width === result.originalWidth && result.height === result.originalHeight
+                    ? `${result.width}×${result.height}px（大きさは元のまま）`
+                    : `${result.originalWidth}×${result.originalHeight}px → ${result.width}×${result.height}px`}
+                </p>
                 {result.compressionRate <= 0 && (
                   <p className="text-xs text-amber-600 dark:text-amber-500 mt-1">
-                    この画像はすでに最適化済みです。品質を下げるか、WebP形式への変換をお試しください。
+                    {result.compressionRate < 0
+                      ? "圧縮すると元のファイルより大きくなります。この画像は元のファイルをそのままお使いください。"
+                      : "この画像はこれ以上小さくなりません。元のファイルをそのままお使いいただくか、長辺の上限を小さくしてお試しください。"}
                   </p>
                 )}
               </div>
