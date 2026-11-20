@@ -14,7 +14,8 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   // 白基調に固定した画面では、押しても変わらないテーマ切替ボタンを出さない
-  const hideThemeToggle = isForcedLightRoute(usePathname());
+  const pathname = usePathname();
+  const hideThemeToggle = isForcedLightRoute(pathname);
 
   // Close on escape key
   useEffect(() => {
@@ -28,6 +29,9 @@ export function Header() {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
+
+  // 英語版の商品ページ（/en/）は、日本語のサイトのヘッダーを出さず、ページ自身のナビを使う
+  if (pathname.startsWith("/en/")) return null;
 
   const popularTools = TOOLS.filter(t => t.isPopular);
   const newTools = TOOLS.filter(t => t.isNew);

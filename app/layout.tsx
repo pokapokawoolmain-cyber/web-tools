@@ -2,6 +2,7 @@
 // ルートレイアウト（全ページ共通）
 // フォント・テーマ・グローバルCSSをここで設定
 // ========================================
+import { HideOnPaths } from "@/components/layout/HideOnPaths";
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
 import { VercelAnalytics } from "@/components/analytics/VercelAnalytics";
@@ -125,7 +126,9 @@ export default function RootLayout({
             {children}
           </main>
 
-          <Footer />
+          <HideOnPaths prefixes={["/en/"]}>
+            <Footer />
+          </HideOnPaths>
         </ThemeProvider>
         <VercelAnalytics />
       </body>

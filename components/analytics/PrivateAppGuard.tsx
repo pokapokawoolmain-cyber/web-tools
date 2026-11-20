@@ -11,6 +11,6 @@ import { GA_MEASUREMENT_ID } from "@/lib/analytics/config";
 import { MOCHICO_PRIVATE_PATH_RE } from "@/lib/mochico/private-paths";
 
 export function PrivateAppGuard() {
-  const code = `(function(){try{if(${MOCHICO_PRIVATE_PATH_RE.toString()}.test(location.pathname)){window[${JSON.stringify(`ga-disable-${GA_MEASUREMENT_ID}`)}]=true;(window.adsbygoogle=window.adsbygoogle||[]).pauseAdRequests=1;}}catch(e){}})();`;
+  const code = `(function(){try{if(${MOCHICO_PRIVATE_PATH_RE.toString()}.test(location.pathname)){window[${JSON.stringify(`ga-disable-${GA_MEASUREMENT_ID}`)}]=true;(window.adsbygoogle=window.adsbygoogle||[]).pauseAdRequests=1;}else if(/^\\/en\\//.test(location.pathname)){(window.adsbygoogle=window.adsbygoogle||[]).pauseAdRequests=1;}}catch(e){}})();`;
   return <script dangerouslySetInnerHTML={{ __html: code }} />;
 }
