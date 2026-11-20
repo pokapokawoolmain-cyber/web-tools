@@ -32,7 +32,8 @@ export default function PurchasePage() {
           ["更新", <>{TEXT.form}{TEXT.update}</>],
           ["外部サービスの料金", TEXT.external],
           ["別売り", TEXT.separate],
-          ["販売者", <>{SELLER.name}（運営統括責任者: {SELLER.representative}）・{SELLER.email}</>],
+          ["領収書", TEXT.invoice],
+          ["販売者", <>{SELLER.name}・{SELLER.email}</>],
         ]}
       />
       <PurchaseConsent paymentLink={PAYMENT_LINK} />
