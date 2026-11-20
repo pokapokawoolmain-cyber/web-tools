@@ -2,6 +2,8 @@
 import { useState, useCallback } from "react";
 import { Printer, RefreshCw } from "lucide-react";
 import Link from "next/link";
+import { EnvelopeFront, EnvelopeInner, PREVIEW_SIZE, PRINT_SIZE } from "@/components/tools/EnvelopeFace";
+import { hasAvoidedDigits, splitSubName, toDaijiAmount } from "@/lib/envelope";
 
 type Religion = "buddhist" | "shinto" | "christian" | "unknown" | "ofuse";
 
@@ -41,22 +43,11 @@ export function KodenMaker() {
     window.print();
   }, []);
 
-  // Convert amount to kanji
-  const toKanjiAmount = (n: string): string => {
-    const num = parseInt(n.replace(/[^0-9]/g, ""), 10);
-    if (isNaN(num)) return "";
-    const kanjiDigits = ["〇","一","二","三","四","五","六","七","八","九"];
-    const units = ["","拾","百","仟","萬","拾","百","仟","億"];
-    const str = String(num);
-    let result = "金";
-    for (let i = 0; i < str.length; i++) {
-      result += kanjiDigits[parseInt(str[i])];
-      if (i < str.length - 1) result += units[str.length - 1 - i] || "";
-    }
-    return result + "圓";
-  };
 
-  const kanjiAmount = toKanjiAmount(amount);
+  const kanjiAmount = toDaijiAmount(amount);
+  const avoidDigits = hasAvoidedDigits(amount);
+  const sub = splitSubName(subName);
+  const names = [name.trim(), ...sub.names].filter(Boolean);
   const fontClass = fontStyle === "thin"
     ? "font-normal"
     : "font-bold";
@@ -74,23 +65,10 @@ export function KodenMaker() {
 
       {/* Print area */}
       <div id="koden-print-area" className="hidden print:flex flex-col items-center gap-8 w-full">
-        {/* 表 (front) */}
-        <div style={{ width: "120mm", height: "170mm", border: "1px solid #ccc", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "10mm", fontFamily: "'Noto Serif JP', serif", background: "white", position: "relative" }}>
-          <p style={{ position: "absolute", top: "12mm", left: "50%", transform: "translateX(-50%)", fontSize: "8pt", color: "#64748b", letterSpacing: "0.1em" }}>表書き（おもてがき）</p>
-          <p style={{ fontSize: "24pt", fontWeight: fontStyle === "bold" ? "bold" : "normal", letterSpacing: "0.2em", textAlign: "center", color: "#1e293b", marginBottom: "15mm", fontFamily: "'Noto Serif JP', serif" }}>
-            {omoteGaki}
-          </p>
-          <div style={{ width: "60%", height: "1px", background: "#94a3b8", marginBottom: "15mm" }} />
-          <p style={{ fontSize: "16pt", textAlign: "center", color: "#1e293b", fontFamily: "'Noto Serif JP', serif" }}>{name || "　　　　　"}</p>
-          {subName && <p style={{ fontSize: "11pt", textAlign: "center", color: "#64748b", marginTop: "4mm", fontFamily: "'Noto Serif JP', serif" }}>{subName}</p>}
-        </div>
-        {/* 中袋（金額） */}
-        {amount && (
-          <div style={{ width: "120mm", height: "80mm", border: "1px solid #ccc", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "8mm", fontFamily: "'Noto Serif JP', serif", background: "white" }}>
-            <p style={{ fontSize: "8pt", color: "#64748b", marginBottom: "4mm" }}>中袋（金額）</p>
-            <p style={{ fontSize: "16pt", textAlign: "center", letterSpacing: "0.1em", color: "#1e293b" }}>{kanjiAmount}</p>
-          </div>
-        )}
+        {/* 表（縦書き：上段＝表書き／下段＝氏名） */}
+        <EnvelopeFront omote={omoteGaki} names={names} org={sub.org} bold={fontStyle === "bold"} ink={fontStyle === "thin" ? "#6b7280" : "#111827"} size={PRINT_SIZE} />
+        {/* 中袋（金額・縦書き） */}
+        {kanjiAmount && <EnvelopeInner amount={kanjiAmount} size={PRINT_SIZE} heightRatio={0.52} />}
       </div>
 
       <div className="space-y-5">
@@ -205,6 +183,9 @@ export function KodenMaker() {
           {kanjiAmount && (
             <p className="text-[13px] text-slate-500 dark:text-zinc-400 mt-2">大字：<strong className="text-slate-800 dark:text-zinc-200">{kanjiAmount}</strong></p>
           )}
+          {avoidDigits && (
+            <p className="text-[12px] text-amber-700 dark:text-amber-400 mt-1">香典では「4（死）」「9（苦）」を連想させる金額は避けるのが一般的です。</p>
+          )}
         </div>
 
         {/* Preview */}
@@ -218,15 +199,14 @@ export function KodenMaker() {
         {showPreview && (
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 p-6">
             <p className="text-[12px] text-center text-slate-400 mb-4">香典袋プレビュー（表）</p>
-            <div className="mx-auto bg-white border border-slate-300 rounded-lg shadow-sm flex flex-col items-center justify-center gap-4 p-8" style={{ width: "min(220px, 100%)", minHeight: "280px" }}>
-              <p className={`text-[26px] ${fontClass} text-slate-800 tracking-[0.25em] text-center`} style={{ fontFamily: "'Noto Serif JP', Georgia, serif", color: fontStyle === "thin" ? "#94a3b8" : "#1e293b" }}>
-                {omoteGaki}
-              </p>
-              <div className="w-2/3 h-px bg-slate-300" />
-              <p className="text-[16px] text-slate-700 tracking-wider text-center" style={{ fontFamily: "'Noto Serif JP', Georgia, serif" }}>
-                {name || "　　　　"}
-              </p>
-              {subName && <p className="text-[12px] text-slate-400 text-center">{subName}</p>}
+            <div className="flex flex-wrap items-start justify-center gap-4">
+              <EnvelopeFront omote={omoteGaki} names={names} org={sub.org} bold={fontStyle === "bold"} ink={fontStyle === "thin" ? "#6b7280" : "#111827"} size={PREVIEW_SIZE} />
+              {kanjiAmount && (
+                <div className="text-center">
+                  <EnvelopeInner amount={kanjiAmount} size={PREVIEW_SIZE} />
+                  <p className="mt-1 text-[11px] text-slate-400">中袋（表）</p>
+                </div>
+              )}
             </div>
           </div>
         )}

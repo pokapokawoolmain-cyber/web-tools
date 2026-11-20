@@ -10,6 +10,7 @@ import { suggest } from "../lib/workspace/suggest";
 import { searchTools, toSearchEntries } from "../lib/tool-search";
 import { TOOLS } from "../data/tools";
 import { classifyArticleLink } from "../lib/analytics/article";
+import { hasAvoidedDigits, splitSubName, toDaijiAmount } from "../lib/envelope";
 import { pickPromo } from "../components/blog/ServicePromo";
 import { GOODS_TEMPLATES, getTemplate, parsePick, sumPrice } from "../lib/mochico/templates";
 import {
@@ -282,6 +283,29 @@ test("選んだ番号の読み取り", () => {
   assert.deepEqual(parsePick("3,1,1,99,-1,x", 10), [1, 3]);
   assert.equal(parsePick("", 10), null);
   assert.equal(parsePick(undefined, 10), null);
+});
+
+console.log("香典袋・祝儀袋");
+test("金額を正式な大字に（0の位は飛ばし、円也で閉じる）", () => {
+  assert.equal(toDaijiAmount("5000"), "金伍仟円也");
+  assert.equal(toDaijiAmount("10000"), "金壱萬円也");
+  assert.equal(toDaijiAmount("30000"), "金参萬円也");
+  assert.equal(toDaijiAmount("50000"), "金伍萬円也");
+  assert.equal(toDaijiAmount("15000"), "金壱萬伍仟円也");
+  assert.equal(toDaijiAmount("100000"), "金壱拾萬円也");
+  assert.equal(toDaijiAmount("１０，０００"), "金壱萬円也");
+  assert.equal(toDaijiAmount("0"), "");
+  assert.equal(toDaijiAmount(""), "");
+});
+test("4・9を含む金額の注意", () => {
+  assert.equal(hasAvoidedDigits("40000"), true);
+  assert.equal(hasAvoidedDigits("9000"), true);
+  assert.equal(hasAvoidedDigits("30000"), false);
+});
+test("連名と会社名の分け方（阿部・服部などの名字は会社名にしない）", () => {
+  assert.deepEqual(splitSubName("阿部太郎・服部花子"), { org: "", names: ["阿部太郎", "服部花子"] });
+  assert.deepEqual(splitSubName("株式会社ABC"), { org: "株式会社ABC", names: [] });
+  assert.deepEqual(splitSubName("総務部一同"), { org: "", names: ["総務部一同"] });
 });
 
 console.log(`\n${passed} passed`);
