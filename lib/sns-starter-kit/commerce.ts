@@ -6,10 +6,14 @@
 //   文言を変えるときは、このファイルだけを直す。
 // ============================================================
 
-/** Stripe の支払いリンク（本番）。公開してよい URL。販売を止めるときは SALE_OPEN を false にする。 */
-export const PAYMENT_LINK = "https://buy.stripe.com/14AfZh4891Rif9zaCrcQU01";
+/**
+ * 支払い画面は、購入内容の確認ページで同意したときだけ、その場で作る（ACOS の /api/sns-kit/checkout）。
+ * 固定の支払いリンク（Payment Link）は使わない（確認ページを飛ばす経路を作らないため）。
+ * 販売を止めるときは SALE_OPEN を false にする（ACOS 側の SNS_KIT_SALE_OPEN でも止まる）。
+ */
+export const CHECKOUT_PATH = "/sns-starter-kit/checkout";
 export const SALE_OPEN = false;
-export const PURCHASABLE = SALE_OPEN && PAYMENT_LINK.startsWith("https://buy.stripe.com/");
+export const PURCHASABLE = SALE_OPEN;
 
 export const SELLER = {
   name: "akamaru Corp.（屋号）",

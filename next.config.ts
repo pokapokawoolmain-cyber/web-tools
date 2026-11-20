@@ -102,6 +102,11 @@ const nextConfig: NextConfig = {
         source: "/sns-starter-kit/download/:token",
         destination: "https://ceo.toolboxjp.com/api/sns-kit/download/:token",
       },
+      // 購入内容の確認ページの「支払い画面へ進む」（同意を確かめて Stripe の支払い画面を作る）
+      {
+        source: "/sns-starter-kit/checkout",
+        destination: "https://ceo.toolboxjp.com/api/sns-kit/checkout",
+      },
     ];
   },
   async headers() {
