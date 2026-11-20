@@ -8,7 +8,7 @@
 
 /** Stripe の支払いリンク（本番）。公開してよい URL。販売を止めるときは SALE_OPEN を false にする。 */
 export const PAYMENT_LINK = "https://buy.stripe.com/14AfZh4891Rif9zaCrcQU01";
-export const SALE_OPEN = true;
+export const SALE_OPEN = false;
 export const PURCHASABLE = SALE_OPEN && PAYMENT_LINK.startsWith("https://buy.stripe.com/");
 
 export const SELLER = {
