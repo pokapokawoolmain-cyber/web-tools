@@ -3,12 +3,14 @@ import { useState } from "react";
 
 // 規約への同意のチェックを入れるまで、支払い画面へ進めないようにする。
 // 「支払い画面へ進む」を押すと、サーバーで同意を確かめてから Stripe の支払い画面を作る（固定の支払いリンクは使わない）。
-export function PurchaseConsent({ action, termsVersion }: { action: string; termsVersion: string }) {
+export function PurchaseConsent({ action, termsVersion, legalVersion, buildCommit }: { action: string; termsVersion: string; legalVersion: string; buildCommit: string }) {
   const [agreed, setAgreed] = useState(false);
   const [sending, setSending] = useState(false);
   return (
     <form method="post" action={action} onSubmit={() => setSending(true)} className="rounded-xl border border-slate-300 p-5 space-y-4">
       <input type="hidden" name="terms_version" value={termsVersion} />
+      <input type="hidden" name="legal_version" value={legalVersion} />
+      <input type="hidden" name="build_commit" value={buildCommit} />
       <label className="flex items-start gap-3 cursor-pointer">
         <input
           type="checkbox"

@@ -36,7 +36,7 @@ export default function PurchasePage() {
           ["販売者", <>{SELLER.name}・{SELLER.email}</>],
         ]}
       />
-      <PurchaseConsent action={CHECKOUT_PATH} termsVersion={TERMS_EFFECTIVE_DATE} />
+      <PurchaseConsent action={CHECKOUT_PATH} termsVersion={TERMS_EFFECTIVE_DATE} legalVersion={process.env.SNS_KIT_LEGAL_VERSION ?? ""} buildCommit={process.env.SNS_KIT_BUILD_COMMIT ?? ""} />
       <p className="text-sm text-slate-500">{TEXT.cancelBeforeConfirm}</p>
     </LegalShell>
   );

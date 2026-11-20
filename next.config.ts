@@ -1,6 +1,29 @@
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import type { NextConfig } from "next";
 
+// SNS Starter Kit の同意の版（YYYY-MM-DD.<12桁のハッシュ>）。販売条件・規約・特商法・確認ページのソースから作る。
+// 文言が1文字でも変われば版が変わる（同じ日の修正も区別できる）。全文はこのコミットのソースで再現できる。
+const SNS_KIT_LEGAL_FILES = [
+  "lib/sns-starter-kit/commerce.ts",
+  "app/sns-starter-kit/terms/page.tsx",
+  "app/sns-starter-kit/tokushoho/page.tsx",
+  "app/sns-starter-kit/purchase/page.tsx",
+  "app/sns-starter-kit/purchase/PurchaseConsent.tsx",
+];
+function snsKitLegalVersion(): string {
+  const h = createHash("sha256");
+  for (const f of SNS_KIT_LEGAL_FILES) h.update(readFileSync(join(process.cwd(), f)));
+  const jst = new Date(Date.now() + 9 * 3600_000).toISOString().slice(0, 10);
+  return `${jst}.${h.digest("hex").slice(0, 12)}`;
+}
+
 const nextConfig: NextConfig = {
+  env: {
+    SNS_KIT_LEGAL_VERSION: snsKitLegalVersion(),
+    SNS_KIT_BUILD_COMMIT: (process.env.VERCEL_GIT_COMMIT_SHA ?? "local").slice(0, 40),
+  },
   // 画像最適化の許可ドメイン
   images: {
     formats: ["image/avif", "image/webp"],

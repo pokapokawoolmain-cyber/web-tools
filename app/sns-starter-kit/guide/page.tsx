@@ -328,7 +328,7 @@ export default function SnsStarterKitGuidePage() {
             <ol className={s.steps}>
               <li>
                 <span className={s.stepTitle}>購入して、ZIP を受け取る</span>
-                決済のあと、ダウンロードの案内をメールでお送りします（24時間以内）。
+                決済のあと、ダウンロードの案内をメールで自動でお送りします（通常は数分以内）。
               </li>
               <li>
                 <span className={s.stepTitle}>START_HERE.md を読む</span>
