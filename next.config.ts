@@ -94,6 +94,16 @@ const nextConfig: NextConfig = {
   },
 
   // ヘッダー設定（SEO・セキュリティ）
+  // SNS Starter Kit のダウンロードページ（購入者のメールのリンク）。中身は ACOS（ceo.toolboxjp.com）が返す。
+  // 注文・回数・署名 URL の処理は ACOS の1か所にまとめ、購入者には toolboxjp.com のアドレスで見せる
+  async rewrites() {
+    return [
+      {
+        source: "/sns-starter-kit/download/:token",
+        destination: "https://ceo.toolboxjp.com/api/sns-kit/download/:token",
+      },
+    ];
+  },
   async headers() {
     return [
       {
