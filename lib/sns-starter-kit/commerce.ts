@@ -12,7 +12,7 @@
  * 販売を止めるときは SALE_OPEN を false にする（ACOS 側の SNS_KIT_SALE_OPEN でも止まる）。
  */
 export const CHECKOUT_PATH = "/sns-starter-kit/checkout";
-export const SALE_OPEN = false;
+export const SALE_OPEN = true; // 社内検証のプレビュー専用（このブランチは main にマージしない）
 export const PURCHASABLE = SALE_OPEN;
 
 export const SELLER = {
