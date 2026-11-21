@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { PAYMENT_LINK, PURCHASABLE, SELLER, TEXT } from "@/lib/sns-starter-kit/commerce";
+import { CHECKOUT_PATH, PURCHASABLE, SELLER, TERMS_EFFECTIVE_DATE, TEXT } from "@/lib/sns-starter-kit/commerce";
 import { LegalShell, TermTable } from "@/components/sns-starter-kit/legal/LegalShell";
 import { PurchaseConsent } from "./PurchaseConsent";
 
@@ -32,10 +32,11 @@ export default function PurchasePage() {
           ["更新", <>{TEXT.form}{TEXT.update}</>],
           ["外部サービスの料金", TEXT.external],
           ["別売り", TEXT.separate],
-          ["販売者", <>{SELLER.name}（運営統括責任者: {SELLER.representative}）・{SELLER.email}</>],
+          ["領収書", TEXT.invoice],
+          ["販売者", <>{SELLER.name}・{SELLER.email}</>],
         ]}
       />
-      <PurchaseConsent paymentLink={PAYMENT_LINK} />
+      <PurchaseConsent action={CHECKOUT_PATH} termsVersion={TERMS_EFFECTIVE_DATE} legalVersion={process.env.SNS_KIT_LEGAL_VERSION ?? ""} buildCommit={process.env.SNS_KIT_BUILD_COMMIT ?? ""} />
       <p className="text-sm text-slate-500">{TEXT.cancelBeforeConfirm}</p>
     </LegalShell>
   );

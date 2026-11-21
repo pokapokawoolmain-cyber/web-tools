@@ -23,6 +23,7 @@ export default function TokushohoPage() {
           ["商品代金以外の必要料金", <>インターネットの接続料金・通信料金。{TEXT.external}</>],
           ["支払方法", TEXT.payMethod],
           ["支払時期", TEXT.payTiming],
+          ["領収書", TEXT.invoice],
           ["商品の引渡時期", TEXT.deliveryTiming],
           ["引渡方法", TEXT.deliveryMethod],
           ["動作環境", TEXT.env],
