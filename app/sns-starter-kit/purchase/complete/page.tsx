@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SELLER } from "@/lib/sns-starter-kit/commerce";
+import { TEXT } from "@/lib/sns-starter-kit/commerce";
 import { LegalShell } from "@/components/sns-starter-kit/legal/LegalShell";
 
 export const metadata: Metadata = {
@@ -11,13 +11,9 @@ export const metadata: Metadata = {
 export default function PurchaseCompletePage() {
   return (
     <LegalShell title="ご購入ありがとうございます">
-      <p>
-        お支払いの手続きが終わりました。ご入力のメールアドレスへ、ダウンロードの方法を自動でお送りします（通常は数分以内に届きます）。
-      </p>
-      <p>
-        メールが届かない場合は、迷惑メールのフォルダもご確認ください。それでも見つからない場合は、{SELLER.email}{" "}
-        へご連絡ください。お送りします。
-      </p>
+      <p>お支払いの手続きが終わりました。</p>
+      <p>{TEXT.deliveryTiming}</p>
+      <p>メールが届かない場合は、迷惑メールのフォルダもご確認ください。</p>
       <p>Stripe からは、別に領収書のメールが届きます。</p>
     </LegalShell>
   );
