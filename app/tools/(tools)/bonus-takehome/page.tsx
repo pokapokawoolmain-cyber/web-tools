@@ -3,13 +3,13 @@ import Link from "next/link";
 import { ToolJsonLd } from "@/components/seo/ToolJsonLd";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { generateMeta } from "@/lib/seo";
-import { calcBonusTakehome } from "@/lib/takehome";
+import { calcBonusTakehome, SOCIAL_INSURANCE_RATES as R, SOCIAL_INSURANCE_YEAR_LABEL } from "@/lib/takehome";
 import { BonusTakehome } from "./BonusTakehome";
 import { RelatedTools } from "@/components/tools/RelatedTools";
 import { RelatedArticles } from "@/app/tools/_components/RelatedArticles";
 
 export const metadata: Metadata = generateMeta({
-  title: "ボーナス手取り計算ツール【2026年】賞与から引かれる税金・社会保険料を自動計算",
+  title: "ボーナス手取り計算【2026年冬】賞与の計算方法と税金・社会保険料を自動計算",
   description:
     "賞与額と前月の給与を入力するだけでボーナスの手取り額を自動計算。健康保険・厚生年金・雇用保険・源泉所得税の内訳、賞与額別の手取り早見表つき。無料・登録不要・スマホ対応。",
   path: "/tools/bonus-takehome",
@@ -37,6 +37,22 @@ const TABLE = BONUS_MAN.map((man) => {
 });
 
 const net100 = calcBonusTakehome(1000000, PREV_SALARY, 0, false);
+
+// 計算方法の例（賞与50万円・前月給与30万円・扶養0人・40歳未満）。calcBonusTakehome の結果をそのまま表示するので、ツールと常に一致する
+const EX_BONUS = 500000;
+const ex = calcBonusTakehome(EX_BONUS, PREV_SALARY, 0, false);
+const yen = (n: number) => `${n.toLocaleString("ja-JP")}円`;
+const pct = (r: number) => `${Math.round(r * 100000) / 1000}%`;
+const EX_STEPS: { label: string; formula: string; value: string }[] = [
+  { label: "1. 標準賞与額", formula: "賞与額の1,000円未満を切り捨て", value: yen(Math.floor(EX_BONUS / 1000) * 1000) },
+  { label: "2. 健康保険料", formula: `標準賞与額 × ${pct(R.health)}`, value: yen(ex.healthInsurance) },
+  { label: "3. 子ども・子育て支援金", formula: `標準賞与額 × ${pct(R.childSupport)}`, value: yen(ex.childSupport) },
+  { label: "4. 厚生年金保険料", formula: `標準賞与額 × ${pct(R.pension)}`, value: yen(ex.pension) },
+  { label: "5. 雇用保険料", formula: `賞与額 × ${pct(R.employment)}`, value: yen(ex.employmentInsurance) },
+  { label: "6. 社会保険料の合計", formula: "2〜5の合計", value: yen(ex.socialInsurance) },
+  { label: "7. 源泉所得税", formula: `（賞与額 − 社会保険料）× ${ex.taxRate}%`, value: yen(ex.incomeTax) },
+  { label: "8. 手取り", formula: "賞与額 − 社会保険料 − 源泉所得税", value: yen(ex.net) },
+];
 
 // 解説ブロック共通: 小見出しラベル＋白カード（ツール本体と同じ視覚言語）
 function Block({ label, children }: { label: string; children: React.ReactNode }) {
@@ -99,6 +115,24 @@ export default function Page() {
             </div>
             <p className="mt-4 text-[12px] text-slate-400 dark:text-zinc-500">
               ※ 前月給与や扶養人数が異なると源泉所得税率が変わります。上のツールでご自身の条件に合わせて計算してください。
+            </p>
+          </Block>
+
+          <Block label="ボーナス手取りの計算方法（計算例）">
+            <p className="mb-4">賞与50万円・前月の給与（社会保険料控除後）30万円・扶養0人・40歳未満の場合の計算の手順です。数字はツール本体と同じ計算で出しています。</p>
+            <ol className="space-y-2.5">
+              {EX_STEPS.map((s) => (
+                <li key={s.label} className="flex items-start justify-between gap-3 border-b border-slate-50 dark:border-zinc-800/50 last:border-0 pb-2.5 last:pb-0">
+                  <div>
+                    <p className="font-semibold text-slate-700 dark:text-zinc-300">{s.label}</p>
+                    <p className="text-[12px] text-slate-400 dark:text-zinc-500">{s.formula}</p>
+                  </div>
+                  <p className="font-medium text-slate-800 dark:text-zinc-200 whitespace-nowrap">{s.value}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-4 text-[12px] text-slate-400 dark:text-zinc-500">
+              ※ 源泉所得税の税率（{ex.taxRate}%）は、前月の給与と扶養親族の数から国税庁「賞与に対する源泉徴収税額の算出率の表」で決まります。前月の給与が上がると税率も上がることがあります。保険料率は協会けんぽ東京支部・{SOCIAL_INSURANCE_YEAR_LABEL}の本人負担の目安です。
             </p>
           </Block>
 

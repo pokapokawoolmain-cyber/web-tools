@@ -32,6 +32,40 @@ export default function Page() {
         <p className="mt-2 text-[13px]">改正は2026年12月1日施行のため、毎月の源泉徴収ではなく年末調整でまとめて精算されます。（出典：国税庁タックスアンサー No.1199・1410・1191・1180・1140）</p>
       </div>
 
+      <h2>家族の年収が123万〜136万円なら「扶養控除等（異動）申告書」を出し直す</h2>
+      <p>
+        今年は扶養に入れられる家族の年収の上限が上がりました。年の初めに出した扶養控除等申告書で「扶養の対象外」としていた家族も、今年の年収が新しい上限以下なら控除を受けられます。ただし、<strong>会社に「扶養控除等（異動）申告書」を出し直さないと年末調整に反映されません</strong>。年末調整の書類と一緒に提出してください。
+      </p>
+
+      <div className="overflow-x-auto my-6">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-slate-100 dark:bg-zinc-800">
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">家族の区分</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">2026年分（給与収入だけの場合）</th>
+              <th className="border border-slate-200 dark:border-zinc-700 px-4 py-2 text-left">2025年分まで</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["扶養親族・同一生計配偶者", "136万円以下", "123万円以下"],
+              ["特定親族（19〜22歳の子など）", "136万円超197万円以下", "123万円超188万円以下"],
+              ["配偶者特別控除の対象の配偶者", "136万円超207万円以下", "123万円超201万5,999円以下"],
+              ["勤労学生（本人）", "163万円以下", "150万円以下"],
+            ].map(([kubun, after, before], i) => (
+              <tr key={i} className={i % 2 === 1 ? "bg-slate-50 dark:bg-zinc-900" : ""}>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2 font-medium">{kubun}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{after}</td>
+                <td className="border border-slate-200 dark:border-zinc-700 px-4 py-2">{before}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[13px] text-slate-500 dark:text-zinc-400">
+        例：生計を一にする親（65歳）のパート収入が130万円の場合、2025年分の基準では扶養控除の対象外でしたが、2026年分は一般の扶養親族（控除38万円）の対象です。年の初めの申告書で親を書かなかった場合は、異動申告書で追加します。（出典：国税庁「令和8年分 年末調整のしかた」昨年と比べて変わった点 <a href="https://www.nta.go.jp/publication/pamph/gensen/nencho2026/pdf/102.pdf" target="_blank" rel="noopener noreferrer" className="underline">PDF</a>）
+      </p>
+
       <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-5 my-6 border border-blue-200 dark:border-blue-800">
         <strong className="text-blue-800 dark:text-blue-300 block mb-1">手取り額・還付金を正確に把握する</strong>
         <p className="text-[14px] text-blue-700 dark:text-blue-400 mb-3">年収・扶養・保険料を入力して年間の手取り額をシミュレーションできます。</p>
@@ -220,7 +254,8 @@ export default function Page() {
 
       <ul className="space-y-2">
         <li><strong>マイナンバーの記入漏れ</strong>：扶養家族のマイナンバーを忘れがちです。事前に確認しておきましょう。</li>
-        <li><strong>書き間違えた場合</strong>：修正液（ホワイト）は使用不可です。二重線で訂正し、訂正印（認印可）を押してください。</li>
+        <li><strong>書き間違えた場合</strong>：修正液（ホワイト）は使わず、二重線で消して近くに正しい内容を書きます。2021年4月から年末調整の申告書への押印は不要になっているため、訂正印も原則いりません（勤務先に独自のルールがある場合はその指示に従ってください。出典：<a href="https://www.nta.go.jp/publication/pamph/gensen/nencho2021/pdf/04-05.pdf" target="_blank" rel="noopener noreferrer">国税庁</a>）。</li>
+        <li><strong>国税庁の記入例で確認する</strong>：書類ごとの記入例は国税庁の「<a href="https://www.nta.go.jp/publication/pamph/gensen/nencho2026/01.htm" target="_blank" rel="noopener noreferrer">年末調整がよくわかるページ（令和8年分）</a>」に掲載されています。</li>
         <li><strong>証明書の添付漏れ</strong>：保険料控除証明書・住宅ローン残高証明書などの添付が必要です。</li>
         <li><strong>年末調整でできない控除</strong>：医療費控除・雑損控除・寄附金控除（ふるさと納税でワンストップ特例を使わない場合）は確定申告が必要です。</li>
       </ul>
