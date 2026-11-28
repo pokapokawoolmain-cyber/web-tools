@@ -34,12 +34,15 @@ export const metadata = mochicoArticleMeta(post, [
   "米津玄師 STORE アプリ",
   "GHOST ツアー 会場受け取り",
   "米津玄師 ガチャガチャ",
+  "米津玄師 GHOST 受注生産",
+  "米津玄師 グッズ 通販",
+  "米津玄師 GHOST 事後通販",
 ]);
 
 const TOC: TocItem[] = [
   { id: "lineup", label: "グッズ全20アイテムと価格" },
   { id: "budget", label: "予算はいくら？3つのモデルコース" },
-  { id: "ways", label: "買い方は3通り（当日・会場受け取り・ツアー後）" },
+  { id: "ways", label: "買い方は4通り（当日・会場受け取り・受注生産・事後通販）" },
   { id: "schedule", label: "会場別の物販時間と、アプリ整理券の配布日" },
   { id: "nagano", label: "長野公演の様子と、前回ツアーから分かること" },
   { id: "rules", label: "購入制限・支払い方法・ガチャのルール" },
@@ -125,13 +128,28 @@ function tourStatus(now: Date) {
 /** もちのひとこと（次の公演と整理券の状況に合わせて変える） */
 function nextTicketMessage(now: Date): string {
   const { nextIndex, nextTicketIndex } = tourStatus(now);
-  if (nextIndex === -1) return "国内ツアーはすべて終わったよ。ツアーグッズはツアー終了後にオンラインストアで販売予定だから、公式の発表を待とう！";
+  if (nextIndex === -1) return "国内ツアーはすべて終わったよ。グッズは公式ONLINE STOREの事後通販（12/24(木) 19:00〜・在庫販売）で買えるよ！";
   const next = STOPS[nextIndex];
   if (nextTicketIndex === nextIndex) {
     return `次は${next.city}公演（${next.date}）。整理券は${next.ticketLabel}に配布だよ。スマホのリマインダーに「20時 整理券」って入れておこう！`;
   }
   const after = nextTicketIndex === -1 ? "" : `その次の${STOPS[nextTicketIndex].city}公演の整理券は${STOPS[nextTicketIndex].ticketLabel}だよ。`;
   return `次は${next.city}公演（${next.date}）。整理券はもう配布済みだから、取れなかった人は整理券の時間帯が終わったあとの販売や、開場後・終演後の販売を狙おう。${after}`;
+}
+
+// 公式ONLINE STOREの受注生産と事後通販（公式のお知らせ 2026-11-26 で確認：2026-11-27）
+const ONLINE = [
+  { key: "first", label: "1次受注", period: "11/26(木) 12:00〜12/4(金) 23:59", ship: "2027年1月下旬から順次発送", end: "2026-12-04T23:59:59+09:00" },
+  { key: "second", label: "2次受注", period: "12/5(土) 0:00〜12/20(日) 23:59", ship: "2027年2月下旬から順次発送", end: "2026-12-20T23:59:59+09:00" },
+  { key: "stock", label: "ツアー事後通販（在庫販売）", period: "12/24(木) 19:00〜 なくなり次第終了", ship: "12月下旬から順次発送", end: null },
+] as const;
+
+/** もちのひとこと（通販の受付状況に合わせて変える） */
+function onlineMessage(now: Date): string {
+  if (now <= new Date(ONLINE[0].end)) return "オンラインの受注生産（1次）は12/4(金) 23:59まで。会場で買えなかったものは、ここで注文できるよ。届くのは1月下旬からだから、ライブ当日に使いたいものは会場で買おう！";
+  if (now <= new Date(ONLINE[1].end)) return "受注生産の1次は締め切ったけど、2次受注を12/20(日) 23:59まで受付中だよ。届くのは2月下旬から。早く欲しい人は12/24(木) 19:00からの事後通販（在庫販売）もチェック！";
+  if (now < new Date("2026-12-24T19:00:00+09:00")) return "受注生産は締め切ったよ。次は12/24(木) 19:00からの事後通販（在庫販売）。なくなり次第終了で、全商品があるわけではないから、欲しいものを先に決めておこう！";
+  return "12/24(木) 19:00から事後通販（在庫販売）が始まったよ。なくなり次第終了なので、公式ONLINE STOREで在庫を確認してね。";
 }
 
 /** 自作の図：ツアーの流れ（会場・日程・物販開始時刻） */
@@ -185,6 +203,8 @@ function TourRoute() {
 }
 
 export default function Page() {
+  const now = new Date();
+  const orderOpen = now <= new Date(ONLINE[1].end);
   return (
     <OshiArticleLayout
       post={post}
@@ -194,9 +214,9 @@ export default function Page() {
           <mark>全20アイテム</mark>と物販攻略
         </>
       }
-      heroLead="価格の一覧、予算のモデルコース、アプリ整理券の配布日、会場受け取り、支払い方法まで。公式の発表をもとに、物販の前に知っておきたいことを1ページにまとめました。"
-      stickers={["🎤 ライブ物販", "👻 GHOST", "🧾 価格一覧つき", "📅 11/6〜12/17"]}
-      unofficialNote="この記事は、公式サイトの発表をもとにToolBoxJP編集部がまとめた非公式のガイドです。米津玄師さん・REISSUE RECORDSとは関係ありません。販売時間や在庫は変わることがあるので、出かける前に必ず公式の最新情報を確認してください（2026年11月8日更新）。"
+      heroLead="価格の一覧、予算のモデルコース、オンラインの受注生産と事後通販、アプリ整理券の配布日、会場受け取り、支払い方法まで。公式の発表をもとに、物販の前に知っておきたいことを1ページにまとめました。"
+      stickers={["🎤 ライブ物販", "👻 GHOST", "🧾 価格一覧つき", orderOpen ? "🛒 受注生産 受付中" : "🛒 事後通販 12/24〜"]}
+      unofficialNote="この記事は、公式サイトの発表をもとにToolBoxJP編集部がまとめた非公式のガイドです。米津玄師さん・REISSUE RECORDSとは関係ありません。販売時間や在庫は変わることがあるので、出かける前に必ず公式の最新情報を確認してください（2026年11月27日更新）。"
     >
       <p>
         11月6日・7日の長野ビッグハット公演で幕を開けた「米津玄師 2026 TOUR / GHOST」。全国6都市14公演のアリーナツアーで、12月17日のK-Arena Yokohamaまで約6週間続きます。国内公演のあとは、12月26日からアジア・北米・ヨーロッパの11都市を回るワールドツアーも控えています。
@@ -219,6 +239,17 @@ export default function Page() {
           <>会場物販はチケットがなくても買える。混雑する時間帯は、公式アプリ「米津玄師 STORE」の整理券で案内</>,
           <>神奈川公演だけ、事前決済の「会場受け取り」あり（受け取り場所は横浜ランドマークホール）</>,
           <>1アイテム1人3点まで。ツアーグッズ1万円以上でショッピングバッグの先着プレゼントあり</>,
+          <>
+            {orderOpen ? (
+              <>
+                <strong>公式ONLINE STOREで受注生産を受付中</strong>（1次は12/4(金) 23:59まで、2次は12/20まで）。12/24(木) 19:00からは事後通販（在庫販売）も
+              </>
+            ) : (
+              <>
+                受注生産は12/20で締切。<strong>12/24(木) 19:00から公式ONLINE STOREで事後通販</strong>（在庫販売・なくなり次第終了）
+              </>
+            )}
+          </>,
         ]}
       />
 
@@ -321,7 +352,7 @@ export default function Page() {
       </p>
 
       <H2 id="ways" num={3}>
-        買い方は3通り（当日・会場受け取り・ツアー後）
+        買い方は4通り（当日・会場受け取り・受注生産・事後通販）
       </H2>
       <h3>① 公演当日に会場で買う</h3>
       <p>
@@ -365,10 +396,52 @@ export default function Page() {
           会場受け取りは、決済が終わったあとの<strong>キャンセル・サイズ変更・交換ができません</strong>。サイズはよく確かめてから決済しましょう。支払いはアプリに登録したクレジットカード・PayPay・paidyで、銀行振込とコンビニ払いは使えません。
         </p>
       </Card>
-      <h3>③ ツアーが終わってから通販で買う</h3>
+      <h3>③ 公式ONLINE STOREの受注生産で買う（11/26〜12/20）</h3>
       <p>
-        公式グッズページによると、ツアーグッズは<strong>ツアー終了後に販売を予定</strong>しています（詳細は後日発表、数量限定）。遠方で行けない人や、会場で売り切れていた人は、公式のお知らせを待ちましょう。
+        11月26日から、公式ONLINE STOREで<strong>ツアーグッズすべてを対象にした受注生産</strong>が始まりました。注文を受けてから作るので、会場で売り切れていた商品も、遠くて会場に行けない人も注文できます。そのかわり、届くのは2027年1月下旬以降です。
       </p>
+      <div className={s.tableWrap} role="region" aria-label="オンラインの受注生産と事後通販の日程" tabIndex={0}>
+        <table className={s.table}>
+          <thead>
+            <tr>
+              <th scope="col">販売</th>
+              <th scope="col">受付期間</th>
+              <th scope="col">届く時期</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ONLINE.map((o) => (
+              <tr key={o.key}>
+                <th scope="row">{o.label}</th>
+                <td>{o.period}</td>
+                <td>{o.ship}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className={s.tableNote}>出典：米津玄師 ONLINE STORE のお知らせ（2026年11月26日）。配送日時の指定はできません。</p>
+      <ul>
+        <li>
+          <strong>購入制限：</strong>1人1アイテムにつき3点まで（サイズ違いも合計）。ガチャ「リイシューオールスターズ / CANDY COLOR」は6点までで、全8種からランダム（種類は選べません）。
+        </li>
+        <li>
+          <strong>送料：</strong>1回の注文ごとに全国一律900円（税込）。注文を分けると、そのたびに送料がかかります。
+        </li>
+        <li>
+          <strong>ショッピングバッグ：</strong>1回の注文が10,000円（税込・送料と手数料を除く）以上なら、先着で商品と一緒に届きます。
+        </li>
+      </ul>
+      <Card kind="caution">
+        <p>
+          注文後の<strong>キャンセル・内容変更・返品・交換はできません</strong>。また、届く時期が違う商品を同じ注文に入れると、<strong>全部そろってから</strong>まとめて発送されます。1次と2次で分けて注文するときは、届く時期のずれも考えておきましょう。支払い方法と支払期限は、公式ONLINE STOREの「ご利用ガイド」で確認してください。
+        </p>
+      </Card>
+      <h3>④ ツアー事後通販（在庫販売）で買う（12/24 19:00〜）</h3>
+      <p>
+        12月24日(木)19:00からは、会場販売で残った在庫を売る<strong>事後通販</strong>が始まります。受注生産と同じ商品ですが、在庫から送るので<strong>受注生産より早く届きます</strong>（12月下旬から順次発送、発送まで2〜4週間ほど）。ただし数量に限りがあり、全商品がそろうわけではありません。在庫は注文を完了した時点で確保されるので、カートに入れただけでは安心できない点に注意しましょう。
+      </p>
+      <Bubble>{onlineMessage(now)}</Bubble>
 
       <ArticleAd />
 
@@ -450,9 +523,14 @@ export default function Page() {
           <strong>タオルやリストバンドのような小物は売り切れにくい</strong>という声があります（今回のツアーのラインナップでも同じとは限りません）。
         </li>
         <li>
-          <strong>ツアー後の通販</strong>は、前回はワールドツアーのあとしばらくしてから始まったという声があります（今回の時期は未発表）。
+          <strong>ツアー後の通販</strong>は、前回はワールドツアーのあとしばらくしてから始まったという声がありました。今回はツアー中の11月26日から受注生産が始まり、12月24日には事後通販も予定されています。
         </li>
       </ul>
+      <Card kind="memo" label="公式も「早い時間に品切れ」と発表">
+        <p>
+          公式ONLINE STOREのお知らせ（11/26）では、会場物販に想定を大きく上回る人が集まり、多くの商品が早い時間に品切れになったと説明されています。会場販売はこのあとの公演でも続きますが、<strong>確実に欲しいアパレルは受注生産で押さえておき、会場では小物やガチャを楽しむ</strong>、という分け方もおすすめです。
+        </p>
+      </Card>
       <Card kind="point" label="これから行く人へ">
         <p>
           「絶対に欲しいアパレル」がある人は、整理券を取って早めの枠で並ぶのがいちばん確実です。小物中心なら、整理券の時間帯が終わったあとや、開場後・終演後の販売でも間に合う可能性があります。どちらにしても、当日の朝に公式SNSで売り切れのお知らせを確認してから出かけましょう。
@@ -553,7 +631,7 @@ export default function Page() {
         買ったあとにやっておきたいこと
       </H2>
       <p>
-        ツアーは12月まで続き、複数公演に入る人や、友達の分をまとめて買う人も多いはず。「どれをもう買ったか」「ガチャで何が出たか」は、その日のうちにメモしておくのがおすすめです。ツアー後の通販が始まったときに、買い足すものをすぐ判断できます。
+        ツアーは12月まで続き、複数公演に入る人や、友達の分をまとめて買う人も多いはず。「どれをもう買ったか」「ガチャで何が出たか」は、その日のうちにメモしておくのがおすすめです。受注生産（12/20締切）や事後通販（12/24〜）で買い足すものを、すぐ判断できます。
       </p>
       <Bubble>
         ガチャは何が出たかを残しておくと、ダブりを交換に出すときに便利だよ。写真つきだとさらに分かりやすい！
@@ -574,6 +652,7 @@ export default function Page() {
           { href: "https://reissuerecords.net/goods/", title: "GOODS / GHOST（公式グッズページ）", icon: "👕" },
           { href: "https://reissuerecords.net/2026/07/03/2026-tour-ghost/", title: "米津玄師 2026 TOUR / GHOST（公演情報）", icon: "👻" },
           { href: "https://ticket.kenshiyonezu.jp/tour/2026", title: "KENSHI YONEZU TICKET（公式リセール）", icon: "🎫" },
+          { href: "https://shop.kenshiyonezu.jp/blogs/news/20261126", title: "受注生産販売のお知らせ（ONLINE STORE）", icon: "🛒" },
           { href: "https://shop.kenshiyonezu.jp/", title: "米津玄師 ONLINE STORE", icon: "🛍️" },
         ]}
       />
@@ -581,6 +660,7 @@ export default function Page() {
       <Sources
         items={[
           { href: "https://reissuerecords.net/goods/", label: "REISSUE RECORDS「GOODS / GHOST」（価格・販売時間・整理券・会場受け取り・支払い方法・購入制限）" },
+          { href: "https://shop.kenshiyonezu.jp/blogs/news/20261126", label: "米津玄師 ONLINE STORE「米津玄師 2026 TOUR / GHOST グッズ 受注生産販売について」（2026年11月26日。受注生産・事後通販・購入制限・送料）" },
           { href: "https://reissuerecords.net/2026/07/03/2026-tour-ghost/", label: "REISSUE RECORDS「米津玄師 2026 TOUR / GHOST」（公演日程）" },
           { href: "https://ticket.kenshiyonezu.jp/pages/2026_ticketcaution", label: "KENSHI YONEZU TICKET「注意事項」（本人確認・撮影禁止など）" },
           { href: "https://natalie.mu/music/news/696163", label: "音楽ナタリー「米津玄師ツアー『GHOST』グッズ リイシューねこちゃん、とんがりくん、ティースくんが大集合」" },
