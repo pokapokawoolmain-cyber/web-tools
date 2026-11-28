@@ -1,27 +1,8 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import { loadNotoSansJp, ogFonts } from "@/lib/og/google-font";
 
 export const runtime = "edge";
-
-async function loadFont(): Promise<ArrayBuffer | null> {
-  try {
-    // Safari UA → Google Fonts returns woff (Satori compatible)
-    const css = await fetch(
-      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700",
-      {
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
-        },
-      }
-    ).then((r) => r.text());
-    const url = css.match(/src: url\((.+?)\)/)?.[1] ?? "";
-    if (!url) return null;
-    return fetch(url).then((r) => r.arrayBuffer());
-  } catch {
-    return null;
-  }
-}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
@@ -29,11 +10,8 @@ export async function GET(req: NextRequest) {
   const icon  = searchParams.get("icon")  ?? "🧰";
   const desc  = searchParams.get("desc")  ?? "無料Webツール集";
 
-  const font = await loadFont();
-
-  const fontConfig = font
-    ? [{ name: "Noto Sans JP", data: font, weight: 700 as const }]
-    : [];
+  const font = await loadNotoSansJp(undefined, 700);
+  const fontConfig = ogFonts("Noto Sans JP", [{ data: font, weight: 700 }]);
 
   return new ImageResponse(
     (
