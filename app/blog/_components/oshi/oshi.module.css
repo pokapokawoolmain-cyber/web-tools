@@ -1208,3 +1208,434 @@
   background: #b3122e;
   border-color: #c9a227;
 }
+
+/* ============================================================
+   ライブ記事のテーマ（ツアーの世界観に合わせる）
+   - ヒーローだけ暗いガラス風にして、光をゆっくり動かす（動きを減らす設定の人には止める）
+   - 本文は白い紙面のまま（読みやすさ優先）。見出し・まとめ・表の色だけテーマ色にする
+   - ヒーローの文字は暗い背景に対して WCAG AA 以上（--heroInk 14:1 前後 / --heroMuted 7:1 前後）
+   ============================================================ */
+.liveTheme {
+  --heroInk: #ffffff;
+  --heroMuted: #e6e1f2;
+  --markHi: rgba(255, 255, 255, 0.35);
+}
+.liveTheme .hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 820px;
+  margin: 12px auto 0;
+  padding: 26px 22px 28px;
+  border-radius: 0 0 28px 28px;
+  background: var(--heroBg);
+  color: var(--heroInk);
+}
+@media (min-width: 860px) {
+  .liveTheme .hero {
+    border-radius: 28px;
+    padding: 34px 36px 36px;
+  }
+}
+.heroGlow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.heroGlow i {
+  position: absolute;
+  width: 62%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: 0.55;
+  animation: glowDrift 16s ease-in-out infinite alternate;
+}
+.heroGlow i:nth-child(1) {
+  background: var(--glow1);
+  left: -18%;
+  top: -30%;
+}
+.heroGlow i:nth-child(2) {
+  background: var(--glow2);
+  right: -20%;
+  top: 10%;
+  animation-duration: 21s;
+  animation-delay: -6s;
+}
+.heroGlow i:nth-child(3) {
+  background: var(--glow3);
+  left: 20%;
+  bottom: -45%;
+  animation-duration: 25s;
+  animation-delay: -11s;
+}
+@keyframes glowDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(14%, 10%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-10%, 16%, 0) scale(0.95);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroGlow i {
+    animation: none;
+  }
+}
+.liveTheme .sticker,
+.liveTheme .sticker:nth-child(n) {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--heroInk);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.liveTheme .h1 {
+  color: var(--heroInk);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+.liveTheme .h1 mark {
+  background: linear-gradient(transparent 58%, var(--markHi) 58%);
+  color: inherit;
+}
+.liveTheme .lead,
+.liveTheme .meta {
+  color: var(--heroMuted);
+}
+.liveTheme .unofficial {
+  color: var(--heroMuted);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.liveTheme .body h2 {
+  background: linear-gradient(90deg, var(--lav), #fff 85%);
+}
+.liveTheme .tldr {
+  background: linear-gradient(135deg, var(--lav) 0%, #fff 100%);
+  box-shadow: 0 0 0 1px var(--lavDeep);
+}
+.liveTheme .table thead th {
+  background: var(--lav);
+}
+
+/* BLOOD SAGA：深紅と黒（ヴァンパイアの物語） */
+.themeEnhypen {
+  --accent: #b3122e;
+  --accentInk: #9c0f27;
+  --lav: #fdecee;
+  --lavDeep: #f2b9c1;
+  --pinkInk: #9c0f27;
+  --heroBg: linear-gradient(160deg, #0b0507 0%, #2a0710 55%, #120306 100%);
+  --glow1: #c1121f;
+  --glow2: #6d0a1a;
+  --glow3: #ff4d5e;
+  --markHi: rgba(193, 18, 31, 0.6);
+  --heroMuted: #f3dfe2;
+  background: #fbf6f6;
+}
+/* ALL SUITE：夜のホテルの紺と金 */
+.themeSnowman {
+  --accent: #a07d1c;
+  --accentInk: #6f5410;
+  --lav: #fbf5e4;
+  --lavDeep: #e6d39c;
+  --heroBg: linear-gradient(160deg, #0b1626 0%, #1b2f4a 58%, #0b1626 100%);
+  --glow1: #d4af37;
+  --glow2: #7fa7d9;
+  --glow3: #f5e6b8;
+  --markHi: rgba(212, 175, 55, 0.55);
+  --heroMuted: #e9edf5;
+  background: #fbfaf6;
+}
+/* SHADOWS：夕暮れのゴーストと、りんごの緑 */
+.themeMga {
+  --accent: #0f9d76;
+  --accentInk: #0b6f54;
+  --lav: #e9f8f2;
+  --lavDeep: #b7e6d6;
+  --pinkInk: #a3306f;
+  --heroBg: linear-gradient(160deg, #1a1033 0%, #2e1b4f 55%, #0f2a2a 100%);
+  --glow1: #9b5de5;
+  --glow2: #2ec4b6;
+  --glow3: #f15bb5;
+  --markHi: rgba(46, 196, 182, 0.55);
+  --heroMuted: #ece6f7;
+  background: #f8fbfa;
+}
+/* No.Ⅲ：黒とクロームに、青い光 */
+.themeNumberi {
+  --accent: #1d4ed8;
+  --accentInk: #1e40af;
+  --lav: #eef2ff;
+  --lavDeep: #c7d2fe;
+  --heroBg: linear-gradient(160deg, #050505 0%, #1c1c20 60%, #0a0a0c 100%);
+  --glow1: #e5e7eb;
+  --glow2: #3b82f6;
+  --glow3: #9ca3af;
+  --markHi: rgba(96, 165, 250, 0.5);
+  --heroMuted: #e5e7eb;
+  background: #f7f8fa;
+}
+/* 超惑星：宇宙の藍と、星の黄・ピンク・水色 */
+.themeYoasobi {
+  --accent: #6d28d9;
+  --accentInk: #5b21b6;
+  --lav: #f1ebff;
+  --lavDeep: #d6c6ff;
+  --heroBg:
+    radial-gradient(1.5px 1.5px at 12% 22%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 72% 14%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 86% 62%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 34% 78%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 52% 40%, #fff 50%, transparent 51%),
+    linear-gradient(160deg, #070b2e 0%, #1d1065 55%, #3b0a5e 100%);
+  --glow1: #ff5fa2;
+  --glow2: #5ee7ff;
+  --glow3: #ffd447;
+  --markHi: rgba(255, 212, 71, 0.6);
+  --heroMuted: #ece7ff;
+  background: #f8f6ff;
+}
+
+/* ── Mochico のグッズリスト（記事のいちばんの導線） ───────── */
+.listCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 1.6em 0;
+  padding: 18px 18px 16px;
+  border-radius: 22px;
+  background: var(--heroBg, linear-gradient(135deg, #2b1a5e, #5a2fd2));
+  color: #fff;
+}
+.listCard::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto auto;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--glow2, #7c4dff);
+  filter: blur(42px);
+  opacity: 0.55;
+  z-index: -1;
+}
+.listCardHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.listCardFace {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.92);
+}
+.listCardKicker {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.85);
+}
+.listCardTitle {
+  display: block;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.45;
+  color: #fff;
+}
+.listCard p {
+  margin: 10px 0 0 !important;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.92);
+}
+.listCardStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.listCardStats span {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.listCardButton {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 13px 18px;
+  border-radius: 14px;
+  background: #fff;
+  color: #1b1430 !important;
+  font-weight: 900;
+  font-size: 15.5px;
+  text-decoration: none !important;
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+}
+.listCardButton:hover {
+  transform: translateY(-1px);
+}
+.listCardNote {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ── カウントダウン（クライアント側で毎秒更新） ─────────── */
+.countdown {
+  margin: 18px 0 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--heroInk, #1b1430);
+  font-size: 13px;
+  font-weight: 700;
+}
+.countdownNum {
+  font-size: 22px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.countdownNum small {
+  font-size: 12px;
+  margin: 0 4px 0 2px;
+  opacity: 0.85;
+}
+
+/* ── グッズ一覧と予算計算（チェックすると合計が出る） ─────── */
+.goodsTools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 10px;
+}
+.goodsChip {
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink2);
+  cursor: pointer;
+}
+.goodsChip[aria-pressed="true"] {
+  background: var(--accentInk);
+  border-color: var(--accentInk);
+  color: #fff;
+}
+.goodsList {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.body .goodsList li {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.body .goodsList li:first-child {
+  border-top: 0;
+}
+.goodsRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  cursor: pointer;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.goodsRow input {
+  flex: none;
+  width: 19px;
+  height: 19px;
+  accent-color: var(--accent);
+}
+.goodsName {
+  flex: 1;
+  min-width: 0;
+  color: var(--ink);
+}
+.goodsTag {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 10.5px;
+  font-weight: 900;
+  color: #fff;
+  background: var(--accentInk);
+  border-radius: 6px;
+  padding: 0 6px;
+  vertical-align: 1px;
+}
+.goodsPrice {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--ink2);
+}
+.goodsSum {
+  position: sticky;
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(27, 20, 48, 0.86);
+  color: #fff;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.7);
+}
+.goodsSumNum {
+  font-size: 20px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.goodsSum a {
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 13.5px;
+}
+.goodsSumNote {
+  width: 100%;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.78);
+}

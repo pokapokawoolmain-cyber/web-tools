@@ -19,6 +19,21 @@ import { ServicePromoBottom, ServicePromoTop } from "@/components/blog/ServicePr
 
 export type TocItem = { id: string; label: string };
 
+export type OshiTheme = "default" | "jump" | "comiket" | "xmas" | "enhypen" | "snowman" | "mga" | "numberi" | "yoasobi";
+const THEME_CLASS: Record<OshiTheme, string | undefined> = {
+  default: undefined,
+  jump: s.themeJump,
+  comiket: s.themeComiket,
+  xmas: s.themeXmas,
+  enhypen: s.themeEnhypen,
+  snowman: s.themeSnowman,
+  mga: s.themeMga,
+  numberi: s.themeNumberi,
+  yoasobi: s.themeYoasobi,
+};
+/** ヒーローをガラス風・動く光にするライブ記事のテーマ */
+const LIVE_THEMES = new Set<OshiTheme>(["enhypen", "snowman", "mga", "numberi", "yoasobi"]);
+
 /** 推し活ガイドのカテゴリ（関連記事はこのカテゴリと Mochico ガイドから集める） */
 export const OSHI_GUIDE_CATEGORY = "推し活ガイド";
 
@@ -37,6 +52,7 @@ export function OshiArticleLayout({
   stickers,
   unofficialNote,
   theme = "default",
+  heroExtra,
   children,
 }: {
   post: BlogPost;
@@ -47,8 +63,13 @@ export function OshiArticleLayout({
   stickers: string[];
   /** 非公式であることの注記（アーティスト・会場名を扱う記事で出す） */
   unofficialNote?: string;
-  /** 界隈ごとの見た目（jump: 少年漫画の誌面 / comiket: 同人誌即売会のカタログ / xmas: テーマパークのクリスマス）。既定はポップな紫 */
-  theme?: "default" | "jump" | "comiket" | "xmas";
+  /**
+   * 界隈ごとの見た目（jump: 少年漫画の誌面 / comiket: 同人誌即売会のカタログ / xmas: テーマパークのクリスマス）。既定はポップな紫。
+   * ライブ記事はツアーの世界観に合わせる（enhypen / snowman / mga / numberi / yoasobi）。ヒーローはガラス風・光がゆっくり動く
+   */
+  theme?: OshiTheme;
+  /** ヒーローの下の方に置く要素（カウントダウンなど） */
+  heroExtra?: ReactNode;
   children: ReactNode;
 }) {
   const siteUrl = getSiteUrl();
@@ -99,7 +120,7 @@ export function OshiArticleLayout({
 
   return (
     <ArticleLinkTracker slug={post.slug}>
-    <div className={`${s.page} ${theme === "jump" ? s.themeJump : theme === "comiket" ? s.themeComiket : theme === "xmas" ? s.themeXmas : ""}`}>
+    <div className={`${s.page} ${THEME_CLASS[theme] ?? ""} ${LIVE_THEMES.has(theme) ? s.liveTheme : ""}`}>
       <JsonLd data={schemas} />
 
       <nav aria-label="パンくずリスト" className={s.crumbs}>
@@ -116,6 +137,13 @@ export function OshiArticleLayout({
 
       <article>
         <header className={s.hero}>
+          {LIVE_THEMES.has(theme) && (
+            <span className={s.heroGlow} aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+          )}
           <div className={s.stickers}>
             {stickers.slice(0, 4).map((t) => (
               <span key={t} className={s.sticker}>
@@ -137,6 +165,7 @@ export function OshiArticleLayout({
             <span>読了目安 約{post.readingMinutes}分</span>
             <span>文：ToolBoxJP編集部</span>
           </p>
+          {heroExtra}
           {unofficialNote && <p className={s.unofficial}>{unofficialNote}</p>}
         </header>
 
@@ -396,6 +425,54 @@ export function FanVoices({ title, items }: { title: string; items: { text: Reac
         ファンの体験談を編集部が要約したものです。公演や時期によって状況は変わります。
       </p>
     </div>
+  );
+}
+
+/**
+ * Mochico で公開しているツアーのグッズリスト（記事の主な導線）。
+ * href は共有リンク（/mochico/s/<token>）。ログインしなくても一覧を見られる。まだリンクがないときは紹介ページへ
+ */
+export function MochicoListCard({
+  href,
+  tour,
+  goodsCount,
+  note,
+}: {
+  href: string | null;
+  tour: string;
+  goodsCount: number;
+  note?: string;
+}) {
+  return (
+    <aside className={s.listCard} aria-label="Mochicoのグッズリスト">
+      <div className={s.listCardHead}>
+        <span className={s.listCardFace} aria-hidden="true">
+          <MascotSvg size={34} />
+        </span>
+        <span>
+          <span className={s.listCardKicker}>MOCHICO × グッズリスト</span>
+          <span className={s.listCardTitle}>{tour} のグッズを、Mochicoのリストで</span>
+        </span>
+      </div>
+      <p>
+        全{goodsCount}アイテムを価格つきで一覧にしたリストを公開中。開くだけで見られて、Mochicoに参加すれば「買った・持ってる」を自分用に記録できます。友達とリストを共有しても、自分の記録は相手に見えません。
+      </p>
+      <div className={s.listCardStats}>
+        <span>全{goodsCount}アイテム</span>
+        <span>無料</span>
+        <span>アプリのダウンロード不要</span>
+      </div>
+      {href ? (
+        <a href={href} className={s.listCardButton} rel="nofollow">
+          グッズリストを開く<span aria-hidden="true">→</span>
+        </a>
+      ) : (
+        <Link href="/mochico" className={s.listCardButton}>
+          Mochicoを見てみる<span aria-hidden="true">→</span>
+        </Link>
+      )}
+      <span className={s.listCardNote}>{note ?? "ToolBoxJPのアプリです。リストはファンの非公式なまとめで、最新の情報は公式の発表を確認してください。"}</span>
+    </aside>
   );
 }
 
