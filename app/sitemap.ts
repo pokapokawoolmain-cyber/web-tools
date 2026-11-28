@@ -190,6 +190,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/blog/kawaii-lab-live-goods`, lastModified: blogDate("kawaii-lab-live-goods"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/vantelin-dome-nagoya-guide`, lastModified: blogDate("vantelin-dome-nagoya-guide"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/tokyo-garden-theater-guide`, lastModified: blogDate("tokyo-garden-theater-guide"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/blog/milk-shakariki-revolution-aichi-goods`, lastModified: blogDate("milk-shakariki-revolution-aichi-goods"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/blog/hey-say-jump-juliet-fukuoka-goods`, lastModified: blogDate("hey-say-jump-juliet-fukuoka-goods"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/blog/txt-steal-the-wind-fukuoka-goods`, lastModified: blogDate("txt-steal-the-wind-fukuoka-goods"), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/blog/aichi-sky-expo-guide`, lastModified: blogDate("aichi-sky-expo-guide"), changeFrequency: "weekly", priority: 0.8 },
     // 2026-11-15 トレンド型・ストック型（公開後に日付の更新が必要。各記事の確認日を参照）
     { url: `${siteUrl}/blog/jump-festa-2027-goods`, lastModified: blogDate("jump-festa-2027-goods"), changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/blog/comiket-109-ticket-guide`, lastModified: blogDate("comiket-109-ticket-guide"), changeFrequency: "weekly", priority: 0.8 },

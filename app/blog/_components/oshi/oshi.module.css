@@ -1687,3 +1687,46 @@
   --heroMuted: #ffeef6;
   background: #fff8fb;
 }
+
+/* シャカリキレボリューション：5人のメンバーカラー（桃・青・赤・白・黄） */
+.themeMilk {
+  --accent: #e0457b;
+  --accentInk: #b8285d;
+  --lav: #ffeef4;
+  --lavDeep: #ffc6da;
+  --heroBg: linear-gradient(135deg, #3b1d5e 0%, #b8285d 40%, #2b6cb0 75%, #1f3a6b 100%);
+  --glow1: #ff8fb8;
+  --glow2: #6cc4ff;
+  --glow3: #ffe066;
+  --markHi: rgba(255, 224, 102, 0.6);
+  --heroMuted: #fdeef5;
+  background: #fffafc;
+}
+/* Juliet：夜のバルコニーと深いバラ色 */
+.themeJumpJuliet {
+  --accent: #b3264f;
+  --accentInk: #8e1c3e;
+  --lav: #fdecf1;
+  --lavDeep: #f3b9ca;
+  --heroBg: linear-gradient(160deg, #120a1f 0%, #3a1030 50%, #6b1636 100%);
+  --glow1: #e0577f;
+  --glow2: #7a5cff;
+  --glow3: #f7c6d6;
+  --markHi: rgba(224, 87, 127, 0.55);
+  --heroMuted: #f6e3ea;
+  background: #fdf8fa;
+}
+/* STEAL THE WIND：夕暮れの空と、吹き抜ける風の青緑 */
+.themeTxt {
+  --accent: #0f8a8a;
+  --accentInk: #0a6b6b;
+  --lav: #e6f7f6;
+  --lavDeep: #b2e3df;
+  --heroBg: linear-gradient(160deg, #0c1b3a 0%, #1d4e7a 50%, #2b8c8a 100%);
+  --glow1: #8be9e0;
+  --glow2: #6aa7ff;
+  --glow3: #ffd6a8;
+  --markHi: rgba(139, 233, 224, 0.55);
+  --heroMuted: #e5f3f6;
+  background: #f6fbfb;
+}

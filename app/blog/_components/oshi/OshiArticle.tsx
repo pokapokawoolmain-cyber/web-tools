@@ -19,7 +19,7 @@ import { ServicePromoBottom, ServicePromoTop } from "@/components/blog/ServicePr
 
 export type TocItem = { id: string; label: string };
 
-export type OshiTheme = "default" | "jump" | "comiket" | "xmas" | "enhypen" | "snowman" | "mga" | "numberi" | "yoasobi" | "bigbang" | "lesserafim" | "kawaiilab";
+export type OshiTheme = "default" | "jump" | "comiket" | "xmas" | "enhypen" | "snowman" | "mga" | "numberi" | "yoasobi" | "bigbang" | "lesserafim" | "kawaiilab" | "milk" | "heysayjump" | "txt";
 const THEME_CLASS: Record<OshiTheme, string | undefined> = {
   default: undefined,
   jump: s.themeJump,
@@ -33,9 +33,12 @@ const THEME_CLASS: Record<OshiTheme, string | undefined> = {
   bigbang: s.themeBigbang,
   lesserafim: s.themeLesserafim,
   kawaiilab: s.themeKawaiilab,
+  milk: s.themeMilk,
+  heysayjump: s.themeJumpJuliet,
+  txt: s.themeTxt,
 };
 /** ヒーローをガラス風・動く光にするライブ記事のテーマ */
-const LIVE_THEMES = new Set<OshiTheme>(["enhypen", "snowman", "mga", "numberi", "yoasobi", "bigbang", "lesserafim", "kawaiilab"]);
+const LIVE_THEMES = new Set<OshiTheme>(["enhypen", "snowman", "mga", "numberi", "yoasobi", "bigbang", "lesserafim", "kawaiilab", "milk", "heysayjump", "txt"]);
 
 /** 推し活ガイドのカテゴリ（関連記事はこのカテゴリと Mochico ガイドから集める） */
 export const OSHI_GUIDE_CATEGORY = "推し活ガイド";
@@ -68,7 +71,7 @@ export function OshiArticleLayout({
   unofficialNote?: string;
   /**
    * 界隈ごとの見た目（jump: 少年漫画の誌面 / comiket: 同人誌即売会のカタログ / xmas: テーマパークのクリスマス）。既定はポップな紫。
-   * ライブ記事はツアーの世界観に合わせる（enhypen / snowman / mga / numberi / yoasobi / bigbang / lesserafim / kawaiilab）。ヒーローはガラス風・光がゆっくり動く
+   * ライブ記事はツアーの世界観に合わせる（enhypen / snowman / mga / numberi / yoasobi / bigbang / lesserafim / kawaiilab / milk / heysayjump / txt）。ヒーローはガラス風・光がゆっくり動く
    */
   theme?: OshiTheme;
   /** ヒーローの下の方に置く要素（カウントダウンなど） */

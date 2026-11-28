@@ -241,6 +241,16 @@ export default function Page() {
           "グッズリストは Mochico で準備中です。"
         )}
       </p>
+      <Card kind="memo" label="12月はほかにも">
+        <ul>
+          <li>
+            <strong>12/12(土)・13(日) Hey! Say! JUMP「Juliet」</strong>：ツアー初日。「<Link href="/blog/hey-say-jump-juliet-fukuoka-goods">Hey! Say! JUMP 福岡公演のグッズガイド</Link>」
+          </li>
+          <li>
+            <strong>12/19(土)・20(日) TXT「STEAL THE WIND」</strong>：日本ドームツアー初日。「<Link href="/blog/txt-steal-the-wind-fukuoka-goods">TXT 福岡公演のグッズガイド</Link>」
+          </li>
+        </ul>
+      </Card>
       <Card kind="memo" label="12/26・27 は BIGBANG">
         <p>
           年末の 12/26(土)・27(日) は BIGBANG「XX : COSMOS」の福岡公演（開場15:00・開演17:00）。福岡限定グッズもあります。「<Link href="/blog/bigbang-xx-cosmos-japan-goods">BIGBANG「XX : COSMOS」グッズ完全ガイド</Link>」

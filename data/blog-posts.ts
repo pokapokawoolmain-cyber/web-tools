@@ -15,6 +15,58 @@ export type BlogPost = {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "milk-shakariki-revolution-aichi-goods",
+    title: "M!LK「シャカリキレボリューション」愛知公演のグッズガイド｜価格一覧・事前購入と会場受取・ペンライト【12/12・12/13】",
+    description:
+      "M!LK ARENA TOUR 2026-2027「シャカリキレボリューション」の愛知公演（Aichi Sky Expo・12/12・13）のグッズ18アイテムの価格と予算計算、愛知だけの事前購入・会場受取（ホールB）、ミルクラスタル スティック 3 とうちわのルール、入場の本人確認をまとめました。",
+    publishedAt: "2026-11-29",
+    category: "推し活ガイド",
+    readingMinutes: 8,
+    faqs: [
+      { q: "愛知公演の開場・開演時間は？", a: "12/12(土)は開場16:00・開演17:00、12/13(日)は1部が開場11:30・開演12:30、2部が開場16:30・開演17:30です。" },
+      { q: "事前購入・会場受取の受取場所は？", a: "Aichi Sky Expo のホールB（ライブ会場のホールAとは別）です。当日のチケットを持つ本人だけが、マイページのQRコードで受け取れます。" },
+    ],
+  },
+  {
+    slug: "hey-say-jump-juliet-fukuoka-goods",
+    title: "Hey! Say! JUMP「Juliet」福岡公演のグッズガイド｜価格一覧・購入制限・ペンライト・全10公演の日程",
+    description:
+      "Hey! Say! JUMP DOME TOUR 2026-2027 Juliet の福岡公演（みずほPayPayドーム福岡・12/12・13）に向けて、グッズ12アイテムの価格と予算計算、1商品2点までの購入制限、ツアー後の通販がないペンライト、オンライン販売の日程、4大ドーム10公演の日程をまとめました。",
+    publishedAt: "2026-11-29",
+    category: "推し活ガイド",
+    readingMinutes: 7,
+    faqs: [
+      { q: "ツアーの日程は？", a: "福岡 12/12・13、名古屋 12/19・20、東京 12/29・12/30・1/1、大阪 1/10・11・12 の4大ドーム10公演です。" },
+      { q: "オリジナルペンライトはツアー後に通販で買えますか？", a: "公式によると、オリジナルペンライトはオンラインストアでの事後販売はありません。前のツアー「H⁺」「S say」などと同じ商品です。" },
+    ],
+  },
+  {
+    slug: "txt-steal-the-wind-fukuoka-goods",
+    title: "TXT「STEAL THE WIND」福岡公演のグッズガイド｜価格一覧・POP UP STORE・ハイタッチ会【12/19・12/20】",
+    description:
+      "TOMORROW X TOGETHER WORLD TOUR ＜STEAL THE WIND＞ IN JAPAN の福岡公演（みずほPayPayドーム福岡・12/19・20）に向けて、グッズ27アイテムの価格と予算計算、予約販売の購入数、福岡PARCOほか3都市のPOP UP STORE、ハイタッチ会とライブビューイングをまとめました。",
+    publishedAt: "2026-11-29",
+    category: "推し活ガイド",
+    readingMinutes: 8,
+    faqs: [
+      { q: "福岡公演の開場・開演時間は？", a: "12/19(土)は開場15:00・開演17:00、12/20(日)は開場14:00・開演16:00です。" },
+      { q: "福岡のPOP UP STOREはいつ・どこですか？", a: "12/11(金)〜12/21(月)に福岡PARCO 本館5F PARCO FACTORYで開かれます（10:00〜20:30）。一般の先着予約はWeverse Spotで12/4(金)18:00からです。" },
+    ],
+  },
+  {
+    slug: "aichi-sky-expo-guide",
+    title: "Aichi Sky Expo 完全ガイド｜アクセス・コインロッカー・ホールAの見え方・駐車場",
+    description:
+      "中部国際空港となりのAichi Sky Expo（愛知県国際展示場）でのライブに行く人向けの会場ガイド。名鉄ミュースカイほかの行き方、100円硬貨のみのロッカー6か所、ホールAの座席と見え方、飲食と電波、12月の駐車場閉鎖を図つきで解説します。",
+    publishedAt: "2026-11-29",
+    category: "推し活ガイド",
+    readingMinutes: 7,
+    faqs: [
+      { q: "名古屋駅からどのくらいかかりますか？", a: "名鉄名古屋駅から名鉄の特急ミュースカイで最速28分（特別車両券が必要）、一般の特急で約37分。中部国際空港駅から会場までは徒歩約5分です。" },
+      { q: "コインロッカーはありますか？", a: "館内6か所に約190口あります。100円硬貨・現金のみで、両替は館内のビジネスセンターです。" },
+    ],
+  },
+  {
     slug: "bigbang-xx-cosmos-japan-goods",
     title: "BIGBANG「XX : COSMOS」日本ドームツアーのグッズ完全ガイド｜価格一覧・会場限定・20周年ペンライト【名古屋・東京・福岡】",
     description:

@@ -235,6 +235,14 @@ export default function Page() {
           <strong>ENHYPEN「BLOOD SAGA」12/26(土)・27(日)</strong>：日本ツアーの名古屋公演。東京公演のグッズの買い方は「<Link href="/blog/enhypen-blood-saga-tokyo-dome-goods">ENHYPEN 東京ドームグッズ完全ガイド</Link>」を参考に。
         </li>
       </ul>
+      <ul>
+        <li>
+          <strong>Hey! Say! JUMP「Juliet」12/19(土)・20(日)</strong>：「<Link href="/blog/hey-say-jump-juliet-fukuoka-goods">Hey! Say! JUMP「Juliet」グッズガイド</Link>」
+        </li>
+        <li>
+          <strong>TXT「STEAL THE WIND」2027/2/20(土)・21(日)</strong>：「<Link href="/blog/txt-steal-the-wind-fukuoka-goods">TXT「STEAL THE WIND」グッズガイド</Link>」
+        </li>
+      </ul>
       <MochicoNudge title="ドームで買ったグッズを、公演ごとに残すなら">
         <p>「Mochico（モチコ）」は、ライブごとにグッズを写真つきで一覧にして、持っているものをタップで記録できるアプリです。</p>
       </MochicoNudge>

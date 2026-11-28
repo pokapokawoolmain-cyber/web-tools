@@ -33,7 +33,7 @@ export const metadata = mochicoArticleMeta(post, [
 ]);
 
 const TOC: TocItem[] = [
-  { id: "dec", label: "12月の東京ドームのライブとグッズリスト" },
+  { id: "dec", label: "12月〜1月の東京ドームのライブとグッズリスト" },
   { id: "access", label: "4つの駅と、ゲートの探し方" },
   { id: "gate", label: "ゲート番号と座席エリアの傾向" },
   { id: "locker", label: "コインロッカー：空き状況はスマホで見られる" },
@@ -135,6 +135,8 @@ const DEC = [
   { date: "12/5(土)・12/6(日)", name: "YOASOBI「超惑星」", href: "/blog/yoasobi-superplanet-tokyo-dome-goods", list: LIVE_LISTS.yoasobi.listUrl },
   { date: "12/9(水)・12/10(木)", name: "Number_i「LIVE TOUR No.Ⅲ」", href: "/blog/number-i-no3-tour-goods", list: LIVE_LISTS.numberi.listUrl },
   { date: "12/13(日)〜12/15(火)", name: "BIGBANG「XX : COSMOS」", href: "/blog/bigbang-xx-cosmos-japan-goods", list: LIVE_LISTS.bigbang.listUrl },
+  { date: "12/29(火)・12/30(水)・1/1(金・祝)", name: "Hey! Say! JUMP「Juliet」", href: "/blog/hey-say-jump-juliet-fukuoka-goods", list: LIVE_LISTS.jump.listUrl },
+  { date: "2027/1/7(木)・1/8(金)", name: "TXT「STEAL THE WIND」", href: "/blog/txt-steal-the-wind-fukuoka-goods", list: LIVE_LISTS.txt.listUrl },
 ];
 
 export default function Page() {
@@ -168,7 +170,7 @@ export default function Page() {
       <Toc items={TOC} />
 
       <H2 id="dec" num={1}>
-        12月の東京ドームのライブとグッズリスト
+        12月〜1月の東京ドームのライブとグッズリスト
       </H2>
       <div className={s.tableWrap} role="region" aria-label="12月の東京ドームのライブ" tabIndex={0}>
         <table className={s.table} style={{ minWidth: 520 }}>
