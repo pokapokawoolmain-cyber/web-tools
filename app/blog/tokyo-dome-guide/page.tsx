@@ -134,6 +134,7 @@ const DEC = [
   { date: "12/1(火)・12/2(水)", name: "ENHYPEN「BLOOD SAGA」", href: "/blog/enhypen-blood-saga-tokyo-dome-goods", list: LIVE_LISTS.enhypen.listUrl },
   { date: "12/5(土)・12/6(日)", name: "YOASOBI「超惑星」", href: "/blog/yoasobi-superplanet-tokyo-dome-goods", list: LIVE_LISTS.yoasobi.listUrl },
   { date: "12/9(水)・12/10(木)", name: "Number_i「LIVE TOUR No.Ⅲ」", href: "/blog/number-i-no3-tour-goods", list: LIVE_LISTS.numberi.listUrl },
+  { date: "12/13(日)〜12/15(火)", name: "BIGBANG「XX : COSMOS」", href: "/blog/bigbang-xx-cosmos-japan-goods", list: LIVE_LISTS.bigbang.listUrl },
 ];
 
 export default function Page() {
@@ -150,7 +151,7 @@ export default function Page() {
       unofficialNote="この記事は、東京ドームシティの公式サイトと、ファンのブログなどの体験談をもとに ToolBoxJP 編集部がまとめた非公式のガイドです。会場の運営会社とは関係ありません。図はすべて編集部が作った簡略図です。ゲートと座席の関係は公演ごとに違うので、必ずチケットに書かれたゲートを確認してください（2026年11月28日時点）。"
     >
       <p>
-        水道橋・後楽園にある<strong>東京ドーム</strong>は、約5万5000人が入る日本初の全天候型ドーム。12月も、ENHYPEN・YOASOBI・Number_i と大きなライブが続きます。
+        水道橋・後楽園にある<strong>東京ドーム</strong>は、約5万5000人が入る日本初の全天候型ドーム。12月も、ENHYPEN・YOASOBI・Number_i・BIGBANG と大きなライブが続きます。
       </p>
       <p>
         広い会場なので、<span className={s.hl}>「降りる駅」と「入るゲート」の組み合わせ</span>を間違えると、ドームの外周を半周歩くことに。ロッカーや場内のルールも独特なので、出かける前に押さえておきましょう。
