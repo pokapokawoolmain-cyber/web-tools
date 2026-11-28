@@ -236,6 +236,12 @@ export default function Page() {
           <strong>BIGBANG「XX : COSMOS」11/27〜29</strong>：大阪限定グッズやフード＆ドリンクも。「<Link href="/blog/bigbang-xx-cosmos-japan-goods">BIGBANG「XX : COSMOS」グッズ完全ガイド</Link>」
         </li>
         <li>
+          <strong>Hey! Say! JUMP「Juliet」2027/1/10〜12</strong>：「<Link href="/blog/hey-say-jump-juliet-fukuoka-goods">Hey! Say! JUMP「Juliet」グッズガイド</Link>」
+        </li>
+        <li>
+          <strong>TXT「STEAL THE WIND」2027/1/30・31</strong>：「<Link href="/blog/txt-steal-the-wind-fukuoka-goods">TXT「STEAL THE WIND」グッズガイド</Link>」
+        </li>
+        <li>
           <strong>LE SSERAFIM「PUREFLOW」12/19・20</strong>：グループ初の京セラドーム公演。「<Link href="/blog/le-sserafim-pureflow-kyocera-goods">LE SSERAFIM「PUREFLOW」グッズガイド</Link>」
         </li>
       </ul>
