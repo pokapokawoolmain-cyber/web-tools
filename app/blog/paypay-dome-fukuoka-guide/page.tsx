@@ -241,6 +241,11 @@ export default function Page() {
           "グッズリストは Mochico で準備中です。"
         )}
       </p>
+      <Card kind="memo" label="12/26・27 は BIGBANG">
+        <p>
+          年末の 12/26(土)・27(日) は BIGBANG「XX : COSMOS」の福岡公演（開場15:00・開演17:00）。福岡限定グッズもあります。「<Link href="/blog/bigbang-xx-cosmos-japan-goods">BIGBANG「XX : COSMOS」グッズ完全ガイド</Link>」
+        </p>
+      </Card>
       <MochicoNudge title="遠征で買ったグッズを、公演ごとに残すなら">
         <p>「Mochico（モチコ）」は、ライブごとにグッズを写真つきで一覧にして、持っているものをタップで記録できるアプリです。</p>
       </MochicoNudge>

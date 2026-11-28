@@ -230,6 +230,15 @@ export default function Page() {
           "グッズリストは Mochico で準備中です。"
         )}
       </p>
+      <h3>ほかの12月前後のライブ</h3>
+      <ul>
+        <li>
+          <strong>BIGBANG「XX : COSMOS」11/27〜29</strong>：大阪限定グッズやフード＆ドリンクも。「<Link href="/blog/bigbang-xx-cosmos-japan-goods">BIGBANG「XX : COSMOS」グッズ完全ガイド</Link>」
+        </li>
+        <li>
+          <strong>LE SSERAFIM「PUREFLOW」12/19・20</strong>：グループ初の京セラドーム公演。「<Link href="/blog/le-sserafim-pureflow-kyocera-goods">LE SSERAFIM「PUREFLOW」グッズガイド</Link>」
+        </li>
+      </ul>
       <MochicoNudge title="ドームで買ったグッズを、公演ごとに残すなら">
         <p>「Mochico（モチコ）」は、ライブごとにグッズを写真つきで一覧にして、持っているものをタップで記録できるアプリです。</p>
       </MochicoNudge>

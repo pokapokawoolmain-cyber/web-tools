@@ -8,7 +8,17 @@ import { MascotSvg } from "@/lib/mochico/icon-render";
 export const MOCHICO_OG_SIZE = { width: 1200, height: 630 };
 const FOOT = "ToolBoxJP ブログ ｜ Mochico ガイド";
 
+/** Google Fonts の取得はビルド時にまれに失敗するので、少し待って数回やり直す */
 async function loadFont(text: string, weight: number): Promise<ArrayBuffer | null> {
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const font = await loadFontOnce(text, weight);
+    if (font) return font;
+    await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+  }
+  return null;
+}
+
+async function loadFontOnce(text: string, weight: number): Promise<ArrayBuffer | null> {
   try {
     const css = await fetch(
       `https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@${weight}&text=${encodeURIComponent(text)}`,
@@ -22,7 +32,8 @@ async function loadFont(text: string, weight: number): Promise<ArrayBuffer | nul
     ).then((r) => r.text());
     const url = css.match(/src: url\((.+?)\)/)?.[1];
     if (!url) return null;
-    return await fetch(url).then((r) => r.arrayBuffer());
+    const res = await fetch(url);
+    return res.ok ? await res.arrayBuffer() : null;
   } catch {
     return null;
   }
@@ -97,6 +108,7 @@ export async function renderMochicoArticleOg({
         </div>
       </div>
     ),
-    { ...MOCHICO_OG_SIZE, fonts }
+    // フォントが1つも取れなかったときは fonts を渡さず、@vercel/og の既定フォントで描く（ビルドを止めない）
+    fonts.length > 0 ? { ...MOCHICO_OG_SIZE, fonts } : MOCHICO_OG_SIZE
   );
 }

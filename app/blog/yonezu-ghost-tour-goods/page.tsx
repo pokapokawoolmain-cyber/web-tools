@@ -9,6 +9,7 @@ import {
   FanVoices,
   Figure,
   H2,
+  MochicoListCard,
   MochicoNudge,
   OfficialLinks,
   OshiArticleLayout,
@@ -559,6 +560,12 @@ export default function Page() {
         ガチャは何が出たかを残しておくと、ダブりを交換に出すときに便利だよ。写真つきだとさらに分かりやすい！
       </Bubble>
 
+      <MochicoListCard
+        href="https://www.toolboxjp.com/mochico/s/GbM-K6gxn2r--yL4zupShjI6v74V6pEtozHoSR7P8fk"
+        tour="米津玄師「GHOST」"
+        goodsCount={20}
+        note="ツアーのグッズを Mochico のリストで公開中。買ったものをチェックしておけば、ツアー後の通販で買い足すものがすぐ分かります。"
+      />
       <MochicoNudge title="買ったグッズを、写真つきの一覧にしておくなら">
         <p>
           「Mochico（モチコ）」は、ライブやイベントごとにグッズを写真つきで一覧にして、持っているものをタップで記録できるアプリです。ガチャのようなランダムグッズは絵柄ごとに個数を記録でき、リストはリンクで友達と共有できます。
